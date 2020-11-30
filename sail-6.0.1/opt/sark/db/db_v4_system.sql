@@ -120,7 +120,7 @@ INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('236','sarkthreathist/main.php','Threat History','50','view');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('240','sarkbackup/main.php','Backup/Restore','50','create');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('242','sarkcert/main.php','Certificates','50','create');
-INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('244','sark3pcert/main.php','3rd Party Certs','50','create');
+INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('244','sark3pcerts/main.php','Certs(3rd Party)','50','create');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('250','sarklog/main.php','Logs','50','view');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('252','sarkpcap/main.php','SIP PCAP Logs','50','view');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('255','sarkshell/main.php','Console','50','view');
