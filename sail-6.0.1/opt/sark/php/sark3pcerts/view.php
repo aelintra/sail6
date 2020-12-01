@@ -37,11 +37,11 @@ public function showForm() {
 
         $this->myPanel->pagename = '3pcert';
 
-        if (isset($_POST['remove']) || isset($_POST['endRemove'])) {
+        if (isset($_POST['remove']) || isset($_POST['endremove'])) {
                 $this->message = $this->remCert();
         }
 
-        if (isset($_POST['install']) || isset($_POST['endInstall'])) {
+        if (isset($_POST['save']) || isset($_POST['endsave'])) {
                 $this->message = $this->addCert();
         }
 
@@ -59,9 +59,11 @@ private function showMain() {
         $buttonArray=array();
         if (file_exists($this->certFile)) {
             $buttonArray['remove'] = "w3-text-white";
+            $buttonArray['save'] = "w3-text-white";
+
         }
         else {
-             $buttonArray['Install'] = "w3-text-white";
+             $buttonArray['save'] = "w3-text-white";
         }
 
         $this->myPanel->actionBar($buttonArray,"sark3pcertForm",false);
@@ -76,25 +78,24 @@ private function showMain() {
         if (file_exists($this->certFile)) {
             $file = file_get_contents($this->certFile) or die("Could not read file $pkey !");
 			$this->myPanel->internalEditBoxStart();
-        )
-        $this->myPanel->subjectBar("Third Party Bundled Certificates");
+        }
+        $this->myPanel->subjectBar("Third Party Certificates");
         echo '<div class="w3-margin-bottom w3-text-blue-grey w3-small">';
         echo "<p>";
         echo "If you wish to use secure provisioning for your phones then you will need to obtain the correct certificates from each of your phone vendor(s) and paste them here.  You can concatenate as many certificates as you need into this box and they will be saved as a bundled pem file for Apache to use. Paste each new certificate at then end of the file on a new line.";
         echo '</p>';
         echo '</div>';
 
-		$this->myPanel->subjectBar("Certificate bundle");
 		echo '<div class="w3-margin-bottom w3-text-blue-grey w3-small">';
-		echo "<p>";
-		echo "<label> Copy and paste your .crt pr .pem file contents into the box below </label>";
-		echo '</p>';
+
 		echo '</div>';
-		echo '<p><textarea class="w3-padding w3-margin-bottom w3-tiny w3-card-4 longdatabox" style="height:120px; width:500px"';
-		echo ' name="cert" id="cert" >$file</textarea></p>' . PHP_EOL;
+		echo '<p><textarea class="w3-padding w3-margin-bottom w3-tiny w3-card-4 longdatabox" style="height:2000px; width:500px"';
+		echo ' name="cert" id="cert" >' . $file . '</textarea></p>' . PHP_EOL;
 
 		echo '<div class="w3-container w3-padding w3-margin-top">' . PHP_EOL;
-		echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endInstall">Install</button>';
+		echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endsave">Save</button>';
+        echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endremove">Remove</button>';
+
 		echo '</div>' . PHP_EOL;
  
         echo '</div>' . PHP_EOL;        
@@ -115,13 +116,14 @@ private function addcert()
         `sudo chown root:root $this->certFile`;
         `sudo chmod 644 $this->certFile`;
 
-        if (file_exists("/etc/apache2/sites-enabled/sark-prov-ssl.conf"))
-            return(Saved Certificates");
+        if (file_exists("/etc/apache2/sites-enabled/sark-prov-ssl.conf")) {
+            return("Saved Certificates");
         }
+        
 
         `sudo a2ensite sark-prov-ssl.conf`;
 
-        return("Installed Certificates - reboot to action");
+        return("Saved Certificates - reboot to action");
 }
 
 
