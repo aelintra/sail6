@@ -194,16 +194,6 @@ chown -R asterisk:asterisk /etc/asterisk/ssl
 chmod 511 /etc/asterisk/ssl
 chmod 400 /etc/asterisk/ssl/*
 
-#sudoers
-if [ -e /etc/sudoers.d/sail ]; then 
-    chmod 0440 /etc/sudoers.d/sailsudoers
-fi
-# all moved to sudoers.d/sail in 5.0.0-30
-#if [ ! -e /etc/sudoers.d/sarkrssh ]; then
-#        echo asterisk ALL=NOPASSWD: /usr/bin/sv > /etc/sudoers.d/sarkrssh
-#        chmod 0440 /etc/sudoers.d/sarkrssh
-#fi
-
 #reverse proxy port perms
 chown asterisk:asterisk /opt/sark/service/rssh/serviceport1
 
@@ -254,6 +244,9 @@ if [ -d /etc/shorewall6 ]; then
     chown www-data:www-data /etc/shorewall6/sark_rules6
 #    chown www-data:www-data /etc/shorewall6/sark_blrules
 fi
+
+#run shorewall's own fix routines
+shorewall update
 
 # F2b setup
 [ -e /etc/fail2ban/jail.local ] && rm -rf /etc/fail2ban/jail.local && echo "replacing F2B jail.local" 

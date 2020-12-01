@@ -306,9 +306,9 @@ USE_DEL_REG_CLOSE_1="Y"
 # # Browser access - CHANGE THIS FOR YOUR SITE!
 ## N.B. passwords must be 6 characters or more
 ADMIN_ID="admin"
-ADMIN_PASS="myadminpass"
+ADMIN_PASS="$padminpass"
 USER_ID="user"
-USER_PASS="myuserpass"
+USER_PASS="$puserpass"
 
 ## LDAP Settings
 LDAP_ENABLE="Y"
@@ -1563,9 +1563,9 @@ logon_wizard$: skip welcome
 
 ;set an http UID & password
 http_user!: user
-http_pass!: 1111
+http_pass!: $puserpass
 
-admin_mode_password!: 2222','Descriptor');
+admin_mode_password!: $padminpass','Descriptor');
 INSERT OR IGNORE INTO Device(pkey,desc,owner,provision,technology) values ('snom.Fkey','Snom BLF template','system','fkey$seq$: $type $value
 fkey_label$seq$: $label','BLF Template');
 INSERT OR IGNORE INTO Device(pkey,desc,owner,provision,technology) values ('snom.ipv4','snom ipv4 fragment','system','dhcp_v6$: off','Descriptor');
@@ -2264,8 +2264,8 @@ INSERT OR IGNORE INTO Device(pkey,desc,owner,provision,technology) values ('yeal
 ##File header "#!version:1.0.0.1" can not be edited or deleted, and must be placed in the first line.##
 
 # # phone browser access - change for your site
-security.user_password = admin:myadminpass
-security.user_password = user:myuserpass
+security.user_password = admin:$padminpass
+security.user_password = user:$puserpass
 
 features.direct_ip_call_enable = 0
 

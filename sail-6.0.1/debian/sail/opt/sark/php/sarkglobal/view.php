@@ -308,11 +308,20 @@ private function showMain() {
 		echo '</div>';
 	}
 
+/*
+ * ToDo - placeholder for the PJSIP generator
+
 	$this->myPanel->internalEditBoxStart();
  	$this->myPanel->subjectBar("SIP Channel Driver");   
-    $this->myPanel->radioSlide('sipdriver',$global['SIPDRIVER'],array('chan_sip','pjsip'));
+    $this->myPanel->radioSlide('sipdriver',$global['SIPDRIVER'],array('chan_sip'));
     echo '</div>';	
+*/
 
+	$this->myPanel->internalEditBoxStart();
+ 	$this->myPanel->subjectBar("Phone Browser Security");   
+    $this->myPanel->displayInputFor('puserpass','text',$global['PUSERPASS']);
+    $this->myPanel->displayInputFor('padminpass','text',$global['PADMINPASS']);
+    echo '</div>';	
 
 	$this->myPanel->internalEditBoxStart();
  	$this->myPanel->subjectBar("User Services");   

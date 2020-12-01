@@ -170,11 +170,11 @@ public function copyFirewallTemplates() {
 	$this->helper = new helper;
 	
 	$res = $this->dbh->query("SELECT BINDPORT,FQDN,FQDNINSPECT,SIPFLOOD FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
-	$file = '/opt/sark/templates/shorewall/sark_inline_fqdn';
+
 	if ($res['FQDNINSPECT'] == 'YES') {
 		$rule = "'INLINE(ACCEPT) net \$FW tcp ";
 		$rule .= $res['BINDPORT'];
-		$rule .= '; -m string --algo bm --to 100 --string "';
+		$rule .= ';; -m string --algo bm --to 100 --string "';
 		$rule .= $res['FQDN'];
 		$rule .= '"';
 		$rule .= "'";
@@ -182,7 +182,7 @@ public function copyFirewallTemplates() {
 
 		$rule = "'INLINE(ACCEPT) net \$FW udp ";
 		$rule .= $res['BINDPORT'];
-		$rule .= '; -m string --algo bm --to 100 --string "';
+		$rule .= ';; -m string --algo bm --to 100 --string "';
 		$rule .= $res['FQDN'];
 		$rule .= '"';
 		$rule .= "'";
@@ -192,7 +192,10 @@ public function copyFirewallTemplates() {
 		$rc = $this->helper->request_syscmd ("echo '#' > /etc/shorewall/sark_inline_fqdn");
 	}
 
-
+#ToDo
+# If we want to use this then it will have to be refactored to use a block like the one above so we can suvstiture 
+# the BINDPORT value into the strings
+# 
 	$file = '/opt/sark/templates/shorewall/sark_inline_limit';
 	if (file_exists($file) && $res['SIPFLOOD'] == 'YES') {
 		$rc = $this->helper->request_syscmd ("cp $file /etc/shorewall");
