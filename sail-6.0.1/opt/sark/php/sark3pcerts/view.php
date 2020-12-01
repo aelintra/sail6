@@ -89,12 +89,14 @@ private function showMain() {
 		echo '<div class="w3-margin-bottom w3-text-blue-grey w3-small">';
 
 		echo '</div>';
-		echo '<p><textarea class="w3-padding w3-margin-bottom w3-tiny w3-card-4 longdatabox" style="height:2000px; width:500px"';
+		echo '<p><textarea class="w3-padding w3-margin-bottom w3-tiny w3-card-4 longdatabox" style="height:200px; width:500px"';
 		echo ' name="cert" id="cert" >' . $file . '</textarea></p>' . PHP_EOL;
 
 		echo '<div class="w3-container w3-padding w3-margin-top">' . PHP_EOL;
-		echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endsave">Save</button>';
         echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endremove">Remove</button>';
+        echo '$nbsp';
+		echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endsave">Save</button>';
+        
 
 		echo '</div>' . PHP_EOL;
  
