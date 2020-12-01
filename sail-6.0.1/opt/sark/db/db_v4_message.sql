@@ -233,6 +233,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('operator','S
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('orideclosed','Override','Set this to YES if you want to force ALL extensions to have this closed restriction');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('orideopen','Override','Set this to YES if you want to force ALL extensions to have this open restriction');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('outcome','Outcome','Where the call will be delivered if the call group fails to terminate the call.');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('padminpass','Phone Admin Password','The global admin password to be set into the phones at the next provision');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('password','Password','The password for this account, called the secret in Asterisk');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('path1','Path 1','You can specify up to 4 paths (1 primary and up to 3 failover) in descending order of priority.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('path2','Path 2','You can specify up to 4 paths (1 primary and up to 3 failover) in descending order of priority.');
@@ -258,6 +259,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('protocol','I
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('provisioning','Provisioning','Header');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('provisionwith','Provision With URL?','Tells SARK what kind of addresses to set in the provisioning stream.  This will be used by the endpoint to communicate back with SARK. You probably do not want to use a URL with locally attached devices unless you are using IPV6 GUAs or you have a local nameserver, however you should consider using one for IPV6 phones or IPV4 remote phones.  It is easier to manage and you can use stateful firewall rules to inspect inbound INVITEs and REGISTRATIONs to ensure they are correctly marked, which can help against toll fraud attacks.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('proxy','Dynamic Proxy Enable','Enables/disables SARKs dynamic proxy feature (see extensions panel status field).');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('puserpass','Phone User Password','The global user password to be set into the phones at the next provision');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('push','Push','Some phones (Snoms) can reload their config without rebooting');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('pwdlen','Ext password length','Length of the password (in characters) the randomizer will create for new extensions');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('qdd','Direct Dial','Queue direct dial access');
@@ -295,6 +297,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sclose','clo
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('searchkey','goKey','Here you can enter all or part of the key for any object in the database, for example: an extension number, ring group number, queue name etc.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('secondary','Secondary Path','The second choice trunk for this route.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('selectall','Select All','');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipdriver','SIP Channel Driver','');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipflood','Throttle SIP floods?','Turning this on will throttle sipfloods in the firewall. This may help control SIP DOS attacks and over enthusiastic SIP crack robots');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipiaxfriend','SIP Peer entry','Asterisk SIP settings');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipiaxpeer','Sip Peer entry', 'Asterisk peer stanza name');

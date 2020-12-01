@@ -350,6 +350,8 @@ NUMGROUPS TEXT,                     -- not used in 4.x
 ONBOARDMENU TEXT,                   -- not used in 4.x 
 OPERATOR TEXT DEFAULT 0,            -- sysop
 OPRT TEXT,                          -- not used in 4.x 
+PADMINPASS TEXT DEFAULT 'myadminpass',	-- phone browser ADMIN passord
+PUSERPASS TEXT DEFAULT 'myuserpass',	-- phone browser USER passord
 PWDLEN TEXT,                        -- password length
 PCICARDS TEXT,                      -- not used in 4.x 
 PKTINSPECT TEXT,					-- not used

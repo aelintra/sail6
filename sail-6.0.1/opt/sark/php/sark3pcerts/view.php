@@ -124,7 +124,7 @@ private function addcert()
         `sudo chmod 644 $this->certFile`;
 
         if (file_exists("/etc/apache2/sites-enabled/sark-prov-ssl.conf")) {
-            return("Saved Certificates");
+            return("updated Certificates");
         }
         
 
