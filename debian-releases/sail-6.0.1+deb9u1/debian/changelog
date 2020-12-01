@@ -1,3 +1,15 @@
+sail (6.0.1-59+deb9u1) UNRELEASED; urgency=low
+  * tagged
+
+  - Add panel for third party certificate bundle upload
+  - modify provisioning to support user defined endpoint passwords in Globals; padminpass and puserpass
+  - modify Globals to add padminpass and puserpass
+  - modify device templates to add padminpass and puserpass for Panasonic, Snom and Yealink
+  - add new virtual SSL host at 41363 which enforces CA checking 
+  - Add non-standard local SIP port option  
+  
+ -- CoCoSoft <admin@aelintra.com>  Tue, 1  DEC 2020 18:00:00 +0000
+
 sail (6.0.1-58+deb9u1) UNRELEASED; urgency=low
   * tagged
 

@@ -64,7 +64,7 @@ private function showMain() {
              $buttonArray['install'] = "w3-text-white";
         }
 
-        $this->myPanel->actionBar($buttonArray,"sarkcertForm",false);
+        $this->myPanel->actionBar($buttonArray,"sarkcertForm",false,false);
         $this->myPanel->Heading($this->head,$this->message);
         $this->myPanel->responsiveSetup(2);
 

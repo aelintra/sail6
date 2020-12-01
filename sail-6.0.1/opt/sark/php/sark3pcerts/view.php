@@ -66,7 +66,7 @@ private function showMain() {
              $buttonArray['save'] = "w3-text-white";
         }
 
-        $this->myPanel->actionBar($buttonArray,"sark3pcertForm",false);
+        $this->myPanel->actionBar($buttonArray,"sark3pcertForm",false,false);
         $this->myPanel->Heading($this->head,$this->message);
         $this->myPanel->responsiveSetup(2);
 
