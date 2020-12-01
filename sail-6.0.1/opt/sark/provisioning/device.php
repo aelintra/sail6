@@ -262,13 +262,14 @@ if (preg_match('/\$localip/',$retstring)) {
 $retstring = preg_replace ( '/\$bindport/', $bindport, $retstring);
 $retstring = preg_replace ( '/\$tlsport/', $tlsport, $retstring);
 $retstring = preg_replace ( '/\$ldapbase/', $ldapbase, $retstring);
+$retstring = preg_replace ( '/\$padminpass/', $padminpass, $retstring);
+$retstring = preg_replace ( '/\$puserpass/', $puserpass, $retstring);
 
 if (!$descriptor) {
 	$retstring = preg_replace ( '/\$desc/', $thisConfig->desc, $retstring);
 	$retstring = preg_replace ( '/\$password/', $thisConfig->passwd, $retstring);
 	$retstring = preg_replace ( '/\$ext/', $thisConfig->pkey, $retstring);
-	$retstring = preg_replace ( '/\$padminpass/', $thisConfig->pkey, $padminpass);
-	$retstring = preg_replace ( '/\$puserpass/', $thisConfig->pkey, $puserpass);
+
 // If its a Gigaset do their stupid double quoted desc field
 	if (preg_match('/^7c2f80/',$mac) ) {
 		$retstring = preg_replace ( '/\$quotedDesc/', '\'"' . $thisConfig->desc . '"\'', $retstring);
