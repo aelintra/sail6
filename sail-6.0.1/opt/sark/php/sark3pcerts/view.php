@@ -84,6 +84,9 @@ private function showMain() {
         echo "<p>";
         echo "If you plan to provision remote endpoints then it is highly recommended you use CA authorisation checking to prevent a potential hacker from stealing phone SIP acccount and Login passwords. To implement this you will need to obtain the correct certificates from each of your phone vendors and paste them here.  You can concatenate as many certificates as you need into this box and they will be saved as a bundled .pem file. Paste each new certificate at then end of the file on a new line and press Save.  You will also need to update the provsioning URL in each phone to use port 41363;- e.g. https://mypbx:41363/provisioning";
         echo '</p>';
+        echo "<p>";
+        echo "N.B. - don't fprget to open (and forward) port 41363(TCP) in your PBX and external firewalls";
+        echo '</p>';        
         echo "";
         echo '</p>';        
         echo '</div>';
