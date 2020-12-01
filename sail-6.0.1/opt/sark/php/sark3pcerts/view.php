@@ -94,7 +94,7 @@ private function showMain() {
 
 		echo '<div class="w3-container w3-padding w3-margin-top">' . PHP_EOL;
         echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endremove">Remove</button>';
-        echo '<span w3-padding w3-right">&nbsp</span>';
+        echo '<span class="w3-padding w3-right">&nbsp</span>';
 		echo '<button class="w3-button w3-blue w3-small w3-round-xxlarge w3-padding w3-right" type="submit" name="endsave">Save</button>';
         
 
