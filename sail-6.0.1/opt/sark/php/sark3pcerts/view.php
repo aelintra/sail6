@@ -21,7 +21,7 @@
 Class sark3pcerts {
 
         protected $message;
-        protected $head = "Third Party Certificates";
+        protected $head = "Certificates";
         protected $certFile = "/etc/ssl/3pcerts/3pcerts.pem";
 
         protected $myPanel;
@@ -82,8 +82,10 @@ private function showMain() {
         $this->myPanel->subjectBar("Third Party Certificates");
         echo '<div class="w3-margin-bottom w3-text-blue-grey w3-small">';
         echo "<p>";
-        echo "If you wish to use secure provisioning for your phones then you will need to obtain the correct certificates from each of your phone vendor(s) and paste them here.  You can concatenate as many certificates as you need into this box and they will be saved as a bundled pem file for Apache to use. Paste each new certificate at then end of the file on a new line.";
+        echo "If you plan to provision remote endpoints then it is highly recommended you use CA authorisation checking to prevent a potential hacker from stealing phone access and SIP acccount passwords. To implement this you will need to obtain the correct certificates from each of your phone vendors and paste them here.  You can concatenate as many certificates as you need into this box and they will be saved as a bundled .pem file. Paste each new certificate at then end of the file on a new line and press Save.  You will also need to update the provsioning URL in each phone to use port 41363; - e.g. https://mypbx:41363/provisioning";
         echo '</p>';
+        echo "";
+        echo '</p>';        
         echo '</div>';
 
 		echo '<div class="w3-margin-bottom w3-text-blue-grey w3-small">';
