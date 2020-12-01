@@ -33,7 +33,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // get the global env settings we need
 try {	  
-  	$global = $db->query("select EDOMAIN,FQDN,FQDNPROV,HACLUSTERIP,HAUSECLUSTER,LDAPBASE,LOGLEVEL,BINDPORT,TLSPORT from globals")->fetch();
+  	$global = $db->query("select BINDPORT,EDOMAIN,FQDN,FQDNPROV,HACLUSTERIP,HAUSECLUSTER,LDAPBASE,LOGLEVEL,PADMINPASS,PUSERPASS,TLSPORT from globals")->fetch();
 
 } catch (Exception $e) {
   $errorMsg = $e->getMessage();
@@ -56,7 +56,8 @@ $ldapbase = $global['LDAPBASE'];
 $loglevel = $global['LOGLEVEL'];
 $tlsport = $global['TLSPORT'];
 $bindport = $global['BINDPORT'];
-
+$padminpass = $global['PADMINPASS'];
+$puserpass = $global['PUSERPASS'];
 
 // ignore polycom logging requests
 if (defined('STDIN')) {
@@ -266,6 +267,8 @@ if (!$descriptor) {
 	$retstring = preg_replace ( '/\$desc/', $thisConfig->desc, $retstring);
 	$retstring = preg_replace ( '/\$password/', $thisConfig->passwd, $retstring);
 	$retstring = preg_replace ( '/\$ext/', $thisConfig->pkey, $retstring);
+	$retstring = preg_replace ( '/\$padminpass/', $thisConfig->pkey, $padminpass);
+	$retstring = preg_replace ( '/\$puserpass/', $thisConfig->pkey, $puserpass);
 // If its a Gigaset do their stupid double quoted desc field
 	if (preg_match('/^7c2f80/',$mac) ) {
 		$retstring = preg_replace ( '/\$quotedDesc/', '\'"' . $thisConfig->desc . '"\'', $retstring);
