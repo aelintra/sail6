@@ -393,7 +393,7 @@ private function saveSIPIAX(&$tuple) {
 		}
 					
 		if ( $_POST['regthistrunk'] == "YES" ) {
-			$tuple['register'] = $tuple['username'].':'.$tuple['password'].'@'.$tuple['host'].'/'.$tuple['username'];
+			$tuple['register'] = $tuple['username'].':'.$tuple['password'].'@'.$tuple['host'];
 		}
 									
 		$template = $this->copyTemplates ($tuple);
