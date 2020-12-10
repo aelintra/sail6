@@ -15,9 +15,9 @@ context=mainmenu
 requirecalltoken=no','IAX2');
 INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,register,sipiaxpeer,technology) values ('GeneralSIP','GeneralSIP','VOIP','A general SIP carrier','NO','username:password@url/username','type=peer
 host=
+port=5060
 qualify=yes
 canreinvite=no
-username=
 fromuser=
 secret=
 insecure=port,invite','SIP');
@@ -95,6 +95,7 @@ INSERT OR IGNORE INTO mfgmac(pkey,name,notify) values ('00:21:04','Gigaset','gig
 INSERT OR IGNORE INTO mfgmac(pkey,name,notify) values ('14:AE:DB','Vtech','vtech-check-cfg');
 INSERT OR IGNORE INTO mfgmac(pkey,name,notify) values ('00:12:2A','Vtech','vtech-check-cfg');
 INSERT OR IGNORE INTO mfgmac(pkey,name,notify) values ('C4:68:D0','Vtech','vtech-check-cfg');
+INSERT OR IGNORE INTO mfgmac(pkey,name,notify) values ('0C:38:3E','Fanvil','fanvil-check-cfg');
 
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('100','sarkextension/main.php','Extensions','30','create');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('105','sarkphone/main.php','Phone','0','update');
