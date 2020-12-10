@@ -1,3 +1,11 @@
+sail (6.0.1-60+deb10u1) UNRELEASED; urgency=low
+  * tagged
+
+   - Add provisioning support for Fanvil X3U, X4U, X5U, X6U 
+   - Updated third party phone iamges
+  
+ -- CoCoSoft <admin@aelintra.com>  Thu, 10  DEC 2020 18:00:00 +0000
+
 sail (6.0.1-59+deb10u1) UNRELEASED; urgency=low
   * tagged
 
