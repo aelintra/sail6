@@ -1878,6 +1878,9 @@ private function printEditNotes ($pkey,$extension,$sip_peers) {
 		if (preg_match ( " /[S|s]nom/ ", $extension['device'])) {
 			$images .= 'snom';
 		}
+		if (preg_match ( " /Fanvil/ ", $extension['device'])) {
+			$images .= 'fanvil';
+		}		
 		if (preg_match ( " /Vtech/ ", $extension['device'])) {
 			$images .= 'vtech';
 		}
@@ -1934,11 +1937,11 @@ private function getVendorFromMac($mac) {
 		if ( ! empty($short_vendor_cols[1]) ) {
 			$short_vendor = $short_vendor_cols[1];
 		}
-		if (preg_match('/(Snom|Panasonic|Yealink|Polycom|Cisco|Gigaset|Aastra|Grandstream|Vtech)/i',$short_vendor_cols[2],$matches)) {
+		if (preg_match('/(Snom|Panasonic|Yealink|Polycom|Fanvil|Cisco|Gigaset|Aastra|Grandstream|Vtech)/i',$short_vendor_cols[2],$matches)) {
 				$short_vendor = $matches[1];
 		}
 		else {
-			if (preg_match('/(Snom|Panasonic|Yealink|Polycom|Cisco|Gigaset|Aastra|Grandstream|Vtech)/i',$short_vendor,$matches)) {
+			if (preg_match('/(Snom|Panasonic|Yealink|Polycom|Fanvil|Cisco|Gigaset|Aastra|Grandstream|Vtech)/i',$short_vendor,$matches)) {
 				$short_vendor = $matches[1];
 			}
 			else {

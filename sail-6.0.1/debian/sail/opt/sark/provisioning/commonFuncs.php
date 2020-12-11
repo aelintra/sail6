@@ -516,7 +516,8 @@ function logUA() {
   	"yealink" => 'Yealink\sSIP-([\w-]+)\s',
   	"yealinkDECT" => 'Yealink\s([\w-]+)\s',
   	"panasonic" => 'Panasonic_(KX-\w+)\/',
-  	"aastra" => 'Aastra(\d{4}i)\s'
+  	"aastra" => 'Aastra(\d{4}i)\s',
+  	"fanvil" => 'Fanvil\s(.*)\s'
   );
   
   $model = NULL;
