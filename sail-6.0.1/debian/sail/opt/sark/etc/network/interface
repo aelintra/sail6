@@ -1,0 +1,37 @@
+#remove netplan and restore ifupdown
+#
+#
+
+NIC=`ls /sys/class/net | grep -v wlan | grep -v lo`
+
+[ ! -e /etc/network/interface ] && \
+    echo 'source /etc/network/interfaces.d' > /etc/network/interfaces 
+    echo 'auto lo' >> /etc/network/interfaces
+    echo 'iface lo inet loopback' >> /etc/network/interfaces
+    echo "allow-hotplug $NIC" >> /etc/network/interfaces
+    echo "auto $NIC" >> /etc/network/interfaces
+    echo "iface $NIC inet dhcp" >> /etc/network/interfaces
+
+ifdown -a --force && ifup -a
+
+[ systemctl is-active --quiet networking ] || \
+    systemctl unmask networking && \
+    systemctl enable networking && \
+    systemctl restart networking
+
+#systemctl stop systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+[ systemctl is-active --quiet systemd-networkd.socket ] && \
+    systemctl disable systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online && \
+    systemctl mask systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+
+#stop systemd.resolved - it interferes with dnsmasq
+[ systemctl is-active --quiet systemd-resolved ] && \
+    systemctl disable systemd-resolved && \
+    systemctl mask systemd-resolved 
+
+#restart dnsmasq
+systemctl restart dnsmasq
+
+#
+# end of networking
+#
