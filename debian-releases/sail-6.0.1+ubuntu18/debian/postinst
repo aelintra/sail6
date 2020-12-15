@@ -303,6 +303,37 @@ chmod 664 /opt/sark/db/sark.db
 [ ! -d /opt/sark/public/vtech ] && mkdir /opt/sark/public/vtech && chown www-data:www-data /opt/sark/public/vtech
 [ ! -d /opt/sark/public/yealink ] && mkdir /opt/sark/public/yealink && chown www-data:www-data /opt/sark/public/yealink
 
+
+#remove netplan and restore ifupdown
+#
+#
+echo 'source /etc/network/interfaces.d' > /etc/network/interfaces
+echo 'auto lo' >> /etc/network/interfaces
+echo 'iface lo inet loopback' >> /etc/network/interfaces
+echo 'allow-hotplug eth0' >> /etc/network/interfaces
+echo 'auto eth0' >> /etc/network/interfaces
+echo 'iface eth0 inet dhcp' >> /etc/network/interfaces
+
+ifdown --force enp0s3 lo && ifup -a
+
+systemctl unmask networking
+systemctl enable networking
+systemctl restart networking
+
+systemctl stop systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+systemctl disable systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+systemctl mask systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+
+#stop systemd.resolved - it interferes with dnsmasq
+systemctl disable systemd-resolved
+systemctl mask systemd-resolved
+#restart dnsmasq
+systemctl restart dnsmasq
+
+#
+# end of networking
+#
+
 #set up shellinabox to our likin
 sed -i "/^SHELLINABOX_PORT/c\SHELLINABOX_PORT=63005" /etc/default/shellinabox
 sed -i '/^SHELLINABOX_ARGS/c\SHELLINABOX_ARGS="--no-beep --localhost-only --disable-peer-check --disable-ssl"' /etc/default/shellinabox
@@ -339,10 +370,7 @@ sv u srk-ua-helper
 #add definitions to MySQL
 mysql -u root < /opt/sark/stat/asterisk-stat-v2/cdr-mysql-setup.sql
 
-#stop systemd.resolved - it interferes with dnsmasq
-systemctl disable systemd-resolved
-#restart dnsmasq
-systemctl restart dnsmasq
+
 
 #Install date
 date --iso-8601=minutes > /opt/sark/db/.sail-install-date

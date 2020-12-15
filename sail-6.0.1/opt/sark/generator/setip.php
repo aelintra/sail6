@@ -92,6 +92,12 @@ else {
 			`echo "dhcp-option=$phone,option:tftp-server,\"http://$ip/provisioning$query\"" >> /etc/dnsmasq.d/sarkdhcp-opt66`;
 		}
 	}
+/*
+	Set an IP in /etc/issue for CPE systems
+ */
+	$srkrlse = `dpkg-query -W -f '\${version}\n' sail`;
+	$osrelease = `lsb_release -d --short`;
+	echo "$osrelease/SARK $srkrlse running at $netaddress/$cidr" > /etc/issue;
 }
 
 ?>		
