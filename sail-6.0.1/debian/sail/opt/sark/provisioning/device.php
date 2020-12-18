@@ -210,20 +210,6 @@ try {
 		}
 	}
 
-// create and/or set the model in netphone record
-/*
-		$sql = $db->prepare('select * from netphone WHERE pkey = ?');
-		$sql->execute(array($mac));
-		$thisNetphone = $sql->fetchObject();
-		If (!empty($thisNetphone->pkey)) {
-			$sql = $db->prepare('UPDATE netphone SET model=? WHERE pkey = ?');
-			$sql->execute(array($model,$mac));
-		}
-		else {
-			$sql = $db->prepare('INSERT INTO netphone (pkey,model) VALUES(?,?)');
-			$sql->execute(array($mac,$model));
-		}
-*/
   }	
    
 //  $masterkey = $thisConfig->pkey;
@@ -330,7 +316,7 @@ try {
 
 // disable auth send for next time
 if (!$descriptor) {
-	if ($thisConfig->sndcreds != 'Always') { 
+	if ($thisConfig->sndcreds = 'Once') { 
 		try {
 			$update = $db->prepare("update ipphone set sndcreds='No' where  pkey = '" . $thisConfig->pkey . "'");
 			$update->execute();

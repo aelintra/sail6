@@ -5,7 +5,7 @@ d41d8cd98f00b204e9800998ecf8427e  opt/sark/.recone
 a43bf3251488ee3fdc03c6c9866e7045  opt/sark/always/1400788134.db_v4_admin_perms
 e2935f8de66d2b10f1d7f133c3bfc7bf  opt/sark/always/1408278454.db_v4_set_defaults
 a8ff0c5b92768315dc6b063dc75f1e23  opt/sark/cache/1520813339.db_v4_admin_perms2
-070fbb22d544fc58d65fbc7dfecc6c37  opt/sark/cache/cdr-mysql-setup.sql
+a44ed84608bed84ab56f239587762fcf  opt/sark/cache/cdr-mysql-setup.sql
 d75715eb37352674f8b10cf8a03cfaf2  opt/sark/cache/debsetlan
 d41d8cd98f00b204e9800998ecf8427e  opt/sark/cache/fqdndrop
 40c94b7553fbe3692311942ae3603d24  opt/sark/cache/htpasswd
@@ -312,7 +312,7 @@ dfe5835f22b396c8599497b261e357c3  opt/sark/generator/play.php
 0571cff2d8607dcea50405ffc860ad01  opt/sark/generator/routealloc.php
 2d62d02a04611133e1eba7e805699c0c  opt/sark/generator/runApacheGen.php
 3cb72b91b87b6e0537041136ae101791  opt/sark/generator/sanitize-firewall.php
-725f03e70281ff63f36112a11ef0df2a  opt/sark/generator/setip.php
+07b779db9cd344a958d223da7743d333  opt/sark/generator/setip.php
 d96430251e14697f663955bdbbe377fd  opt/sark/generator/shorewallreload.php
 c1f1ecaaede322bf9105ab24c22fd971  opt/sark/generator/sipSQL.php
 e6d7dad28e5747dbdc4d037b192a3d8c  opt/sark/generator/srkcsvloader.php
@@ -587,7 +587,7 @@ dd8ee99244cd5135668e7375eee07232  opt/sark/php/srksessions/common.php
 ac74fbe354e32d42db0beffae0726e97  opt/sark/php/srksessions/logout.php
 5dc1ef867c9cfd5ab272a949b7e82689  opt/sark/php/srksessions/session.php
 879e4ce128ec78d28531290983da88df  opt/sark/provisioning/commonFuncs.php
-06dd4e2891158965a5e649e7dc0d1192  opt/sark/provisioning/device.php
+03a476141c269bfb9d0f264f4b236227  opt/sark/provisioning/device.php
 64a59e64750ecbcee04e30cae06e8ee6  opt/sark/provisioning/settings.php
 61a2a12db7862761d193f47665e878c4  opt/sark/public/snom/snom_rereg.php
 d41d8cd98f00b204e9800998ecf8427e  opt/sark/recone
@@ -1399,5 +1399,5 @@ da362eff5f073b336d4f0b861cd8e652  opt/sark/www/sark-common/smeserver_logo.jpg
 95b8921fd7326e8a6971f6436e8d6135  opt/sark/www/support.htm
 751d17d6f9c5aecd2a264c673af4577b  usr/share/asterisk/agi-bin/kwakeup
 0af8c3e30ef06285d251c45681703e6c  usr/share/doc/sail-4.0.0/COPYING.gz
-84ad560214bc06e1b85856e88813bf46  usr/share/doc/sail/changelog.Debian.gz
+ef9684ad5f34863861a52127e9d1101b  usr/share/doc/sail/changelog.Debian.gz
 c007f37c8e4cfb4dfae4575723a0d6c1  usr/share/doc/sail/copyright
