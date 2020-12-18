@@ -96,7 +96,7 @@ else {
         Set an IP in /etc/issue for CPE systems
  */
 	$srkrlse = trim(`dpkg-query -W -f '\${version}\n' sail`);
-	osrelease = trim (`lsb_release -d --short`);
+	$osrelease = trim (`lsb_release -d --short`);
 	`echo "$osrelease/SARK $srkrlse running at $ip/$cidr" > /etc/issue`;
 }
 
