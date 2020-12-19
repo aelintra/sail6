@@ -248,7 +248,7 @@ private function showMain() {
 		echo '</div>' . PHP_EOL;	
 		$this->myPanel->displayInputFor('staticipv4','text',$global->STATICIPV4);	
 		$this->myPanel->displayInputFor('dns','text',$dns[0],"dns1");
-		$this->myPanel->displayInputFor('dns','text',$dns[1],"dns2")
+		$this->myPanel->displayInputFor('dns','text',$dns[1],"dns2");
 		echo '</div>';
 
 /*
