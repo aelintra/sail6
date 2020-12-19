@@ -94,8 +94,11 @@ private function showMain() {
 		
 	$dhcp=false;
 	$interface = $this->nethelper->get_interfaceName();
-	if (`grep $interface /etc/network/interfaces | grep -i dhcp` ) {
+	if (`ip -4 a show dev $interface | grep dynamic` ) {
 		$dhcp=true;
+	}
+	else {
+		
 	}
 	$dhcpsrvAvail=false;
 	$dhcpsrvUp=false;
