@@ -220,7 +220,7 @@ private function showMain() {
 	
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("IPV4 " . $this->nethelper->get_interfaceName() );
-/*	
+	
 	if ( ! $global->VCL) {
 		if ( !$dhcpsrvUp ) {
 			if ( $dhcp ) {			
@@ -232,7 +232,7 @@ private function showMain() {
 			$this->myPanel->aHelpBoxFor('dhcpaddr');		
 		}
 	}
-*/	
+	
 		echo '<input type="hidden" name="bindaddr" id="bindaddr" size="20"  value="' . $global->BINDADDR . '"  />' . PHP_EOL; 
  
 		echo '<div id="elementsToOperateOnDhcp">';
@@ -400,7 +400,11 @@ private function saveEdit() {
 //print_r ($_POST);
 	$this->myPanel->xlateBooleans($this->myBooleans);
 	$interface = $this->nethelper->get_interfaceName();
-	$network_string = "auto lo " . $interface . "\niface lo inet loopback\n";	
+
+	$cur_dhcp=false;
+	if (`grep $interface /etc/network/interfaces | grep -i dhcp` ) {
+		$cur_dhcp=true;
+	}	
 
 	$this->validator = new FormValidator();
 
@@ -474,7 +478,7 @@ private function saveEdit() {
 		$restartShorewall=false;
 
 		$old = $this->dbh->query("SELECT * FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
-		
+
 		$tuple = array();
 		$tuple['pkey'] = "global";
 		$tuple['edomain'] = null;
