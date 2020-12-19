@@ -51,8 +51,9 @@ function __construct() {
 //	staticIPV4
     $this->dbh = DB::getInstance();
 	$res = $this->dbh->query("SELECT STATICIPV4 FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
-	$this->$staticIPV4 = $res['STATICIPV4'];
-    
+	if ($res['STATICIPV4']) {
+		$this->staticIPV4 = $res['STATICIPV4'];
+    }
  // Broadcast IPV4
  	preg_match ( '/brd\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/', $iprets, $matches); 
 	$this->networkBrd = $matches[1];
@@ -75,7 +76,7 @@ public function get_interfaceName() {
 }
 
 public function get_localIPV4() {
-	if ($this->$staticIPV4) {
+	if ($this->staticIPV4) {
 		return $this->$staticIPV4;
 	}
 	return $this->localIPV4;

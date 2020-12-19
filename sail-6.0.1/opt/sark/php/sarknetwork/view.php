@@ -473,8 +473,8 @@ private function saveEdit() {
 
 		$restartShorewall=false;
 
-		$old = $this->helper->getTuple("globals");
-
+		$old = $this->dbh->query("SELECT * FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
+		
 		$tuple = array();
 		$tuple['pkey'] = "global";
 		$tuple['edomain'] = null;
@@ -739,8 +739,7 @@ private function saveEdit() {
 			$output .= "mailhub=" . $smtphost . PHP_EOL;
 			if ($smtpuser) {
 				$output .= "AuthUser=" . $smtpuser . PHP_EOL;
-				if ($smtppwd) {
-					$output .= "AuthPass=" . $smtppwd . PHP_EOL;
+				if ($smtppwd) {                                                                  
 				}
 			}
 			$output .= "UseTLS=" . $smtpusetls . PHP_EOL;
