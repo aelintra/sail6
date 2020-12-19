@@ -419,9 +419,6 @@ private function saveEdit() {
 		$this->validator->addValidation("dns1","req","You MUST provide at least one nameserver for correct execution of the PBX");
 	}
 	 	
-    $this->validator->addValidation("lanipaddr",
-		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
-		"IP address is invalid");
 	$this->validator->addValidation("staticipv4",
 		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
 		"Static IP address is invalid");    
