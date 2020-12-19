@@ -416,8 +416,6 @@ private function saveEdit() {
 	
 	if ( !isset($_POST['toggle'] ) ) {
 		$this->validator->addValidation("lanipaddr","req","You MUST provide an ip address");
-		$this->validator->addValidation("netmask","req","You MUST provide a network mask");
-		$this->validator->addValidation("gatewayip","req","You MUST provide a gateway address");
 		$this->validator->addValidation("dns1","req","You MUST provide at least one nameserver for correct execution of the PBX");
 	}
 	 	
@@ -427,9 +425,6 @@ private function saveEdit() {
 	$this->validator->addValidation("staticipv4",
 		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
 		"Static IP address is invalid");    
-    $this->validator->addValidation("netmask",
-		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
-		"Netmask is invalid");
 	$this->validator->addValidation("gatewayip",
 		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
 		"Gateway IP address is invalid");	
