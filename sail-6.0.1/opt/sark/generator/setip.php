@@ -24,9 +24,11 @@ $netaddress = $net->get_networkIPV4();
 $cidr = $net->get_networkCIDR();
 $msk = $net->get_netMask();
 $ip = $net->get_localIPV4();
+$staticip = $net->get_staticIPV4();
 
 echo  "Interface name on this node: $interface\n";
 echo  "IPV4: $ip\n";
+echo  "staticIPV4: $staticip\n";
 echo  "Network address: $netaddress\n";
 echo  "netmask: $msk\n";
 echo  "CIDR: $cidr\n";
@@ -48,13 +50,15 @@ if ($netaddress == '0.0.0.0') {
 }
 else {
 	print "Setting local subnet as $netaddress/$cidr \n";
+	if ($staticip) {
+		print "Setting static ip $staticip \n";
+		`sudo ip addr add $staticip dev $interface`;
+	}
+	print "Setting static ip as $staticip \n";
+
 	if ( file_exists( "/etc/shorewall") ) {
 		`echo LAN=$netaddress/$cidr > /etc/shorewall/local.lan`;
 		`echo IF1=$interface > /etc/shorewall/local.if1`;
-		# shorewall pre 4.5.13
-		`sed -i '/^BLACKLISTNEWONLY=/c\\BLACKLISTNEWONLY=NO' /etc/shorewall/shorewall.conf`;
-		# shorewall 4.5.13+
-		`sed -i '/^BLACKLIST=/c\\BLACKLIST=ALL' /etc/shorewall/shorewall.conf`;
 	}
 	
 	if ( file_exists( "/etc/fail2ban/jail.local")) {	

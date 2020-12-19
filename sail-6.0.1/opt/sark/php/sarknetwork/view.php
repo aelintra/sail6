@@ -88,7 +88,7 @@ private function showMain() {
 	if (isset($this->message)) {
 		$this->myPanel->msg = $this->message;
 	} 
-	$sql = $this->dbh->prepare("SELECT fqdn,fqdnhttp,fqdninspect,fqdnprov,bindaddr,bindport,edomain,sendedomain,vcl FROM globals where pkey = ?");
+	$sql = $this->dbh->prepare("SELECT fqdn,fqdnhttp,fqdninspect,fqdnprov,bindaddr,bindport,edomain,staticipv4,sendedomain,vcl FROM globals where pkey = ?");
 	$sql->execute(array('global'));
 	$global = $sql->fetchObject();
 		
@@ -220,7 +220,7 @@ private function showMain() {
 	
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("IPV4 " . $this->nethelper->get_interfaceName() );
-	
+/*	
 	if ( ! $global->VCL) {
 		if ( !$dhcpsrvUp ) {
 			if ( $dhcp ) {			
@@ -232,7 +232,7 @@ private function showMain() {
 			$this->myPanel->aHelpBoxFor('dhcpaddr');		
 		}
 	}
-	
+*/	
 		echo '<input type="hidden" name="bindaddr" id="bindaddr" size="20"  value="' . $global->BINDADDR . '"  />' . PHP_EOL; 
  
 		echo '<div id="elementsToOperateOnDhcp">';
@@ -245,6 +245,8 @@ private function showMain() {
 		$this->myPanel->displayInputFor('dns','text',$dns[1],"dns2");
 
 		echo '</div>' . PHP_EOL;
+
+		$this->myPanel->displayInputFor('staticipv4','text',$global->STATICIPV4);
 
 		echo '</div>';
 
@@ -431,6 +433,9 @@ private function saveEdit() {
     $this->validator->addValidation("lanipaddr",
 		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
 		"IP address is invalid");
+	$this->validator->addValidation("staticipv4",
+		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
+		"Static IP address is invalid");    
     $this->validator->addValidation("netmask",
 		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
 		"Netmask is invalid");
@@ -454,6 +459,7 @@ private function saveEdit() {
     if ($this->validator->ValidateForm()) {
 		
 		$ipaddr			= strip_tags($_POST['lanipaddr']);	
+		$staticipv4		= strip_tags($_POST['staticipv4']);
 		$netmask		= strip_tags($_POST['netmask']);
 		$gatewayip		= strip_tags($_POST['gatewayip']);
 		$hostname 		= strip_tags($_POST['hostname']);	
@@ -480,6 +486,8 @@ private function saveEdit() {
 		$icmp 			= strip_tags($_POST['icmp']);
 
 		$restartShorewall=false;
+
+		$old = $this->helper->getTuple("globals");
 
 		$tuple = array();
 		$tuple['pkey'] = "global";
@@ -516,6 +524,11 @@ private function saveEdit() {
 		if (isset($bindport)) {
 			$tuple['bindport'] = $bindport;
 			$restartShorewall=true;
+		}
+
+		if (isset($staticipv4) && $staticipv4 != $old['STATICIPV4'] ) {
+			$this->netHelper->set_staticIPV4($staticipv4);
+			$tuple['STATICIPV4'] = $staticipv4;
 		}		
 
 		$ret = $this->helper->setTuple("globals",$tuple);
