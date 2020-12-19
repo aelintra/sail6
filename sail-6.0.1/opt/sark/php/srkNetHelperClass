@@ -85,8 +85,8 @@ public function get_staticIPV4() {
 
 public function set_staticIPV4($ip) {	
 	$this->helper = new helper;	
-	$this->helper->request_syscmd ("/usr/sbin/ip a delete " . $this->staticipv4 . " dev " . $this->interfaceName);
-	$this->helper->request_syscmd ("/usr/sbin/ip a add $ip dev $this->interfaceName");
+	$this->helper->request_syscmd ("ip a delete " . $this->staticIPV4 . "/32 dev " . $this->interfaceName);
+	$this->helper->request_syscmd ("ip a add $ip dev $this->interfaceName");
 	return;
 }
 
