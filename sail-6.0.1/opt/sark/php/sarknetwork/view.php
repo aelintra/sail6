@@ -98,7 +98,7 @@ private function showMain() {
 		$dhcp=true;
 	}
 	else {
-		
+
 	}
 	$dhcpsrvAvail=false;
 	$dhcpsrvUp=false;
@@ -223,7 +223,7 @@ private function showMain() {
 	
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("IPV4 " . $this->nethelper->get_interfaceName() );
-	
+/*	
 	if ( ! $global->VCL) {
 		if ( !$dhcpsrvUp ) {
 			if ( $dhcp ) {			
@@ -235,7 +235,7 @@ private function showMain() {
 			$this->myPanel->aHelpBoxFor('dhcpaddr');		
 		}
 	}
-	
+*/	
 		echo '<input type="hidden" name="bindaddr" id="bindaddr" size="20"  value="' . $global->BINDADDR . '"  />' . PHP_EOL; 
  
 		echo '<div id="elementsToOperateOnDhcp">';
