@@ -401,20 +401,6 @@ private function saveEdit() {
 	$this->myPanel->xlateBooleans($this->myBooleans);
 	$interface = $this->nethelper->get_interfaceName();
 	$network_string = "auto lo " . $interface . "\niface lo inet loopback\n";	
-	$dhcp_on_string = 
-		"iface $interface inet dhcp\n".
-/*
-		"allow-hotplug wlan0\n". 
-		"iface wlan0 inet manual\n". 
-		"wpa-roam /etc/wpa_supplicant.conf\n".
-*/ 
-		"iface default inet dhcp\n" .
-		"source /etc/network/interfaces.d/*\n";
-
-	$cur_dhcp=false;
-	if (`grep $interface /etc/network/interfaces | grep -i dhcp` ) {
-		$cur_dhcp=true;
-	}	
 
 	$this->validator = new FormValidator();
 
