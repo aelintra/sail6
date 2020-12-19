@@ -131,7 +131,7 @@ private function showMain() {
 	}
 	
 	$ipaddr = $this->nethelper->get_localIPV4();
-	$netmask = $this->nethelper->get_netMask();
+	$netcidr = $this->nethelper->get_networkCIDR();
 	$gatewayip = $this->nethelper->get_networkGw();	
 	
 	$hostname = `cat /etc/hostname`;
@@ -240,17 +240,15 @@ private function showMain() {
  
 		echo '<div id="elementsToOperateOnDhcp">';
     
-		$this->myPanel->displayInputFor('lanipaddr','text',$ipaddr);
-		$this->myPanel->displayInputFor('netmask','text',$netmask);
+		$this->myPanel->displayInputFor('lanipaddr','text',$ipaddr . "/" . $netcidr);
+//		$this->myPanel->displayInputFor('netmask','text',$netmask);
 		$this->myPanel->displayInputFor('gatewayip','text',$gatewayip);
-		$this->myPanel->displayInputFor('domain','text',$domain);		
+//		$this->myPanel->displayInputFor('domain','text',$domain);	
+//		
+		echo '</div>' . PHP_EOL;	
+		$this->myPanel->displayInputFor('staticipv4','text',$global->STATICIPV4);	
 		$this->myPanel->displayInputFor('dns','text',$dns[0],"dns1");
-		$this->myPanel->displayInputFor('dns','text',$dns[1],"dns2");
-
-		echo '</div>' . PHP_EOL;
-
-		$this->myPanel->displayInputFor('staticipv4','text',$global->STATICIPV4);
-
+		$this->myPanel->displayInputFor('dns','text',$dns[1],"dns2")
 		echo '</div>';
 
 /*

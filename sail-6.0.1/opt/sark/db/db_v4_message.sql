@@ -186,7 +186,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('ivrActive','
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('ivrHelp','IVR Keys','Activate a key by clicking or touching the slider.  From the action dropdown, choose the action you want the IVR to take when the key is pressed. You can also send an alphatag to the phone to give the callee more information about the call type, e.g. sales, accounts, etc. You can set a distinctive ring by incuding an alertinfo tag. These tags are not standard and vary by phone manufacturer so you will need to refer to the relevant documentation from your phone supplier.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('ivrname','IVR Name','IVR keyfield');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('keyboardDial','&nbsp;','Enter the number you wish to call and press the Dial button.');
-INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('lanipaddr','IPV4 Address','The IPV4 address of this server.');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('lanipaddr','DHCP IPV4 Address','The dynamic IPV4 address of this server (from DHCP).');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('latency','latency','The latency of the end-point (i.e. the time taken for Asterisk to receive a response to an IP request).');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('ldapbase','LDAP Base','LDAP base, sometimes called domain; enter it in the form dc=somecompany,dc=com');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('ldapou','Organizational Unit','The name of the OU where the contacts directory is held (default contacts) ');
