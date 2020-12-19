@@ -520,7 +520,7 @@ private function saveEdit() {
 		}
 
 		if (isset($staticipv4) && $staticipv4 != $old['STATICIPV4'] ) {
-			$this->netHelper->set_staticIPV4($staticipv4);
+			$this->nethelper->set_staticIPV4($staticipv4);
 			$tuple['STATICIPV4'] = $staticipv4;
 		}		
 

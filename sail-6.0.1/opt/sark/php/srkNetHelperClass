@@ -76,9 +76,6 @@ public function get_interfaceName() {
 }
 
 public function get_localIPV4() {
-	if ($this->staticIPV4) {
-		return $this->$staticIPV4;
-	}
 	return $this->localIPV4;
 }
 
@@ -87,8 +84,8 @@ public function get_staticIPV4() {
 }
 
 public function set_staticIPV4($ip) {
-	`sudo ip a delete $this->staticipv4 dev $interface`;
-	`sudo ip a add $ip dev $interface`;
+	`sudo ip a delete $this->staticipv4 dev $interfaceName`;
+	`sudo ip a add $ip dev $interfaceName`;
 	return;
 }
 
