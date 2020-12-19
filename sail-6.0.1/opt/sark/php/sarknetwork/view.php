@@ -236,7 +236,6 @@ private function showMain() {
 		}
 	}
 */	
-		echo '<input type="hidden" name="bindaddr" id="bindaddr" size="20"  value="' . $global->BINDADDR . '"  />' . PHP_EOL; 
  
 		echo '<div id="elementsToOperateOnDhcp">';
     
@@ -258,10 +257,6 @@ private function showMain() {
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("Identity");
 //	echo '<h2 class="w3-red">Identity</h2>';
-
-    if ( $global->BINDADDR != 'ON' ) {
-		$this->myPanel->displayInputFor("hostname",'text',$hostname); 
-	}
 
     $edomaindig = $this->nethelper->get_externip();
     if ($edomaindig) { 
@@ -443,13 +438,9 @@ private function saveEdit() {
 		
 		$ipaddr			= strip_tags($_POST['lanipaddr']);	
 		$staticipv4		= strip_tags($_POST['staticipv4']);
-		$netmask		= strip_tags($_POST['netmask']);
-		$gatewayip		= strip_tags($_POST['gatewayip']);
 		$hostname 		= strip_tags($_POST['hostname']);	
-		$domain 		= strip_tags($_POST['domain']);	
 		$edomain 		= strip_tags($_POST['edomain']);
 		$sendedomain	= strip_tags($_POST['edomainsend']);
-		$bindaddr 		= strip_tags($_POST['bindaddr']);
 		$fqdn 			= strip_tags($_POST['fqdn']);
 		$fqdnhttp 		= strip_tags($_POST['fqdnhttp']);
 		$fqdninspect 	= strip_tags($_POST['fqdninspect']);
@@ -522,21 +513,7 @@ private function saveEdit() {
 		if (isset($_POST['dhcpend'])) {		
 			$dhcpend		= strip_tags($_POST['dhcpend']);
 		}
-			
-		$cur_ipaddr = $this->nethelper->get_localIPV4();
-		$cur_netmask = $this->nethelper->get_netMask();
-		$cur_gatewayip = $this->nethelper->get_networkGw();
 
-// Removed Jan 2019			
-/*		
-		$file = file("/etc/ntp.conf") or die("Could not read file $pkey !");	
-		$cur_astfile = null;
-		foreach ($file as $rec) {
-			if ( preg_match (" /^server\s*(.*)$/ ",$rec,$matches)) {
-				$cur_astfile .=  $matches[1]."\n";
-			}
-		}		
-*/	
 		$ret = $this->helper->request_syscmd ("grep Port /etc/ssh/sshd_config");
 		$ret = preg_replace('/<<EOT>>$/', '', $ret);
 		if (preg_match (" /(\d{2,5})/ ",$ret,$matches)) {
@@ -597,18 +574,7 @@ private function saveEdit() {
 			$myret = $this->helper->request_syscmd ("sed -i '1a127.0.1.1 $cur_hostname' /etc/hosts");	
 			$reboot=true;
 		}
-/*
- * update hosts
- */ 			
- 		
-		if ( $bindaddr != 'ON' ) {
-			if ($update_hosts) {				
-				$myret = $this->helper->request_syscmd ("/bin/echo $cur_hostname > /etc/hostname");
-				$this->helper->request_syscmd ("sed -i '/127.0.1.1/c 127.0.1.1 $hosts_string' /etc/hosts");
-				$reboot=true;
-//				echo "REBOOT 1 hostname is " . $hostname . " and curr_hostname is " . $cur_hostname . "\n";
-			}
-		}	
+
 /*
  * set ssh port
  */ 		
@@ -635,7 +601,7 @@ private function saveEdit() {
 			}
 			$restartShorewall = true;
 		}
-		
+/*		
 		$rewrite = false;
 		if ( isset($_POST['toggle']) ) {
 			if (!$cur_dhcp) {			
@@ -650,7 +616,7 @@ private function saveEdit() {
 			}
 		}
 		else {
-			if ($ipaddr != $cur_ipaddr || $netmask != $cur_netmask || $gatewayip != $cur_gatewayip || $cur_dhcp) {				
+			if ($ipaddr != $cur_ipaddr || $cur_dhcp) {				
 				$network_string .= "iface $interface inet static \n";
 				$network_string .= "\taddress " . $ipaddr . "\n";
 				$network_string .= "\tnetmask " . $netmask . "\n";
@@ -727,7 +693,7 @@ private function saveEdit() {
 				}
 			}												
 		}
-
+*/
 		if (file_exists ("/etc/ssmtp/ssmtp.conf")) {
 			$this->helper->request_syscmd ("chmod 777 /etc/ssmtp/ssmtp.conf");
 			$fh = fopen("/etc/ssmtp/ssmtp.conf", 'w') or die('Could not open ssmtp.conf file!');
@@ -746,19 +712,6 @@ private function saveEdit() {
 			$this->helper->request_syscmd ("chmod 664 /etc/ssmtp/ssmtp.conf");
 		}				
 
-// Removed Jan 2019.  
-/*		
-		$ntpservers = explode("\n", $astfile);
-		if (!empty($ntpservers)) {
-			$this->helper->request_syscmd ("sed -i '/^server/d' /etc/ntp.conf");
-			foreach ($ntpservers as $ntp) {
-				if ($ntp) {
-					$trimntp = trim($ntp);
-					$this->helper->request_syscmd ("echo server $trimntp >> /etc/ntp.conf");
-				}
-			}
-		}
-*/		
 		if ($timez !=  $oldtz ) {
 			$distro = trim(`lsb_release -si`);
 			$rlse = trim(`lsb_release -sr`);
@@ -778,17 +731,7 @@ private function saveEdit() {
 			fwrite($fh, $network_string) or die('Could not write to file');
 			fclose($fh);
 			$myret = $this->helper->request_syscmd ("chmod 644 /etc/network/interfaces");
-//			echo "<strong> Resetting IP address now...</strong>";
-			if ( $this->bindaddr != 'ON' ) {
-				$myret = $this->helper->request_syscmd ("ip addr flush dev $interface && ifdown $interface && ifup $interface");
-				$myret = $this->helper->request_syscmd ("php /opt/sark/generator/setip.php");
-				$myret = $this->helper->request_syscmd ("sv d srk-ua-responder");
-				$myret = $this->helper->request_syscmd ("sv u srk-ua-responder");
-				$this->doResolv();				
-			}
-			else {
-				$reboot=true;
-			}	
+			
 				
 //			return;
 		}	
