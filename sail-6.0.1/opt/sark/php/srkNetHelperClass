@@ -83,9 +83,10 @@ public function get_staticIPV4() {
 	return $this->staticIPV4;
 }
 
-public function set_staticIPV4($ip) {
-	`sudo ip a delete $this->staticipv4 dev $interfaceName`;
-	`sudo ip a add $ip dev $interfaceName`;
+public function set_staticIPV4($ip) {	
+	$this->helper = new helper;	
+	$this->helper->request_syscmd ("sudo ip a delete $this->staticipv4 dev $interfaceName");
+	$this->helper->request_syscmd ("sudo ip a add $ip dev $interfaceName");
 	return;
 }
 
