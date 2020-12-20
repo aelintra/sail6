@@ -161,7 +161,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('fwdestports'
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('fwproto','Proto','The network Protocol.  This can be tcp, udp or ALL.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('fwsource','Source','Packet Source - takes the form net{:IPADDR{/cidr}} or &#34;$LAN&#34;. Examples:<br/><i>net:192.192.192.192/24<br/>$LAN<br/>net</i><br/>Specifying &#34;net&#34; on its own will open a port completely to the Internet.  More commonly, you may use a cidr to allow an address range, for example <i>net:194.194.194.200/29</i>.  You can also use the keyword &#34;$LAN&#34; if you simply wish to restrict access to the local subnet.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('fwsource6','Source','Packet Source - takes the form net:[IPV6ADDR{/cidr}]. Examples:<br/><i>net:[fe80::/10]<br/>net:[2001:db8:1234:1a00::/56]<br/>net:[::/0]</i><br/>Specifying net:[::/0] will open a port completely to the Internet.  More commonly, you may use a cidr to allow an address range.');
-INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('gatewayip','Gateway','Set this to the correct value for your subnet');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('gatewayip','Gateway','Gateway address of your subnet');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('greeting','Greeting Number','Greeting number that this IVR uses.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('greetingnum','Number','The 4-digit greeting number');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('groupname','Group id','The extension number of the group or alias.');

@@ -49,10 +49,9 @@ if ($netaddress == '0.0.0.0') {
 	print "No IP from ifconfig  - got $netaddress \n";
 }
 else {
-	print "Setting local subnet as $netaddress/$cidr \n";
 	if ($staticip) {
 		print "Setting static ip $staticip \n";
-		`sudo ip addr add $staticip dev $interface`;
+		$this->nethelper->set_staticIPV4($staticipv4);
 	}
 	print "Setting static ip as $staticip \n";
 
