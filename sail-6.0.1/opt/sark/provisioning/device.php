@@ -315,6 +315,7 @@ try {
 }
 
 // disable auth send for next time
+/*
 if (!$descriptor) {
 	if ($thisConfig->sndcreds = 'Once') { 
 		try {
@@ -328,6 +329,7 @@ if (!$descriptor) {
 		}
 	}
 }
+*/x
 $db=NULL;
 /*
  * MAINLINE ENDS
