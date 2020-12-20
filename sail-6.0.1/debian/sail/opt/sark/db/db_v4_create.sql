@@ -380,8 +380,9 @@ SMSALERT TEXT,                      -- not used in 4.x
 SMSC TEXT,                          -- not used in 4.x 
 SNO TEXT,                           -- not used in 4.x 
 SPYPASS TEXT,                       -- password for SPY ops
+STATICIPV4 TEXT DEFAULT NULL,		-- Static IP to start
 SUPEMAIL TEXT,                      -- supervisor email
-SYSOP TEXT DEFAULT 0,                         -- system operator real extension
+SYSOP TEXT DEFAULT 0,				-- system operator real extension
 SYSPASS TEXT,                       -- password for sysops
 TFTP TEXT,                          -- deprecated in 4.0, deleted in 4.1
 TLSPORT	TEXT,						-- TLS port (default 5061)
