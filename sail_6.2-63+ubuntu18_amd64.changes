@@ -1,0 +1,30 @@
+Format: 1.8
+Date: Sun, 20  DEC 2020 18:00:00 +0000
+Source: sail
+Binary: sail
+Architecture: all
+Version: 6.2-63+ubuntu18
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: CoCo <admin@aelintra.com>
+Changed-By: CoCoSoft <admin@aelintra.com>
+Description:
+ sail       - SARK  Asterisk Integration Layer (SAIL) - A fast, lightweight swi
+Changes:
+ sail (6.2-63+ubuntu18) UNRELEASED; urgency=low
+ .
+   * tagged
+ .
+    - Networking changes for Ubuntu Netplan
+    - SARK always keeps two IP's now - DHCP and static
+    - Fix to database lock condition in Extensions
+    - minor changes to home screen
+Checksums-Sha1:
+ 57da495e8f187d8f8eb30080b3841edab9911134 6883990 sail_6.2-63+ubuntu18_all.deb
+ eb7eebc32909f2c8d7930fe9944a7f891cf20562 3675 sail_6.2-63+ubuntu18_amd64.buildinfo
+Checksums-Sha256:
+ c6a6ca83343a437169b2947b9e3d2abd347977535db00605975257cb1ccb6647 6883990 sail_6.2-63+ubuntu18_all.deb
+ ccd21998f23cb8656706e1d9ed55a2b0168b12f4bbc4c648df0fea95d37e803f 3675 sail_6.2-63+ubuntu18_amd64.buildinfo
+Files:
+ 9db97d9d910cc8f7003619c6118a6864 6883990 network extra sail_6.2-63+ubuntu18_all.deb
+ c07f911d860efcb7520224d07932a2d0 3675 network extra sail_6.2-63+ubuntu18_amd64.buildinfo
