@@ -49,11 +49,11 @@ if ($netaddress == '0.0.0.0') {
 	print "No IP from ifconfig  - got $netaddress \n";
 }
 else {
-	if ($staticip) {
+	if ($staticIPV4) {
 		print "Setting static ip $staticIPV4 \n";
 		$net->set_staticIPV4($staticIPV4);
 	}
-	print "Setting static ip as $staticip \n";
+	print "Setting static ip as $staticIPV4 \n";
 
 	if ( file_exists( "/etc/shorewall") ) {
 		`echo LAN=$netaddress/$cidr > /etc/shorewall/local.lan`;
