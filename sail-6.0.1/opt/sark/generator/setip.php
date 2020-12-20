@@ -28,7 +28,7 @@ $staticIPV4 = $net->get_staticIPV4();
 
 echo  "Interface name on this node: $interface\n";
 echo  "IPV4: $ip\n";
-echo  "staticIPV4: $staticip\n";
+echo  "staticIPV4: $staticIPV4\n";
 echo  "Network address: $netaddress\n";
 echo  "netmask: $msk\n";
 echo  "CIDR: $cidr\n";
