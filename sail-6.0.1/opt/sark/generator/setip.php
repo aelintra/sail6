@@ -24,7 +24,7 @@ $netaddress = $net->get_networkIPV4();
 $cidr = $net->get_networkCIDR();
 $msk = $net->get_netMask();
 $ip = $net->get_localIPV4();
-$staticip = $net->get_staticIPV4();
+$staticIPV4 = $net->get_staticIPV4();
 
 echo  "Interface name on this node: $interface\n";
 echo  "IPV4: $ip\n";
@@ -50,8 +50,8 @@ if ($netaddress == '0.0.0.0') {
 }
 else {
 	if ($staticip) {
-		print "Setting static ip $staticip \n";
-		$net->set_staticIPV4($staticipv4);
+		print "Setting static ip $staticIPV4 \n";
+		$net->set_staticIPV4($staticIPV4);
 	}
 	print "Setting static ip as $staticip \n";
 
