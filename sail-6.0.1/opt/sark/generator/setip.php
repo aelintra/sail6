@@ -50,7 +50,7 @@ if ($netaddress == '0.0.0.0') {
 }
 else {
 	if ($staticIPV4) {
-		logit  ("Setting static ip $staticIPV4"};
+		logit  ("Setting static ip $staticIPV4");
 		$net->set_staticIPV4($staticIPV4);
 	}
 
@@ -102,7 +102,7 @@ else {
 	`echo "$osrelease/SARK $srkrlse running at $ip/$cidr" > /etc/issue`;
 }
 
-function logit ($sometext) {
+function logit ($someText) {
 	syslog(LOG_WARNING, "SRK setip $someText");	
 }
 

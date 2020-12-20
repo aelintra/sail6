@@ -1880,6 +1880,9 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkNetHelperClass";
     $global = $dbh->query("SELECT EXTLIM,CLUSTER FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
 
     $localip = $nethelper->get_localIPV4();
+    $staticip = $nethelper->get_staticIPV4();
+    $dhcpip = $nethelper->get_dhcpIPV4();
+
     $ipv6lla = $nethelper->get_IPV6LLA();
     $ipv6gua = $nethelper->get_IPV6GUA();
     $updays=false;
@@ -1997,9 +2000,14 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkNetHelperClass";
     else {
         echo "Public IP: <strong>Unknown</strong><br/>";
     }
-    if ( $localip ) {
-        echo "Local IP: <strong>$localip</strong><br/>";
+    if ( $dhcpip ) {
+        echo "DHCP IP: <strong>$dhcpip</strong><br/>";
     }
+
+    if ( $staticip ) {
+        echo "Static IP: <strong>$staticip</strong><br/>";
+    }
+
 //  if ( $ipv6gua ) {
 //      echo "IPV6: <strong>$ipv6gua</strong><br/>";
 //  }
