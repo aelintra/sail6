@@ -26,12 +26,12 @@ $msk = $net->get_netMask();
 $ip = $net->get_localIPV4();
 $staticIPV4 = $net->get_staticIPV4();
 
-echo  "Interface name on this node: $interface\n";
-echo  "IPV4: $ip\n";
-echo  "staticIPV4: $staticIPV4\n";
-echo  "Network address: $netaddress\n";
-echo  "netmask: $msk\n";
-echo  "CIDR: $cidr\n";
+logit  ("Interface name on this node: $interface");
+logit  ("IPV4: $ip");
+logit  ("staticIPV4: $staticIPV4");
+logit  ("Network address: $netaddress");
+logit  ("netmask: $msk");
+logit  ("CIDR: $cidr");
 
 $Phonelist = array ('aastra'=>'aastra',
 					'cisco'=>'cisco',
@@ -50,10 +50,9 @@ if ($netaddress == '0.0.0.0') {
 }
 else {
 	if ($staticIPV4) {
-		print "Setting static ip $staticIPV4 \n";
+		logit  ("Setting static ip $staticIPV4"};
 		$net->set_staticIPV4($staticIPV4);
 	}
-	print "Setting static ip as $staticIPV4 \n";
 
 	if ( file_exists( "/etc/shorewall") ) {
 		`echo LAN=$netaddress/$cidr > /etc/shorewall/local.lan`;
@@ -101,6 +100,10 @@ else {
 	$srkrlse = trim(`dpkg-query -W -f '\${version}\n' sail`);
 	$osrelease = trim (`lsb_release -d --short`);
 	`echo "$osrelease/SARK $srkrlse running at $ip/$cidr" > /etc/issue`;
+}
+
+function logit ($sometext) {
+	syslog(LOG_WARNING, "SRK setip $someText");	
 }
 
 ?>		
