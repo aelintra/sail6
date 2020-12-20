@@ -51,7 +51,7 @@ if ($netaddress == '0.0.0.0') {
 else {
 	if ($staticip) {
 		print "Setting static ip $staticip \n";
-		$this->nethelper->set_staticIPV4($staticipv4);
+		$net->set_staticIPV4($staticipv4);
 	}
 	print "Setting static ip as $staticip \n";
 
