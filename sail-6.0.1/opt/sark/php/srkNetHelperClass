@@ -16,7 +16,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-require_once $_SERVER["DOCUMENT_ROOT"] . "/opt/sark/php/srkDbClass";
+
+if(php_sapi_name() == 'cli')
+{
+    require_once "/opt/sark//php/srkDbClass";
+}
+else {
+	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkDbClass";
+}
 
 Class nethelper {
 	
