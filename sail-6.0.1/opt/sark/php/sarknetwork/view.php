@@ -199,7 +199,6 @@ private function showMain() {
 		$dns[] = "8.8.8.8";
 		$dns[] = "8.8.4.4";
 	}
-	$domain = `hostname -d`;
 /* 
  * start page output
  */
@@ -246,6 +245,7 @@ private function showMain() {
 //		
 		echo '</div>' . PHP_EOL;	
 		$this->myPanel->displayInputFor('staticipv4','text',$global->STATICIPV4);	
+		$this->myPanel->displayInputFor('staticipv4','text',$hostname);	
 		$this->myPanel->displayInputFor('dns','text',$dns[0],"dns1");
 		$this->myPanel->displayInputFor('dns','text',$dns[1],"dns2");
 		echo '</div>';
@@ -257,6 +257,8 @@ private function showMain() {
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("Identity");
 //	echo '<h2 class="w3-red">Identity</h2>';
+
+	$this->myPanel->displayInputFor("hostname",'text',$hostname); 
 
     $edomaindig = $this->nethelper->get_externip();
     if ($edomaindig) { 
@@ -420,9 +422,6 @@ private function saveEdit() {
 	$this->validator->addValidation("gatewayip",
 		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
 		"Gateway IP address is invalid");	
-	$this->validator->addValidation("domain",
-		"regexp=/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/",
-		"Domain format is invalid");
 	$this->validator->addValidation("fqdn",
 		"regexp=/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/",
 		"FQDN format is invalid");
@@ -537,30 +536,12 @@ private function saveEdit() {
 		$update_hosts = false;
 		$cur_hostname = `hostname`;
 		$cur_hostname = trim ($cur_hostname);
-		$cur_domain = `hostname -d`;
-		$cur_domain = trim ($cur_domain);
 								
 		if (isset($hostname) && $hostname != $cur_hostname) {
 			$cur_hostname = $hostname;
 			$update_hosts = true;
 		}		
-		$hosts_string = $cur_hostname;	
-		if ($domain != $cur_domain) {	
-			$update_hosts = true;		
-/*
- * set forced server for dnsmasq
- */ 
-			if ($domain) {			
-				$cur_domain = $domain;				
-				$hosts_string .= '.' . $cur_domain . ' '  . $hostname;
-				$myret = $this->helper->request_syscmd ("sed -i '/address=/c address=/$cur_domain/127.0.0.1' /etc/dnsmasq.d/sarkdns");
-				$myret = $this->helper->request_syscmd ("sed -i '/search/c search $cur_domain' /etc/dnsmasq.d/sarkdns");			
-			}
-			else {
-				$myret = $this->helper->request_syscmd ("sed -i '/address=/c address=/nodomain.local/127.0.0.1' /etc/dnsmasq.d/sarkdns");
-				$myret = $this->helper->request_syscmd ("sed -i '/search/c search nodomain.local' /etc/resolv.conf");
-			}
-		}							  
+		$hosts_string = $cur_hostname;						  
 /*
  * repair broken hosts file
  */ 		
@@ -724,17 +705,6 @@ private function saveEdit() {
 			}
 			$this->helper->request_syscmd ("dpkg-reconfigure -f noninteractive tzdata");	
 		}
-				
-		if ($rewrite) {
-			$myret = $this->helper->request_syscmd ("chmod 777 /etc/network/interfaces");
-			$fh = fopen("/etc/network/interfaces", 'w') or die('Could not open interface file!');
-			fwrite($fh, $network_string) or die('Could not write to file');
-			fclose($fh);
-			$myret = $this->helper->request_syscmd ("chmod 644 /etc/network/interfaces");
-			
-				
-//			return;
-		}	
 				
 /*
  * flag errors
