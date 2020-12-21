@@ -337,7 +337,7 @@ sleep 1
 sv u srk-ua-helper
 
 #add definitions to MySQL
-mysql -u root < /opt/sark/stat/asterisk-stat-v2/cdr-mysql-setup.sql
+mysql -u root < /opt/sark/cache/cdr-mysql-setup.sql
 
 #stop systemd.resolved - it interferes with dnsmasq
 systemctl stop systemd-resolved

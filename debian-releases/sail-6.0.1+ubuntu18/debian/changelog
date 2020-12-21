@@ -1,12 +1,14 @@
-sail (6.2-63+ubuntu18) UNRELEASED; urgency=low
+sail (6.2.0-1+ubuntu18) UNRELEASED; urgency=low
   * tagged
 
+   - First 6.2 packaging
    - Networking changes for Ubuntu Netplan
    - SARK always keeps two IP's now - DHCP and static
    - Fix to database lock condition in Extensions
    - minor changes to home screen 
   
  -- CoCoSoft <admin@aelintra.com>  Sun, 20  DEC 2020 18:00:00 +0000
+
 
 sail (6.0.1-62+ubuntu18) UNRELEASED; urgency=low
   * tagged
