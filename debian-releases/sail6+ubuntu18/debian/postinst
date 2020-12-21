@@ -231,6 +231,10 @@ if [ -d /etc/shorewall ]; then
 #    chown www-data:www-data /etc/shorewall/sark_blrules
 fi
 
+# enable setlan
+systemctl enable debsetlan.service
+systemctl start debsetlan.service
+
 #Shorewall6 setup
 if [ -d /etc/shorewall6 ]; then
 # the rules file always gets refreshed
@@ -273,10 +277,6 @@ if [ "$?" -eq "0" ] ; then
     sed -i 's/ACCEPT net:$LAN $FW tcp 443/ACCEPT net $FW tcp 443/' /etc/shorewall/sark_rules
     sed -i 's/ACCEPT net:$LAN $FW tcp 22/ACCEPT net $FW tcp 22/' /etc/shorewall/sark_rules
 fi
-
-# enable setlan
-systemctl enable debsetlan.service
-systemctl start debsetlan.service
 
 # enable shorewall
 [ -e  /etc/shorewall/routestopped ] && mv /etc/shorewall/routestopped /etc/shorewall/routestopped.bak
@@ -340,6 +340,7 @@ sv u srk-ua-helper
 mysql -u root < /opt/sark/cache/cdr-mysql-setup.sql
 
 #stop systemd.resolved - it interferes with dnsmasq
+systemctl stop systemd-resolved
 systemctl disable systemd-resolved
 #restart dnsmasq
 systemctl enable dnsmasq
