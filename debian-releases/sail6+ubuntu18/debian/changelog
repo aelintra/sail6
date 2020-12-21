@@ -1,3 +1,10 @@
+sail (6.2.0-2+ubuntu18) UNRELEASED; urgency=low
+  * tagged
+
+   - change to postinst - dnsmasq was not enabled
+  
+ -- CoCoSoft <admin@aelintra.com>  Sun, 20  DEC 2020 18:00:00 +0000
+
 sail (6.2.0-1+ubuntu18) UNRELEASED; urgency=low
   * tagged
 
@@ -8,7 +15,6 @@ sail (6.2.0-1+ubuntu18) UNRELEASED; urgency=low
    - minor changes to home screen 
   
  -- CoCoSoft <admin@aelintra.com>  Sun, 20  DEC 2020 18:00:00 +0000
-
 
 sail (6.0.1-62+ubuntu18) UNRELEASED; urgency=low
   * tagged

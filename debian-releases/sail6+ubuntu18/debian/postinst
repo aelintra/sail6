@@ -342,6 +342,7 @@ mysql -u root < /opt/sark/cache/cdr-mysql-setup.sql
 #stop systemd.resolved - it interferes with dnsmasq
 systemctl disable systemd-resolved
 #restart dnsmasq
+systemctl enable dnsmasq
 systemctl restart dnsmasq
 
 #Install date
