@@ -136,15 +136,6 @@ private function showMain() {
 	
 	$hostname = `cat /etc/hostname`;
 
-/*	
-	$file = file("/etc/ntp.conf") or die("Could not read file ntp.conf!");	
-	$astfile = null;
-	foreach ($file as $rec) {
-		if ( preg_match (" /^(server|pool)\s*(.*)$/ ",$rec,$matches)) {
-			$astfile .=  $matches[2]."\n";
-		}
-	}	
-*/	
 	$ret = $this->helper->request_syscmd ("grep 'Port ' /etc/ssh/sshd_config");
 	$ret = preg_replace('/<<EOT>>$/', '', $ret);
 	if (preg_match (" /(\d{2,5})/ ",$ret,$matches)) {
@@ -381,7 +372,7 @@ private function showMain() {
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("Access");
 	$this->myPanel->displayBooleanFor('icmp',$icmp);  
-	$this->myPanel->displayInputFor("sshport",'number',$sshport);
+//	$this->myPanel->displayInputFor("sshport",'number',$sshport);
 	echo '</div>';	
 
 //	echo '<br/>' . PHP_EOL; 
@@ -407,8 +398,8 @@ private function saveEdit() {
 
 	$this->validator = new FormValidator();
 
-	$this->validator->addValidation("sshpport","num","sshport must be numeric"); 
-	$this->validator->addValidation("sshport","maxlen=5","sshport max length is 5"); 
+//	$this->validator->addValidation("sshpport","num","sshport must be numeric"); 
+//	$this->validator->addValidation("sshport","maxlen=5","sshport max length is 5"); 
     $this->validator->addValidation("smtpuser","alphanum","smtpuser must be alphanumeric");    
 	$this->validator->addValidation("hostname","alphanum","hostname must be alphanumeric");
 	
@@ -446,7 +437,7 @@ private function saveEdit() {
 		$fqdninspect 	= strip_tags($_POST['fqdninspect']);
 		$fqdnprov 		= strip_tags($_POST['fqdnprov']);
 		$bindport 		= strip_tags($_POST['bindport']);
-		$sshport		= strip_tags($_POST['sshport']);
+//		$sshport		= strip_tags($_POST['sshport']);
 		$smtpuser		= strip_tags($_POST['smtpuser']);
 		$smtppwd		= strip_tags($_POST['smtppwd']);
 		$smtphost		= strip_tags($_POST['smtphost']);
@@ -495,7 +486,7 @@ private function saveEdit() {
 		}
 		
 
-		if (isset($bindport)) {
+		if (isset($bindport) && $old['BINDPORT'] != $bindport) {
 			$tuple['bindport'] = $bindport;
 			$restartShorewall=true;
 		}
@@ -503,6 +494,7 @@ private function saveEdit() {
 		if (isset($staticipv4) && $staticipv4 != $old['STATICIPV4'] ) {
 			$this->nethelper->set_staticIPV4($staticipv4);
 			$tuple['STATICIPV4'] = $staticipv4;
+			$this->message = "Static IP add/change - ";
 		}		
 
 		$ret = $this->helper->setTuple("globals",$tuple);
@@ -513,7 +505,8 @@ private function saveEdit() {
 		if (isset($_POST['dhcpend'])) {		
 			$dhcpend		= strip_tags($_POST['dhcpend']);
 		}
-
+/*
+	Removed in 6.2
 		$ret = $this->helper->request_syscmd ("grep Port /etc/ssh/sshd_config");
 		$ret = preg_replace('/<<EOT>>$/', '', $ret);
 		if (preg_match (" /(\d{2,5})/ ",$ret,$matches)) {
@@ -522,7 +515,7 @@ private function saveEdit() {
 		else {
 			$cur_sshport = 22;
 		} 
-	
+*/	
 /*
  * update the files
  */ 
@@ -559,12 +552,10 @@ private function saveEdit() {
 
 /*
  * set ssh port
+ * 	Removed in 6.2
  */ 		
-		if ($cur_sshport != $sshport) {
-			$myret=$this->helper->request_syscmd ("/bin/sed -i 's/^Port [0-9][0-9]*/Port $sshport/' /etc/ssh/sshd_config");
-//			$myret=$this->helper->request_syscmd ("/usr/sbin/service ssh restart");
-			$reboot=true;
-		}
+
+
 /*
  * set ICMP rules
  */
@@ -711,7 +702,7 @@ private function saveEdit() {
  * flag errors
  */ 	
 		if ($ret == 'OK') {
-			$this->message = " - Updated OK!";
+			$this->message .= "Updated OK!";
 			
 			if ($reboot) {
 				$this->message .= " - Reboot required!";
