@@ -551,6 +551,17 @@ private function saveEdit() {
 		}
 
 /*
+ * update hosts
+ */ 			
+ 		
+		if ($update_hosts) {				
+			$myret = $this->helper->request_syscmd ("/bin/echo $cur_hostname > /etc/hostname");
+			$this->helper->request_syscmd ("sed -i '/127.0.1.1/c 127.0.1.1 $hosts_string' /etc/hosts");
+			$reboot=true;
+		}
+	
+
+/*
  * set ssh port
  * 	Removed in 6.2
  */ 		
