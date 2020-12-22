@@ -486,7 +486,7 @@ private function saveEdit() {
 		}
 		
 
-		if (isset($bindport)) {
+		if (isset($bindport) && $old['BINDPORT'] != $bindport) {
 			$tuple['bindport'] = $bindport;
 			$restartShorewall=true;
 		}
@@ -494,6 +494,7 @@ private function saveEdit() {
 		if (isset($staticipv4) && $staticipv4 != $old['STATICIPV4'] ) {
 			$this->nethelper->set_staticIPV4($staticipv4);
 			$tuple['STATICIPV4'] = $staticipv4;
+			$this->message = "Static IP add/change - ";
 		}		
 
 		$ret = $this->helper->setTuple("globals",$tuple);
@@ -701,7 +702,7 @@ private function saveEdit() {
  * flag errors
  */ 	
 		if ($ret == 'OK') {
-			$this->message = " - Updated OK!";
+			$this->message .= "Updated OK!";
 			
 			if ($reboot) {
 				$this->message .= " - Reboot required!";
