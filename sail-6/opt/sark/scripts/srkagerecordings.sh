@@ -5,5 +5,5 @@
 
 RECAGE=`/usr/bin/sqlite3 /opt/sark/db/sark.db "select RECAGE from globals;"`
 
-echo find /opt/sark/www/origrecs/recordings/*  -mtime +$RECAGE -type d -exec rm -rf {} +
+find /opt/sark/www/origrecs/recordings/*  -mtime +$RECAGE -type d -exec rm -rf {} +
 
