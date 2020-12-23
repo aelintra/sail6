@@ -20,15 +20,8 @@
 01 * * * * root perl /opt/sark/scripts/agevmail.sh >/dev/null 2>&1
 #sark disk space pruner (ppc and arm)
 */10 * * * * root perl /opt/sark/scripts/diskabs.pl >/dev/null 2>&1
-
-#
-# Blacklist and whitelist loaders removed
-# 
-#sark blacklist loader for the firewall - requires ipset 
-#*/30 * * * * root sh /opt/sark/scripts/getvoipbl.sh >/dev/null 2>&1
-#sark fqdn whitelist loader for the firewall - requires ipset 
-#* * * * * root /bin/sh /opt/sark/scripts/getfqdnip.sh 
-#*/30 * * * * root sh /opt/sark/scripts/getfqdndrop.sh >/dev/null 2>&1
+#SARK age call recordings daily at 2:00AM
+0 2 * * * root sh /opt/sark/scripts/srkagerecordings.sh >/dev/null 2>&1
 
 #run an internet speed test once every day
 0 0 * * * root /usr/bin/speedtest-cli --simple  > /opt/sark/cache/speedtest 
