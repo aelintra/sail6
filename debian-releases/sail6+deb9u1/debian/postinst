@@ -349,5 +349,11 @@ systemctl disable systemd-resolved
 systemctl enable dnsmasq
 systemctl restart dnsmasq
 
+if [ -d /opt/sark/www/origrecs/recordings ]; then 
+    mkdir /opt/sark/www/origrecs/recordings
+    chown www-data:www-data /opt/sark/www/origrecs/recordings
+    chmod 664 /opt/sark/www/origrecs/recordings
+fi
+
 #Install date
 date --iso-8601=minutes > /opt/sark/db/.sail-install-date
