@@ -326,16 +326,16 @@ LDAPBASE text,                      -- LDAP base
 LDAPOU text,                        -- LDAP OU
 LDAPUSER text,                      -- LDAP user
 LDAPPASS text,                      -- LDAP password
-LEASEHDTIME INT DEFAULT 43200,      -- Hot desk lease time
+LEASEHDTIME INTEGER DEFAULT 43200,      -- Hot desk lease time
 LKEY TEXT,							-- not used
 LOCALAREA TEXT,                     -- not used (See Cluster)
 LOCALDLEN TEXT,                     -- not used (See Cluster)
 LOCALIP TEXT,                       -- local ip address
 LOGLEVEL TEXT DEFAULT 0,            -- internal log level
 LOGOPTS TEXT,                       -- not used
-LOGSIPDISPSIZE INT DEFAULT 2000,	-- number of SIP pcap lines to display
-LOGSIPNUMFILES INT DEFAULT 10,		-- number of SIP pcap spins to keep
-LOGSIPFILESIZE INT DEFAULT 20000,  	-- SIP pcap max filesize (bytes)
+LOGSIPDISPSIZE INTEGER DEFAULT 2000,	-- number of SIP pcap lines to display
+LOGSIPNUMFILES INTEGER DEFAULT 10,		-- number of SIP pcap spins to keep
+LOGSIPFILESIZE INTEGER DEFAULT 20000,  	-- SIP pcap max filesize (bytes)
 LTERM TEXT,                         -- late termination flag
 MAXIN TEXT,                         -- maximum inbound calls
 MEETMEDIAL TEXT,                    -- not used in 4.x 
@@ -361,6 +361,7 @@ PLAYCONGESTED TEXT,                 -- play congested message or tones
 PLAYTRANSFER TEXT DEFAULT YES,     	-- play transfer message when transferring off the PBX
 PROXY TEXT,                         -- allow proxy operations
 PROXYIGNORE TEXT,                   -- not used in 4.x
+RECAGE INTEGER DEFAULT 60,			-- How long to keep voice recordings in days
 RECFINALDEST TEXT,                  -- recordings folder
 RECLIMIT TEXT,                      -- Recording folder max size
 RECQDITHER TEXT,                    -- dither (ms) on queuelog searches
