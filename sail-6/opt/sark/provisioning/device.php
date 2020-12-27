@@ -329,8 +329,8 @@ if (!$descriptor) {
 		}
 	}
 }
-*/x
-$db=NULL;
+*/
+//$db=NULL;
 /*
  * MAINLINE ENDS
  */

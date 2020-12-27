@@ -2,7 +2,8 @@ BEGIN TRANSACTION;
 
 /* Agent */
 CREATE TABLE IF NOT EXISTS Agent (
-pkey TEXT PRIMARY KEY,
+id INTEGER PRIMARY KEY,	
+pkey INTEGER NOT NULL UNIQUE,
 cluster TEXT,
 conf TEXT,
 name TEXT,
@@ -115,7 +116,8 @@ z_updater TEXT DEFAULT 'system'
 
 /* system greetings */
 CREATE TABLE IF NOT EXISTS Greeting (
-pkey TEXT PRIMARY KEY,
+id INTEGER PRIMARY KEY,	
+pkey TEXT,
 cluster TEXT,							-- Tenant	
 desc TEXT, 								-- Description
 type TEXT,								-- MIME type
@@ -216,7 +218,8 @@ z_updater TEXT DEFAULT 'system'
 
 /* Outbound routing */
 CREATE TABLE IF NOT EXISTS Route (
-pkey TEXT PRIMARY KEY,
+id INTEGER PRIMARY KEY,
+pkey TEXT,
 active TEXT DEFAULT 'YES',
 alternate TEXT,
 auth TEXT,
@@ -568,7 +571,8 @@ z_updater TEXT DEFAULT 'system'
 
 /* callgroups */
 CREATE TABLE IF NOT EXISTS speed (
-pkey TEXT PRIMARY KEY,
+id INTEGER PRIMARY KEY,
+pkey INTEGER,
 callerid TEXT,
 calleridname TEXT,
 cluster TEXT,
@@ -592,6 +596,8 @@ z_created datetime,
 z_updated datetime,
 z_updater TEXT DEFAULT 'system'
 );
+
+CREATE INDEX idx_speed_pkey ON speed (pkey);
 
 /* Class of service */
 CREATE TABLE IF NOT EXISTS IPphoneCOSopen (
@@ -757,36 +763,12 @@ z_updater TEXT DEFAULT 'system'
 CREATE TABLE IF NOT EXISTS master_xref (
 id integer PRIMARY KEY,
 pkey TEXT NOT NULL,
+cluster TEXT DEFAULT 'default',
 relation TEXT
 );
 
-CREATE TABLE IF NOT EXISTS shorewall_blacklist (
-pkey integer PRIMARY KEY,
-source TEXT,
-comment TEXT,
-z_created datetime,
-z_updated datetime,
-z_updater TEXT DEFAULT 'system'
-);
-
-CREATE TABLE IF NOT EXISTS shorewall_whitelist (
-pkey integer PRIMARY KEY,
-fqdn TEXT,
-comment TEXT,
-z_created datetime,
-z_updated datetime,
-z_updater TEXT DEFAULT 'system'
-);
-
-CREATE TABLE IF NOT EXISTS clid_blacklist (
-pkey TEXT PRIMARY KEY,
-action TEXT DEFAULT 'Hangup',
-cluster TEXT DEFAULT 'default',
-desc TEXT,
-z_created datetime,
-z_updated datetime,
-z_updater TEXT DEFAULT 'system'
-);
+CREATE INDEX idx_xref_cluster ON master_xref (cluster);
+CREATE INDEX idx_xref_relation ON master_xref (relation);
 
 CREATE TABLE IF NOT EXISTS master_audit (
 pkey integer PRIMARY KEY,
@@ -826,21 +808,6 @@ END;
 CREATE TRIGGER appl_delete AFTER DELETE ON appl
 BEGIN
    INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('DELETE', old.pkey, 'appl', datetime('now'));
-END;
-
-CREATE TRIGGER clid_blacklist_insert AFTER INSERT ON clid_blacklist
-BEGIN
-   UPDATE clid_blacklist set z_created=datetime('now'), z_updated=datetime('now') where pkey=new.pkey;
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('INSERT', new.pkey, 'clid_blacklist', datetime('now'));   
-END;
-CREATE TRIGGER clid_blacklist_update AFTER UPDATE ON clid_blacklist
-BEGIN
-   UPDATE clid_blacklist set z_updated=datetime('now') where pkey=new.pkey;
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('UPDATE', new.pkey, 'clid_blacklist', datetime('now'));
-END;
-CREATE TRIGGER clid_blacklist_delete AFTER DELETE ON clid_blacklist
-BEGIN
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('DELETE', old.pkey, 'clid_blacklist', datetime('now'));
 END;
 
 CREATE TRIGGER COS_insert AFTER INSERT ON COS
@@ -1005,21 +972,6 @@ END;
 CREATE TRIGGER Route_delete AFTER DELETE ON Route
 BEGIN
    INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('DELETE', old.pkey, 'Route', datetime('now'));
-END;
-
-CREATE TRIGGER shorewall_blacklist_insert AFTER INSERT ON shorewall_blacklist
-BEGIN
-   UPDATE shorewall_blacklist set z_created=datetime('now'), z_updated=datetime('now') where pkey=new.pkey;
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('INSERT', new.pkey, 'shorewall_blacklist', datetime('now'));   
-END;
-CREATE TRIGGER shorewall_blacklist_update AFTER UPDATE ON shorewall_blacklist
-BEGIN
-   UPDATE shorewall_blacklist set z_updated=datetime('now') where pkey=new.pkey;
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('UPDATE', new.pkey, 'shorewall_blacklist', datetime('now'));
-END;
-CREATE TRIGGER shorewall_blacklist_delete AFTER DELETE ON shorewall_blacklist
-BEGIN
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('DELETE', old.pkey, 'shorewall_blacklist', datetime('now'));
 END;
 
 CREATE TRIGGER User_insert AFTER INSERT ON User
@@ -1208,28 +1160,28 @@ END;
 
 CREATE TRIGGER agent_xref_insert AFTER INSERT ON agent
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'agent');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'agent');
 END;
 CREATE TRIGGER agent_xref_delete AFTER DELETE ON agent
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='agent'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='agent'; 
 END;
 CREATE TRIGGER agent_update_key AFTER UPDATE OF pkey ON agent
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='agent';
+   UPDATE master_xref set pkey=new.pkey,cluster=new.cluster where pkey=old.pkey AND cluster=old.cluster AND relation='agent';
 END;
 
 CREATE TRIGGER appl_xref_insert AFTER INSERT ON appl
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'appl');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'appl');
 END;
 CREATE TRIGGER appl_xref_delete AFTER DELETE ON appl
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='appl'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='appl'; 
 END;
 CREATE TRIGGER appl_update_key AFTER UPDATE OF pkey ON appl
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='appl';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='appl';
 END;
 
 CREATE TRIGGER COS_xref_insert AFTER INSERT ON COS
@@ -1286,132 +1238,119 @@ END;
 
 CREATE TRIGGER Greeting_xref_insert AFTER INSERT ON Greeting
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'Greeting');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'Greeting');
 END;
 CREATE TRIGGER Greeting_xref_delete AFTER DELETE ON Greeting
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='Greeting'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='Greeting'; 
 END;
 CREATE TRIGGER Greeting_update_key AFTER UPDATE OF pkey ON Greeting
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='Greeting';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='Greeting';
 END;
 
 CREATE TRIGGER IPphone_xref_insert AFTER INSERT ON IPphone
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'IPphone');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'IPphone');
 END;
 CREATE TRIGGER IPphone_xref_delete AFTER DELETE ON IPphone
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='IPphone'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='IPphone'; 
 END;
 CREATE TRIGGER IPphone_update_key AFTER UPDATE OF pkey ON IPphone
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='IPphone';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='IPphone';
 END;
 
 CREATE TRIGGER Queue_xref_insert AFTER INSERT ON Queue
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'Queue');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'Queue');
 END;
 CREATE TRIGGER Queue_xref_delete AFTER DELETE ON Queue
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='Queue'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='Queue'; 
 END;
 CREATE TRIGGER Queue_update_key AFTER UPDATE OF pkey ON Queue
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='Queue';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='Queue';
 END;
 
 CREATE TRIGGER Route_xref_insert AFTER INSERT ON Route
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'Route');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'Route');
 END;
 CREATE TRIGGER Route_xref_delete AFTER DELETE ON Route
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='Route'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='Route'; 
 END;
 CREATE TRIGGER Route_update_key AFTER UPDATE OF pkey ON Route
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='Route';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='Route';
 END;
 
 CREATE TRIGGER User_xref_insert AFTER INSERT ON User
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'User');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'User');
 END;
 CREATE TRIGGER User_xref_delete AFTER DELETE ON User
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='User'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='User'; 
 END;
 CREATE TRIGGER User_update_key AFTER UPDATE OF pkey ON User
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='User';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='User';
 END;
 
 CREATE TRIGGER ivrmenu_xref_insert AFTER INSERT ON ivrmenu
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'ivrmenu');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'ivrmenu');
 END;
 CREATE TRIGGER ivrmenu_xref_delete AFTER DELETE ON ivrmenu
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='ivrmenu'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='ivrmenu'; 
 END;
 CREATE TRIGGER ivrmenu_update_key AFTER UPDATE OF pkey ON ivrmenu
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='ivrmenu';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='ivrmenu';
 END;
 
 CREATE TRIGGER lineIO_xref_insert AFTER INSERT ON lineIO
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'lineIO');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'lineIO');
 END;
 CREATE TRIGGER lineIO_xref_delete AFTER DELETE ON lineIO
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='lineIO'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='lineIO'; 
 END;
 CREATE TRIGGER lineIO_update_key AFTER UPDATE OF pkey ON lineIO
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='lineIO';
-END;
-
-CREATE TRIGGER mcast_xref_insert AFTER INSERT ON mcast
-BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'mcast');
-END;
-CREATE TRIGGER mcast_xref_delete AFTER DELETE ON mcast
-BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='mcast'; 
-END;
-CREATE TRIGGER mcast_update_key AFTER UPDATE OF pkey ON mcast
-BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='mcast';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='lineIO';
 END;
 
 CREATE TRIGGER meetme_xref_insert AFTER INSERT ON meetme
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'meetme');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'meetme');
 END;
 CREATE TRIGGER meetme_xref_delete AFTER DELETE ON meetme
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='meetme'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='meetme'; 
 END;
 CREATE TRIGGER meetme_update_key AFTER UPDATE OF pkey ON meetme
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='meetme';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='meetme';
 END;
 
 CREATE TRIGGER speed_xref_insert AFTER INSERT ON speed
 BEGIN
-	INSERT INTO master_xref(pkey, relation) VALUES (new.pkey, 'speed');
+	INSERT INTO master_xref(pkey, cluster, relation) VALUES (new.pkey, new.cluster, 'speed');
 END;
 CREATE TRIGGER speed_xref_delete AFTER DELETE ON speed
 BEGIN
-   DELETE from master_xref WHERE pkey=old.pkey AND relation='speed'; 
+   DELETE from master_xref WHERE pkey=old.pkey AND cluster=old.cluster AND relation='speed'; 
 END;
 CREATE TRIGGER speed_update_key AFTER UPDATE OF pkey ON speed
 BEGIN
-   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND relation='speed';
+   UPDATE master_xref set pkey=new.pkey where pkey=old.pkey AND cluster=old.cluster AND relation='speed';
 END;
 
 COMMIT;
