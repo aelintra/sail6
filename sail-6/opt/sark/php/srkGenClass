@@ -331,8 +331,8 @@ private function genSip() {
 				$row['sipiaxfriend'] = preg_replace ( '/context=internal/', "context=" . $myContext . "COS", $row['sipiaxfriend']);		
 				$row['sipiaxfriend'] = preg_replace ( '/\$desc/', $row['desc'], $row['sipiaxfriend']);
 				$row['sipiaxfriend'] = preg_replace ( '/\$password/', $row['passwd'], $row['sipiaxfriend']);
-				$row['sipiaxfriend'] = preg_replace ( '/\$ext/', $this->helper->displayKey($row['pkey']), $row['sipiaxfriend']);
-//				$row['sipiaxfriend'] = preg_replace ( '/\$ext/', $row['pkey'], $row['sipiaxfriend']);
+//	V7			$row['sipiaxfriend'] = preg_replace ( '/\$ext/', $this->helper->displayKey($row['pkey']), $row['sipiaxfriend']);
+				$row['sipiaxfriend'] = preg_replace ( '/\$ext/', $row['pkey'], $row['sipiaxfriend']);
 				$row['sipiaxfriend'] = preg_replace ( '/\$clst/', $row['cluster'], $row['sipiaxfriend']);
 				$row['sipiaxfriend'] = preg_replace ( '/\$subtxt/', $myContext, $row['sipiaxfriend']);
 				$nat='no';
@@ -512,7 +512,8 @@ Context not currently used but may be in future
 			if (!preg_match(" /^;.*/",$line)) {
 				$line = preg_replace( '/\s+/', ' ', $line );
 				if (preg_match(" /^(\d{3,6})\s*=>\s*((\d*)?),/",$line,$matches)) {			
-					$mailbox[$context][$matches[1]]['password'] = substr($matches[2],2);
+//  V7				$mailbox[$context][$matches[1]]['password'] = substr($matches[2],2);
+					$mailbox[$context][$matches[1]]['password'] = $matches[2];
 				}
 				$parts = explode('=>',$line);
 				if (isset($parts[1])) {	
@@ -1038,8 +1039,8 @@ LOCAL;
 			if ($myCluster == 'default') {
 				$myCluster = 'qrxvtmny';
 			} 
-			$OUT .= "[" . $myCluster . substr($IPphone['pkey'],2) . "opencos]\n";
-//			$OUT .= "[" . $myCluster . $IPphone['pkey'] . "opencos]\n";
+// V7			$OUT .= "[" . $myCluster . substr($IPphone['pkey'],2) . "opencos]\n";
+			$OUT .= "[" . $myCluster . $IPphone['pkey'] . "opencos]\n";
 			
 			$OUT .= "\tinclude => Emergency\n"; 
 //			
@@ -1062,11 +1063,11 @@ LOCAL;
 				} 	
 			}
 
-			$OUT .= "\tinclude => ". $myCluster . substr($IPphone['pkey'],2) . "Cosend\n";
-//			$OUT .= "\tinclude => ". $myCluster . $IPphone['pkey'] . "Cosend\n";			
+// V7			$OUT .= "\tinclude => ". $myCluster . substr($IPphone['pkey'],2) . "Cosend\n";
+			$OUT .= "\tinclude => ". $myCluster . $IPphone['pkey'] . "Cosend\n";			
 
-			$OUT .= "[" . $myCluster . substr($IPphone['pkey'],2) . "closedcos]\n";
-//			$OUT .= "[" . $myCluster . $IPphone['pkey'] . "closedcos]\n";
+// V7			$OUT .= "[" . $myCluster . substr($IPphone['pkey'],2) . "closedcos]\n";
+			$OUT .= "[" . $myCluster . $IPphone['pkey'] . "closedcos]\n";
 			
 			$OUT .= "\tinclude => Emergency\n"; 
 			
@@ -1086,11 +1087,11 @@ LOCAL;
 					$OUT .= "\tinclude => " . $coskeys['COS_pkey'] . "\n";
 				} 	
 			}
-			$OUT .= "\tinclude => " . $myCluster . substr($IPphone['pkey'],2) . "Cosend\n";
-//			$OUT .= "\tinclude => " . $myCluster . $IPphone['pkey'] . "Cosend\n";
+// V7			$OUT .= "\tinclude => " . $myCluster . substr($IPphone['pkey'],2) . "Cosend\n";
+			$OUT .= "\tinclude => " . $myCluster . $IPphone['pkey'] . "Cosend\n";
 			
-			$OUT .= '[' . $myCluster . substr($IPphone['pkey'],2) . "Cosend]\n";
-//			$OUT .= '[' . $myCluster . $IPphone['pkey'] . "Cosend]\n";
+// V7			$OUT .= '[' . $myCluster . substr($IPphone['pkey'],2) . "Cosend]\n";
+			$OUT .= '[' . $myCluster . $IPphone['pkey'] . "Cosend]\n";
 			
 			
 			$OUT .= "\texten => _.,1,GoTo($myCluster,\${EXTEN},1))\n";
@@ -1398,23 +1399,24 @@ private function generateRingGroups(&$OUT,$cluster,$id) {
 		$shortKey = $row['pkey'];
 */
         $fullKey = $row['pkey'];
-        $shortKey = substr($row['pkey'],2);		
+// V7        $shortKey = substr($row['pkey'],2);		
 
 		if ($row['grouptype'] != "Page" && $row['pkey'] != 'RINGALL') {
 // ring group forwarding logic				
 			if (!empty($row['divert'])) {				
-				$OUT .= "\texten => **" . substr($row['pkey'],2) . ",1,NoOp()\n";
-				$OUT .= "\texten => **$shortKey,n,GoToIf(\$[\"\${DEVICE_STATE(Custom:$fullKey)}\" = \"BUSY\"]?free$fullKey:set$fullKey)\n";
+// V7				$OUT .= "\texten => **" . substr($row['pkey'],2) . ",1,NoOp()\n";
+				$OUT .= "\texten => **" . $row['pkey'] . ",1,NoOp()\n";				
+				$OUT .= "\texten => **$fullKey,n,GoToIf(\$[\"\${DEVICE_STATE(Custom:$fullKey)}\" = \"BUSY\"]?free$fullKey:set$fullKey)\n";
 
-				$OUT .= "\texten => **$shortKey,n(set$fullKey),NoOp()\n";
-				$OUT .= "\texten => **$shortKey,n,Set(DEVICE_STATE(Custom:$fullKey)=BUSY)\n";
-				$OUT .= "\texten => **$shortKey,n,Playback(activated)\n";
-				$OUT .= "\texten => **$shortKey,n,Hangup()\n";
+				$OUT .= "\texten => **$fullKey,n(set$fullKey),NoOp()\n";
+				$OUT .= "\texten => **$fullKey,n,Set(DEVICE_STATE(Custom:$fullKey)=BUSY)\n";
+				$OUT .= "\texten => **$fullKey,n,Playback(activated)\n";
+				$OUT .= "\texten => **$fullKey,n,Hangup()\n";
 
-				$OUT .= "\texten => **$shortKey,n(free$fullKey),NoOp()\n";					
-				$OUT .= "\texten => **$shortKey,n,Set(DEVICE_STATE(Custom:$fullKey)=NOT_INUSE)\n";
-				$OUT .= "\texten => **$shortKey,n,Playback(de-activated)\n";
-				$OUT .= "\texten => **$shortKey,n,Hangup()\n";
+				$OUT .= "\texten => **$fullKey,n(free$fullKey),NoOp()\n";					
+				$OUT .= "\texten => **$fullKey,n,Set(DEVICE_STATE(Custom:$fullKey)=NOT_INUSE)\n";
+				$OUT .= "\texten => **$fullKey,n,Playback(de-activated)\n";
+				$OUT .= "\texten => **$fullKey,n,Hangup()\n";
 
 				$OUT .= "\texten => $fullKey,1,NoOp(Custom:$fullKey state is \${DEVICE_STATE(Custom:$fullKey) )\n";
 				$OUT .= "\texten => $fullKey,n,GoToIf(\$[\"\${DEVICE_STATE(Custom:$fullKey)}\"=\"BUSY\"]?divert$fullKey:normal$fullKey)\n"; 
@@ -1428,7 +1430,7 @@ private function generateRingGroups(&$OUT,$cluster,$id) {
 			else {
 				$OUT .= "\texten => $fullKey,1,agi(sarkhpe,Alias,$dialstr,\${EXTEN},)\n";
 			}
-			$OUT .= "\texten => $shortKey,1,GoTo($fullKey,1)\n";
+// V7			$OUT .= "\texten => $shortKey,1,GoTo($fullKey,1)\n";
 		}
 		else {
 			// build array of page groups (key & dialstring)
