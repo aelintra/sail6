@@ -70,7 +70,8 @@ z_updater TEXT DEFAULT 'system'
 
 /* Tenant */
 CREATE TABLE IF NOT EXISTS Cluster (
-pkey TEXT PRIMARY KEY,
+id INTEGER PRIMARY KEY,	
+pkey TEXT NOT NULL UNIQUE,
 abstimeout TEXT, 					-- absolute timeout (in seconds)
 clusterclid TEXT,					-- cluster main CLID
 callgroup TEXT,   					-- asterisk callgroup number (1-63)
@@ -91,7 +92,7 @@ z_updated datetime,
 z_updater TEXT DEFAULT 'system'
 );
 
-INSERT OR IGNORE INTO Cluster(pkey,abstimeout,chanmax,include,oclo,operator) values ('default','14400','30','ALL','OPEN','System Operator');
+INSERT OR IGNORE INTO Cluster(id,pkey,abstimeout,chanmax,include,oclo,operator) values ('10','default','14400','30','ALL','OPEN','System Operator');
 
 /* phone types */
 CREATE TABLE IF NOT EXISTS Device (
