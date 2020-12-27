@@ -861,7 +861,7 @@ LOCAL;
 		}
 		else {
 */
-			$OUT .= "\n\texten => _*8XX.,1,Pickup(" .$row['id'] . "\${EXTEN:2}@PICKUPMARK)\n\n";
+			$OUT .= "\n\texten => _*8XX.,1,Pickup(" .$row['pkey'] . "\${EXTEN:2}@PICKUPMARK)\n\n";
 //		}
 		
 
