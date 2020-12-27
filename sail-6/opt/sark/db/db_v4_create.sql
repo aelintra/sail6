@@ -91,6 +91,8 @@ z_updated datetime,
 z_updater TEXT DEFAULT 'system'
 );
 
+INSERT OR IGNORE INTO Cluster(id,pkey,abstimeout,chanmax,include,oclo,operator) values ('10','default','14400','30','ALL','OPEN','System Operator');
+
 /* phone types */
 CREATE TABLE IF NOT EXISTS Device (
 pkey TEXT PRIMARY KEY,
