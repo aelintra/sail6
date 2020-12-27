@@ -706,7 +706,7 @@ try {
 
 
 	
-	$sql = "select * from Cluster order by id";
+	$sql = "select * from Cluster order by pkey";
 	$qRes = $this->dbh->query($sql);
 	$cluster = $qRes->fetchAll();
 	$qRes = NULL;
