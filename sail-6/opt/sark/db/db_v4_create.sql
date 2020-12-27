@@ -206,6 +206,8 @@ CREATE TABLE IF NOT EXISTS Queue (
 id INTEGER PRIMARY KEY,
 pkey TEXT,
 cluster TEXT,
+description TEXT, 
+directdial INTEGER,
 conf TEXT,
 devicerec TEXT,
 greetnum TEXT DEFAULT 'None',
@@ -432,7 +434,8 @@ alert8 TEXT,
 alert9 TEXT,
 description TEXT DEFAULT 'None',
 cluster TEXT,
-greetnum TEXT DEFAULT 'None',						-- greeting number to play
+directdial INTEGER,					-- dial from dialplan
+greetnum TEXT DEFAULT 'None',		-- greeting number to play
 listenforext TEXT,
 name TEXT,
 option0 TEXT,						-- routed name for each keypress
@@ -619,20 +622,6 @@ z_created datetime,
 z_updated datetime,
 z_updater TEXT DEFAULT 'system',
 PRIMARY KEY (IPphone_pkey, COS_pkey)
-);
-
-/* Intrusion attempts */
-CREATE TABLE IF NOT EXISTS threat (
-pkey TEXT PRIMARY KEY,
-asn TEXT,
-firstseen TEXT,
-hits INTEGER,
-isp TEXT,
-lastseen TEXT,
-loc TEXT,
-z_created datetime,
-z_updated datetime,
-z_updater TEXT DEFAULT 'system'
 );
 
 /* messages */
@@ -1141,21 +1130,6 @@ END;
 CREATE TRIGGER speed_delete AFTER DELETE ON speed
 BEGIN
    INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('DELETE', old.pkey, 'speed', datetime('now'));
-END;
-
-CREATE TRIGGER threat_insert AFTER INSERT ON threat
-BEGIN
-   UPDATE threat set z_created=datetime('now'), z_updated=datetime('now') where pkey=new.pkey;
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('INSERT', new.pkey, 'threat', datetime('now'));   
-END;
-CREATE TRIGGER threat_update AFTER UPDATE ON threat
-BEGIN
-   UPDATE threat set z_updated=datetime('now') where pkey=new.pkey;
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('UPDATE', new.pkey, 'threat', datetime('now'));
-END;
-CREATE TRIGGER threat_delete AFTER DELETE ON threat
-BEGIN
-   INSERT INTO master_audit(act,owner,relation,tstamp) VALUES ('DELETE', old.pkey, 'threat', datetime('now'));
 END;
 
 /* system xref triggers */
