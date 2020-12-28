@@ -1368,7 +1368,8 @@ private function generateRingGroups(&$OUT,$cluster,$id) {
  	foreach ($speed as $row) { 
 		$outlist = $this->synthAlias($row['pkey']);
 		foreach ($outlist as $ep) {
-			$phonekey = $id . $ep;
+// V7			$phonekey = $id . $ep;
+			$phonekey = $ep;			
 			if (strlen($phonekey) <= 6 ) {
 				$sql = "select * from IPphone WHERE pkey = '" . $phonekey . "'"; 
 				$qRes = $this->dbh->query($sql);
