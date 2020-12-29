@@ -45,25 +45,25 @@ public function showForm() {
 				$this->error_hash['duplicate'] = $matches[1] . " already exists";
 				$this->invalidForm = True;	
 			}
-			else {
-				$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed /tmp/" . $_FILES['file']['name'] . " -q";
-				$rets = `$sox`;
-				if (!$rets) {
-					$this->helper->request_syscmd ("/bin/mv /tmp/" . $_FILES['file']['name'] . ' ' . $this->soundir . $_REQUEST['cluster']);			
-					$this->helper->request_syscmd ("/bin/chown asterisk:asterisk $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
-					$this->helper->request_syscmd ("/bin/chmod 664 $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
-					$this->message = "File $filename uploaded!";
-				}
-				else {					
-					$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";	
-					$this->invalidForm = True;		
-				}
+		}
+	}
+
+	if (! $this->invalidForm) {
+		if ($matches[2] == 'wav') {
+			$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed /tmp/" . $_FILES['file']['tmp_name'] . " -q";
+			$rets = `$sox`;
+			if ($rets) {
+				$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";	
+				$this->invalidForm = True;
 			}
 		}
-		else {
-			$this->error_hash['format'] = "*ERROR* - File name must be format usergreeting{9999}.{wav|mp3|MP3|gsm}";
-			$this->invalidForm = True;	
-		}					
+	}
+
+	if (! $this->invalidForm) {					
+		$this->helper->request_syscmd ("/bin/mv $_FILES['file']['tmp_name'] " . $this->soundir . $_REQUEST['cluster']) . "/$filename" ;			
+		$this->helper->request_syscmd ("/bin/chown asterisk:asterisk $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
+		$this->helper->request_syscmd ("/bin/chmod 664 $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
+		$this->message = "File $filename uploaded!";				
 	}
 	
 	if (isset($_POST['new']) || isset ($_GET['new'])  ) { 
