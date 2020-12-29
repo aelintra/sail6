@@ -1,6 +1,9 @@
 
   $(document).ready(function() {
 
+	$('#clustershow :input').prop('readonly', true);
+	$('#clustershow :input').css('background-color','#f1f1f1');
+
 	$("[name='upimg']").click(function() {
 		$('#file').click();
 	});
@@ -26,28 +29,22 @@
 //		"sScrollY": ($(window).height() - 300),
 		"bPaginate": false,
 		"bAutoWidth": true,
+		"sDom": 'fti',
 		"bStateSave": true,
-		"bstateDuration": 360,	
-		"sDom": 'ti',
-		"aoColumnDefs" : [{
-			"bSortable" : false,
-			"aTargets" : [2,6,7]
-		}],
-		"aoColumns": [ 
+		"bSort": false, 
+		"aoColumns": [ 			
+			{ "sName": "cluster" },
 			{ "sName": "pkey" },
-			{ "sName": "cluster" },			
 			{ "sName": "desc"},
 			{ "sName": "filesize" },			
 			{ "sName": "filetype" },
 			{ "sName": "download" },
 			{ "sName": "play" },
+			{ "sName": "ed" },
 			{ "sName": "del" }
 		],
-		"oLanguage": {
-			"sSearch": "Filter:"
-		},		
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(2)', nRow).addClass( "bluetags" );
+          $('td:eq(1),td:eq(3)', nRow).addClass( "bluetags" );
         }  
 
 	} ).makeEditable({
@@ -58,7 +55,7 @@
 				},					
 			sReadOnlyCellClass: "read_only",
 			"aoColumns": [
-				null,	// pkey
+				
 				{
 					type: 'select',
 					tooltip: 'Tenant',
@@ -68,6 +65,7 @@
                     loadurl: '/php/cluster/list.php',
                     loadtype: 'GET'					
 				}, 	// Tenant
+				null,	// pkey
 				{
 					type: 'textarea',
 					submit:'Save',
@@ -80,6 +78,7 @@
 				null,	// filetype
 				null,	// download col
 				null,	// play	
+				null,	// edit
 				null	// delete col				
             ]
         });   

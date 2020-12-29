@@ -146,7 +146,8 @@ z_updater TEXT DEFAULT 'system'
 
 /* Extensions */
 CREATE TABLE IF NOT EXISTS IPphone (
-pkey TEXT PRIMARY KEY,
+id INTEGER PRIMARY KEY,
+pkey INTEGER NOT NULL UNIQUE,
 abstimeout TEXT,
 active TEXT DEFAULT 'YES',				-- Active/inactive flag
 basemacaddr TEXT,                       -- not used             
