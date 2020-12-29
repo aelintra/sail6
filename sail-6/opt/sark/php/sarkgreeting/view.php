@@ -30,6 +30,39 @@ Class sarkgreeting {
 	protected $error_hash = array();
 	protected $soundir = '/usr/share/asterisk/sarksounds/'; // set for Debian/Ubuntu
 
+
+private function loadNewGreeting() {
+	$filename = strip_tags($_FILES['file']['name']);
+	if (preg_match (' /^(usergreeting\d{4})\.(wav|mp3|MP3|gsm)$/ ', $filename, $matches) ) {
+		if (glob($this->soundir . '/' . $_REQUEST['cluster'] . '/' . $matches[1] . '.*')) {
+				$this->error_hash['duplicate'] = $matches[1] . " already exists";
+				$this->invalidForm = True;	
+				return;
+		}
+	}
+	else {
+		$this->error_hash['format'] = "*ERROR* - Unrecognised file, file name must be format usergreeting{9999}.wav";
+		return;
+	}
+
+	if ($matches[2] == 'wav') {
+		$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed " . $_FILES['file']['tmp_name'] . " -q";
+		$rets = `$sox`;
+		if ($rets) {
+			$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";	
+			$this->invalidForm = True;
+			return;
+		}
+	}
+			
+	$this->helper->request_syscmd ("/bin/mv $_FILES['file']['tmp_name'] " . $this->soundir . $_REQUEST['cluster'] . "/$filename" ;			
+	$this->helper->request_syscmd ("/bin/chown asterisk:asterisk $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
+	$this->helper->request_syscmd ("/bin/chmod 664 $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
+	$this->message = "File $filename uploaded!";
+
+}
+
+
 public function showForm() {
 
 	$this->myPanel = new page;
@@ -38,32 +71,9 @@ public function showForm() {
 	
 	$this->myPanel->pagename = 'Greeting';
 
+	
 	if (!empty($_FILES['file']['name'])) { 
-		$filename = strip_tags($_FILES['file']['name']);
-		if (preg_match (' /^(usergreeting\d{4})\.(wav|mp3|MP3|gsm)$/ ', $filename, $matches) ) {
-			if (glob($this->soundir . '/' . $_REQUEST['cluster'] . '/' . $matches[1] . '.*')) {
-				$this->error_hash['duplicate'] = $matches[1] . " already exists";
-				$this->invalidForm = True;	
-			}
-		}
-	}
-
-	if (! $this->invalidForm) {
-		if ($matches[2] == 'wav') {
-			$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed /tmp/" . $_FILES['file']['tmp_name'] . " -q";
-			$rets = `$sox`;
-			if ($rets) {
-				$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";	
-				$this->invalidForm = True;
-			}
-		}
-	}
-
-	if (! $this->invalidForm) {					
-		$this->helper->request_syscmd ("/bin/mv $_FILES['file']['tmp_name'] " . $this->soundir . $_REQUEST['cluster']) . "/$filename" ;			
-		$this->helper->request_syscmd ("/bin/chown asterisk:asterisk $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
-		$this->helper->request_syscmd ("/bin/chmod 664 $this->soundir" . $_REQUEST['cluster'] .  "/$filename");
-		$this->message = "File $filename uploaded!";				
+		$this->loadNewGreeting();
 	}
 	
 	if (isset($_POST['new']) || isset ($_GET['new'])  ) { 
