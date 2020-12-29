@@ -93,9 +93,7 @@ private function showMain() {
 	if (isset($this->message)) {
 		$this->myPanel->msg = $this->message;
 	} 
-	
-	$this->myPanel->showErrors($this->error_hash);
-	
+		
 	$fgreeting = array();
 	$tuple = array();	
 

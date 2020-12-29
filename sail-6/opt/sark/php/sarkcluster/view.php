@@ -108,8 +108,6 @@ private function showMain() {
 		$this->myPanel->msg = $this->message;
 	}
 	  
-	$this->myPanel->showErrors($this->error_hash);
-	
 	$buttonArray['new'] = true;
 	$this->myPanel->actionBar($buttonArray,"sarkclusterForm",false);
 
@@ -290,10 +288,8 @@ private function showEdit($pkey=false) {
 	$res = $this->dbh->query("SELECT * FROM cluster WHERE pkey = '" . $pkey . "'")->fetch(PDO::FETCH_ASSOC);
 	
 	$buttonArray['cancel'] = true;
-	$this->myPanel->actionBar($buttonArray,"sarkclusterForm",false,false,false);
-	
-	$this->myPanel->showErrors($this->error_hash);
-	
+	$this->myPanel->actionBar($buttonArray,"sarkclusterForm",false,truee,true);
+		
 	if ($this->invalidForm) {
 		$this->myPanel->showErrors($this->error_hash);
 	}
