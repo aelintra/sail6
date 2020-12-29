@@ -40,9 +40,10 @@ public function showForm() {
 
 	if (!empty($_FILES['file']['name'])) { 
 		$filename = strip_tags($_FILES['file']['name']);
-		if (preg_match (' /^(usergreeting\d{4})\.(wav)$/ ', $filename, $matches) ) {
+		if (preg_match (' /^(usergreeting\d{4})\.(wav|mp3|MP3|gsm)$/ ', $filename, $matches) ) {
 			if (glob($this->soundir . '/' . $_REQUEST['cluster'] . '/' . $matches[1] . '.*')) {
 				$this->error_hash['duplicate'] = $matches[1] . " already exists";
+				$this->invalidForm = True;	
 			}
 			else {
 				$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed /tmp/" . $_FILES['file']['name'] . " -q";
@@ -54,12 +55,14 @@ public function showForm() {
 					$this->message = "File $filename uploaded!";
 				}
 				else {					
-					$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";				
+					$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";	
+					$this->invalidForm = True;		
 				}
 			}
 		}
 		else {
-			$this->error_hash['format'] = "*ERROR* - File name must be format usergreeting{9999}.wav";
+			$this->error_hash['format'] = "*ERROR* - File name must be format usergreeting{9999}.{wav|mp3|MP3|gsm}";
+			$this->invalidForm = True;	
 		}					
 	}
 	
@@ -246,6 +249,8 @@ private function showNew() {
 	if ($this->invalidForm) {
 		$this->myPanel->showErrors($this->error_hash);
 	}
+
+
 
 	$this->myPanel->Heading($this->head,$this->message);
 	$this->myPanel->responsiveSetup(2);
