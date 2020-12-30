@@ -1,3 +1,10 @@
+sail (6.2.0-6+ubuntu18) UNRELEASED; urgency=low
+  * tagged
+
+   - fixed typo bug in provisioning/device
+  
+ -- CoCoSoft <admin@aelintra.com>  Wed, 30  DEC 2020 18:00:00 +0000
+
 sail (6.2.0-5+ubuntu18) UNRELEASED; urgency=low
   * tagged
 
