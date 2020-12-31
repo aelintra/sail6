@@ -585,8 +585,8 @@ cb67841354fba8d243b490de231862d2  opt/sark/php/srkmain.php
 dd8ee99244cd5135668e7375eee07232  opt/sark/php/srksessions/common.php
 ac74fbe354e32d42db0beffae0726e97  opt/sark/php/srksessions/logout.php
 5dc1ef867c9cfd5ab272a949b7e82689  opt/sark/php/srksessions/session.php
-879e4ce128ec78d28531290983da88df  opt/sark/provisioning/commonFuncs.php
-bceaac1edde6cebedbbaa0e25a494cc0  opt/sark/provisioning/device.php
+bc9b357d55448f5910f41c24dd2448c7  opt/sark/provisioning/commonFuncs.php
+5a8a35a0f2b134a678b439ae468d4268  opt/sark/provisioning/device.php
 64a59e64750ecbcee04e30cae06e8ee6  opt/sark/provisioning/settings.php
 61a2a12db7862761d193f47665e878c4  opt/sark/public/snom/snom_rereg.php
 d41d8cd98f00b204e9800998ecf8427e  opt/sark/recone
@@ -1392,5 +1392,5 @@ eb30975a1ff74f1cc5d6ceb09e6c7f67  opt/sark/www/sark-common/sark-colour-web.jpg
 da362eff5f073b336d4f0b861cd8e652  opt/sark/www/sark-common/smeserver_logo.jpg
 751d17d6f9c5aecd2a264c673af4577b  usr/share/asterisk/agi-bin/kwakeup
 0af8c3e30ef06285d251c45681703e6c  usr/share/doc/sail-4.0.0/COPYING.gz
-7e08e292e06b2feb681c5691a67c4e39  usr/share/doc/sail/changelog.Debian.gz
+6928d1d19727938a3304cc790b055da5  usr/share/doc/sail/changelog.Debian.gz
 c007f37c8e4cfb4dfae4575723a0d6c1  usr/share/doc/sail/copyright

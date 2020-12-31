@@ -379,6 +379,7 @@ function polycomSubConfig($mac,$fname,$db) {
 	}
 	echo $retstring;
 // disable auth send for next time
+/*
 	if ($fname == 'polycom-phone1.cfg') {
 		if ($thisextConfig->sndcreds != 'Always') { 
 			try {
@@ -389,7 +390,8 @@ function polycomSubConfig($mac,$fname,$db) {
 				logIt("Unable to update extension sndcreds - DB error $errorMsg");
 			}
 		}
-	}		
+	}
+*/		
 } 
 
 /*
