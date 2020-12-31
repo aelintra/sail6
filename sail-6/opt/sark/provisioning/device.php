@@ -293,6 +293,7 @@ logit ("====================End of stream======================>",4);
 echo $retstring; 
 
 // try to update lasteen
+/*
 try {
 	$time = time();
 	if (isset($_SERVER["REMOTE_ADDR"])) {
@@ -313,7 +314,7 @@ try {
   		send404();
   		exit(1);
 }
-
+*/
 // disable auth send for next time
 /*
 if (!$descriptor) {
