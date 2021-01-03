@@ -102,16 +102,29 @@ public function get_staticIPV4() {
 	return $this->staticIPV4;
 }
 
-public function set_staticIPV4($ip) {	
+public function set_staticIPV4($oldIp, $newIp) {	
 	$this->helper = new helper;	
-	if ($this->staticIPV4) { 
-		$this->helper->request_syscmd ("ip a delete " . $this->staticIPV4 . "/32 dev " . $this->interfaceName);
+	
+	$this->helper->request_syscmd ("ip a delete $oldIp/32 dev " . $this->interfaceName);
+/* network commands
+	$this->helper->request_syscmd ("rm /etc/network/if-up.d/srkstaticipV4");
+*/
+	if (!empty($newIP)) { 
+		sleep(1);
+		$this->helper->request_syscmd ("ip a add $newIp dev " .  $this->interfaceName);
+/* network commands
+		$this->helper->request_syscmd ("echo '#!/bin/bash' > /etc/network/if-up.d/srkstaticipV4");
+		$ipcmd = "ip a add $newIp dev " . $this->interfaceName;
+		$this->helper->request_syscmd ("echo $ipcmd >> /etc/network/if-up.d/srkstaticipV4");
+		$this->helper->request_syscmd ("chmod +x  /etc/network/if-up.d/srkstaticipV4");
+*/
 	}
-	$this->helper->request_syscmd ("ip a add $ip dev $this->interfaceName");
+	$this->helper->commitOn;
 	return;
 }
 
 public function get_dhcpIPV4() {
+	
 	return $this->dhcpIPV4;
 }
 

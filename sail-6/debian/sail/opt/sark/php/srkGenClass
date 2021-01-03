@@ -107,8 +107,8 @@ private function genIax() {
 
 //	$global = $this->helper->getTable("globals");
 //	print_r($global);
-	if ($this->globals['BINDADDR'] == "ON") { 
-		$OUT .= 'bindaddr=' . $this->globals['HACLUSTERIP'] . "\n";	   
+	if (!empty($this->globals['STATICIPV4'])) {
+		$OUT .= 'bindaddr=' . $this->globals['STATICIPV4'] . "\n";   
 	}
 
 	if (!empty($OUT)) { 
@@ -224,10 +224,8 @@ private function genSip() {
             }
 		}
 	}
-	if ($this->globals['BINDADDR'] == "ON") {
-		if ($this->globals['HACLUSTERIP']) {
-			$OUT .= 'bindaddr=' . $this->globals['HACLUSTERIP'] . "\n";
-		}	   
+	if (!empty($this->globals['STATICIPV4'])) {
+		$OUT .= 'bindaddr=' . $this->globals['STATICIPV4'] . "\n";   
 	}
 	$OUT .= 'bindport=' . $this->globals['BINDPORT'] . "\n";
 
