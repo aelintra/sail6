@@ -1,5 +1,11 @@
+sail (6.2.0-7+deb10u1) UNRELEASED; urgency=low
+
+   - modified setip, network/view, and NetHelper for Netplan/ifupdown
+   - modified GenClass to include bindaddr for SIP/IAX
+
+ -- CoCoSoft <admin@aelintra.com>  Sun, 03  JAN 2021 18:00:00 +0000
+
 sail (6.2.0-6+deb10u1) UNRELEASED; urgency=low
-  * tagged
 
    - fixed typo bug in provisioning/device
    - Temporarily removed firstseen/lastseen logic due locks
