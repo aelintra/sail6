@@ -104,12 +104,18 @@ public function get_staticIPV4() {
 
 public function set_staticIPV4($oldIp, $newIp) {	
 	$this->helper = new helper;	
-	
-	$this->helper->request_syscmd ("ip a delete $oldIp/32 dev " . $this->interfaceName);
+
+	if (empty($oldIp) && empty($newIp)) {
+		return -1;
+	}
+
+	if (!empty($oldIp)) { 	
+		$this->helper->request_syscmd ("ip a delete $oldIp/32 dev " . $this->interfaceName);
+	}
 /* network commands
 	$this->helper->request_syscmd ("rm /etc/network/if-up.d/srkstaticipV4");
 */
-	if (!empty($newIP)) { 
+	if (!empty($newIp)) { 
 		sleep(1);
 		$this->helper->request_syscmd ("ip a add $newIp dev " .  $this->interfaceName);
 /* network commands
@@ -119,7 +125,7 @@ public function set_staticIPV4($oldIp, $newIp) {
 		$this->helper->request_syscmd ("chmod +x  /etc/network/if-up.d/srkstaticipV4");
 */
 	}
-	$this->helper->commitOn;
+	$this->helper->commitOn();
 	return;
 }
 

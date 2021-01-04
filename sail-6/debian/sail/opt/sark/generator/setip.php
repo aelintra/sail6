@@ -51,7 +51,7 @@ if ($netaddress == '0.0.0.0') {
 else {
 	if ($staticIPV4) {
 		logit  ("Static Virt ip $staticIPV4");
-		$net->set_staticIPV4($staticIPV4);
+		$net->set_staticIPV4(false,$staticIPV4);
 	}
 	if ( file_exists( "/etc/shorewall") ) {
 		`echo LAN=$netaddress/$cidr > /etc/shorewall/local.lan`;

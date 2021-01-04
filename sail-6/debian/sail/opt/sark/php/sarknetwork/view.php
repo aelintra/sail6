@@ -494,7 +494,7 @@ private function saveEdit() {
 		if (isset($staticipv4) && $staticipv4 != $old['STATICIPV4'] ) {
 			$this->nethelper->set_staticIPV4($old['STATICIPV4'],$staticipv4);
 			$tuple['STATICIPV4'] = $staticipv4;
-			$this->message = "Static IP add/change - ";
+			$this->message = "Static IP add/change - Commit Required";
 		}		
 
 		$ret = $this->helper->setTuple("globals",$tuple);
