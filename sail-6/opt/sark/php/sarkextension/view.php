@@ -702,7 +702,7 @@ private function addNewExtension ($tuple) {
 	$tuple['dvrvmail'] = $tuple['pkey'];
 			
 // ToDo permit ipv6 acl
-
+/*
 	if ($tuple['acl'] == 'YES' && $tuple['location'] == 'local') {
 		if ( !preg_match(' /deny=/ ',$tuple['sipiaxfriend'])) {
 			$tuple['sipiaxfriend'] .= "\ndeny=0.0.0.0/0.0.0.0";
@@ -711,7 +711,7 @@ private function addNewExtension ($tuple) {
 			$tuple['sipiaxfriend'] .= "\npermit=" . $this->netHelper->get_networkIPV4() . '/' . $this->netHelper->get_networkCIDR();
 		}			
 	}
-
+*/
 	$tuple['sipiaxfriend'] = trim($tuple['sipiaxfriend']);
 
 /*

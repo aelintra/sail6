@@ -225,13 +225,17 @@ private function genSip() {
 		}
 	}
 	if (!empty($this->globals['STATICIPV4'])) {
-		$OUT .= 'bindaddr=' . $this->globals['STATICIPV4'] . "\n";   
-	}
-	$OUT .= 'bindport=' . $this->globals['BINDPORT'] . "\n";
+		$OUT .= 'udpbindaddr=' . $this->globals['STATICIPV4'] . ":" . $this->globals['BINDPORT'] . "\n"; 
+		$OUT .= 'tcpbindaddr=' . $this->globals['STATICIPV4'] . ":" . $this->globals['BINDPORT'] . "\n";
+		$OUT .= 'tlsbindaddr=' . $this->globals['STATICIPV4'] . ":" . $this->globals['TLSPORT'] . "\n";  
 
+	}
+//	$OUT .= 'bindport=' . $this->globals['BINDPORT'] . "\n";
+
+
+/*  deal with TLS
 	`/bin/echo $tlsport > /etc/asterisk/sark_sip_tlsbindaddr.conf`;
 	
-//  deal with TLS
 	$tlsport = 'tlsbindaddr=0.0.0.0';
 	if (isset($this->globals['TLSPORT'])) {
 		if ($this->globals['TLSPORT'] != '5061') {
@@ -239,7 +243,7 @@ private function genSip() {
 		}
 	}
 	`/bin/echo $tlsport > /etc/asterisk/sark_sip_tlsbindaddr.conf`;
-	
+*/	
 
 	if (file_exists( '/etc/asterisk/sark_sip_localnet.conf' )) {
 		$OUT .= "#include sark_sip_localnet.conf \n";

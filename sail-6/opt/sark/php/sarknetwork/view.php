@@ -235,7 +235,7 @@ private function showMain() {
 //		$this->myPanel->displayInputFor('domain','text',$domain);	
 //		
 		echo '</div>' . PHP_EOL;	
-		if (!$vcl) {
+		if (! $global->VCL) {
 			$this->myPanel->displayInputFor('staticipv4','text',$global->STATICIPV4);	
 		}	
 		$this->myPanel->displayInputFor('dns','text',$dns[0],"dns1");
@@ -267,7 +267,7 @@ private function showMain() {
     if (!empty($global->FQDN)) {
     	$this->myPanel->displayBooleanFor('fqdnprov',$global->FQDNPROV);
     	$this->myPanel->displayBooleanFor('fqdninspect',$global->FQDNINSPECT);
-    	$this->myPanel->displayBooleanFor('fqdnhttp',$global->FQDNHTTP);
+//ToDo    	$this->myPanel->displayBooleanFor('fqdnhttp',$global->FQDNHTTP);
     }
 
 	echo '</div>';
