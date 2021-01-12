@@ -1,3 +1,10 @@
+sail (6.2.0-8+deb10u1) UNRELEASED; urgency=low
+
+   - changes to GenClass and postinst
+   - changes to snom and Fianvil templates
+
+ -- CoCoSoft <admin@aelintra.com>  Tue, 12  JAN 2021 18:00:00 +0000
+
 sail (6.2.0-7+deb10u1) UNRELEASED; urgency=low
 
    - modified setip, network/view, and NetHelper for Netplan/ifupdown
