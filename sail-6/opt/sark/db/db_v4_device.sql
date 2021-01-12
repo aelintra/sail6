@@ -2430,6 +2430,7 @@ INSERT OR IGNORE INTO Device(pkey,desc,owner,provision,sipiaxfriend,technology) 
 
 <SIP CONFIG MODULE>
 --SIP Line List--  :
+SIP1 Enable Reg         :1
 SIP1 Phone Number       :$ext
 SIP1 Display Name       :$ext($desc)
 SIP1 Sip Name           :$ext

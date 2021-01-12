@@ -1848,7 +1848,8 @@ private function printEditNotes ($pkey,$extension,$sip_peers) {
 	}
 
     echo 'Transport: <strong>' . $extension['transport'] . '</strong><br/>' . PHP_EOL;
-   
+
+/* ToDo   
     if (isset($extension['firstseen'])) {
     	$epoch = $extension['firstseen'];
     	$dt = new DateTime("@$epoch");
@@ -1860,7 +1861,7 @@ private function printEditNotes ($pkey,$extension,$sip_peers) {
     	$dt = new DateTime("@$epoch");
     	echo 'Provisioned: <strong>' . $dt->format('d-m-y H:i') . '</strong><br/>' . PHP_EOL;
     } 
-       
+*/       
     $images='/sark-common/phoneimages/';
     if (isset($extension['devicemodel'])) {
 
