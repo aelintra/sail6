@@ -1068,8 +1068,6 @@ try {
     	$OUT .= "\n[Cosend]\n";
 /*
 
-
-
  */
     	$OUT .= "\texten => _X.,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";
     	$OUT .= "\texten => _[+*]X.,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";
