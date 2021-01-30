@@ -573,7 +573,7 @@ d13e5d9f6df6b51af61d66ba940ec990  opt/sark/php/sarkwallboard/view.php
 d41d8cd98f00b204e9800998ecf8427e  opt/sark/php/srkBooleans.php
 afc5cb6fb105328d45a7ec4f1e0e2800  opt/sark/php/srkDbClass
 9690b9e4e3f9dc2515b9548a5444ad54  opt/sark/php/srkFileTailClass
-9975faf6a82f1c47533fc7c5b1c825ed  opt/sark/php/srkGenClass
+a7537591a1e0e9cf82b74f89cd1919f4  opt/sark/php/srkGenClass
 26a94573236578b9b61109d11a31b7d3  opt/sark/php/srkHelperClass
 23da937f48cff63849d153a8cc5d9c6c  opt/sark/php/srkLDAPHelperClass
 782d9e36530242fa2573fb88d9b27cbc  opt/sark/php/srkNetHelperClass
@@ -1392,5 +1392,5 @@ eb30975a1ff74f1cc5d6ceb09e6c7f67  opt/sark/www/sark-common/sark-colour-web.jpg
 da362eff5f073b336d4f0b861cd8e652  opt/sark/www/sark-common/smeserver_logo.jpg
 751d17d6f9c5aecd2a264c673af4577b  usr/share/asterisk/agi-bin/kwakeup
 0af8c3e30ef06285d251c45681703e6c  usr/share/doc/sail-4.0.0/COPYING.gz
-2932a5c5b77178a944c768fba54da483  usr/share/doc/sail/changelog.Debian.gz
+93443d932d6e1d9af57d9b24d2b2d2e4  usr/share/doc/sail/changelog.Debian.gz
 c007f37c8e4cfb4dfae4575723a0d6c1  usr/share/doc/sail/copyright

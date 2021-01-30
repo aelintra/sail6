@@ -1,3 +1,10 @@
+sail (6.2.0-9+ubuntu18) UNRELEASED; urgency=low
+
+   - added test to postinst to detect amazon aarm64 arch
+   - create /etc/ssl/3pcert dir in postinst.  Used by Apache cert checking 
+
+ -- CoCoSoft <admin@aelintra.com>  Tue, 12  JAN 2021 18:00:00 +0000
+
 sail (6.2.0-8+ubuntu18) UNRELEASED; urgency=low
 
    - changes to GenClass and postinst

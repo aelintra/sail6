@@ -1067,11 +1067,12 @@ try {
 	}
     	$OUT .= "\n[Cosend]\n";
 /*
+
+ */
     	$OUT .= "\texten => _X.,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";
     	$OUT .= "\texten => _[+*]X.,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";
     	$OUT .= "\texten => _**X.,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";
-    	$OUT .= "\texten => _***X.,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";
-*/    	
+    	$OUT .= "\texten => _***X.,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";    	
     	$OUT .= "\texten => _[*#0-9]!,1,agi(sarkhpe,OutCluster,\${EXTEN},,)\n";
 /*
  * Conferences
