@@ -389,6 +389,7 @@ private function saveEdit() {
 // save the data away
 //print_r ($_POST);
 	$this->myPanel->xlateBooleans($this->myBooleans);
+
 	$interface = $this->nethelper->get_interfaceName();
 
 	$cur_dhcp=false;
@@ -482,6 +483,7 @@ private function saveEdit() {
 			}									
 		}
 		else {
+			$tuple['fqdn'] = null;
 			`echo 'ServerName sark.local' > /opt/sark/etc/apache2/sark_includes/sarkServerName.conf`;
 		}
 		
