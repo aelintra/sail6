@@ -140,7 +140,7 @@ private function showMain() {
 	echo '</div>';
 	
 	
-
+/*
 
   	echo '<div class="w3-container w3-padding ' . $this->myPanel->bgColorClass . '" >';
   	echo '<div class="w3-col w3-quarter">';
@@ -197,6 +197,8 @@ private function showMain() {
   	echo '</div>';
 	echo '<div class="w3-col w3-quarter">&nbsp;</div>';
   	echo '</div>';
+
+*/
 
   	echo '<div class="w3-row-padding w3-light-gray" style="min-height:10em;">' . PHP_EOL;
 	echo '<div class="w3-col w3-container w3-hide-small m1 l2">&nbsp;</div>' . PHP_EOL;
