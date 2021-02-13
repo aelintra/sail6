@@ -28,6 +28,7 @@ Class sarkreception {
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
+	protected $productImage = $_SERVER["DOCUMENT_ROOT"] . "/sark-common/AELI006-Product_600x600.png";
 	protected $HA;
 
 
@@ -73,7 +74,9 @@ private function showMain() {
 
 	$this->myPanel->responsiveSetup(2);
 
-	echo '<h1 class="w3-center w3-jumbo">Welcome</h1>';
+	echo '<h1 class="w3-center w3-xxlarge">Welcome</h1>';
+
+	echo '<span class="w3-center><img src="' . $this->productImage . '/></span>' . PHP_EOL;
 
 	
 //	echo '<div class="w3-display-container" style="min-height:7em">';
