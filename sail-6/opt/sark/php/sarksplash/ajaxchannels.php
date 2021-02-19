@@ -31,7 +31,7 @@
 	$result = `sudo /usr/sbin/asterisk -rx 'core show channels concise'`;
   $data = explode("\n", $result);
 */
-  
+
   $stream = null;
  
     $stream .= '<table class="w3-table w3-card-4 w3-text-gray w3-striped w3-hoverable" id="chantable">';
@@ -67,7 +67,8 @@
       case "Queue":
           $stream .= "<td>InQueue</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          $stream .= "<td>" . $chan['ApplicationData'] . "</td>";
+          $queueName = explode(',',$chan['ApplicationData']);
+          $stream .= "<td>" . $queueName[1] . "</td>";
           break;
 
     }
