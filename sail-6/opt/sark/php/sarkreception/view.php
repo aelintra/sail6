@@ -21,7 +21,7 @@
 Class sarkreception {
 	
 	protected $message=NULL;
-	protected $head="SARK PBX"; 
+	protected $head="Welcome"; 
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
@@ -36,14 +36,10 @@ Class sarkreception {
 public function showForm() {
 
 	$this->myPanel = new page;
-//	$this->dbh = DB::getInstance();
+
 	$this->helper = new helper;
 			
-	$this->myPanel->pagename = 'SARK PBX';
- 
-//	Debugging		
-//	$this->helper->logit(print_r($_POST, TRUE));
-	
+	$this->myPanel->pagename = 'Home';
 	
 	if (isset($_POST['commit']) || isset($_POST['commitClick'])) { 
 		$this->helper->sysCommit();
@@ -74,25 +70,13 @@ private function showMain() {
 
 	$this->myPanel->responsiveSetup(2);
 
-	echo '<h1 class="w3-center w3-xxlarge">Welcome</h1>';
+	echo '<div>';
+	echo '<img src="' . $this->productImage . '" style="display:block;margin-left:auto;margin-right:auto;width:40%;"></img>' . PHP_EOL;
+	echo '</div>';
 
-	echo '<span class="w3-center><img src="' . $_SERVER["DOCUMENT_ROOT"] . $this->productImage . '/></span>' . PHP_EOL;
-
-	
-//	echo '<div class="w3-display-container" style="min-height:7em">';
 	if ( $_SESSION['user']['pkey'] == 'admin' ) {
-		echo '<div class="w3-container">';
-		echo '<form id="sarkForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">' . PHP_EOL;         
-		echo '<input class=" w3-input w3-card-4 w3-round-large" type="text" name="searchkey">';
-		echo '</form>';	
-		$this->myPanel->aHelpBoxFor('searchkey');
-		
-		echo '</div>' . PHP_EOL;
-
 		$this->myPanel->printSysNotes();
-//		echo '</div>' . PHP_EOL;
 	}
-
 	
 	echo '</div>';
     $this->myPanel->responsiveClose();

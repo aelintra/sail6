@@ -20,12 +20,14 @@
   
 //	syslog(LOG_WARNING, "channel reader running");
 
-/* memory jogger ToDo
+// memory jogger ToDo
   require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkAmiHelperClass";
+  require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";
+
   $amiHelper = new amiHelper;
-  $channels = $amiHelper->get_coreShowChannels();
-  syslog(LOG_WARNING, $channels);
-*/
+  $channels = build_channel_array($amiHelper->get_coreShowChannels());
+  print_r($channels);
+
 
 	$result = `sudo /usr/sbin/asterisk -rx 'core show channels concise'`;
   $data = explode("\n", $result);
@@ -37,7 +39,36 @@
 		$stream .= '<tr>';	
 		$stream .= '</tr>';
 		$stream .= '</thead>';
-		$stream .= '<tbody>';      
+		$stream .= '<tbody>';     
+
+
+  foreach($channels as $key=>$chan) {
+
+    // TOC and CLID are common to all
+    $stream .= "<tr>";  
+    // time on call 
+    $stream .= "<td>" . $chan['Duration'] . "</td>";
+    // CLID
+    $stream .= "<td>" . $chan['CallerIDNum'] . "</td>";
+// nice little arrow
+    $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
+
+    switch ($chan['Application']) {
+
+      case "Dial":
+          $stream .= "<td>" . $chan['ConnectedLineNum'] . "</td>";
+//          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
+//          $stream .= "<td>" . $chan['ConnectedLineNum'] . "</td>";
+    }
+    $stream .= "</td>"; 
+    $stream .= '</tbody>';
+    $stream .= "</table>";  
+
+  }  
+  echo $stream;
+
+
+/*
 		foreach($data as $line) {
 			if (preg_match("/Up/", $line) && (preg_match("/!Dial!/", $line) 
 				||  preg_match("/!ConfBridge!/i", $line) 
@@ -104,7 +135,46 @@
 		$stream .= '</tbody>';
 		$stream .= "</table>";	
 //    syslog(LOG_WARNING, "$stream");
-    echo $stream;
+*/
+    
+
+function build_channel_array($amirets) {
+/*
+ * build an array of active channels by cleaning up the AMI output
+ * (which contains stuff we don't want).
+ */ 
+  $channel_array=array();
+  $lines = explode("\r\n",$amirets);  
+  $channel = 0;
+  foreach ($lines as $line) {
+    // ignore lines that aren't couplets
+    if (!preg_match(' /:/ ',$line)) { 
+        continue;
+    }
+    
+    // parse the couplet  
+    $couplet = explode(': ', $line);
+    
+    // ignore events and ListItems
+    if ($couplet[0] == 'Event' || $couplet[0] == 'EventList' || $couplet[0] == 'ListItems' || $couplet[0] == 'Response' || $couplet[0] == 'Message' ) {
+      continue;
+    }
+    
+    //check for a new channel and set a new key if we have one
+    if ($couplet[0] == 'Channel') {
+      $channel = $couplet[1];
+    }
+    else {
+      if (!$channel) {
+        continue;
+      }
+      else {
+        $channel_array [$channel][$couplet[0]] = $couplet[1];
+      }
+    }
+  }
+  return $channel_array; 
+}
    	
 ?>
 
