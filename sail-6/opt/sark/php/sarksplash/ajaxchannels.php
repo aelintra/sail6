@@ -76,6 +76,12 @@
           $confName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $confName[0] . "</td>";
           break;
+      case "Voicemail":
+          $stream .= "<td>Voicemail</td>";
+          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
+//          $confName = explode(',',$chan['ApplicationData']);
+          $stream .= "<td>" . $chan['ApplicationData'] . "</td>";
+          break;          
     }
 
 
