@@ -26,12 +26,12 @@
 
   $amiHelper = new amiHelper;
   $channels = build_channel_array($amiHelper->get_coreShowChannels());
-  print_r($channels);
 
-
+/*
 	$result = `sudo /usr/sbin/asterisk -rx 'core show channels concise'`;
   $data = explode("\n", $result);
-
+*/
+  
   $stream = null;
  
     $stream .= '<table class="w3-table w3-card-4 w3-text-gray w3-striped w3-hoverable" id="chantable">';
