@@ -62,7 +62,12 @@
       case "Dial":
           $stream .= "<td>" . $chan['Exten'] . "</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          $stream .= "<td>" . $chan['ChannelStateDesc'] . "</td>";
+          $target =  $chan['ChannelStateDesc'];
+          $linked = findLinked($channels,$chan['Channel'],$chan['BridgeId']);
+          if ($linked) {
+            $target = $linked;
+          }
+          $stream .= "<td>" . $target . "</td>";
           break;
       case "Queue":
           $stream .= "<td>In Queue</td>";
@@ -205,6 +210,16 @@ function build_channel_array($amirets) {
     }
   }
   return $channel_array; 
+}
+
+function findLinked($channels,$channelID,$bridge) {
+
+  foreach ($channels as $candidate) {
+    if (candidate['Channel'] != $channelID && candidate['BridgeID'] == $bridge) {
+      return candidate['CallerIDNum'];
+    }
+  }
+  return null;
 }
    	
 ?>
