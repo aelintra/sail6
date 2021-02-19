@@ -56,6 +56,9 @@
     switch ($chan['Application']) {
 
       case "Dial":
+          if ($chan['ApplicationData'] == '(Outgoing Line)') {
+            break;
+          }
           $stream .= "<td>" . $chan['ConnectedLineNum'] . "</td>";
 //          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
 //          $stream .= "<td>" . $chan['ConnectedLineNum'] . "</td>";
