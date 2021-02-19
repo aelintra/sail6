@@ -65,13 +65,13 @@
           $stream .= "<td>" . $chan['ChannelStateDesc'] . "</td>";
           break;
       case "Queue":
-          $stream .= "<td>InQueue</td>";
+          $stream .= "<td>In Queue</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $queueName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $queueName[0] . "</td>";
           break;
       case "ConfBridge":
-          $stream .= "<td>Conference</td>";
+          $stream .= "<td>Conference Room</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $confName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $confName[0] . "</td>";
