@@ -63,7 +63,7 @@
           $stream .= "<td>" . $chan['Exten'] . "</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $target =  $chan['ChannelStateDesc'];
-          $linked = findLinked($channels,$chan['Channel'],$chan['BridgeId']);
+          $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
           if ($linked) {
             $target = $linked;
           }
@@ -212,10 +212,10 @@ function build_channel_array($amirets) {
   return $channel_array; 
 }
 
-function findLinked($channels,$channelID,$bridge) {
+function findLinked($channels,$CallerIDNum,$bridge) {
 
   foreach ($channels as $candidate) {
-    if ($candidate['Channel'] != $channelID && $candidate['BridgeID'] == $bridge) {
+    if ($candidate['CallerIDNum'] != $CallerIDNum && $candidate['BridgeID'] == $bridge) {
       return $candidate['CallerIDNum'];
     }
   }
