@@ -68,7 +68,7 @@
           $stream .= "<td>InQueue</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $queueName = explode(',',$chan['ApplicationData']);
-          $stream .= "<td>" . $queueName[1] . "</td>";
+          $stream .= "<td>" . $queueName[0] . "</td>";
           break;
 
     }
