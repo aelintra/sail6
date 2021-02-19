@@ -215,8 +215,8 @@ function build_channel_array($amirets) {
 function findLinked($channels,$channelID,$bridge) {
 
   foreach ($channels as $candidate) {
-    if (candidate['Channel'] != $channelID && candidate['BridgeID'] == $bridge) {
-      return candidate['CallerIDNum'];
+    if ($candidate['Channel'] != $channelID && $candidate['BridgeID'] == $bridge) {
+      return $candidate['CallerIDNum'];
     }
   }
   return null;
