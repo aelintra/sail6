@@ -73,7 +73,7 @@
       case "ConfBridge":
           $stream .= "<td>Conference</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          $ConfName = explode(',',$chan['ApplicationData']);
+          $confName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $confName[0] . "</td>";
           break;
     }
