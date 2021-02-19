@@ -63,7 +63,16 @@
           $stream .= "<td>" . $chan['Exten'] . "</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $stream .= "<td>" . $chan['ChannelStateDesc'] . "</td>";
+          break;
+      case "Queue":
+          $stream .= "<td>InQueue</td>";
+          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
+          $stream .= "<td>" . $chan['ApplicationData'] . "</td>";
+          break;
+
     }
+
+
     $stream .= "</td>"; 
     $stream .= '</tbody>';
     $stream .= "</table>";  
