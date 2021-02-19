@@ -44,6 +44,10 @@
 
   foreach($channels as $key=>$chan) {
 
+    if ($chan['Application'] == 'AppDial') {
+        continue;
+    }
+
     // TOC and CLID are common to all
     $stream .= "<tr>";  
     // time on call 
@@ -52,10 +56,6 @@
     $stream .= "<td>" . $chan['CallerIDNum'] . "</td>";
 // nice little arrow
     $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-
-    if ($chan['ApplicationData'] == '(Outgoing Line)') {
-        continue;
-    }
 
     switch ($chan['Application']) {
 
