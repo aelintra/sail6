@@ -67,7 +67,7 @@
           $queueName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>Queue $queueName[0]</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          $target =  $chan['ChannelStateDesc'];
+          $target =  "Queue Wait";
           $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
           if ($linked) {
             $target = $linked;
