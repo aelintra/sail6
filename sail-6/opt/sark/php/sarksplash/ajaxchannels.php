@@ -65,7 +65,7 @@
       case "Queue":
           buildCommon($chan,$stream);
           $queueName = explode(',',$chan['ApplicationData']);
-          $stream .= "<td>Queue $queueName</td>";
+          $stream .= "<td>Queue $queueName[0]</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $target =  $chan['ChannelStateDesc'];
           $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
