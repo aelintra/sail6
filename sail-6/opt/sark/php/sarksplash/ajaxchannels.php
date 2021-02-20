@@ -58,7 +58,7 @@
           $target =  $chan['ChannelStateDesc'];
           $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
           if ($linked == $chan['Exten']) {
-            $target = In Call;
+            $target = "In Call";
           }
           else {
             $target = $linked;
