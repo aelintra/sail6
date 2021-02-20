@@ -60,7 +60,7 @@
           if ($linked == $chan['Exten']) {
             $target = "In Call";
           }
-          elseif {!empty($linked) {
+          elseif (!empty($linked)) {
             $target = $linked;
           }
           $stream .= "<td>" . $target . "</td>";
