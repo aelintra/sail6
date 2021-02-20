@@ -102,76 +102,6 @@
 
   }  
   echo $stream;
-
-
-/*
-		foreach($data as $line) {
-			if (preg_match("/Up/", $line) && (preg_match("/!Dial!/", $line) 
-				||  preg_match("/!ConfBridge!/i", $line) 
-				||  preg_match("/!VoiceMail/i", $line) 
-				|| preg_match("/!Queue!/i", $line)) ) {
-          		$pieces = explode("!", $line);
-          	// TOC and CLID are common to all
-          		$stream .= "<tr>";	
-          	// time on call	
-          		$stream .= "<td>" . gmdate("H:i:s", $pieces[11]) . "</td>";
-          	// CLID
-          		$cn = preg_replace(' /^00/ ', '+', $pieces[7]);
-          		$stream .= "<td>" . $cn . "</td>";
-// nice little arrow
-          		$stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          		
-// regular Dial
-          		if (preg_match("/!Dial!/i", $line)) {          	
-          		// number connected
-          			$dn = preg_replace(' /^00/ ', '+', $pieces[2]);
-          			$stream .= "<td>" . $dn . "</td>";
-          			$stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          			$stream .= "<td>" . $pieces[12] . "</td>";
-          			continue;
-          		}
-// Confbridge          
-          		if (preg_match("/!ConfBridge!/i", $line)) {
-          			$dn = preg_replace(' /^00/ ', '+', $pieces[2]);
-          			$stream .= "<td>" . $dn . "</td>";
-          			$stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          			$stream .= "<td>ConfBridge</td>";
-          			continue;
-          		}
-// Queue
-          		if (preg_match("/!Queue!/i", $line)) {
-          			$splitqueue = explode(',',$pieces[6]); 
-          			$stream .= "<td>" . $splitqueue[0] . "</td>";
-          			$stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          			if ($pieces[12] == '(None)') {
-          				$stream .= "<td>In Queue</td>";
-          			}
-          			else {
-          				$stream .= "<td>" . $pieces[12] . "</td>";;
-          			}	
-          		} 
-// Voicemail
-			     if (preg_match("/!Voicemail/i", $line)) {
-          			$splitqueue = explode(',',$pieces[6]); 
-          			$stream .= "<td>" . $splitqueue[0] . "</td>";
-          			$stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
-          			$stream .= "<td>Voicemail";
-          			if (preg_match("/!VoicemailMain/i", $line)) {
-          				$stream .= " listen";
-          			}
-          			else {
-          				$stream .= " record";
-          			}	
-          			$stream .= "</td>";	
-          		}   			
-          		
-          	}
-          	$stream .= "</tr>";
-		}
-		$stream .= '</tbody>';
-		$stream .= "</table>";	
-//    syslog(LOG_WARNING, "$stream");
-*/
     
 
 function build_channel_array($amirets) {
@@ -214,6 +144,9 @@ function build_channel_array($amirets) {
 
 function findLinked($channels,$CallerIDNum,$BridgeId) {
 
+  if (empty($BridgeId)) {
+    return null;
+  }
   foreach ($channels as $candidate) {
     if ($candidate['CallerIDNum'] != $CallerIDNum && $candidate['BridgeId'] == $BridgeId) {
       return $candidate['CallerIDNum'];
