@@ -52,7 +52,7 @@
     switch ($chan['Application']) {
 
       case "Dial":
-          buildCommon($chan);
+          buildCommon($chan,$stream);
           $stream .= "<td>" . $chan['Exten'] . "</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $target =  $chan['ChannelStateDesc'];
@@ -63,28 +63,28 @@
           $stream .= "<td>" . $target . "</td>";
           break;
       case "Queue":
-          buildCommon($chan)
+          bbuildCommon($chan,$stream);
           $stream .= "<td>In Queue</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $queueName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $queueName[0] . "</td>";
           break;
       case "ConfBridge":
-          buildCommon($chan)
+          buildCommon($chan,$stream);
           $stream .= "<td>Conference Room</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $confName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $confName[0] . "</td>";
           break;
       case "VoiceMail":
-          buildCommon($chan)
+          buildCommon($chan,$stream);
           $stream .= "<td>Leaving Voicemail</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $vName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $vName[0] . "</td>";
           break;
       case "VoiceMailMain":
-          buildCommon($chan)
+          buildCommon($chan,$stream);
           $stream .= "<td>Retrieving Voicemail</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
 //          $confName = explode(',',$chan['ApplicationData']);
@@ -101,7 +101,7 @@
   echo $stream;
     
 
-function buildCommon($chan) {
+function buildCommon($chan, &$stream) {
 // TOC and CLID are common to all
     $stream .= "<tr>";  
     // time on call 
