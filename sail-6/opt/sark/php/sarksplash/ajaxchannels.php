@@ -113,7 +113,7 @@ function buildCommon($chan, &$stream,$key) {
     $stream .= "<td>" . $chan['Duration'] . "</td>";
     // CLID
     $shortChannel = explode("-",$key);
-    $stream .= "<td>" . $shortChannel . "</td>";
+    $stream .= "<td>" . $shortChannel[0] . "</td>";
 // nice little arrow
     $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
 }
