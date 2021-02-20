@@ -64,10 +64,15 @@
           break;
       case "Queue":
           buildCommon($chan,$stream);
-          $stream .= "<td>In Queue</td>";
-          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $queueName = explode(',',$chan['ApplicationData']);
-          $stream .= "<td>" . $queueName[0] . "</td>";
+          $stream .= "<td>Queue $queueName</td>";
+          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
+          $target =  $chan['ChannelStateDesc'];
+          $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
+          if ($linked) {
+            $target = $linked;
+          }
+          $stream .= "<td>" . $target . "</td>";
           break;
       case "ConfBridge":
           buildCommon($chan,$stream);
