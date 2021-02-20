@@ -66,7 +66,7 @@
           $stream .= "<td>" . $target . "</td>";
           break;
       case "Queue":
-          buildCommon($chan,$stream);
+          buildCommon($chan,$stream,$key);
           $queueName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>Queue $queueName[0]</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
@@ -78,21 +78,21 @@
           $stream .= "<td>" . $target . "</td>";
           break;
       case "ConfBridge":
-          buildCommon($chan,$stream);
+          buildCommon($chan,$stream,$key);
           $stream .= "<td>Conference Room</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $confName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $confName[0] . "</td>";
           break;
       case "VoiceMail":
-          buildCommon($chan,$stream);
+          buildCommon($chan,$stream,$key);
           $stream .= "<td>Leaving Voicemail</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $vName = explode(',',$chan['ApplicationData']);
           $stream .= "<td>" . $vName[0] . "</td>";
           break;
       case "VoiceMailMain":
-          buildCommon($chan,$stream);
+          buildCommon($chan,$stream,$key);
           $stream .= "<td>Retrieving Voicemail</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
 //          $confName = explode(',',$chan['ApplicationData']);
