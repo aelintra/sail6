@@ -63,7 +63,7 @@
           $stream .= "<td>" . $target . "</td>";
           break;
       case "Queue":
-          bbuildCommon($chan,$stream);
+          buildCommon($chan,$stream);
           $stream .= "<td>In Queue</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $queueName = explode(',',$chan['ApplicationData']);
