@@ -117,7 +117,7 @@ function buildCommon($chan, &$stream,$key) {
     // CLID
 //    $shortChannel = explode("-",$key);
 //    $stream .= "<td>" . $shortChannel[0] . "</td>";
-    preg_match(' /^\w+\/(\w+)-.*$/ ',$key,$matches);
+    preg_match(' /^\w+\/([\w\@]+)-.*$/ ',$key,$matches);
     if (strlen($matches[1]) < 6) {
       $stream .= "<td>" . $matches[1] . "</td>";
     }
