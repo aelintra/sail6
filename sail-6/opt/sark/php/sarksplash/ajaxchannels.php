@@ -117,7 +117,13 @@ function buildCommon($chan, &$stream,$key) {
     // CLID
 //    $shortChannel = explode("-",$key);
 //    $stream .= "<td>" . $shortChannel[0] . "</td>";
-    $stream .= "<td>" . $chan['CallerIDNum'] . "</td>";
+    preg_match(' /^\w+\/(\w+)-.*$/ ',$key,$matches);
+    if (strlen($matches[1]) > 4) {
+      $stream .= "<td>" . $matches[1] . "</td>";
+    }
+    else {
+      $stream .= "<td>" . $chan['CallerIDNum'] . "</td>";
+    }
 // nice little arrow
     $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
 }
