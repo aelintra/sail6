@@ -115,8 +115,9 @@ function buildCommon($chan, &$stream,$key) {
     // time on call 
     $stream .= "<td>" . $chan['Duration'] . "</td>";
     // CLID
-    $shortChannel = explode("-",$key);
-    $stream .= "<td>" . $shortChannel[0] . "</td>";
+//    $shortChannel = explode("-",$key);
+//    $stream .= "<td>" . $shortChannel[0] . "</td>";
+    $stream .= "<td>" . $chan['CallerIDNum'] . "</td>";
 // nice little arrow
     $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
 }
