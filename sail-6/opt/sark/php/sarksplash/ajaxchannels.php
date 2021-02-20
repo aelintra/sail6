@@ -52,7 +52,7 @@
     switch ($chan['Application']) {
 
       case "Dial":
-          buildCommon($chan,$stream);
+          buildCommon($chan,$stream,$key);
           $stream .= "<td>" . $chan['Exten'] . "</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $target =  $chan['ChannelStateDesc'];
@@ -106,13 +106,13 @@
   echo $stream;
     
 
-function buildCommon($chan, &$stream) {
+function buildCommon($chan, &$stream,$key) {
 // TOC and CLID are common to all
     $stream .= "<tr>";  
     // time on call 
     $stream .= "<td>" . $chan['Duration'] . "</td>";
     // CLID
-    $shortChannel = explode("-",$chan['Channel']);
+    $shortChannel = explode("-",$key);
     $stream .= "<td>" . $shortChannel . "</td>";
 // nice little arrow
     $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
