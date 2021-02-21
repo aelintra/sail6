@@ -45,6 +45,7 @@
     $stream .= '<th>Source</th>';
     $stream .= '<th></th>';
     $stream .= '<th>Destination</th>';
+    $stream .= '<th></th>';
     $stream .= '<th>State</th>';			
 		$stream .= '</tr>';
 		$stream .= '</thead>';
