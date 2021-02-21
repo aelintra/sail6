@@ -200,7 +200,7 @@ private function showMain() {
 
 */
 
-  	echo '<div class="w3-row-padding w3-light-gray" style="min-height:10em;">' . PHP_EOL;
+  	echo '<div class="w3-row-padding w3-light-gray" style="min-height:34em;">' . PHP_EOL;
 	echo '<div class="w3-col w3-container w3-hide-small m1 l2">&nbsp;</div>' . PHP_EOL;
     echo '<div class="w3-col w3-container m10 l8">' . PHP_EOL;
     echo '<br/><br/>';
@@ -211,16 +211,17 @@ private function showMain() {
 	echo '</div>';
   	echo '</div>'; 
 
-
+/*
 	echo '<br/><br/><br/>';
 	echo '<br/><br/><br/>';
+ */
 	echo '</div>';
 
 	
 //  	$this->myPanel->printSysNotes();
 
   	
-  	echo '<div class="w3-tiny w3-padding ' . $this->myPanel->bgColorClass . '"><sup>*</sup>Internet speeds are as observed from the PBX and will usually be somewhat lower than the advertised speed of the circuit.</div>';
+//  	echo '<div class="w3-tiny w3-padding ' . $this->myPanel->bgColorClass . '"><sup>*</sup>Internet speeds are as observed from the PBX and will usually be somewhat lower than the advertised speed of the circuit.</div>';
 
   	echo '</div>';
   	echo '</div>'; 
