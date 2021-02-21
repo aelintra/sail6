@@ -153,11 +153,6 @@ private function showMain() {
 
 	echo '</div>';
 
-	
-//  	$this->myPanel->printSysNotes();
-
-  	
-  	echo '<div class="w3-tiny w3-padding ' . $this->myPanel->bgColorClass . '"><sup>*</sup>Internet speeds are as observed from the PBX and will usually be somewhat lower than the advertised speed of the circuit.</div>';
 
   	echo '</div>';
   	echo '</div>'; 
