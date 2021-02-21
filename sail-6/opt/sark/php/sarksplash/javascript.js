@@ -62,7 +62,7 @@
       });
     };
 
-    doSystem();
+//    doSystem();
     doData();
     doEndpoints();
 
