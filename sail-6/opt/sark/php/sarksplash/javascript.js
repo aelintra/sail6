@@ -1,6 +1,13 @@
 
   $(document).ready(function() {
 
+      $('#chantable').dataTable ( {
+    "bPaginate": false,
+    "bAutoWidth": true,
+    "sDom": 't',
+    "bSort" : false
+  } );   
+
     google.charts.load('current', {'packages':['corechart','gauge']});
     google.charts.setOnLoadCallback(drawSysChart);
 //google.charts.setOnLoadCallback(drawCallChart);
@@ -184,12 +191,7 @@ function drawCallChart() {
 }
 */
 
-  $('#chantable').dataTable ( {
-    "bPaginate": false,
-    "bAutoWidth": true,
-    "sDom": 't',
-    "bSort" : false
-  } );          
+       
          
 
  
