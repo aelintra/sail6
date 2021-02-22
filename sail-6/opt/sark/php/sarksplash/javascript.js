@@ -62,7 +62,7 @@
       });
     };
 
-//    doSystem();
+    doSystem();
     doData();
     doEndpoints();
 
@@ -183,8 +183,15 @@ function drawCallChart() {
 
 }
 */
+
+  $('#chantable').dataTable ( {
+    "bPaginate": false,
+    "bAutoWidth": true,
+    "sDom": 't',
+    "bSort" : false
+  } );          
          
-});
+
  
 
       
