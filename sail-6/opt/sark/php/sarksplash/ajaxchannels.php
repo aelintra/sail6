@@ -39,7 +39,7 @@
   $stream = null;
  
     $stream .= '<table class="w3-table w3-card-4 w3-text-gray w3-striped w3-hoverable" id="chantable">';
-    $stream .= '<thead>'; 
+    $stream .= '<thead class="w3-deep-orange w3-text-white">'; 
     $stream .= '<tr>';
     $stream .= '<th>Duration</th>';
     $stream .= '<th>Source</th>';
