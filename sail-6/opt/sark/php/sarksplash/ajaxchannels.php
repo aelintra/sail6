@@ -105,8 +105,12 @@
           $stream .= "<td>Leaving Voicemail</td>";
           break;
       case "VoiceMailMain":
-          buildCommon($chan,$stream,$key);          
-          $stream .= "<td>" . $chan['ApplicationData'] . "</td>";
+          buildCommon($chan,$stream,$key); 
+          $destination = $chan['ApplicationData'];
+          if (empty($chan['ApplicationData'])) {
+              $destination = $chan['Exten'];
+          }       
+          $stream .= "<td>$destination</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $stream .= "<td>Retrieving Voicemail</td>";         
           break;          
