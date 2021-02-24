@@ -80,12 +80,13 @@
           buildCommon($chan,$stream,$key);
           $queueName = explode(',',$chan['ApplicationData']);
           $target =  "Queue Wait";
+          $destination = $queueName[0];
           $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
           if ($linked) {
-            $queueName = $linked . " (Via $queueName)";
+            $destination = $linked . " (Via $destination)";
             $target = "In Call";
           }
-          $stream .= "<td>Queue $queueName[0]</td>";
+          $stream .= "<td>Queue $destination</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';          
           $stream .= "<td>" . $target . "</td>";
           break;
