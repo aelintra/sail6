@@ -121,7 +121,17 @@
           $stream .= "<td>$destination</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
           $stream .= "<td>Retrieving Voicemail</td>";         
-          break;          
+          break;  
+      case "Wait":
+          buildCommon($chan,$stream,$key);
+          $destination =  $chan['Context'];
+          if  ($chan['Context'] == 'mainmenu')  {
+              $destination = "IVR";
+          }
+          $stream .= "<td>$destination</td>";
+          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
+          $stream .= "<td>Wait</td>";         
+          break;                  
     }
 
 
