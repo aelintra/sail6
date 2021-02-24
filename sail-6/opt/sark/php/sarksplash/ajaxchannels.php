@@ -86,7 +86,7 @@
             $destination = "$linked (Via $destination)";
             $target = "In Call";
           }
-          $stream .= "<td>Queue $destination</td>";
+          $stream .= "<td>$destination</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';          
           $stream .= "<td>" . $target . "</td>";
           break;
