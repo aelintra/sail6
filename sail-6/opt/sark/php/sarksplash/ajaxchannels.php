@@ -63,16 +63,19 @@
 
       case "Dial":
           buildCommon($chan,$stream,$key);
-          $stream .= "<td>" . $chan['Exten'] . "</td>";
-          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';
+
+          $destination = $chan['Exten'];
           $target =  $chan['ChannelStateDesc'];
           $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
           if ($linked == $chan['Exten']) {
             $target = "In Call";
           }
           elseif (!empty($linked)) {
-            $target = $linked;
+            $destination = $linked . " (Via $destination)";
           }
+
+          $stream .= "<td>$destination</td>";
+          $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';          
           $stream .= "<td>" . $target . "</td>";
           break;
       case "Queue":
