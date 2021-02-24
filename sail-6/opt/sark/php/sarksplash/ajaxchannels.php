@@ -83,7 +83,7 @@
           $destination = $queueName[0];
           $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
           if ($linked) {
-            $destination .= " (Via $linked)";
+            $destination = "$linked (Via $destination)";
             $target = "In Call";
           }
           $stream .= "<td>Queue $destination</td>";
