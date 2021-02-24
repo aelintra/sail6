@@ -65,12 +65,20 @@
           buildCommon($chan,$stream,$key);
           $destination = $chan['Exten'];
           $target =  $chan['ChannelStateDesc'];
+//Call groups simply have a status of Up.   Change it to Ring to be consistent.
+          if ($target = "Up") {
+            $target = "Ring";
+          }
           $linked = findLinked($channels,$chan['CallerIDNum'],$chan['BridgeId']);
           if ($linked == $chan['Exten']) {
             $target = "In Call";
           }
           elseif (!empty($linked)) {
             $destination = $linked . " (Via $destination)";
+            $target = "In Call";
+          }
+          else {
+
           }
           $stream .= "<td>$destination</td>";
           $stream .= '<td class="icons"><img src="/sark-common/icons/arrowright.png" border=0 title = "Direction of call"></td>';          
