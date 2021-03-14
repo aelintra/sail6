@@ -199,14 +199,17 @@ try {
 	$thisConfig = $configs->fetchObject();
 	$configs = NULL;
 // update the phone model (it may have changed or it may not be present yet)
-  	$model = logUA();
-  	if (!empty($model)) {
-  		if ($model != $thisConfig->devicemodel) {
+// ignore VXT phones
+ 	if (!preg_match(" /VXT/ ", $thisConfig->device)) {
+  		$model = logUA();
+  		if (!empty($model)) {
+  			if ($model != $thisConfig->devicemodel) {  			
 // set the model in the extension record  	
- 			logIt("Device model differs between UA and DB.  UA = $model, DB = " . $thisConfig->devicemodel);
-  	  		$sql = $db->prepare('UPDATE ipphone SET devicemodel=? WHERE pkey = ?');
-			$sql->execute(array($model,$thisConfig->pkey));
-			$sql = NULL;
+ 				logIt("Device model differs between UA and DB.  UA = $model, DB = " . $thisConfig->devicemodel);
+  	  			$sql = $db->prepare('UPDATE ipphone SET devicemodel=? WHERE pkey = ?');
+				$sql->execute(array($model,$thisConfig->pkey));
+				$sql = NULL;
+			}
 		}
 	}
 
