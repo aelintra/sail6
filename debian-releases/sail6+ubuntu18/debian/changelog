@@ -1,3 +1,7 @@
+sail (6.2.0-10+ubuntu18) UNRELEASED; urgency=low
+
+   - Upgraded wallboard 
+
 sail (6.2.0-9+ubuntu18) UNRELEASED; urgency=low
 
    - added test to postinst to detect amazon aarm64 arch
