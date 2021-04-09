@@ -85,7 +85,7 @@
 			doDelete($ldap,$dn,$argument);
 		}
 		else {
-			if (!empty[$value]) {
+			if (!empty($value) {
 				$argument["cn"] = $value . ' ' . $result[0]["sn"][0];
 			}
 			else {
