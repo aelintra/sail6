@@ -7,7 +7,7 @@
 	echo  "LDAP ERROR - " . ldap_error($ldap->ds);
   }
   
-  $dn = "uid=" . $_REQUEST['uid'] . "," . $ldap->addressbook . "," . $ldap->base;
+  $dn = "entryuuid=" . $_REQUEST['entryuuid'] . "," . $ldap->addressbook . "," . $ldap->base;
   if (ldap_delete($ldap->ds,$dn)) {
 	echo "ok";
   }
