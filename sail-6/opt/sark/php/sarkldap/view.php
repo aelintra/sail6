@@ -256,6 +256,10 @@ private function saveNew() {
 		
 		if (isset($_POST['givenname']) && $_POST['givenname'] != "") {			
 			$ldapargs["givenname"] = $_POST['givenname'];
+			$ldapargs["cn"] = $ldapargs["givenname"] . ' ' . $ldapargs["sn"];
+		}
+		else {
+			$ldapargs["cn"] = $ldapargs["sn"];
 		}
 		if (isset($_POST['phone']) && $_POST['phone'] != "") {
 			$ldapargs["telephonenumber"] = $_POST['phone'];
@@ -266,7 +270,7 @@ private function saveNew() {
 		if (isset($_POST['home']) && $_POST['home'] != "") {			
 			$ldapargs["homephone"] = $_POST['home'];
 		}		
-		$ldapargs["cn"] = $ldapargs["givenname"] . ' ' . $ldapargs["sn"];
+		
 		$ldapargs["objectclass"] = array('top', 'person', 'organizationalPerson', 'inetOrgPerson');
 		$this->message = $this->ldap->Add($ldapargs);
 	}
