@@ -115,7 +115,7 @@
 		echo $_REQUEST['value'];
 	}
 	else { 
-		echo  "LDAP ERROR 65 - " . ldap_error($ldap->ds);
+		echo  "LDAP ERROR 65 - dn=$dn, E->" . ldap_error($ldap->ds);
 		return -1;
 	} 	
  }
