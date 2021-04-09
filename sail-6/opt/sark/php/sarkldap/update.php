@@ -87,11 +87,11 @@
 		else {
 			if (!empty($value)) {
 				$argument["cn"] = $value . ' ' . $result[0]["sn"][0];
+				$argument["givenname"] = $value;
 			}
 			else {
 				$argument["cn"] = $result[0]["sn"][0];
-			}
-			$argument["givenname"] = $value;
+			}			
 			doModify($ldap,$dn,$argument); 
 		}
 	}
