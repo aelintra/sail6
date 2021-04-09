@@ -22,7 +22,7 @@
 /*
 	phone numbers
  */
-    if ($column=='phone' || $column=='mobile' || $column=='home') {
+    if ($column=='telephonenumber' || $column=='mobile' || $column=='homephone') {
 		if (!is_numeric($value) && !empty($value)) {
 			echo "LDAP ERROR 36 - phone numbers must be numeric or NULL (empty)";
 			return;
