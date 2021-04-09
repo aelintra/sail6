@@ -29,6 +29,7 @@
 		}
 		else {			
 			if (empty($value)) {
+				$argument[$column]=array();
 				doDelete($ldap,$dn,$argument);
 			}
 			else {
@@ -80,6 +81,7 @@
 
 	if ($column=='givenname') {
 		if (empty($value)) {
+			$argument[$column]=array();
 			doDelete($ldap,$dn,$argument);
 		}
 		else {
