@@ -83,17 +83,14 @@
 		if (empty($value)) {
 			$argument[$column]=array();
 			doDelete($ldap,$dn,$argument);
-		}
-		else {
-			if (!empty($value)) {
-				$argument["cn"] = $value . ' ' . $result[0]["sn"][0];
-				$argument["givenname"] = $value;
-			}
-			else {
-				$argument["cn"] = $result[0]["sn"][0];
-			}			
+			$argument["cn"] = $result[0]["sn"][0];
 			doModify($ldap,$dn,$argument); 
 		}
+		else {
+			$argument["cn"] = $value . ' ' . $result[0]["sn"][0];
+			$argument["givenname"] = $value;
+			doModify($ldap,$dn,$argument); 
+		}			
 	}
    
   	$ldap->Close();
