@@ -13,7 +13,7 @@
   $value = strip_tags($_REQUEST['value']) ;
   $column = $_REQUEST['columnName'] ;
   $argument=array();
-  $dn = "entryUUID={$id}," . $ldap->addressbook . "," . $ldap->base;
+  $dn = "entryuuid=" . $_REQUEST['id'] . "," . $ldap->addressbook . "," . $ldap->base;
 
   if (!$ldap->Connect()) {
 	echo  "LDAP ERROR 19 - " . ldap_error($ldap->ds);
@@ -52,10 +52,10 @@
 	}	 
 
 	
-// get the existing sn,givenName usng the entryuuid
+// get the existing sn,givenName usng the UID
 
 	$search_arg = array("givenname", "sn");
-	if (!$result = $ldap->Get("entryUUID={$id}", $search_arg)) {
+	if (!$result = $ldap->Get("uid=" . $id, $search_arg)) {
 			echo  "LDAP ERROR47 - Couldn't retrieve UID $value";
 			$ldap->Close();
 			return; 
@@ -115,7 +115,7 @@
 		echo $_REQUEST['value'];
 	}
 	else { 
-		echo  "LDAP ERROR 65 - dn=$dn, E->" . ldap_error($ldap->ds);
+		echo  "LDAP ERROR 65 - " . ldap_error($ldap->ds);
 		return -1;
 	} 	
  }

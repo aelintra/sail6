@@ -148,7 +148,7 @@ private function showMain() {
 //	$this->myPanel->aHeaderFor('nohead',false,'w3-hide-medium w3-hide-large');
 
 
-	$search_arg = array("entryuuid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn");
+	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn");
 	$result = $this->ldap->Search($search_arg);
 
 
@@ -162,7 +162,7 @@ private function showMain() {
 //print_r($result);
 	for ($i=0; $i<$result["count"]; $i++) {
 		
-		echo '<tr id="' .  $result[$i]["entryuuid"][0] . '">'. PHP_EOL; 	
+		echo '<tr id="' .  $result[$i]["uid"][0] . '">'. PHP_EOL; 	
 
 		echo '<td>' . $result[$i]["sn"][0]  . '</td>' . PHP_EOL;
 
@@ -198,7 +198,7 @@ private function showMain() {
 		
 
 		if ($table == "ldaptable") {
-			$get = '?entryuuid=' . $result[$i]["entryuuid"][0];		
+			$get = '?uid=' . $result[$i]["uid"][0];		
 			$this->myPanel->ajaxdeleteClick($get);		 
 			echo '</td>' . PHP_EOL;
 		}
