@@ -13,7 +13,7 @@
   $value = strip_tags($_REQUEST['value']) ;
   $column = $_REQUEST['columnName'] ;
   $argument=array();
-  $dn = "entryuuid=" . $_REQUEST['id'] . "," . $ldap->addressbook . "," . $ldap->base;
+  $dn = "uid=" . $_REQUEST['id'] . "," . $ldap->addressbook . "," . $ldap->base;
 
   if (!$ldap->Connect()) {
 	echo  "LDAP ERROR 19 - " . ldap_error($ldap->ds);
