@@ -1,3 +1,9 @@
+sail (6.2.0-11+deb9u1) UNRELEASED; urgency=low
+
+   - Refactored sarkldap due to null value bug in givenname 
+
+ -- CoCoSoft <admin@aelintra.com>  Sat, 10  APR 2021 18:00:00 +0000
+
 sail (6.2.0-10+deb9u1) UNRELEASED; urgency=low
 
    - Upgraded wallboard 
