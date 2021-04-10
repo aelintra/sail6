@@ -61,7 +61,7 @@ public function Get($uid,$arg) {
 }
 
 public function Add($arg) {
-	$sr = ldap_add($this->ds, "uid=" . uniqid("sark-id-", true) . ","  . $this->addressbook . "," . $this->base, $arg);
+	$sr = ldap_add($this->ds, "uid=" . uniqid() . ","  . $this->addressbook . "," . $this->base, $arg);
 	if (!$sr) {
 		if (ldap_errno($this->ds) == 0x44) { 
          return "Entry already exists!";
@@ -76,7 +76,7 @@ public function Add($arg) {
 // Used by the factory reset function
 public function Clean() {
 	$sr=ldap_list($this->ds,$this->addressbook . "," . $this->base,"cn=*",array(""));
-    $info = ldap_get_entries($this->ds, $sr);
+    $info = ldap_get_entries($this->ds, $sr);LD
     for($i=0;$i<$info['count'];$i++){
 		$dn = $info[$i]['dn'];
         $result = ldap_delete($this->ds,$dn);
