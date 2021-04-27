@@ -80,6 +80,11 @@ if [  "$?" -ne "0" ] ; then
         echo "enable=no" > /etc/asterisk/sark_cdr.conf
 fi
 
+grep -q '#include sark_moh.conf' /etc/asterisk/musiconhold.conf
+if [  "$?" -ne "0" ] ; then
+        echo "#include sark_moh.conf" >> /etc/asterisk/musiconhold.conf
+fi
+
 if [ -e /etc/asterisk/meetme.conf ] ; then
     grep -q '#include sark_meetme.conf' /etc/asterisk/meetme.conf
     if [  "$?" -ne "0" ] ; then

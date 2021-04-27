@@ -678,7 +678,30 @@ private function addNewExtension ($tuple) {
 	$sql->execute(array($tuple['device']));
 	$resdevice = $sql->fetch();
 
-	$tuple['sipiaxfriend'] 	= $resdevice['sipiaxfriend'];
+
+
+	$tuple['sipiaxfriend'] 	= 
+	"type=friend
+defaultuser=\$desc
+secret=\$password
+mailbox=\$ext@\$clst
+host=dynamic
+qualify=yes
+context=internal
+call-limit=3
+callerid=\"\$desc\" <\$ext>
+canreinvite=no
+subscribecontext=\$subtxt
+namedcallgroup=\$clst
+namedpickupgroup=\$clst
+disallow=all 
+allow=alaw
+allow=ulaw
+nat=\$nat
+transport=\$transport
+encryption=\$encryption";
+
+
 	if ($resdevice['technology'] == 'SIP') {
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {
 			$tuple['provision']	.= "#INCLUDE " . $tuple['device'];
