@@ -359,30 +359,11 @@ private function showRestore($rfile) {
 
     $this->myPanel->internalEditBoxStart();
 
-//	echo '<div id="reset" >'. PHP_EOL;
-	
-//	echo '<h2>'. PHP_EOL;
 	$this->myPanel->displayBooleanFor('resetdb','');
-//	echo '<input id="resetdb" type="checkbox" name="resetdb" checked="checked" >'. PHP_EOL;
-//	echo ' :Restore Customer Database?';
-//	echo '<br/>';
 	$this->myPanel->displayBooleanFor('resetasterisk','');
-//	echo '<input id="asterisk" type="checkbox" name="asterisk" checked="checked" >'. PHP_EOL;
-//	echo ' :Restore Asterisk files?';				
-//	echo '<br/>';
 	$this->myPanel->displayBooleanFor('resetvmail','');
-//	echo '<input id="vmail" type="checkbox" name="vmail" checked="checked" >'. PHP_EOL;
-//	echo ' :Restore Voicemail?';				
-//	echo '<br/>';
 	$this->myPanel->displayBooleanFor('resetusergreets','');
-//	echo '<input id="usergreets" type="checkbox" name="usergreets" checked="checked" >'. PHP_EOL;
-//	echo ' :Restore greetings?';				
-//	echo '<br/>';
 	$this->myPanel->displayBooleanFor('resetldap','');
-//	echo '<input id="ldap" type="checkbox" name="ldap" checked="checked" >'. PHP_EOL;
-//	echo ' :Restore LDAP Directory?';				
-//	echo '<br/>';																														
-//	echo '</h2>'. PHP_EOL;
 
     echo '</div>' . PHP_EOL;
     

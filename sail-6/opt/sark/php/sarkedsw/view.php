@@ -368,7 +368,7 @@ private function restartFirewall() {
 	$this->myPanel->responsiveClose();
     			
 }
-/*
+
 private function copyFirewallTemplates() {
 
 	$this->dbh = DB::getInstance();
@@ -395,7 +395,6 @@ private function copyFirewallTemplates() {
 		$rc = $this->helper->request_syscmd ("echo '#' > /etc/shorewall/sark_inline_fqdn");
 	}
 
-
 	$file = '/opt/sark/templates/shorewall/sark_inline_limit';
 	if (file_exists($file) && $res['SIPFLOOD'] == 'YES') {
 		$rc = $this->helper->request_syscmd ("cp $file /etc/shorewall");
@@ -405,7 +404,7 @@ private function copyFirewallTemplates() {
 	}		
 		
 }
-*/
+
 
 private function valid_ip_cidr($cidr, $must_cidr = false) {
 
