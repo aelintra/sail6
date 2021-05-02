@@ -80,7 +80,6 @@ Class sarkextension {
 
 public function showForm() {
 
-
 	$this->myPanel = new page;
 	$this->dbh = DB::getInstance();
 	$this->helper = new helper;
@@ -145,9 +144,7 @@ public function showForm() {
 		return;		
 	}	
 			
-	if (isset($_POST['sync'])) {
-	
-//		$this->dbh = NULL; 
+	if (isset($_POST['sync'])) { 
 		$this->sipNotifyPush();
 		$this->message = "Config request pushed";
 		$this->dbh = DB::getInstance();	

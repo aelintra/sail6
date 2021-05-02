@@ -756,6 +756,9 @@ Class page {
  * @return [null]            
  */
     public function showErrors($errorHash) {
+    	if (empty($errorHash)) {
+    		return;
+    	}
 		echo '<div class="emessage " id="id01" >';
 		echo '<div class="w3-card w3-padding w3-pale-yellow"';
     	echo '<span onclick="document.getElementById(\'id01\').style.display=\'none\'" class="w3-button w3-tiny w3-display-topleft">&times&nbsp;close</span>';
