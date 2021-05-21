@@ -1,3 +1,9 @@
+sail (6.2.0-13+deb10u1) UNRELEASED; urgency=low
+
+   - fix typo in srkedsw6/view 
+
+ -- CoCoSoft <admin@aelintra.com>  Sun, 21  May 2021 18:00:00 +0000
+
 sail (6.2.0-12+deb10u1) UNRELEASED; urgency=low
 
    - merge back of V7 features 
