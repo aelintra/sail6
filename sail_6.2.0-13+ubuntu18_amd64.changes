@@ -1,0 +1,25 @@
+Format: 1.8
+Date: Sun, 21  May 2021 18:00:00 +0000
+Source: sail
+Binary: sail
+Architecture: all
+Version: 6.2.0-13+ubuntu18
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: CoCo <admin@aelintra.com>
+Changed-By: CoCoSoft <admin@aelintra.com>
+Description:
+ sail       - SARK  Asterisk Integration Layer (SAIL) - A fast, lightweight swi
+Changes:
+ sail (6.2.0-13+ubuntu18) UNRELEASED; urgency=low
+ .
+    - fix typo in srkedsw6/view
+Checksums-Sha1:
+ eabdbec28b448174b99fbdda9009d6a42d554636 6995318 sail_6.2.0-13+ubuntu18_all.deb
+ 75f7c87cdcd5a8a6d74e184127ed6bd5339a2f3a 3683 sail_6.2.0-13+ubuntu18_amd64.buildinfo
+Checksums-Sha256:
+ 1d8fb270ecfef13e343e3ae3702a4a517e538fcaad958e9b4a1cd684f82b6972 6995318 sail_6.2.0-13+ubuntu18_all.deb
+ d519a04514614d4e260d2eb6bff407d44a1ecf439146add6f089af2a3e9e944f 3683 sail_6.2.0-13+ubuntu18_amd64.buildinfo
+Files:
+ 95d1951286b9ac21a75dba26cf5e902c 6995318 network extra sail_6.2.0-13+ubuntu18_all.deb
+ f0475e75ac777685c28df6b421e15ae0 3683 network extra sail_6.2.0-13+ubuntu18_amd64.buildinfo

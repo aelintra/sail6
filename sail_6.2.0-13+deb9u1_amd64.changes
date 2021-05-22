@@ -1,0 +1,31 @@
+Format: 1.8
+Date: Sun, 21  May 2021 18:00:00 +0000
+Source: sail
+Binary: sail
+Architecture: all
+Version: 6.2.0-13+deb9u1
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: CoCo <admin@aelintra.com>
+Changed-By: CoCoSoft <admin@aelintra.com>
+Description:
+ sail       - SARK  Asterisk Integration Layer (SAIL) - A fast, lightweight swi
+Changes:
+ sail (6.2.0-13+deb9u1) UNRELEASED; urgency=low
+ .
+    - fix typo in srkedsw6/view
+Checksums-Sha1:
+ cc530eb553c303d974e4d372cc5639491087d2f7 3679 sail_6.2.0-13+deb10u1_amd64.buildinfo
+ 706c6b14e91f27d04e1e3d2f657730400b6a1019 6995294 sail_6.2.0-13+deb9u1_all.deb
+ 9ef0dc4e91b867000da8960e89a6df000e807bcb 3675 sail_6.2.0-13+deb9u1_amd64.buildinfo
+ 75f7c87cdcd5a8a6d74e184127ed6bd5339a2f3a 3683 sail_6.2.0-13+ubuntu18_amd64.buildinfo
+Checksums-Sha256:
+ ee5f983b855bede1cd683571b6d1fb389570d8db713d3e84a1f0b18da1290227 3679 sail_6.2.0-13+deb10u1_amd64.buildinfo
+ eadf1da098abc1ffa0822ec5c51f5015acabdb0c20250c7858331621c42881fb 6995294 sail_6.2.0-13+deb9u1_all.deb
+ cc3672757a1c547a8f72ae4d16225e62fe9aba1c5afddfe1cc043cff67a8f1b5 3675 sail_6.2.0-13+deb9u1_amd64.buildinfo
+ d519a04514614d4e260d2eb6bff407d44a1ecf439146add6f089af2a3e9e944f 3683 sail_6.2.0-13+ubuntu18_amd64.buildinfo
+Files:
+ 93e25ff225e0a03ed0c655a18c3cb6f1 3679 network extra sail_6.2.0-13+deb10u1_amd64.buildinfo
+ b954eba93867b6ce834a72bf3224ff8b 6995294 network extra sail_6.2.0-13+deb9u1_all.deb
+ 005fd241cb8398852578aa349f6568e7 3675 network extra sail_6.2.0-13+deb9u1_amd64.buildinfo
+ f0475e75ac777685c28df6b421e15ae0 3683 network extra sail_6.2.0-13+ubuntu18_amd64.buildinfo
