@@ -688,7 +688,8 @@ private function saveEdit() {
 			$output .= "mailhub=" . $smtphost . PHP_EOL;
 			if ($smtpuser) {
 				$output .= "AuthUser=" . $smtpuser . PHP_EOL;
-				if ($smtppwd) {                                                                  
+				if ($smtppwd) { 
+					$output .= "AuthPass=" . $smtppwd . PHP_EOL;                         
 				}
 			}
 			$output .= "UseTLS=" . $smtpusetls . PHP_EOL;
