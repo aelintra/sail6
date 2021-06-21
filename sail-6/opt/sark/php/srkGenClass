@@ -51,6 +51,7 @@ public function genAsterisk() {
 
     $this->genCdr();
     $this->genExtensions();
+    $this->genMoh();
     $this->genIax();
     $this->genSip();
     $this->genConferences();
@@ -84,9 +85,6 @@ public function genAsterisk() {
 	return;
 }
 
-
-
-
 private function genCdr() {
     $fh = fopen("/etc/asterisk/cdr_mysql.conf", 'w') or die('Could not open file!');
 // write the Master file
@@ -98,8 +96,24 @@ private function genCdr() {
     fclose($fh);
 }
 
-
-
+private function genMoh() {
+	$OUT = $this->genFileBanner();
+	$res = $this->dbh->query('SELECT pkey from cluster');
+	foreach ($res as $row) {
+		if (!file_exists("/usr/share/asterisk/moh-" . $row['pkey'])) {
+			$rc = $this->helper->request_syscmd ("mkdir /usr/share/asterisk/moh-" . $row['pkey']);
+		}
+		$OUT .= "[" . $row['pkey'] . "]\n";
+		$OUT .= "mode=files\n";
+		$OUT .= "directory=moh-" . $row['pkey'] . "\n";
+		$OUT .= "sort=random\n\n";
+	}
+	if (!empty($OUT)) { 
+		$fh = fopen("/etc/asterisk/sark_moh.conf", 'w') or die('Could not open file sark_moh.conf!');
+		fwrite($fh,$OUT) or die('Could not write to file sark_moh.conf');
+		fclose($fh);
+	}
+}
 
 private function genIax() {
 

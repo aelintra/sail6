@@ -39,7 +39,8 @@ if (isset ($argv[1])) {
 	$datafilename='/opt/sark/db/' . $prefix . 'data.sql';
 	$devfilename='/opt/sark/db/' . $prefix . 'device.sql';
 	$custdevfilename='/opt/sark/db/' . $prefix . 'custdevice.sql';
-	$sysfilename='/opt/sark/db/' . $prefix . 'system.sql';		
+	$sysfilename='/opt/sark/db/' . $prefix . 'system.sql';	
+	$tablesdirectory='/opt/sark/db/' . $prefix . 'tabledumps';
 		
     /*** connect to SQLite database ***/
     try {
@@ -57,10 +58,17 @@ if (isset ($argv[1])) {
 	$VALDATA 	= NULL;
 	$CREATE 	= "BEGIN TRANSACTION;\n";
 	$INSERT 	= "BEGIN TRANSACTION;\n";
+	$TABLEINSERT = "BEGIN TRANSACTION;\n";
 	$SYSINSERT 	= "BEGIN TRANSACTION;\n";
 	$DEVINSERT 	= "BEGIN TRANSACTION;\n";
 	$CUSTDEVINSERT 	= "BEGIN TRANSACTION;\n";
-	       
+
+// create the teblesdirectory if it does not exist
+	if (is_dir($tablesdirectory)) {
+		`rm -rf $tablesdirectory`;
+	}
+	`mkdir -p $tablesdirectory`; 
+
 /*
  * get a list of tables
  */
@@ -125,6 +133,9 @@ if (isset ($argv[1])) {
 			syslog(LOG_WARNING, date("M j H:i:s") . ": SRKDUMPER -> " . $someText . "\n");
 			continue;
 		}
+//   Create a file in /opt/sark/db/tabledumps
+
+
 
 //  get column metadata and table data 	
 		try {
@@ -146,8 +157,7 @@ if (isset ($argv[1])) {
 			
 		
 // Build the dump string 	
-		foreach ($rows as $row) {
-				
+		foreach ($rows as $row) {				
 			foreach ($colrows as $col) {
 				$myData = $row[$col['name']];
 				if ($myData) {
@@ -182,11 +192,20 @@ if (isset ($argv[1])) {
 // dump the customer data 
 			else {
 				$INSERT .= "INSERT OR IGNORE INTO " . $table['name'] . "(" . $COLDATA . ") values (" . $VALDATA . ");\n";
+				$TABLEINSERT .= "INSERT OR IGNORE INTO " . $table['name'] . "(" . $COLDATA . ") values (" . $VALDATA . ");\n";
 			}	
 			$COLDATA = NULL;
 			$VALDATA = NULL;			
-		}		
+		}	
+		$TABLEINSERT 	.= "COMMIT;\n";
+		$tname = $tablesdirectory . '/' . $table['name'];
+		$fh = fopen($tname, 'w') or die('Could not open $tname!');
+		fwrite($fh,$TABLEINSERT) or die('Could not write to $tname');
+		fclose($fh);	
+		`dos2unix $tname >/dev/null 2>&1`;
+		$TABLEINSERT = "BEGIN TRANSACTION;\n";
 	}
+
 	$CREATE 	.= "COMMIT;\n";
 	$INSERT 	.= "COMMIT;\n";
 	$SYSINSERT 	.= "COMMIT;\n";
