@@ -1,6 +1,17 @@
 
   $(document).ready(function() {
 
+  	$("[name='newmoh']").click(function() {
+		$('#file').click();
+	});
+	
+	
+	
+	$('#file').change(function() {
+		$('#newmohclick').val("TRUE");
+		$('#sarkclusterForm').submit();
+	});	
+
 	$.validator.addMethod("tenant",function(value,element) {
 		return this.optional(element) || /^[A-Za-z0-9-_]{2,30}$/i.test(value); 
 	},"tenant format is [A-Za-z0-9-_]{2,30} i.e no spaces or specal characters, max length 30 chars");
