@@ -16,6 +16,7 @@
 [ ! -e /opt/sark/mixmon/var/spool/asterisk/monitor ] && mkdir -p /opt/sark/mixmon/var/spool/asterisk/monitor
 [ ! -e /var/spool/asterisk/monstage ] && mkdir -p /var/spool/asterisk/monstage
 [ ! -e /var/spool/asterisk/monout ] && mkdir -p /var/spool/asterisk/monout
+[ ! -e /usr/share/asterisk/moh-default ] && mkdir -p /usr/share/asterisk/moh-default
 [ ! -e /opt/sark/passwd/htpasswd ] && cp -f /opt/sark/cache/htpasswd /opt/sark/passwd/htpasswd
 [ ! -e /opt/sark/bkup ] && mkdir -p /opt/sark/bkup
 [ ! -e /opt/sark/snap ] && mkdir -p /opt/sark/snap
@@ -78,6 +79,11 @@ grep -q '#include sark_cdr.conf' /etc/asterisk/cdr.conf
 if [  "$?" -ne "0" ] ; then
         echo "#include sark_cdr.conf" >> /etc/asterisk/cdr.conf
         echo "enable=no" > /etc/asterisk/sark_cdr.conf
+fi
+
+grep -q '#include sark_moh.conf' /etc/asterisk/musiconhold.conf
+if [  "$?" -ne "0" ] ; then
+        echo "#include sark_moh.conf" >> /etc/asterisk/musiconhold.conf
 fi
 
 if [ -e /etc/asterisk/meetme.conf ] ; then

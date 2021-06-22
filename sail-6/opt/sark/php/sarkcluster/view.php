@@ -28,6 +28,7 @@ Class sarkcluster {
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
+	protected $soundir = '/usr/share/asterisk/sarksounds/';
 	protected $myBooleans = array(
 		'usemohcustom'
 	);	
