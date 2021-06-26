@@ -123,7 +123,7 @@ private function showMain() {
 
 	$this->myPanel->responsiveSetup();
 
-	eecho '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '"  enctype="multipart/form-data">' . PHP_EOL;
+	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '"  enctype="multipart/form-data">' . PHP_EOL;
 	
 	$this->myPanel->beginResponsiveTable('clustertable',' w3-tiny');
 
