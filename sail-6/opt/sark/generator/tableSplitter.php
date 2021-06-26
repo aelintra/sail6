@@ -1,6 +1,6 @@
 <?php
 
-$target = "/opt/sark/db/sark.db"
+$target = "/opt/sark/db/sark.db";
 
 if (!empty ($argv[1])) {
 	$target = $argv[1];
