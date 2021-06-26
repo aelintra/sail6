@@ -415,7 +415,8 @@ private function saveEdit() {
  */ 
 		$custom = array (
 			'masterclose' => True,
-			'newmohclick' => True
+			'newmohclick' => True,
+			'file' => True
         );
 
 		$this->helper->buildTupleArray($_POST,$tuple,$custom);
