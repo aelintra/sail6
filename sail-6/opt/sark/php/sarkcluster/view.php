@@ -29,6 +29,7 @@ Class sarkcluster {
 	protected $invalidForm;
 	protected $error_hash = array();
 	protected $soundir = '/usr/share/asterisk/sarksounds/';
+	protected $mohroot = '/usr/share/asterisk/';
 	protected $myBooleans = array(
 		'usemohcustom'
 	);	
@@ -478,7 +479,7 @@ private function doUpload() {
 
 		$dir='moh-' . $_POST['pkey'];
 		$tfile = $_FILES['file']['tmp_name'];
-		$this->helper->request_syscmd ("/bin/mv /tmp/" . $_FILES['file']['name'] . ' ' . $this->soundir . $dir);
+		$this->helper->request_syscmd ("/bin/mv /tmp/" . $_FILES['file']['name'] . ' ' . $this->mohroot . $dir);
 		$this->message = "File $filename uploaded!";
 		
 }

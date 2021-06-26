@@ -1,7 +1,13 @@
 <?php
 
+$target = "/opt/sark/db/sark.db"
+
+if (!empty ($argv[1])) {
+	$target = $argv[1];
+}
+
 try {
-  $db = new PDO("sqlite:/opt/sark/db/sark.db");
+  $db = new PDO("sqlite:$target");
 } catch (PDOException $e) {
   die("Failed to get DB handle: " . $e->getMessage() . "\n");
 }
