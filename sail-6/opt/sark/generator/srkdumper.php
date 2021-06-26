@@ -27,7 +27,7 @@ $sysTables = array(
 	"Device_atl"  		=> true
 );
      
-$prefix='last_'; 
+$prefix='/last_'; 
 
 if (isset ($argv[1])) {
 	$rootdir = $argv[1];
