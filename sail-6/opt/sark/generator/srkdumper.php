@@ -27,20 +27,25 @@ $sysTables = array(
 	"Device_atl"  		=> true
 );
      
-$prefix='last_';
+$prefix='last_'; 
+
 if (isset ($argv[1])) {
-	$prefix = $argv[1];
-} 
+	$rootdir = $argv[1];
+}
+
+if (isset ($argv[2])) {
+	$sarkdb = $argv[2];
+}
 
 	$tables=array();
 	$colrows=array();
 	$datarows=array();
-	$cfgfilename='/opt/sark/db/' . $prefix . 'create.sql';
-	$datafilename='/opt/sark/db/' . $prefix . 'data.sql';
-	$devfilename='/opt/sark/db/' . $prefix . 'device.sql';
-	$custdevfilename='/opt/sark/db/' . $prefix . 'custdevice.sql';
-	$sysfilename='/opt/sark/db/' . $prefix . 'system.sql';	
-	$tablesdirectory='/opt/sark/db/' . $prefix . 'tabledumps';
+	$cfgfilename=$rootdir . $prefix . 'create.sql';
+	$datafilename=$rootdir . $prefix . 'data.sql';
+	$devfilename=$rootdir . $prefix . 'device.sql';
+	$custdevfilename=$rootdir . $prefix . 'custdevice.sql';
+	$sysfilename=$rootdir . $prefix . 'system.sql';	
+	$tablesdirectory=$rootdir . $prefix . 'tabledumps';
 		
     /*** connect to SQLite database ***/
     try {
