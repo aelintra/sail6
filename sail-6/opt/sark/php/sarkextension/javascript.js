@@ -111,7 +111,7 @@
 		"sDom": 'fti',
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [2,5,6,7,8,10,11]
+			"aTargets" : [2,7,8,9,10]
 		}],
 		"aoColumns": [ 
 			{ "sName": "pkey" },
@@ -121,7 +121,7 @@
 			{ "sName": "macaddr" },					
 			{ "sName": "ipaddr" },		
 			{ "sName": "location" },
-			{ "sName": "sndcreds"},
+//			{ "sName": "sndcreds"},
 //			{ "sName": "boot"},
 //			{ "sName": "trns"},		
 			{ "sName": "connect"},
