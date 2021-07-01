@@ -1,6 +1,6 @@
 <?php
 // sarkcluster class
-// Developed by CoCo
+// Developed by CoCoboolean
 // Copyright (C) 2012 CoCoSoFt
 //
 // This program is free software: you can redistribute it and/or modify
@@ -380,7 +380,7 @@ private function showEdit($pkey=false) {
 	$endButtonArray['update'] = "endupdate";
 	$this->myPanel->endBar($endButtonArray);
 	echo '<br/>' . PHP_EOL;
-	
+
 	echo '<input type="file" id="file" name="file" style="display: none;" />'. PHP_EOL;
 	echo '<input type="hidden" id="newmohclick" name="newmohclick" />'. PHP_EOL;
 	echo '<br/><br/>' . PHP_EOL;
@@ -403,6 +403,7 @@ private function saveEdit() {
 
 	$tuple = array();
 	
+	$this->myPanel->xlateBooleans($this->myBooleans);
 		
 	$this->validator = new FormValidator();
 	$this->validator->addValidation("pkey","req","Please fill in Tenant name");
