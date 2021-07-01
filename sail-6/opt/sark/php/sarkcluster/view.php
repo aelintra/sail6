@@ -123,7 +123,7 @@ private function showMain() {
 
 	$this->myPanel->responsiveSetup();
 
-	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '"  enctype="multipart/form-data">' . PHP_EOL;
+	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">' . PHP_EOL;
 	
 	$this->myPanel->beginResponsiveTable('clustertable',' w3-tiny');
 
@@ -375,6 +375,12 @@ private function showEdit($pkey=false) {
 	else {
 		echo 'No soundfiles loaded for this tenant.  Defaults will be used.<br/><br/>';
 	}
+
+	$endButtonArray['cancel'] = true;
+	$endButtonArray['update'] = "endupdate";
+	$this->myPanel->endBar($endButtonArray);
+	echo '<br/>' . PHP_EOL;
+	
 	echo '<input type="file" id="file" name="file" style="display: none;" />'. PHP_EOL;
 	echo '<input type="hidden" id="newmohclick" name="newmohclick" />'. PHP_EOL;
 	echo '<br/><br/>' . PHP_EOL;
@@ -383,10 +389,7 @@ private function showEdit($pkey=false) {
 
 	echo '<input type="hidden" name="pkey" id="pkey" size="20"  value="' . $pkey . '"  />' . PHP_EOL; 
 
-	$endButtonArray['cancel'] = true;
-	$endButtonArray['update'] = "endupdate";
-	$this->myPanel->endBar($endButtonArray);
-	echo '<br/>' . PHP_EOL;
+
 	echo '</form>' . PHP_EOL; // close the form
 	echo '</div>';  
     $this->myPanel->responsiveClose();	
