@@ -30,6 +30,9 @@ Class sarkivr {
 	protected $error_hash = array();
 	protected $greetings = array();
 	protected $soundir = '/usr/share/asterisk/sounds/'; // set for Debian/Ubuntu	
+	protected $myBooleans = array(
+		'listenforext'
+	);
 
 function __construct() {
 
@@ -440,6 +443,8 @@ private function saveEdit() {
 		'alert11' => true,
 		'alert12' => true
 	);
+
+	$this->myPanel->xlateBooleans($this->myBooleans);
 			
 	$this->validator = new FormValidator();
 
