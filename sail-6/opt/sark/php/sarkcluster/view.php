@@ -299,7 +299,7 @@ private function showEdit($pkey=false) {
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("Edit Tenant " . $pkey);
 
-	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">' . PHP_EOL;
 	
 
 	echo '<div class="w3-margin-bottom">';
