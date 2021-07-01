@@ -681,6 +681,10 @@ Class page {
                                 'checked' =>'YES',
                                 'unchecked' => 'NO'
                                 ),
+                'usemohcustom' => array(
+                                'checked' =>'YES',
+                                'unchecked' => 'NO'
+                                ),   
 
     );
   
