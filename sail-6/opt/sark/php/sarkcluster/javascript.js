@@ -9,6 +9,7 @@
 	
 	$('#file').change(function() {
 		$('#newmohclick').val("TRUE");
+		$(".myspinner").show();
 		$('#sarkclusterForm').submit();
 	});	
 
