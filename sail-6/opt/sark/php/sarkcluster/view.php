@@ -1,6 +1,6 @@
 <?php
 // sarkcluster class
-// Developed by CoCoboolean
+// Developed by CoCo
 // Copyright (C) 2012 CoCoSoFt
 //
 // This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ public function showForm() {
 
 	if (!empty($_FILES['file']['name'])) {
 		$this->doUpload(); 
-		$this->showEdit();
+		$this->showMain();
 		return;									
 	}	
 
@@ -376,10 +376,12 @@ private function showEdit($pkey=false) {
 		echo 'No soundfiles loaded for this tenant.  Defaults will be used.<br/><br/>';
 	}
 
+	echo '<br/>' . PHP_EOL;
+
 	$endButtonArray['cancel'] = true;
 	$endButtonArray['update'] = "endupdate";
 	$this->myPanel->endBar($endButtonArray);
-	echo '<br/>' . PHP_EOL;
+	
 
 	echo '<input type="file" id="file" name="file" style="display: none;" />'. PHP_EOL;
 	echo '<input type="hidden" id="newmohclick" name="newmohclick" />'. PHP_EOL;
