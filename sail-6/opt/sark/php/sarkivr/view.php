@@ -318,7 +318,7 @@ private function showEdit($pkey=false) {
 //    $this->myPanel->aLabelFor('ivrname'); 		
 	echo '<input type="hidden" name="newkey" size="20" id="newkey" value="' . $pkey . '"  />' . PHP_EOL;
 
-	$this->myPanel->internalEditBoxStart;
+	$this->myPanel->internalEditBoxStart();
 
 	echo '<div class="cluster w3-margin-bottom">';
     $this->myPanel->aLabelFor('cluster','cluster');
@@ -341,7 +341,7 @@ private function showEdit($pkey=false) {
 	echo '<br/><br/>';
 //	echo '</div>'; 
 	$this->myPanel->selected = $ivrmenu['timeout'];
-	$this->myPanel->sysSelect('timeout',false,false,true) . PHP_EOL;
+	$this->myPanel->sysSelect('timeout',false,true,true,$ivrmenu['cluster']) . PHP_EOL;
 	echo '<br/><br/>';
 
 	$this->myPanel->displayBooleanFor('listenforext',$ivrmenu['listenforext']);
@@ -390,7 +390,7 @@ private function showEdit($pkey=false) {
 		echo '</div>'; 
 
 		$this->myPanel->selected = $ivrmenu[$opName];
-		$this->myPanel->sysSelect($opName,true) . PHP_EOL;
+		$this->myPanel->sysSelect($opName,true,false,false,$ivrmenu['cluster']) . PHP_EOL;
 
 		$tagindex = "tag" . $key;
 		$alertindex = "alert" . $key;

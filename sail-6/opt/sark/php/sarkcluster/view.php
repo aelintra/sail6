@@ -377,6 +377,8 @@ private function showEdit($pkey=false) {
 	}
 
 	echo '<br/>' . PHP_EOL;
+	echo '</div>';
+
 
 	$endButtonArray['cancel'] = true;
 	$endButtonArray['update'] = "endupdate";
@@ -387,8 +389,7 @@ private function showEdit($pkey=false) {
 	echo '<input type="hidden" id="newmohclick" name="newmohclick" />'. PHP_EOL;
 	echo '<br/><br/>' . PHP_EOL;
 
-	echo '</div>';
-
+	
 	echo '<input type="hidden" name="pkey" id="pkey" size="20"  value="' . $pkey . '"  />' . PHP_EOL; 
 
 
