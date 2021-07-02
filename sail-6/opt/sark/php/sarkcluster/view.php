@@ -339,7 +339,7 @@ private function showEdit($pkey=false) {
 	echo '<br/><br/><br/>' . PHP_EOL;
 
 	if (!empty($mohlist)) {
-		$this->myPanel->beginResponsiveTable('clustertable');
+		$this->myPanel->beginResponsiveTable('mohtable');
 		echo '<thead>' . PHP_EOL;	
 		echo '<tr>' . PHP_EOL;
 		$this->myPanel->aHeaderFor('mohfilename');
