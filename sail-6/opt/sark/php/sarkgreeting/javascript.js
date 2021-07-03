@@ -63,17 +63,17 @@
 					type: 'select',
 					tooltip: 'Tenant',
 					event: 'click',
-                    onblur: 'cancel',
-                    submit: 'Save',
+                    onblur: 'submit',
+//                    submit: 'Save',
                     loadurl: '/php/cluster/list.php',
                     loadtype: 'GET'					
 				}, 	// Tenant
 				{
 					type: 'textarea',
-					submit:'Save',
+//					submit:'Save',
 					tooltip: 'Click to set description',
 					event: 'click',
-					onblur: 'cancel',	
+					onblur: 'submit',	
 					placeholder: 'Null'
 				},		// desc
 				null,	// filesize
