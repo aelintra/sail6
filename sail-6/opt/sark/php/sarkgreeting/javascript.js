@@ -47,7 +47,7 @@
 			"sSearch": "Filter:"
 		},		
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(2)', nRow).addClass( "bluetags" );
+          $('td:eq(1),td:eq(2)', nRow).addClass( "w3-text-blue" );
         }  
 
 	} ).makeEditable({
