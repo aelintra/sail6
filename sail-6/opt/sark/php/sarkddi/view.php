@@ -455,7 +455,7 @@ private function showEdit() {
 		echo '</div>'; 	
 		$this->myPanel->selected = $tuple['openroute'];
 //		$this->myPanel->sysSelect('openroute',false,true,true) . PHP_EOL;
-		$this->myPanel->sysSelect('timeout',true,false,false,$tuple['cluster']) . PHP_EOL;
+		$this->myPanel->sysSelect('timeout',true,false,true,$tuple['cluster']) . PHP_EOL;
 		$this->myPanel->aHelpBoxFor('openroute');
 
 		echo '<div class="w3-margin-bottom">';
@@ -463,7 +463,7 @@ private function showEdit() {
 		echo '</div>';
 		$this->myPanel->selected = $tuple['closeroute'];
 //		$this->myPanel->sysSelect('closeroute',false,true,true) . PHP_EOL;
-		$this->myPanel->sysSelect('timeout',true,false,false,$tuple['cluster']) . PHP_EOL;
+		$this->myPanel->sysSelect('timeout',true,false,true,$tuple['cluster']) . PHP_EOL;
 		$this->myPanel->aHelpBoxFor('closeroute');	
 //	} 
 
