@@ -204,14 +204,7 @@ private function showNew() {
 	echo '<br/>';
 	$this->myPanel->displayInputFor("time",'time',"00:00",'etime');
 	echo '</div>';
-	echo '</div>';
-/*
-	$this->myPanel->internalEditBoxStart();
-	echo '<h2>Routing</h2>';		
-	$this->myPanel->sysSelect('route',true,false,true,'default') . PHP_EOL;
-	echo '<br/><br/>';
-	echo '</div>';
-*/		
+	echo '</div>';		
 	echo '</div>';
 	$endButtonArray['cancel'] = true;
 	$endButtonArray['save'] = "endsave";
@@ -227,6 +220,11 @@ private function saveNew() {
 	$tuple = array();	
 	
 	$tuple['pkey'] 			= 'sched' . rand(100000, 999999);
+/*
+	set POST for the refresh
+ */
+	$_POST['pkey'] = $tuple['pkey'];
+	
 	if (!empty($_POST['cluster'])) {
 		$tuple['cluster'] 		= strip_tags($_POST['cluster']);
 	}
@@ -349,7 +347,7 @@ private function showEdit() {
 	$this->myPanel->internalEditBoxStart();
 	echo '<h2>Routing</h2>';
 	$this->myPanel->selected = $tuple['route'];		
-	$this->myPanel->sysSelect('route',true,false,true,$tuple['cluster']) . PHP_EOL;
+	$this->myPanel->sysSelect('route',true,false,false,$tuple['cluster']) . PHP_EOL;
 	echo '<br/><br/>';
 	echo '</div>';
 
