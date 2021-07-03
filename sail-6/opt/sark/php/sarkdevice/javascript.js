@@ -45,7 +45,7 @@
 			{"sName": "del"}
 		],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(3)', nRow).addClass( "w3-text-blue" );
+          $('td:eq(1),td:eq(2)', nRow).addClass( "w3-text-blue" );
         },
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
@@ -54,7 +54,7 @@
 	} )
 
 	if ( $('#perms').val() != 'view' ) {
-		$('#devicetable').dataTable.makeEditable({
+		$('#devicetable').dataTable().makeEditable({
 			sUpdateURL: "/php/sarkdevice/update.php",
 			"aoColumns": [
 				null,  	// pkey
