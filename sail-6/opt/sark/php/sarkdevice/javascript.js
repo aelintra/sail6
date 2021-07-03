@@ -45,7 +45,7 @@
 			{"sName": "del"}
 		],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(3)', nRow).addClass( "bluetags" );
+          $('td:eq(1),td:eq(3)', nRow).addClass( "w3-text-blue" );
         },
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
