@@ -25,6 +25,7 @@ Class sarkivr {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
+	protected $saveKey;
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
@@ -76,8 +77,11 @@ public function showForm() {
 		$this->saveNew();
 		if ($this->invalidForm) {
 			$this->showNew();
-			return;
-		}					
+		}
+		else {
+			$this->showEdit();
+		}
+		return;						
 	}
 
 	if (isset($_POST['commit']) || isset($_POST['commitClick'])) { 
@@ -240,10 +244,13 @@ private function saveNew() {
 		$this->message = "<B>  --  Validation Errors!</B>";		
     }
     unset ($this->validator);
-	
+/*
+	set key for the refresh
+ */
+	$this->saveKey = $tuple['pkey'];	
 }
 
-private function showEdit($pkey=false) {
+private function showEdit() {
 	
 /*
  * build navigation arrays (emulate perl's qw, using explode)  
@@ -253,50 +260,13 @@ private function showEdit($pkey=false) {
     $tabnavkey = explode(' ','1 2 3 4 5 6 7 8 9 10 0 11'); 	
 	$printkey = explode (' ','0 1 2 3 4 5 6 7 8 9 * #');
 	
-/*
- * get a list of greeting numbers
- */
 
-/*
-	$greetings = array();
-	$root = $this->soundir;
-	$dir = "";
-*/
-/*
-	$user =  $_SESSION['user']['pkey'];
-	if ($_SESSION['user']['pkey'] != 'admin') {
-		$res = $this->dbh->query("SELECT cluster FROM user where pkey = '" . $_SESSION['user']['pkey'] . "'")->fetch(PDO::FETCH_ASSOC);
-		if 	(array_key_exists('cluster',$res)) {
-			$dir = $res['cluster'] . "/";
-		}
+	if (isset($this->saveKey)) {
+		$pkey = $this->saveKey;
 	}
-*/
-/*	
-	$search = $root . "/" . $dir;
-	if ($handle = opendir($search)) {
-		while (false !== ($entry = readdir($handle))) {
-			if (preg_match("/^usergreeting(\d*)/",$entry,$matches)) {
-				array_push($greetings, $matches[1]);
-			}
-		}
-		closedir($handle);
-		asort($greetings);
-	}
-*/								   	
-
-/*
- * pkey could be POST or GET, depending upon the iteration
- */	
-	if (!$pkey) {
-		if (isset ($_GET['pkey'])) {
-			$pkey = $_GET['pkey']; 
-		}
-	
-		if (isset ($_POST['pkey'])) {		
-			$pkey = $_POST['pkey']; 
-			$this->saveEdit();
-		}
-	}
+	else {
+		$pkey = $_REQUEST['pkey'];
+	} 
 	
 	$ivrmenu = $this->dbh->query("SELECT * FROM ivrmenu WHERE pkey = '" . $pkey . "'")->fetch(PDO::FETCH_ASSOC);
 
