@@ -179,7 +179,7 @@ private function showNew() {
 	$this->myPanel->displayCluster();
 	$this->myPanel->aHelpBoxFor('cluster');
 	echo '</div>';
-
+/*
 	$date = date('d-m-Y');
 
 	$this->myPanel->internalEditBoxStart();
@@ -205,8 +205,10 @@ private function showNew() {
 	echo '<br/>';
 	$this->myPanel->displayInputFor("time",'time',"00:00",'etime');
 	echo '</div>';
-	echo '</div>';		
+	echo '</div>';	
+*/	
 	echo '</div>';
+	
 	$endButtonArray['cancel'] = true;
 	$endButtonArray['save'] = "endsave";
 	$this->myPanel->endBar($endButtonArray);
@@ -231,10 +233,6 @@ private function saveNew() {
 	}
 	if (!empty($_POST['desc'])) {
 		$tuple['desc'] 			= strip_tags($_POST['desc']);
-	}
-	if (!empty($_POST['route'])) {
-		$tuple['route'] 		= strip_tags($_POST['route']);
-		$tuple['routeclass'] 	= $this->helper->setRouteClass( $tuple['route'] );
 	}
 	
 	
