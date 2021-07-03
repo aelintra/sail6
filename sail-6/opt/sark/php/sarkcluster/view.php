@@ -306,7 +306,7 @@ private function showEdit($pkey=false) {
 	$this->myPanel->aLabelFor('clustersysop');
 	echo '</div>'; 
 	$this->myPanel->selected = $res['operator'];
-	$this->myPanel->sysSelect('operator',false,true) . PHP_EOL;
+	$this->myPanel->sysSelect('operator',true,false,false,$pkey) . PHP_EOL;
 	$this->myPanel->aHelpBoxFor('clustersysop');
 
 	$this->myPanel->displayInputFor('include','text',$res['include']);

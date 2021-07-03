@@ -1,4 +1,4 @@
-<?php
+syss<?php
 //
 // Developed by CoCo
 // Copyright (C) 2012 CoCoSoft
@@ -51,8 +51,12 @@ public function showForm() {
 		$this->saveNew();
 		if ($this->invalidForm) {
 			$this->showNew();
-			return;
+
 		}
+		else {
+			$this->showEdit();
+		}
+		return;		
 	}
 
 	if (isset($_POST['update']) || isset($_POST['endupdate'])) { 
@@ -170,7 +174,7 @@ private function showNew() {
 	echo '<div class="cluster w3-margin-bottom">';
     $this->myPanel->aLabelFor('cluster','cluster');
     echo '</div>';
-	$this->myPanel->selected = $extension['cluster'];
+	$this->myPanel->selected = 'default';
 	$this->myPanel->displayCluster();
 	$this->myPanel->aHelpBoxFor('cluster');
 	echo '</div>';
@@ -201,13 +205,13 @@ private function showNew() {
 	$this->myPanel->displayInputFor("time",'time',"00:00",'etime');
 	echo '</div>';
 	echo '</div>';
-
+/*
 	$this->myPanel->internalEditBoxStart();
 	echo '<h2>Routing</h2>';		
-	$this->myPanel->sysSelect('route',false,false,false) . PHP_EOL;
+	$this->myPanel->sysSelect('route',true,false,true,'default') . PHP_EOL;
 	echo '<br/><br/>';
 	echo '</div>';
-		
+*/		
 	echo '</div>';
 	$endButtonArray['cancel'] = true;
 	$endButtonArray['save'] = "endsave";
@@ -341,6 +345,13 @@ private function showEdit() {
 	$this->myPanel->aHelpBoxFor('cluster');
 	echo '</div>';
 
+	$this->myPanel->internalEditBoxStart();
+	echo '<h2>Routing</h2>';
+	$this->myPanel->selected = $tuple['route'];		
+	$this->myPanel->sysSelect('route',true,false,true,$tuple['route']) . PHP_EOL;
+	echo '<br/><br/>';
+	echo '</div>';
+
 	$date = date('d-m-Y');
 
 	$this->myPanel->internalEditBoxStart();
@@ -368,12 +379,6 @@ private function showEdit() {
 	echo '</div>';
 	echo '</div>';
 
-	$this->myPanel->internalEditBoxStart();
-	echo '<h2>Routing</h2>';
-	$this->myPanel->selected = $tuple['route'];		
-	$this->myPanel->sysSelect('route',false,false,false) . PHP_EOL;
-	echo '<br/><br/>';
-	echo '</div>';
 
 	echo '<input type="hidden" name="pkey" id="pkey" value="' . $pkey . '"  />' . PHP_EOL;
 		
