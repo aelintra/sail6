@@ -1,4 +1,4 @@
-syss<?php
+<?php
 //
 // Developed by CoCo
 // Copyright (C) 2012 CoCoSoft
@@ -168,7 +168,7 @@ private function showNew() {
 
 	echo '<form id="sarktimerForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 	
-	$this->myPanel->displayInputFor('description','text');
+	$this->myPanel->displayInputFor('description','text',null,'desc');
 	
 	echo '<div class="cluster">';
 	echo '<div class="cluster w3-margin-bottom">';
@@ -241,7 +241,6 @@ private function saveNew() {
 	
 //sort out the 2 dates
 
-	$tuple['desc'] = strip_tags($_POST['desc']);
 	
 	$shm = strip_tags($_POST['stime']);
 	$sdd = strip_tags($_POST['sdate']);
@@ -397,8 +396,8 @@ private function saveEdit() {
 
 	$tuple = array();
 	$custom = array (
-					'sdate' => True,
-					'edate' => True
+		'sdate' => True,
+		'edate' => True
 	);
 
 	$this->helper->buildTupleArray($_POST,$tuple,$custom);	
@@ -462,7 +461,10 @@ private function saveEdit() {
 
 		$tuple['pkey'] = $_POST['pkey'];
 		if (!empty($_POST['route'])) {
-			$tuple['routeclass'] 	= $this->helper->setRouteClass($tuple['route'] );
+			$tuple['routeclass'] = $this->helper->setRouteClass($tuple['route'] );
+		}
+		if (!empty($_POST['desc'])) {
+			$tuple['desc'] = strip_tags($_POST['desc']);
 		}
 		$ret = $this->helper->setTuple("holiday",$tuple);
 		if ($ret == 'OK') {
