@@ -25,6 +25,7 @@ Class sarkholiday {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
+	protected $saveKey;
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
@@ -221,10 +222,10 @@ private function saveNew() {
 	
 	$tuple['pkey'] 			= 'sched' . rand(100000, 999999);
 /*
-	set POST for the refresh
+	set key for the refresh
  */
-	$_POST['pkey'] = $tuple['pkey'];
-	
+	$this->saveKey = $tuple['pkey'];
+
 	if (!empty($_POST['cluster'])) {
 		$tuple['cluster'] 		= strip_tags($_POST['cluster']);
 	}
@@ -315,7 +316,12 @@ private function saveNew() {
 
 private function showEdit() {
 
-	$pkey = $_REQUEST['pkey']; 
+	if (isset($this->saveKey)) {
+		$pkey = $this->saveKey;
+	}
+	else {
+		$pkey = $_REQUEST['pkey'];
+	} 
 
 	$tuple = $this->dbh->query("SELECT * FROM Holiday WHERE pkey='" . $pkey ."'")->fetch(PDO::FETCH_ASSOC);;
 	
