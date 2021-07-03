@@ -52,7 +52,7 @@
 		}    
 
 	} )
-/*
+
 	if ( $('#perms').val() != 'view' ) {
 		$('#devicetable').dataTable.makeEditable({
 			sUpdateURL: "/php/sarkdevice/update.php",
@@ -82,7 +82,7 @@
             ]
         }); 
     }  
-*/
+
 // save scroll for redraw	
 		$(".dataTables_scrollBody").mousedown(function(){
 			scrollPosition = $(".dataTables_scrollBody").scrollTop();
