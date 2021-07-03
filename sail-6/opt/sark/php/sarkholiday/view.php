@@ -239,11 +239,11 @@ private function saveNew() {
 //sort out the 2 dates
 
 	
-	$shm = strip_tags($_POST['stime']);
-	$sdd = strip_tags($_POST['sdate']);
+	$shm = "00:00";
+	$sdd = date('d-m-Y');
 
-	$ehm = strip_tags($_POST['etime']);
-	$edd = strip_tags($_POST['edate']);
+	$ehm = "00:00";
+	$edd = date('d-m-Y');
 
 // Check HH:MM format 	
 	if (!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9])/", $shm)) {
