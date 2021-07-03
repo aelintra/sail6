@@ -38,7 +38,7 @@ public function showForm() {
 	
 	$this->myPanel->pagename = 'Holiday Scheduler';
 
-	if ( isset($_POST['new']) || isset($_GET['new'] )) { 
+	if ( isset($_REQUEST['new'])) { 
 		$this->showNew();
 		return;
 	}
@@ -241,6 +241,8 @@ private function saveNew() {
 	
 //sort out the 2 dates
 
+	$tuple['desc'] = strip_tags($_POST['desc']);
+	
 	$shm = strip_tags($_POST['stime']);
 	$sdd = strip_tags($_POST['sdate']);
 
@@ -348,7 +350,7 @@ private function showEdit() {
 	$this->myPanel->internalEditBoxStart();
 	echo '<h2>Routing</h2>';
 	$this->myPanel->selected = $tuple['route'];		
-	$this->myPanel->sysSelect('route',true,false,true,$tuple['route']) . PHP_EOL;
+	$this->myPanel->sysSelect('route',true,false,true,$tuple['cluster']) . PHP_EOL;
 	echo '<br/><br/>';
 	echo '</div>';
 
