@@ -454,7 +454,7 @@ private function showEdit() {
 		$this->myPanel->aLabelFor('Open Inbound Route');
 		echo '</div>'; 	
 		$this->myPanel->selected = $tuple['openroute'];
-//		$this->myPanel->sysSelect('openroute',false,false,true) . PHP_EOL;
+//		$this->myPanel->sysSelect('openroute',false,true,true) . PHP_EOL;
 		$this->myPanel->sysSelect('timeout',true,false,false,$tuple['cluster']) . PHP_EOL;
 		$this->myPanel->aHelpBoxFor('openroute');
 
@@ -462,7 +462,7 @@ private function showEdit() {
 		$this->myPanel->aLabelFor('Closed Inbound Route');
 		echo '</div>';
 		$this->myPanel->selected = $tuple['closeroute'];
-//		$this->myPanel->sysSelect('closeroute',false,false,true) . PHP_EOL;
+//		$this->myPanel->sysSelect('closeroute',false,true,true) . PHP_EOL;
 		$this->myPanel->sysSelect('timeout',true,false,false,$tuple['cluster']) . PHP_EOL;
 		$this->myPanel->aHelpBoxFor('closeroute');	
 //	} 
