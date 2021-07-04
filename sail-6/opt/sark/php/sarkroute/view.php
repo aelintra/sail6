@@ -119,7 +119,7 @@ private function showMain() {
 //	$this->myPanel->aHeaderFor('path3');
 //	$this->myPanel->aHeaderFor('path4');			
 //	$this->myPanel->aHeaderFor('auth',false,'w3-hide-small');
-	$this->myPanel->aHeaderFor('Act',false,'w3-hide-small');	
+	$this->myPanel->aHeaderFor('Act',false,'w3-hide-small w3-hide-medium');	
 	$this->myPanel->aHeaderFor('ed',false,'editcol');
 	$this->myPanel->aHeaderFor('del',false,'delcol');
 	
@@ -144,7 +144,7 @@ private function showMain() {
 //		echo '<td >' . $row['path3'] . '</td>' . PHP_EOL;
 //		echo '<td >' . $row['path4'] . '</td>' . PHP_EOL;		
 //		echo '<td class="w3-hide-small">' . $row['auth'] . '</td>' . PHP_EOL;
-		echo '<td class="w3-hide">' . $row['active'] . '</td>' . PHP_EOL;		
+		echo '<td class="w3-hide-small w3-hide-medium">' . $row['active'] . '</td>' . PHP_EOL;		
 		$get = '?edit=yes&amp;pkey=';
 		$get .= $row['pkey'];	
 		$this->myPanel->editClick($_SERVER['PHP_SELF'],$get);	
