@@ -147,11 +147,16 @@
 			"sSearch": "Filter:"
 
 		},
-/*
+
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-        $('td:eq(7),td:eq(10)', nRow).addClass( "bluetags" );
-        },
-*/
+//        		$('td:eq(8)', nRow).addClass( "w3-text-blue" );
+        		if ( aData[7] == "UNKNOWN" ) {
+            			$('td', nRow).addClass( "w3-amber" );
+          		} 
+        	},
+
+
+
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
 		}  
@@ -186,7 +191,7 @@
 			{ "sName": "value"}
 		],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(2),td:eq(3)', nRow).addClass( "bluetags" );
+          $('td:eq(1),td:eq(2),td:eq(3)', nRow).addClass( "w3-text-blue" );
         } 
 
 	} ).makeEditable({
