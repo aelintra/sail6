@@ -119,7 +119,7 @@ private function showMain() {
 //	$this->myPanel->aHeaderFor('path3');
 //	$this->myPanel->aHeaderFor('path4');			
 //	$this->myPanel->aHeaderFor('auth',false,'w3-hide-small');
-	$this->myPanel->aHeaderFor('Act',false,'w3-hide');	
+	$this->myPanel->aHeaderFor('Act',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('ed',false,'editcol');
 	$this->myPanel->aHeaderFor('del',false,'delcol');
 	
