@@ -64,7 +64,8 @@ public function showForm() {
 	}
 	
 	if (isset($_POST['update']) || isset($_POST['endupdate'])) { 
-		$this->showEdit();	
+		$this->saveEdit();	
+		$this->showEdit();
 		return;
 	}	
 
