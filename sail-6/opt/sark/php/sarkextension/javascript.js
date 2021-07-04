@@ -149,9 +149,8 @@
 		},
 
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-//        		$('td:eq(8)', nRow).addClass( "w3-text-blue" );
         		if ( aData[7] == "UNKNOWN" ) {
-            			$('td', nRow).addClass( "w3-gray" );
+            			$('td', nRow).addClass( "w3-pale-yellow" );
           		}
         	},
 
