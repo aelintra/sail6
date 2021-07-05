@@ -178,16 +178,19 @@ private function showNew() {
 	echo '<div class="cluster w3-margin-bottom">';
     $this->myPanel->aLabelFor('cluster','cluster');
     echo '</div>';
-	$this->myPanel->selected = $extension['cluster'];
+	$this->myPanel->selected = 'default';
 	$this->myPanel->displayCluster();
 	$this->myPanel->aHelpBoxFor('cluster');
 	echo '</div>';
 
 	echo '<div class="w3-margin-bottom">';
+/*	
 	$this->myPanel->aLabelFor('outcome');
 	echo '</div>'; 
 	$this->myPanel->sysSelect('outcome') . PHP_EOL;
 	$this->myPanel->aHelpBoxFor('outcome');
+*/
+
 	$this->myPanel->displayInputFor('groupstring','text',null,'out');
 	$this->myPanel->radioSlide('devicerec','default',array('default','None','OTR','OTRR','Inbound'));
 	$this->myPanel->displayInputFor('ringdelay','number',$intringdelay);
@@ -296,7 +299,8 @@ private function showEdit($key=False) {
 	$this->myPanel->aLabelFor('outcome');
 	echo '</div>';
 	$this->myPanel->selected = $res['outcome'];
-	$this->myPanel->sysSelect('outcome') . PHP_EOL;
+//	$this->myPanel->sysSelect('outcome') . PHP_EOL;
+	$this->myPanel->sysSelect('outcome',true,false,false,$res['cluster']) . PHP_EOL;
 	$this->myPanel->aHelpBoxFor('outcome');
 	$this->myPanel->displayInputFor('description','text',$res['longdesc'],'longdesc');
 
