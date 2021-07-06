@@ -58,14 +58,7 @@
 			sUpdateURL: "/php/sarkdevice/update.php",
 			"aoColumns": [
 				null,  	// pkey
-				{
-					type: 'textarea',
-//					event: 'click',
-//					submit:'Save',
-//					tooltip: 'Click to set desc',
-//					onblur: 'submit',
-					placeholder: 'Null' 
-				},		// description
+				null,	// description
 //				null,   // technology
 				{
 					type: 'select',
