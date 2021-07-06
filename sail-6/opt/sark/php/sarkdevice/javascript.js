@@ -45,7 +45,7 @@
 			{"sName": "del"}
 		],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(2)', nRow).addClass( "w3-text-blue" );
+          $('td:eq(2)', nRow).addClass( "w3-text-blue" );
         },
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
@@ -63,7 +63,7 @@
 					event: 'click',
 //					submit:'Save',
 //					tooltip: 'Click to set desc',
-					onblur: 'submit',
+//					onblur: 'submit',
 					placeholder: 'Null' 
 				},		// description
 //				null,   // technology
