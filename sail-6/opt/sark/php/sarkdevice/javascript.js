@@ -60,7 +60,7 @@
 				null,  	// pkey
 				{
 					type: 'textarea',
-					event: 'click',
+//					event: 'click',
 //					submit:'Save',
 //					tooltip: 'Click to set desc',
 //					onblur: 'submit',
@@ -71,7 +71,7 @@
 					type: 'select',
 					event: 'click',
 //					submit:'Save',
-//					tooltip: 'Click to set desc',
+					tooltip: 'Click to set Fkey',
 					onblur: 'submit',
 					loadurl: '/php/sarkdevice/fkeylist.php', 
 					placeholder: 'None',        
