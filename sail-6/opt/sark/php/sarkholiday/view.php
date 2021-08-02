@@ -25,7 +25,7 @@ Class sarkholiday {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
-	protected $saveKey;
+	date('d-m-Y')
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
@@ -243,19 +243,7 @@ private function saveNew() {
 	$sdd = date('d-m-Y');
 
 	$ehm = "00:00";
-	$edd = date('d-m-Y');
-
-// Check HH:MM format 	
-	if (!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9])/", $shm)) {
-		$this->invalidForm = True;
-		$this->error_hash['schedinsertstarttime'] = "Illegal start time (hh:mm) $shm";
-	}
-
-// Check HH:MM format 	
-	if (!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9])/", $ehm)) {
-		$this->invalidForm = True;
-		$this->error_hash['schedinsertendtime'] = "Illegal end time (hh:mm) $ehm";
-	}		
+	$edd = date('d-m-Y');	
 
 
 // convert the inputs to Epoch time	
