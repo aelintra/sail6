@@ -28,6 +28,11 @@ Class sarkcluster {
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
+	protected $soundir = '/usr/share/asterisk/sarksounds/';
+	protected $mohroot = '/usr/share/asterisk/';
+	protected $myBooleans = array(
+		'usemohcustom'
+	);	
 	
 public function showForm() {
 
@@ -37,6 +42,12 @@ public function showForm() {
 
 	
 	$this->myPanel->pagename = 'Tenants';
+
+	if (!empty($_FILES['file']['name'])) {
+		$this->doUpload(); 
+		$this->showMain();
+		return;									
+	}	
 
 	if (isset($_POST['new']) || isset ($_GET['new'])  ) { 
 		$this->showNew();
@@ -67,6 +78,15 @@ public function showForm() {
 		$this->helper->delTuple("cluster",$pkey);
 		$this->message = "Deleted " . $pkey;		
 	}
+
+	if (isset($_REQUEST['mohdelete'])  ) { 
+		$file = $_REQUEST['file'];
+		$dir = $_REQUEST['dir'];
+		$ret = $this->helper->request_syscmd ("rm -rf /usr/share/asterisk/$dir/$file");
+		$this->message = "Deleted " . $file . " from " . $dir;	
+		$this->showEdit();
+		return;	
+	}		
 
 
 	if (isset($_POST['commit']) || isset($_POST['commitClick'])) { 
@@ -103,7 +123,7 @@ private function showMain() {
 
 	$this->myPanel->responsiveSetup();
 
-	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">' . PHP_EOL;
 	
 	$this->myPanel->beginResponsiveTable('clustertable',' w3-tiny');
 
@@ -279,14 +299,14 @@ private function showEdit($pkey=false) {
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("Edit Tenant " . $pkey);
 
-	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+	echo '<form id="sarkclusterForm" action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">' . PHP_EOL;
 	
 
 	echo '<div class="w3-margin-bottom">';
 	$this->myPanel->aLabelFor('clustersysop');
 	echo '</div>'; 
 	$this->myPanel->selected = $res['operator'];
-	$this->myPanel->sysSelect('operator',false,true) . PHP_EOL;
+	$this->myPanel->sysSelect('operator',true,false,false,$pkey) . PHP_EOL;
 	$this->myPanel->aHelpBoxFor('clustersysop');
 
 	$this->myPanel->displayInputFor('include','text',$res['include']);
@@ -297,15 +317,82 @@ private function showEdit($pkey=false) {
 	$this->myPanel->displayInputFor('chanmax','number',$res['chanmax']);
 	$this->myPanel->radioSlide('masterclose',$masterclose,array('AUTO','CLOSED'));
 //	$this->myPanel->displayInputFor('oclo','text',$res['oclo'],null,null,true);
-	
+
+	$mohlist = array();
+	if (file_exists("/usr/share/asterisk/moh-" . $pkey)) {
+		if ($handle = opendir("/usr/share/asterisk/moh-" . $pkey)) {
+			while (false !== ($entry = readdir($handle))) {
+				if ($entry == '.' || $entry == '..') {
+					continue;
+				}
+				$mohlist[] = $entry;
+			}
+		closedir($handle);		
+		}	
+	}
+
+	echo '<div class="w3-margin-top w3-margin-bottom">';
+	$this->myPanel->aLabelFor("mohhead");
+	$this->myPanel->aHelpBoxFor("mohhead");
+	echo '</div>';
+	echo '<span class="w3-button w3-blue w3-small w3-round-xxlarge w3-right" style="cursor:pointer" name="newmoh">Upload MOH</span>';	
+	echo '<br/><br/><br/>' . PHP_EOL;
+
+	if (!empty($mohlist)) {
+		$this->myPanel->beginResponsiveTable('mohtable');
+		echo '<thead>' . PHP_EOL;	
+		echo '<tr>' . PHP_EOL;
+		$this->myPanel->aHeaderFor('mohfilename');
+		$this->myPanel->aHeaderFor('play'); 
+		$this->myPanel->aHeaderFor('del');
+		echo '</tr>' . PHP_EOL;
+		echo '</thead>' . PHP_EOL;
+		echo '<tbody>' . PHP_EOL;
+		foreach ($mohlist as $row ) {
+			echo '<tr id="' . $row . '">'. PHP_EOL; 
+			echo '<td >' . $row . '</td>' . PHP_EOL;
+ 			echo '<td><audio controls><source src="/server-moh/moh-' . $pkey . '/' . $row . '"></audio></td>'; 
+//			echo '<td ><a href="/server-moh/moh-' . $pkey . '/' . $row . '"><img src="/sark-common/icons/play.png" border=0 title = "Click to play" ></a></td>';
+			echo '<td><a href="'; 
+			echo $_SERVER['PHP_SELF'];
+			echo '?mohdelete=yes&amp;pkey=';
+			echo $pkey;
+			echo '&amp;dir=';
+			echo 'moh-' . $pkey;
+			echo '&amp;file=';
+			echo $row;			
+			echo '"><img src="/sark-common/icons/delete.png" alt = "Click to Delete" title = "Click to Delete"';
+        	echo ' onclick = "return confirmOK(\'Confirm Delete - Are you sure?\')"></a></td>';
+//			$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$row);	
+			echo '</td>' . PHP_EOL;
+			echo '</tr>'. PHP_EOL;
+		}
+		echo '</tbody>' . PHP_EOL;
+		$this->myPanel->endResponsiveTable();
+		echo '<br/><br/>' . PHP_EOL;
+		$this->myPanel->displayBooleanFor('usemohcustom',$res['usemohcustom']);
+	}
+	else {
+		echo 'No soundfiles loaded for this tenant.  Defaults will be used.<br/><br/>';
+	}
+
+	echo '<br/>' . PHP_EOL;
 	echo '</div>';
 
-	echo '<input type="hidden" name="pkey" id="pkey" size="20"  value="' . $pkey . '"  />' . PHP_EOL; 
 
 	$endButtonArray['cancel'] = true;
 	$endButtonArray['update'] = "endupdate";
 	$this->myPanel->endBar($endButtonArray);
-	echo '<br/>' . PHP_EOL;
+	
+
+	echo '<input type="file" id="file" name="file" style="display: none;" />'. PHP_EOL;
+	echo '<input type="hidden" id="newmohclick" name="newmohclick" />'. PHP_EOL;
+	echo '<br/><br/>' . PHP_EOL;
+
+	
+	echo '<input type="hidden" name="pkey" id="pkey" size="20"  value="' . $pkey . '"  />' . PHP_EOL; 
+
+
 	echo '</form>' . PHP_EOL; // close the form
 	echo '</div>';  
     $this->myPanel->responsiveClose();	
@@ -319,6 +406,7 @@ private function saveEdit() {
 
 	$tuple = array();
 	
+	$this->myPanel->xlateBooleans($this->myBooleans);
 		
 	$this->validator = new FormValidator();
 	$this->validator->addValidation("pkey","req","Please fill in Tenant name");
@@ -334,6 +422,8 @@ private function saveEdit() {
  */ 
 		$custom = array (
 			'masterclose' => True,
+			'newmohclick' => True,
+			'file' => True
         );
 
 		$this->helper->buildTupleArray($_POST,$tuple,$custom);
@@ -376,5 +466,30 @@ private function saveEdit() {
     unset ($this->validator);
 }
 
+private function doUpload() {
+
+		if ($_FILES['file']['error']) {
+			$this->error_hash['Upload'] = "Upload failed.  Check PHP max filesize.";
+			return -1;
+		}
+
+		$filename = strip_tags($_FILES['file']['name']);
+		if (!preg_match (' /wav$/ ', $filename) ) {
+			$this->error_hash['Format'] = "Upload file MUST be format wav";
+			return -1;
+		}
+		$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed /tmp/" . $_FILES['file']['name'] . " -q";
+		$rets = `$sox`;
+		if ($rets) {
+			$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";
+			return -1;			
+		}
+
+		$dir='moh-' . $_POST['pkey'];
+		$tfile = $_FILES['file']['tmp_name'];
+		$this->helper->request_syscmd ("/bin/mv /tmp/" . $_FILES['file']['name'] . ' ' . $this->mohroot . $dir);
+		$this->message = "File $filename uploaded!";
+		
+}
 
 }

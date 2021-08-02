@@ -85,6 +85,7 @@ operator TEXT,    					-- tenant sysop
 pickupgroup TEXT,  					-- asterisk pickupgroup number (1-63)
 routeclassoverride TEXT,				-- Holiday scheduler route class override
 routeoverride TEXT,					-- Holiday scheduler route override
+usemohcustom TEXT,
 z_created datetime,
 z_updated datetime,
 z_updater TEXT DEFAULT 'system'

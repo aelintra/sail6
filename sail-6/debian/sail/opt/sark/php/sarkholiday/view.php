@@ -25,6 +25,7 @@ Class sarkholiday {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
+	date('d-m-Y')
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
@@ -38,7 +39,7 @@ public function showForm() {
 	
 	$this->myPanel->pagename = 'Holiday Scheduler';
 
-	if ( isset($_POST['new']) || isset($_GET['new'] )) { 
+	if ( isset($_REQUEST['new'])) { 
 		$this->showNew();
 		return;
 	}
@@ -51,8 +52,12 @@ public function showForm() {
 		$this->saveNew();
 		if ($this->invalidForm) {
 			$this->showNew();
-			return;
+
 		}
+		else {
+			$this->showEdit();
+		}
+		return;		
 	}
 
 	if (isset($_POST['update']) || isset($_POST['endupdate'])) { 
@@ -164,17 +169,17 @@ private function showNew() {
 
 	echo '<form id="sarktimerForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 	
-	$this->myPanel->displayInputFor('description','text');
+	$this->myPanel->displayInputFor('description','text',null,'desc');
 	
 	echo '<div class="cluster">';
 	echo '<div class="cluster w3-margin-bottom">';
     $this->myPanel->aLabelFor('cluster','cluster');
     echo '</div>';
-	$this->myPanel->selected = $extension['cluster'];
+	$this->myPanel->selected = 'default';
 	$this->myPanel->displayCluster();
 	$this->myPanel->aHelpBoxFor('cluster');
 	echo '</div>';
-
+/*
 	$date = date('d-m-Y');
 
 	$this->myPanel->internalEditBoxStart();
@@ -200,15 +205,10 @@ private function showNew() {
 	echo '<br/>';
 	$this->myPanel->displayInputFor("time",'time',"00:00",'etime');
 	echo '</div>';
+	echo '</div>';	
+*/	
 	echo '</div>';
-
-	$this->myPanel->internalEditBoxStart();
-	echo '<h2>Routing</h2>';		
-	$this->myPanel->sysSelect('route',false,false,false) . PHP_EOL;
-	echo '<br/><br/>';
-	echo '</div>';
-		
-	echo '</div>';
+	
 	$endButtonArray['cancel'] = true;
 	$endButtonArray['save'] = "endsave";
 	$this->myPanel->endBar($endButtonArray);
@@ -223,37 +223,27 @@ private function saveNew() {
 	$tuple = array();	
 	
 	$tuple['pkey'] 			= 'sched' . rand(100000, 999999);
+/*
+	set key for the refresh
+ */
+	$this->saveKey = $tuple['pkey'];
+
 	if (!empty($_POST['cluster'])) {
 		$tuple['cluster'] 		= strip_tags($_POST['cluster']);
 	}
 	if (!empty($_POST['desc'])) {
 		$tuple['desc'] 			= strip_tags($_POST['desc']);
 	}
-	if (!empty($_POST['route'])) {
-		$tuple['route'] 		= strip_tags($_POST['route']);
-		$tuple['routeclass'] 	= $this->helper->setRouteClass( $tuple['route'] );
-	}
 	
 	
 //sort out the 2 dates
 
-	$shm = strip_tags($_POST['stime']);
-	$sdd = strip_tags($_POST['sdate']);
+	
+	$shm = "00:00";
+	$sdd = date('d-m-Y');
 
-	$ehm = strip_tags($_POST['etime']);
-	$edd = strip_tags($_POST['edate']);
-
-// Check HH:MM format 	
-	if (!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9])/", $shm)) {
-		$this->invalidForm = True;
-		$this->error_hash['schedinsertstarttime'] = "Illegal start time (hh:mm) $shm";
-	}
-
-// Check HH:MM format 	
-	if (!preg_match("/(2[0-3]|[01][0-9]):([0-5][0-9])/", $ehm)) {
-		$this->invalidForm = True;
-		$this->error_hash['schedinsertendtime'] = "Illegal end time (hh:mm) $ehm";
-	}		
+	$ehm = "00:00";
+	$edd = date('d-m-Y');	
 
 
 // convert the inputs to Epoch time	
@@ -312,7 +302,12 @@ private function saveNew() {
 
 private function showEdit() {
 
-	$pkey = $_REQUEST['pkey']; 
+	if (isset($this->saveKey)) {
+		$pkey = $this->saveKey;
+	}
+	else {
+		$pkey = $_REQUEST['pkey'];
+	} 
 
 	$tuple = $this->dbh->query("SELECT * FROM Holiday WHERE pkey='" . $pkey ."'")->fetch(PDO::FETCH_ASSOC);;
 	
@@ -339,6 +334,13 @@ private function showEdit() {
 	$this->myPanel->selected = $tuple['cluster'];
 	$this->myPanel->displayCluster();
 	$this->myPanel->aHelpBoxFor('cluster');
+	echo '</div>';
+
+	$this->myPanel->internalEditBoxStart();
+	echo '<h2>Routing</h2>';
+	$this->myPanel->selected = $tuple['route'];		
+	$this->myPanel->sysSelect('route',true,false,false,$tuple['cluster']) . PHP_EOL;
+	echo '<br/><br/>';
 	echo '</div>';
 
 	$date = date('d-m-Y');
@@ -368,12 +370,6 @@ private function showEdit() {
 	echo '</div>';
 	echo '</div>';
 
-	$this->myPanel->internalEditBoxStart();
-	echo '<h2>Routing</h2>';
-	$this->myPanel->selected = $tuple['route'];		
-	$this->myPanel->sysSelect('route',false,false,false) . PHP_EOL;
-	echo '<br/><br/>';
-	echo '</div>';
 
 	echo '<input type="hidden" name="pkey" id="pkey" value="' . $pkey . '"  />' . PHP_EOL;
 		
@@ -390,8 +386,8 @@ private function saveEdit() {
 
 	$tuple = array();
 	$custom = array (
-					'sdate' => True,
-					'edate' => True
+		'sdate' => True,
+		'edate' => True
 	);
 
 	$this->helper->buildTupleArray($_POST,$tuple,$custom);	
@@ -455,7 +451,10 @@ private function saveEdit() {
 
 		$tuple['pkey'] = $_POST['pkey'];
 		if (!empty($_POST['route'])) {
-			$tuple['routeclass'] 	= $this->helper->setRouteClass($tuple['route'] );
+			$tuple['routeclass'] = $this->helper->setRouteClass($tuple['route'] );
+		}
+		if (!empty($_POST['desc'])) {
+			$tuple['desc'] = strip_tags($_POST['desc']);
 		}
 		$ret = $this->helper->setTuple("holiday",$tuple);
 		if ($ret == 'OK') {

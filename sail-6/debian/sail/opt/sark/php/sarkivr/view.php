@@ -25,11 +25,15 @@ Class sarkivr {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
+	protected $saveKey;
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
 	protected $greetings = array();
 	protected $soundir = '/usr/share/asterisk/sounds/'; // set for Debian/Ubuntu	
+	protected $myBooleans = array(
+		'listenforext'
+	);
 
 function __construct() {
 
@@ -60,7 +64,8 @@ public function showForm() {
 	}
 	
 	if (isset($_POST['update']) || isset($_POST['endupdate'])) { 
-		$this->showEdit();	
+		$this->saveEdit();	
+		$this->showEdit();
 		return;
 	}	
 
@@ -73,8 +78,11 @@ public function showForm() {
 		$this->saveNew();
 		if ($this->invalidForm) {
 			$this->showNew();
-			return;
-		}					
+		}
+		else {
+			$this->showEdit();
+		}
+		return;						
 	}
 
 	if (isset($_POST['commit']) || isset($_POST['commitClick'])) { 
@@ -237,10 +245,13 @@ private function saveNew() {
 		$this->message = "<B>  --  Validation Errors!</B>";		
     }
     unset ($this->validator);
-	
+/*
+	set key for the refresh
+ */
+	$this->saveKey = $tuple['pkey'];	
 }
 
-private function showEdit($pkey=false) {
+private function showEdit() {
 	
 /*
  * build navigation arrays (emulate perl's qw, using explode)  
@@ -250,50 +261,13 @@ private function showEdit($pkey=false) {
     $tabnavkey = explode(' ','1 2 3 4 5 6 7 8 9 10 0 11'); 	
 	$printkey = explode (' ','0 1 2 3 4 5 6 7 8 9 * #');
 	
-/*
- * get a list of greeting numbers
- */
 
-/*
-	$greetings = array();
-	$root = $this->soundir;
-	$dir = "";
-*/
-/*
-	$user =  $_SESSION['user']['pkey'];
-	if ($_SESSION['user']['pkey'] != 'admin') {
-		$res = $this->dbh->query("SELECT cluster FROM user where pkey = '" . $_SESSION['user']['pkey'] . "'")->fetch(PDO::FETCH_ASSOC);
-		if 	(array_key_exists('cluster',$res)) {
-			$dir = $res['cluster'] . "/";
-		}
+	if (isset($this->saveKey)) {
+		$pkey = $this->saveKey;
 	}
-*/
-/*	
-	$search = $root . "/" . $dir;
-	if ($handle = opendir($search)) {
-		while (false !== ($entry = readdir($handle))) {
-			if (preg_match("/^usergreeting(\d*)/",$entry,$matches)) {
-				array_push($greetings, $matches[1]);
-			}
-		}
-		closedir($handle);
-		asort($greetings);
-	}
-*/								   	
-
-/*
- * pkey could be POST or GET, depending upon the iteration
- */	
-	if (!$pkey) {
-		if (isset ($_GET['pkey'])) {
-			$pkey = $_GET['pkey']; 
-		}
-	
-		if (isset ($_POST['pkey'])) {		
-			$pkey = $_POST['pkey']; 
-			$this->saveEdit();
-		}
-	}
+	else {
+		$pkey = $_REQUEST['pkey'];
+	} 
 	
 	$ivrmenu = $this->dbh->query("SELECT * FROM ivrmenu WHERE pkey = '" . $pkey . "'")->fetch(PDO::FETCH_ASSOC);
 
@@ -315,7 +289,7 @@ private function showEdit($pkey=false) {
 //    $this->myPanel->aLabelFor('ivrname'); 		
 	echo '<input type="hidden" name="newkey" size="20" id="newkey" value="' . $pkey . '"  />' . PHP_EOL;
 
-	$this->myPanel->internalEditBoxStart;
+	$this->myPanel->internalEditBoxStart();
 
 	echo '<div class="cluster w3-margin-bottom">';
     $this->myPanel->aLabelFor('cluster','cluster');
@@ -338,7 +312,7 @@ private function showEdit($pkey=false) {
 	echo '<br/><br/>';
 //	echo '</div>'; 
 	$this->myPanel->selected = $ivrmenu['timeout'];
-	$this->myPanel->sysSelect('timeout',false,false,true) . PHP_EOL;
+	$this->myPanel->sysSelect('timeout',true,false,false,$ivrmenu['cluster']) . PHP_EOL;
 	echo '<br/><br/>';
 
 	$this->myPanel->displayBooleanFor('listenforext',$ivrmenu['listenforext']);
@@ -387,7 +361,7 @@ private function showEdit($pkey=false) {
 		echo '</div>'; 
 
 		$this->myPanel->selected = $ivrmenu[$opName];
-		$this->myPanel->sysSelect($opName,true) . PHP_EOL;
+		$this->myPanel->sysSelect($opName,true,false,false,$ivrmenu['cluster']) . PHP_EOL;
 
 		$tagindex = "tag" . $key;
 		$alertindex = "alert" . $key;
@@ -440,6 +414,8 @@ private function saveEdit() {
 		'alert11' => true,
 		'alert12' => true
 	);
+
+	$this->myPanel->xlateBooleans($this->myBooleans);
 			
 	$this->validator = new FormValidator();
 

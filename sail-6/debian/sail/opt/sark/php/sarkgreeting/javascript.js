@@ -47,7 +47,7 @@
 			"sSearch": "Filter:"
 		},		
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(2)', nRow).addClass( "bluetags" );
+          $('td:eq(1),td:eq(2)', nRow).addClass( "w3-text-blue" );
         }  
 
 	} ).makeEditable({
@@ -63,17 +63,17 @@
 					type: 'select',
 					tooltip: 'Tenant',
 					event: 'click',
-                    onblur: 'cancel',
-                    submit: 'Save',
+                    onblur: 'submit',
+//                    submit: 'Save',
                     loadurl: '/php/cluster/list.php',
                     loadtype: 'GET'					
 				}, 	// Tenant
 				{
 					type: 'textarea',
-					submit:'Save',
+//					submit:'Save',
 					tooltip: 'Click to set description',
 					event: 'click',
-					onblur: 'cancel',	
+					onblur: 'submit',	
 					placeholder: 'Null'
 				},		// desc
 				null,	// filesize

@@ -45,33 +45,26 @@
 			{"sName": "del"}
 		],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(3)', nRow).addClass( "bluetags" );
+          $('td:eq(2)', nRow).addClass( "w3-text-blue" );
         },
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
 		}    
 
 	} )
-/*
+
 	if ( $('#perms').val() != 'view' ) {
-		$('#devicetable').dataTable.makeEditable({
+		$('#devicetable').dataTable().makeEditable({
 			sUpdateURL: "/php/sarkdevice/update.php",
 			"aoColumns": [
 				null,  	// pkey
-				{
-					type: 'textarea',
-					event: 'click',
-//					submit:'Save',
-//					tooltip: 'Click to set desc',
-					onblur: 'submit',
-					placeholder: 'Null' 
-				},		// description
+				null,	// description
 //				null,   // technology
 				{
 					type: 'select',
 					event: 'click',
 //					submit:'Save',
-//					tooltip: 'Click to set desc',
+					tooltip: 'Click to set Fkey',
 					onblur: 'submit',
 					loadurl: '/php/sarkdevice/fkeylist.php', 
 					placeholder: 'None',        
@@ -82,7 +75,7 @@
             ]
         }); 
     }  
-*/
+
 // save scroll for redraw	
 		$(".dataTables_scrollBody").mousedown(function(){
 			scrollPosition = $(".dataTables_scrollBody").scrollTop();

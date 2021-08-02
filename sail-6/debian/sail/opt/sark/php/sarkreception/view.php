@@ -61,7 +61,7 @@ private function showMain() {
 		$this->myPanel->msg = $this->message;
 	}
 	$buttonArray=array();
-  	$this->myPanel->actionBar($buttonArray,"sarkForm",false,true);
+  	$this->myPanel->actionBar($buttonArray,"sarkForm",false,false);
 
 	if ($this->invalidForm) {
 		$this->myPanel->showErrors($this->error_hash);

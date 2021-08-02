@@ -1,6 +1,18 @@
 
   $(document).ready(function() {
 
+  	$("[name='newmoh']").click(function() {
+		$('#file').click();
+	});
+	
+	
+	
+	$('#file').change(function() {
+		$('#newmohclick').val("TRUE");
+		$(".myspinner").show();
+		$('#sarkclusterForm').submit();
+	});	
+
 	$.validator.addMethod("tenant",function(value,element) {
 		return this.optional(element) || /^[A-Za-z0-9-_]{2,30}$/i.test(value); 
 	},"tenant format is [A-Za-z0-9-_]{2,30} i.e no spaces or specal characters, max length 30 chars");
@@ -36,7 +48,7 @@
 		"sDom": 'fti',
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [2,3,6,7,8,9]
+			"aTargets" : [2,3,4,5,6,7,8,9]
 		}],
 	});	
 

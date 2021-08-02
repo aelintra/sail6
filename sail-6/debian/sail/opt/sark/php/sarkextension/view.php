@@ -246,7 +246,7 @@ private function showMain() {
 	$this->myPanel->aHeaderFor('macaddr',false,'w3-hide-small');
 	$this->myPanel->aHeaderFor('ipaddr',false,'w3-hide-small');
 	$this->myPanel->aHeaderFor('headlocation',false,'w3-hide-small w3-hide-medium');	
-	$this->myPanel->aHeaderFor('sndcreds',false,'w3-hide-small w3-hide-medium');
+//	$this->myPanel->aHeaderFor('sndcreds',false,'w3-hide-small w3-hide-medium');
 //	$this->myPanel->aHeaderFor('bt',false,'w3-hide-small w3-hide-medium');
 //	$this->myPanel->aHeaderFor('trns',false,'w3-hide-small w3-hide-medium');
 	$this->myPanel->aHeaderFor('tstate');
@@ -325,7 +325,7 @@ private function showMain() {
     	echo '<td  class="w3-hide-small" title = "' . $display_ipaddr . '" >' . $display  . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
 		
-		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['sndcreds'] . '</td>' . PHP_EOL;
+//		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['sndcreds'] . '</td>' . PHP_EOL;
 		
 		$latency = 'N/A';
 		if (isset($sip_peers [$row['pkey']]['Status'])) {

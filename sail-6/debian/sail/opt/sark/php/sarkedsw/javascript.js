@@ -26,9 +26,9 @@
 		],
 
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(3),td:eq(4),td:eq(7),td:eq(8)', nRow).addClass( "bluetags" );
+          $('td:eq(1),td:eq(3),td:eq(4),td:eq(7),td:eq(8)', nRow).addClass( "w3-text-blue" );
           if ( aData[1] == "net" ) {
-            	$('td', nRow).css('background-color', 'yellow');
+            	$('td', nRow).addClass( "w3-pale-yellow" );
           } 
         },
    

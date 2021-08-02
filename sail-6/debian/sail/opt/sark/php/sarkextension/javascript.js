@@ -111,7 +111,7 @@
 		"sDom": 'fti',
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [2,5,6,7,8,10,11]
+			"aTargets" : [2,7,8,9,10]
 		}],
 		"aoColumns": [ 
 			{ "sName": "pkey" },
@@ -121,7 +121,7 @@
 			{ "sName": "macaddr" },					
 			{ "sName": "ipaddr" },		
 			{ "sName": "location" },
-			{ "sName": "sndcreds"},
+//			{ "sName": "sndcreds"},
 //			{ "sName": "boot"},
 //			{ "sName": "trns"},		
 			{ "sName": "connect"},
@@ -147,11 +147,15 @@
 			"sSearch": "Filter:"
 
 		},
-/*
+
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-        $('td:eq(7),td:eq(10)', nRow).addClass( "bluetags" );
-        },
-*/
+        		if ( aData[7] == "UNKNOWN" ) {
+            			$('td', nRow).addClass( "w3-pale-yellow" );
+          		}
+        	},
+
+
+
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
 		}  
@@ -186,7 +190,7 @@
 			{ "sName": "value"}
 		],
 		"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-          $('td:eq(1),td:eq(2),td:eq(3)', nRow).addClass( "bluetags" );
+          $('td:eq(1),td:eq(2),td:eq(3)', nRow).addClass( "w3-text-blue" );
         } 
 
 	} ).makeEditable({
