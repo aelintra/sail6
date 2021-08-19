@@ -640,9 +640,9 @@ private function showEdit() {
 		$this->myPanel->displayBooleanFor('callprogress',$tuple['callprogress']);
 	}
 
-	if ($tuple['carrier'] == "InterSARK"  || $tuple['carrier'] == "SailToSail") {
+//	if ($tuple['carrier'] == "InterSARK"  || $tuple['carrier'] == "SailToSail") {
 		$this->myPanel->displayBooleanFor('privileged',$tuple['privileged']);
-	}
+//	}
 
 	if ( $tuple['carriertype'] == 'group' )  {
 		$this->myPanel->displayInputFor('predial','text',$tuple['predial']);	
