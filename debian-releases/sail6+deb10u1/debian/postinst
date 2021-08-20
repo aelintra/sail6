@@ -17,7 +17,8 @@
 [ ! -e /var/spool/asterisk/monstage ] && mkdir -p /var/spool/asterisk/monstage
 [ ! -e /var/spool/asterisk/monout ] && mkdir -p /var/spool/asterisk/monout
 [ ! -e /opt/sark/passwd/htpasswd ] && cp -f /opt/sark/cache/htpasswd /opt/sark/passwd/htpasswd
-[ ! -e /usr/share/asterisk/moh-default ] && mkdir -p /usr/share/asterisk/moh-default
+[ ! -e /etc/asterisk/sark_moh.conf ] && mkdir -p /etc/asterisk/sark_moh.conf
+[ ! -e /etc/asterisk/moh-default ] && mkdir -p /etc/asterisk/moh-default
 [ ! -e /opt/sark/bkup ] && mkdir -p /opt/sark/bkup
 [ ! -e /opt/sark/snap ] && mkdir -p /opt/sark/snap
 #[ ! -e /opt/sark/www/header.htm ] && /bin/cp -f /opt/sark/cache/header.htm /opt/sark/www
