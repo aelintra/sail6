@@ -1022,14 +1022,15 @@ private function showEdit() {
 	$this->myPanel->internalEditBoxStart();
 //	$this->myPanel->displayBooleanFor('location',$extension['location']);
 	$this->myPanel->radioSlide('location',$extension['location'],array('local','remote'));
-/* Removed Dec2020
+
 	if (isset($extension['macaddr'])) {
 		if (isset($fqdn)) {
 			$this->myPanel->radioSlide('provisionwith',$extension['provisionwith'],array('IP','FQDN'));
 		}
-		$this->myPanel->radioSlide('sndcreds',$extension['sndcreds'],array('No','Once','Always'));	
+// Removed Dec2020 - causing race database locks		
+//		$this->myPanel->radioSlide('sndcreds',$extension['sndcreds'],array('No','Once','Always'));	
 	}
-*/	
+	
 	if (count($protocol) > 1)	{
 		$this->myPanel->aLabelFor('protocol');
 		$this->myPanel->selected = $extension['protocol'];
