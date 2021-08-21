@@ -365,6 +365,7 @@ PROXYIGNORE TEXT,                   -- not used in 4.x
 RECAGE INTEGER DEFAULT 60,			-- How long to keep voice recordings in days
 RECFINALDEST TEXT,                  -- recordings folder
 RECLIMIT TEXT,                      -- Recording folder max size
+RECMOUNT TEXT,                   	-- Recording folder mount command
 RECQDITHER TEXT,                    -- dither (ms) on queuelog searches
 RECQSEARCHLIM TEXT,                 -- search limit on queuelog
 RECRSYNCPARMS TEXT,                 -- not used in 4.x 

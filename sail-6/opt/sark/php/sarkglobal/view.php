@@ -1,4 +1,4 @@
-<?php
+Frec<?php
 //
 // Developed by CoCo
 // Copyright (C) 2018 CoCoSoft
@@ -285,6 +285,7 @@ private function showMain() {
     $this->myPanel->radioSlide('playcongested',$global['PLAYCONGESTED'],array('YES','NO','SIGNAL'));
     $this->myPanel->radioSlide('playbusy',$global['PLAYBUSY'],array('YES','NO','SIGNAL'));
     $this->myPanel->radioSlide('callrecord1',$global['CALLRECORD1'],array('None','OTR','OTRR','In','Out','Both'));	
+    $this->myPanel->displayInputFor('recmount',$global['RECMOUNT']);	
     $this->myPanel->displayInputFor('recage','number',$global['RECAGE']);
     $this->myPanel->displayInputFor('vmailage','number',$global['VMAILAGE']);
     $this->myPanel->displayInputFor('intringdelay','number',$global['INTRINGDELAY']);
