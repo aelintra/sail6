@@ -137,20 +137,7 @@ a2dissite default-ssl.conf
 chmod 750 /etc/ssl/private
 usermod -a -G ssl-cert www-data
 
-# remove any previous sark references
-rm -rf /etc/apache2/sites-enabled/sark*
-rm -rf /etc/apache2/sites-available/sark*
-
-# link our sites
-[ ! -L /etc/apache2/sites-available/sark-certs.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-certs.conf /etc/apache2/sites-available
-[ ! -L /etc/apache2/sites-available/sark-default-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-default-ssl.conf /etc/apache2/sites-available
-[ ! -L /etc/apache2/sites-available/sark-http.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-http.conf /etc/apache2/sites-available
-[ ! -L /etc/apache2/sites-available/sark-name.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-name.conf /etc/apache2/sites-available
-[ ! -L /etc/apache2/sites-available/sark-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-ssl.conf /etc/apache2/sites-available
-[ ! -L /etc/apache2/sites-available/sark-prov-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-prov-ssl.conf /etc/apache2/sites-available
-
-
-# enable sark always fragments
+# enable sark apache fragments
 a2ensite sark-http
 a2ensite sark-ssl
 a2ensite sark-name
@@ -370,10 +357,10 @@ systemctl disable systemd-resolved
 systemctl enable dnsmasq
 systemctl restart dnsmasq
 
-if [ -d /opt/sark/www/origrecs/recordings ]; then 
-    mkdir /opt/sark/www/origrecs/recordings
-    chown www-data:www-data /opt/sark/www/origrecs/recordings
-    chmod 664 /opt/sark/www/origrecs/recordings
+if [ -d /opt/sark/recmnt ]; then 
+    mkdir /opt/sark/recmnt
+    chown www-data:www-data /opt/sark/recmnt
+    chmod 664 /opt/sark/recmnt
 fi
 
 #Install date
