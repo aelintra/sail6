@@ -319,15 +319,15 @@ HASECNODE TEXT,                     -- not used in 4.x
 HASYNCH TEXT,                       -- not used in 4.x
 HAUSECLUSTER TEXT,                  -- use cluster virt IP when provisioning
 INTRINGDELAY TEXT,                  -- ring time before voicemail
-IVRKEYWAIT TEXT,                    -- IVR key wait
-IVRDIGITWAIT TEXT,                  -- IVR inter-digit wait
+IVRKEYWAIT INTEGER DEFAULT 3,		-- IVR key wait
+IVRDIGITWAIT INTEGER DEFAULT 3000, 	-- IVR inter-digit wait
 LACL TEXT,							-- Generate ACLs
 LANGUAGE TEXT,                      -- not used
 LDAPBASE text,                      -- LDAP base
 LDAPOU text,                        -- LDAP OU
 LDAPUSER text,                      -- LDAP user
 LDAPPASS text,                      -- LDAP password
-LEASEHDTIME INTEGER DEFAULT 43200,      -- Hot desk lease time
+LEASEHDTIME INTEGER DEFAULT 43200,  -- Hot desk lease time
 LKEY TEXT,							-- not used
 LOCALAREA TEXT,                     -- not used (See Cluster)
 LOCALDLEN TEXT,                     -- not used (See Cluster)
@@ -365,6 +365,7 @@ PROXYIGNORE TEXT,                   -- not used in 4.x
 RECAGE INTEGER DEFAULT 60,			-- How long to keep voice recordings in days
 RECFINALDEST TEXT,                  -- recordings folder
 RECLIMIT TEXT,                      -- Recording folder max size
+RECMOUNT TEXT,                   	-- Recording folder mount command
 RECQDITHER TEXT,                    -- dither (ms) on queuelog searches
 RECQSEARCHLIM TEXT,                 -- search limit on queuelog
 RECRSYNCPARMS TEXT,                 -- not used in 4.x 

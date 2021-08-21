@@ -1,3 +1,11 @@
+/etc/apache2/sark_includes/preventIpAccess.conf
+/etc/apache2/sark_includes/sarkServerName.conf
+/etc/apache2/sites-available/sark-certs.conf
+/etc/apache2/sites-available/sark-default-ssl.conf
+/etc/apache2/sites-available/sark-http.conf
+/etc/apache2/sites-available/sark-name.conf
+/etc/apache2/sites-available/sark-prov-ssl.conf
+/etc/apache2/sites-available/sark-ssl.conf
 /etc/asterisk/sark_agents_header.conf
 /etc/asterisk/sark_agents_main.conf
 /etc/asterisk/sark_buddies.conf

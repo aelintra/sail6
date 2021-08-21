@@ -257,20 +257,12 @@ f9cac0384d600bcaf8f8c378ae19a5e4  opt/sark/countries/za.zone
 dfced7667010a86c22b82ed77cdb4841  opt/sark/countries/zm.zone
 8c94efe3682ba36a21e6c56af65aa8a0  opt/sark/countries/zw.zone
 dd7462bbdfa72cd259a1e73d26bb5c0c  opt/sark/db/.sail-install-date
-283fd451c390abce75bce65a7a2b882b  opt/sark/db/db_v4_create.sql
+8672fd67cf4b7f17312900fe9c5ff42b  opt/sark/db/db_v4_create.sql
 80b3f9cb80c33573c9490614fbf09e99  opt/sark/db/db_v4_device.sql
-84a96bb4233b4f466bad1647d636432d  opt/sark/db/db_v4_message.sql
+8c50be58a6329827eac7ec7aa843ef88  opt/sark/db/db_v4_message.sql
 3092e452f495202b72bc4c3a87fd82e6  opt/sark/db/db_v4_system.sql
 fc6ff2307a71a374b7148da57410afcf  opt/sark/db/ldap_create.ldif
 d41d8cd98f00b204e9800998ecf8427e  opt/sark/db/srkaudit.log
-552dacb15f2019c8f3f74c55befa242c  opt/sark/etc/apache2/sark_includes/preventIpAccess.conf
-5ba411996c7df1c33148c5b02a51db2c  opt/sark/etc/apache2/sark_includes/sarkServerName.conf
-2db165ca2cdcfe9216fa751ee72117a3  opt/sark/etc/apache2/sites-available/sark-certs.conf
-282b0d42c4050287c0d996a296895bef  opt/sark/etc/apache2/sites-available/sark-default-ssl.conf
-4c9db0713227a0eadeb9e699c47c8526  opt/sark/etc/apache2/sites-available/sark-http.conf
-374b9effcbf20b2ea65c2b0415b639b8  opt/sark/etc/apache2/sites-available/sark-name.conf
-0746b543306edce59fd2b3f0e71c7954  opt/sark/etc/apache2/sites-available/sark-prov-ssl.conf
-cf107d34de5fd3ca88b0f1f3df0b47cf  opt/sark/etc/apache2/sites-available/sark-ssl.conf
 378e7d9876709df2d59f06c9af6ba355  opt/sark/etc/dnsmasq.d/sarkdns
 fbcc6fac637e8ed6a065a8fa48c04924  opt/sark/etc/fail2ban/action.d/shorewall-jessie.local
 010d585cb1cad5055faf948c2c58c445  opt/sark/etc/fail2ban/filter.d/asterisk-wheezy.conf
@@ -458,7 +450,7 @@ e2b009fde0afc86ec2a16ec236cffcb6  opt/sark/php/sarkextension/view.php
 a93706b3c815f2b971c554c9a5ee59d6  opt/sark/php/sarkfreset/view.php
 2ad6ed6b639ddc8793f347563b3771b7  opt/sark/php/sarkglobal/javascript.js
 3c43d01c817392b8d1a8311d75d3be0c  opt/sark/php/sarkglobal/main.php
-dc711553c2085ddf3daf1044cf1b437a  opt/sark/php/sarkglobal/view.php
+1631dbb0fc13b1cea458d42e16f4d3e3  opt/sark/php/sarkglobal/view.php
 d837a91a62ea10ed4c7f39c03b34c1af  opt/sark/php/sarkgreeting/delete.php
 4ce24032bd23ab90c72bb1ffc33bf8d2  opt/sark/php/sarkgreeting/javascript.js
 3c43d01c817392b8d1a8311d75d3be0c  opt/sark/php/sarkgreeting/main.php
@@ -497,7 +489,7 @@ fea77488d7122c60b3078b3c07afc48e  opt/sark/php/sarklog/view.php
 046e7db775e64e5edc4ff92ceb01cd83  opt/sark/php/sarkmcast/view.php
 b969619a2aa2073f0075ee02c895b450  opt/sark/php/sarknetwork/javascript.js
 3c43d01c817392b8d1a8311d75d3be0c  opt/sark/php/sarknetwork/main.php
-acd7502153a43bd27914ec1f07110b2c  opt/sark/php/sarknetwork/view.php
+b234d5375596957c054d48800e2d1178  opt/sark/php/sarknetwork/view.php
 5fe088644e31c6b018a797b1a2990b0e  opt/sark/php/sarkpasswd/javascript.js
 3c43d01c817392b8d1a8311d75d3be0c  opt/sark/php/sarkpasswd/main.php
 7ac8d85384b93a7e26a37177676b2b7a  opt/sark/php/sarkpasswd/view.php
@@ -608,6 +600,7 @@ f4898be429dcb8711bc68c66a6f4dc68  opt/sark/scripts/selmixd
 3f6c77d1b0df7e87caeb21860cf21a66  opt/sark/scripts/setsnomidlescreen.pl
 7c744d9bbba85541d6f5ba6935a4de2d  opt/sark/scripts/snap.sh
 a275c3aaa334efb793324efb87860d99  opt/sark/scripts/spin.sh
+2246fcc7270ba169168c0295fcb2ad47  opt/sark/scripts/split_recordings_into_folders.php
 30fccd5cc441372d3d6e1dadca2b1d96  opt/sark/scripts/srkV4reloader.sh
 d6fb965cc5023c8e1c68ca275195931d  opt/sark/scripts/srkagerecordings.sh
 01f6a0a017be404ca4149fcd85202fa6  opt/sark/scripts/srkcronqmove.pl
@@ -616,7 +609,7 @@ e1b6ca2b9b7baeb5f13a6403ed4af857  opt/sark/scripts/srkgenAst
 5e14ca6a21436fcc10c2dae992bb841b  opt/sark/scripts/srkhelper.pl
 9be782896942c184e4514038ce4c116e  opt/sark/scripts/srkinsertdbdata.pl
 1813fa520ecba51778313c6cea22d338  opt/sark/scripts/srkoffload.sh
-7d581036b14ae6de41de76cc1dfcd6d0  opt/sark/scripts/srkoffload_simple.sh
+cf44ba0d5d9d279adffad6cd46136ee1  opt/sark/scripts/srkoffload_simple.sh
 68ac605612be6571f26d44686ed4ba89  opt/sark/scripts/srkreload
 a5d41163e99beb9e8169d9f9d33050b5  opt/sark/scripts/vmnotify.sh
 7aa531ce541e274c3285089760665703  opt/sark/service/httpd-srk/run
@@ -784,7 +777,7 @@ b5e8410d74cbcfab505266c24851d07b  opt/sark/templates/shorewall/sark_ipset_blist
 9d708e089374e204836c14d7ce0dba16  opt/sark/www/index.php
 0be104af52f10f451c829daac80b1045  opt/sark/www/origrecs/README
 8d1edd592e91b2da17857a92335ffd29  opt/sark/www/origrecs/admin.php
-e134ed227690d22db8aa76def11e0617  opt/sark/www/origrecs/config.php
+1cdbdf7ce485c16a8d35e45998c2f389  opt/sark/www/origrecs/config.php
 2a44fbdb7360c60122bcf6dcef0387d8  opt/sark/www/origrecs/css/humanity/images/ui-bg_flat_75_aaaaaa_40x100.png
 951093b89f026993cd155c7d54b67ad4  opt/sark/www/origrecs/css/humanity/images/ui-bg_glass_100_f5f0e5_1x400.png
 8fd8fc8257abe1845d836e5dbd378fd2  opt/sark/www/origrecs/css/humanity/images/ui-bg_glass_25_cb842e_1x400.png
@@ -1391,5 +1384,5 @@ eb30975a1ff74f1cc5d6ceb09e6c7f67  opt/sark/www/sark-common/sark-colour-web.jpg
 da362eff5f073b336d4f0b861cd8e652  opt/sark/www/sark-common/smeserver_logo.jpg
 751d17d6f9c5aecd2a264c673af4577b  usr/share/asterisk/agi-bin/kwakeup
 0af8c3e30ef06285d251c45681703e6c  usr/share/doc/sail-4.0.0/COPYING.gz
-400890a81fba976d074f926194974b26  usr/share/doc/sail/changelog.Debian.gz
+50b5343ab799e9d0068c244036fbdd2e  usr/share/doc/sail/changelog.Debian.gz
 c007f37c8e4cfb4dfae4575723a0d6c1  usr/share/doc/sail/copyright
