@@ -680,6 +680,16 @@ private function saveEdit() {
 			}												
 		}
 */
+
+		$this->helper->request_syscmd ("touch /etc/resolv.dnsmasq");
+		$this->helper->request_syscmd ("tail  /etc/resolv.dnsmasq > /etc/resolv.dnsmasq");
+		if ($dns1) {
+			$this->helper->request_syscmd ("echo nameserver $dns1 >> /etc/resolv.dnsmasq");
+		}
+		if ($dns2) {
+			$this->helper->request_syscmd ("echo nameserver $dns2 >> /etc/resolv.dnsmasq");
+		}
+		
 		if (file_exists ("/etc/ssmtp/ssmtp.conf")) {
 			$this->helper->request_syscmd ("chmod 777 /etc/ssmtp/ssmtp.conf");
 			$fh = fopen("/etc/ssmtp/ssmtp.conf", 'w') or die('Could not open ssmtp.conf file!');
