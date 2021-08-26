@@ -301,6 +301,9 @@ systemctl enable shorewall6.service
 [ ! -d /opt/sark/public/vtech ] && mkdir /opt/sark/public/vtech && chown www-data:www-data /opt/sark/public/vtech
 [ ! -d /opt/sark/public/yealink ] && mkdir /opt/sark/public/yealink && chown www-data:www-data /opt/sark/public/yealink
 
+# call recording 
+[ ! -d /opt/sark/media/recordings/default ] && mkdir -p /opt/sark/media/recordings/default
+
 #set up shellinabox to our likin
 sed -i "/^SHELLINABOX_PORT/c\SHELLINABOX_PORT=63005" /etc/default/shellinabox
 sed -i '/^SHELLINABOX_ARGS/c\SHELLINABOX_ARGS="--no-beep --localhost-only --disable-peer-check --disable-ssl"' /etc/default/shellinabox
