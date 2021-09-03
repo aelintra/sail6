@@ -905,7 +905,7 @@ public function checkCreds($pkey, $password, &$msg, $login) {
 
         // retreive the user's information from the database using 
         // their username. 
-        $query = "SELECT id,pkey,password,salt,email FROM user WHERE pkey = :pkey"; 
+        $query = "SELECT id,pkey,cluster,password,salt,email FROM user WHERE pkey = :pkey"; 
          
         // The parameter values 
         $query_params = array(  ':pkey' => $pkey );

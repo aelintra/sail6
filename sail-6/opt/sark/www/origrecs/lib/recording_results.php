@@ -50,6 +50,8 @@ if (is_dir($folder))
 
 
     // If there's a tenant name then we expect an extra field in the file name
+    // 
+/*
     $offset = strlen($TENANT)>0 ? 1 : 0;
     syslog(LOG_WARNING, "Tenant is  $TENANT, offset is $offset");
     
@@ -61,16 +63,17 @@ if (is_dir($folder))
             $offset = 0;
         }
     }
-
+*/
+    $offset = 1;
     $recordings->setOffset($offset);
 
     while ($file=readdir($dir))
     {
-        syslog(LOG_WARNING, "Considering file $file");
+//        syslog(LOG_WARNING, "Considering file $file");
         if ($file == '.' || $file == '..' || is_dir($file))
         {
             
-            syslog(LOG_WARNING, "ignoring .{.} file $file");
+//            syslog(LOG_WARNING, "ignoring .{.} file $file");
             continue;
         }
 // replace with preg_split for php7
@@ -79,9 +82,9 @@ if (is_dir($folder))
 	$file_list = preg_split('/[-.]/', $file);	
 
         // Unless the filename contains the tenant name then we don't want to include this recording
-        if ($offset > 0 && $TENANT != 'MASTER-USER' && $file_list[1] != $TENANT)
+        if ($offset > 0 && $_SESSION['user']['pkey'] != 'admin' && $file_list[1] != $_SESSION['user']['cluster'])
         {
-            syslog(LOG_WARNING, "Failed tenant rule $file");
+            syslog(LOG_WARNING, "Failed tenant rule $file for tenant " . $_SESSION['user']['cluster']);
             continue;
         }
 

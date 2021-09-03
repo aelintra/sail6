@@ -1,3 +1,10 @@
+sail (6.2.0-18+deb9u1) UNRELEASED; urgency=low
+
+   - integrate the origrecs code with session
+   - add filters to origrecs based upon tenant name
+
+ -- CoCoSoft <admin@aelintra.com>  Fri, 3  Sep 2021 18:00:00 +0000
+ 
 sail (6.2.0-17+deb9u1) UNRELEASED; urgency=low
 
    - move call recordings to /opt/sark/media/recordings
