@@ -1,10 +1,10 @@
 <?php
 
-// Newer vesions of SARK now populate the tenant field when creating a call recording file 
-$TENANT = 'default';
+session_start();
 
 (@include 'config.php') or die('Please create your config.php before proceeding.');
 
+/*  Integrated with SARK auth
 if (isset($AUTH_LOGIN)) {
 	require('lib/auth.php');
 }
@@ -12,6 +12,7 @@ if (isset($AUTH_LOGIN)) {
 if (defined('ACCESSED_OVER_SHARE') && ACCESSED_OVER_SHARE) {
     require('lib/mount.php');
 }
+*/
 
 $results = '';
 
