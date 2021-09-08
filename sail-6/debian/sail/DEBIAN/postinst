@@ -1,5 +1,5 @@
 #!/bin/bash
-exit
+
 setvcl() {
 # turn on VCL in Globals
     echo "AWS instance detected, setting cloud flags"
@@ -136,6 +136,19 @@ a2dissite default-ssl.conf
 # set the snakeoil permissions so Apache can read the key
 chmod 750 /etc/ssl/private
 usermod -a -G ssl-cert www-data
+
+# remove any previous sark references
+rm -rf /etc/apache2/sites-enabled/sark*
+rm -rf /etc/apache2/sites-available/sark*
+
+# link our sites
+[ ! -L /etc/apache2/sites-available/sark-certs.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-certs.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-default-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-default-ssl.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-http.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-http.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-name.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-name.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-ssl.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-prov-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-prov-ssl.conf /etc/apache2/sites-available
+
 
 # enable sark apache fragments
 a2ensite sark-http
