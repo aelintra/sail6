@@ -1,5 +1,5 @@
 #!/bin/bash
-
+exit
 setvcl() {
 # turn on VCL in Globals
     echo "AWS instance detected, setting cloud flags"
