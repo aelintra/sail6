@@ -3,7 +3,7 @@
 sv d srk-ua-responder
 sv d srk-ua-helper
 
-rm -rf /etc/apache2/sites-enabled/sark*
+#rm -rf /etc/apache2/sites-enabled/sark*
 
 [ -L /etc/cron.d/sark ] && rm -rf /etc/cron.d/sark
 
