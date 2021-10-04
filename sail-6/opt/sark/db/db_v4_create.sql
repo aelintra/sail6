@@ -79,11 +79,12 @@ include TEXT,     					-- whitespace separated list of clusters OR, the keyword 
 localarea TEXT,   					-- local area code
 localdplan TEXT,  					-- local dialplan
 masteroclo TEXT,  					-- master day/night throw
-name TEXT,						-- V2; not used
+name TEXT,							-- V2; not used
 oclo TEXT,        					-- calculated day/night throw
 operator TEXT,    					-- tenant sysop
 pickupgroup TEXT,  					-- asterisk pickupgroup number (1-63)
-routeclassoverride TEXT,				-- Holiday scheduler route class override
+devicerec TEXT DEFAULT 'default',		-- recordings settings for this tenant
+routeclassoverride TEXT,			-- Holiday scheduler route class override
 routeoverride TEXT,					-- Holiday scheduler route override
 usemohcustom TEXT,
 z_created datetime,

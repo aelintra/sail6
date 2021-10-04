@@ -48,8 +48,8 @@
 			domain: "domaincheck",
 			dns1: "validIP",
 			dns2: "validIP",
-			sshport: {required: true, range:[1,65535]},
-			hostname: "required hostcheck"
+			sshport: {required: true, range:[1,65535]}
+//			hostname: "required hostcheck"
 			
 	   },
 	   messages: {
