@@ -25,11 +25,10 @@ Class sarkholiday {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
-	date('d-m-Y')
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
-	
+	""
 public function showForm() {
 	
 	$this->myPanel = new page;
