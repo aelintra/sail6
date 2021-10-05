@@ -315,6 +315,7 @@ private function showEdit($pkey=false) {
 	$this->myPanel->displayInputFor('localdplan','text',$res['localdplan']);
 	$this->myPanel->displayInputFor('abstimeout','number',$res['abstimeout']);
 	$this->myPanel->displayInputFor('chanmax','number',$res['chanmax']);
+	$this->myPanel->displayPopupFor('devicerec',$extension['devicerec'],array('default','None','Inbound','Outbound','Both'));
 	$this->myPanel->radioSlide('masterclose',$masterclose,array('AUTO','CLOSED'));
 //	$this->myPanel->displayInputFor('oclo','text',$res['oclo'],null,null,true);
 

@@ -40,7 +40,7 @@ $defltcallfile=array (
 );
 
 $defltsms=array(
-		smsapiid=>'',	// clickatel only
+		smsapiid=>'',	// clickatel onlyΩ
 		smscpath=>"DAHDI/g0/17094009",
 		smshandler=>"smsc",
 		smsmsg=>"Incident - call incident room",
@@ -225,10 +225,12 @@ catch (Exception $ex) {
  * Example 3 - Clickatel
  */
 
+/*
+
 function clickatel(&$smsvars) { 
 /*
  * call the Clickatel gateway using HTTP GET
- */
+ 
   	
 	$message = $smsvars['smsmsg'];
 	foreach ($smsvars['smsnum'] as $smsnum ) {
@@ -238,6 +240,31 @@ function clickatel(&$smsvars) {
 		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatel responded: " . $result );
     } 
 }
+*/
+
+
+/*
+ * Example 3(A) - Clickatel HTTPS API GET
+ */
+
+function clickatel(&$smsvars) { 
+/*
+ * call the Clickatel gateway using HTTP GET
+ */
+  	
+	$message = $smsvars['smsmsg'];
+	foreach ($smsvars['smsnum'] as $smsnum ) {
+		$result = file_get_contents('https://api.clickatell.com/messages/http/send?apiKey=' .
+			$smsvars['smsapiid'] .	
+			'&to=' .
+			$smsnum .
+			'&content=' .
+			substr(urlencode($message),0,160) 
+		);
+		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatel responded: " . $result );
+    	} 
+}
+
 /*
  * Example 4 - aql (needs testing)
  */
