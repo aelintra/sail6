@@ -108,6 +108,7 @@ function buildCallfile($conf,$sc,$channel,&$defltcallfile=array()) {
  */ 
 	$vars=null;
 	$callfile=array();
+	$OUT=null;
 	
 // set defaults for the callfile
 	$callfile = array_merge($callfile,$defltcallfile);
