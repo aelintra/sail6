@@ -57,11 +57,12 @@ $smsvars=array();
  * get the parameters and do checks
  */ 
 $options = getopt("n:r::");
+syslog(LOG_WARNING, "Multicast caller invoked with params " . var_export($options, TRUE));
 $conf = parse_ini_file('/etc/asterisk/sark_mcstcnf.conf',1);
 syslog(LOG_WARNING, var_export($conf, TRUE));
 // check that a short code has been passed as -n
 if (!$options ["n"]) {
-	syslog(LOG_WARNING, "mstcaller.php called without n parameter " );
+	syslog(LOG_WARNING, "mstcaller.php called without n parameter - exit this iteration" );
 	exit;
 }
 else {
@@ -69,7 +70,7 @@ else {
 }
 // check if a room number has been passed as -r
 if (!$options ["r"]) {
-	syslog(LOG_WARNING, "mstcaller.php called without r parameter " );
+	syslog(LOG_WARNING, "mstcaller.php called without r parameter - use default" );
 }
 else {
 	$defltcallfile["room"] = $options["r"];
@@ -77,7 +78,7 @@ else {
 
 // check the short code exists in the conf file	
 if (!is_array($conf["$sc"])) {
-	syslog(LOG_WARNING, "mstcaller.php called with invalid n parameter $sc" );
+	syslog(LOG_WARNING, "mstcaller.php called with non-existing n parameter $sc - exit this iteration" );
 	exit;
 }
 // OK - build the callfiles for this list 
