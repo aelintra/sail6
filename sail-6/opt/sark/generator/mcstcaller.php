@@ -231,7 +231,7 @@ function clickatell(&$smsvars) {
 /*
  * call the Clickatel gateway using HTTP GET
  */
-  	
+  	syslog(LOG_WARNING, var_export($smsvars, TRUE));
 	$message = $smsvars['smsmsg'];
 	foreach ($smsvars['smsnum'] as $smsnum ) {
 		$result = file_get_contents('https://platform.clickatell.com/messages/http/send?apiKey=' .
