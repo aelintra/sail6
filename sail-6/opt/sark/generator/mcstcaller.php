@@ -82,7 +82,7 @@ if (!is_array($conf["$sc"])) {
 	exit;
 }
 // OK - build the callfiles for this list 
-if (array_key_exists($conf["$sc"]["number"])) {
+if (array_key_exists("number",$conf)) {
 	foreach ($conf["$sc"]["number"] as $channel) {
 		buildCallfile($conf,$sc,$channel,$defltcallfile);
 	}
@@ -92,7 +92,7 @@ else {
 }
 // Now send any sms messages requested
 $smsvars = array_merge($smsvars,$defltsms);
-if (array_key_exists($conf["$sc"]["smsnum"])) {
+if (array_key_exists("smsnum",$conf)) {
 	foreach ($conf["$sc"] as $key=>$value) {		
 		if (preg_match(' /^sms/ ',$key)) {
 				$smsvars[$key] = $value;
