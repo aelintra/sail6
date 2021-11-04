@@ -58,7 +58,7 @@ $smsvars=array();
  */ 
 $options = getopt("n:r::");
 $conf = parse_ini_file('/etc/asterisk/sark_mcstcnf.conf',1);
-syslog(LOG_WARNING, print_r($conf, TRUE));
+syslog(LOG_WARNING, var_export($conf, TRUE));
 // check that a short code has been passed as -n
 if (!$options ["n"]) {
 	syslog(LOG_WARNING, "mstcaller.php called without n parameter " );
