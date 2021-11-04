@@ -88,7 +88,7 @@ if (array_key_exists("number", $conf["$sc"])) {
 	}
 }
 else {
-	syslog(LOG_WARNING, "mstcaller.php called with missing number array $sc" );	
+	syslog(LOG_WARNING, "mstcaller.php called with no number array.  Nothing to dial ($sc)" );	
 }
 // Now send any sms messages requested
 $smsvars = array_merge($smsvars,$defltsms);
@@ -101,7 +101,7 @@ if (array_key_exists("smsnum", $conf["$sc"])) {
 	$smsvars['smshandler']($smsvars);
 }
 else {
-	syslog(LOG_WARNING, "mstcaller.php called with missing smsnum array $sc" );	
+	syslog(LOG_WARNING, "mstcaller.php called with no smsnum array. Nothing to SMS ($sc)" );	
 }
 // and out...
 exit;
