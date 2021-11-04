@@ -27,28 +27,28 @@
 //
 
 $defltcallfile=array (		
-		archive=>"no",
-		callerid=>"",
-		context=>"mcstcnfxfer",
-		extension=>"s",
-		greeting=>"beep",
-		maxretries=>0,
-		priority=>1,
-		retrytime=>60,
-		room=>300,
-		waittime=>45
+		'archive' => "no",
+		'callerid' => "",
+		'context' => "mcstcnfxfer",
+		'extension' => "s",
+		'greeting' => "beep",
+		'maxretries' => 0,
+		'priority' => 1,
+		'retrytime' => 60,
+		'room' => 300,
+		'waittime' => 45
 );
 
 $defltsms=array(
-		smsapiid=>'',	// clickatel onlyΩ
-		smscpath=>"DAHDI/g0/17094009",
-		smshandler=>"smsc",
-		smsmsg=>"Incident - call incident room",
-		smsinfomsg=>"",
-		smsoriginator=>'AsteriskPBX',
-		smspassword=>'smspassword',
-		smsuser=>'smsuid',
-		smsretries=>3		
+		'smsapiid' => '',	// clickatel only
+		'smscpath' => "DAHDI/g0/17094009",
+		'smshandler' => "smsc",
+		'smsmsg' => "Incident - call incident room",
+		'smsinfomsg' => "",
+		'smsoriginator' => 'AsteriskPBX',
+		'smspassword' => 'smspassword',
+		'smsuser' => 'smsuid',
+		'smsretries' => 3		
 );
 
 $smsvars=array();
@@ -221,47 +221,26 @@ catch (Exception $ex) {
 
 }
 
+
 /*
- * Example 3 - Clickatel
+ * Example 3(A) - Clickatell HTTPS API GET
  */
 
-/*
-
-function clickatel(&$smsvars) { 
-/*
- * call the Clickatel gateway using HTTP GET
- 
-  	
-	$message = $smsvars['smsmsg'];
-	foreach ($smsvars['smsnum'] as $smsnum ) {
-        $result = file_get_contents('http://api.clickatell.com/http/sendmsg?api_id='.
-			$smsvars['smsapiid'].'&user='.$smsvars['smsuser'].'&password='.$smsvars['smspassword'].
-			'&to='.$smsnum.'&text='.substr(urlencode($message),0,160) );
-		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatel responded: " . $result );
-    } 
-}
-*/
-
-
-/*
- * Example 3(A) - Clickatel HTTPS API GET
- */
-
-function clickatel(&$smsvars) { 
+function clickatell(&$smsvars) { 
 /*
  * call the Clickatel gateway using HTTP GET
  */
   	
 	$message = $smsvars['smsmsg'];
 	foreach ($smsvars['smsnum'] as $smsnum ) {
-		$result = file_get_contents('https://api.clickatell.com/messages/http/send?apiKey=' .
+		$result = file_get_contents('https://platform.clickatell.com/messages/http/send?apiKey=' .
 			$smsvars['smsapiid'] .	
 			'&to=' .
 			$smsnum .
 			'&content=' .
 			substr(urlencode($message),0,160) 
 		);
-		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatel responded: " . $result );
+		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatell responded: " . $result );
     	} 
 }
 
