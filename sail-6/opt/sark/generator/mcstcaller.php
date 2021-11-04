@@ -82,20 +82,26 @@ if (!is_array($conf["$sc"])) {
 	exit;
 }
 // OK - build the callfiles for this list 
-if (is_array($conf["$sc"]["number"])) {
+if (array_key_exists($conf["$sc"]["number"])) {
 	foreach ($conf["$sc"]["number"] as $channel) {
 		buildCallfile($conf,$sc,$channel,$defltcallfile);
 	}
 }
+else {
+	syslog(LOG_WARNING, "mstcaller.php called with missing number array $sc" );	
+}
 // Now send any sms messages requested
 $smsvars = array_merge($smsvars,$defltsms);
-if (is_array($conf["$sc"]["smsnum"])) {
+if (array_key_exists($conf["$sc"]["smsnum"])) {
 	foreach ($conf["$sc"] as $key=>$value) {		
 		if (preg_match(' /^sms/ ',$key)) {
 				$smsvars[$key] = $value;
 		}
 	}
 	$smsvars['smshandler']($smsvars);
+}
+else {
+	syslog(LOG_WARNING, "mstcaller.php called with missing smsnum array $sc" );	
 }
 // and out...
 exit;
