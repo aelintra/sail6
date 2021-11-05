@@ -98,6 +98,7 @@ if (array_key_exists("smsnum", $conf["$sc"])) {
 				$smsvars[$key] = $value;
 		}
 	}
+	syslog(LOG_WARNING, "mstcaller.php calling smshandler " . $smsvars['smshandler'] . " for  ($sc)" ); 
 	$smsvars['smshandler']($smsvars);
 }
 else {
@@ -268,3 +269,4 @@ function aql(&$smsvars) {
 }
 
 ?>
+

@@ -1,9 +1,10 @@
 sail (6.2.0-19+ubuntu18) UNRELEASED; urgency=low
 
    - add recording options to tenant
-
+   - fix corruption in holiday/view
+   
  -- CoCoSoft <admin@aelintra.com>  Fri, 4  Oct 2021 18:00:00 +0000
- 
+
 sail (6.2.0-18+ubuntu18) UNRELEASED; urgency=low
 
    - integrate the origrecs code with session
