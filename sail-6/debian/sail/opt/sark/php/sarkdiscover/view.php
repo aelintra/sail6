@@ -91,7 +91,7 @@ private function showMain() {
  *  Limit search to 8 bits, otherwise it will take forever on Class B networks
  */ 
 		$cidr .= '/24';
- 		$rets=`sudo nmap -T5  -sP -n $cidr | grep -v Host | grep -v '$myip' | awk '/Nmap scan/ {printf $0 " "; getline; print $0}' > /tmp/netfile`;
+ 		$rets=`sudo nmap -T5  -sP -n $cidr | grep -v Host | awk '/Nmap scan/ {printf $0 " "; getline; print $0}' > /tmp/netfile`;
  		`sed -i 's/Nmap scan report for //' /tmp/netfile`;
  		`sed -i 's/MAC Address: //' /tmp/netfile`;
  		`sed -i 's/(//g' /tmp/netfile`;

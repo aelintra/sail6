@@ -233,6 +233,9 @@ private function saveNew() {
 	
 	$this->validator = new FormValidator();
     $this->validator->addValidation("pkey","req","Please fill in Tenant name");
+    $this->validator->addValidation("pkey","maxlen=20","Tenant name must be less than 20 chars");
+    $this->validator->addValidation("pkey","regexp=/^[0-9a-zA-Z_\-]+$/","Tenant name is invalid - must be [0-9a-zA-Z_-]");
+
     $this->validator->addValidation("localarea","num","Local Area Code must be numeric"); 
     $this->validator->addValidation("localdplan","regexp=/^[_0-9XNZxnz!#\s\*\.\-\[\]]+$/","Local Dialplan must be a valid Asterisk dialplan");
     $this->validator->addValidation("abstimeout","num","Absolute Timeout must be numeric");

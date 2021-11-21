@@ -1,5 +1,17 @@
 #!/bin/bash
 
+setvcl() {
+# turn on VCL in Globals
+    echo "AWS instance detected, setting cloud flags"
+    /usr/bin/sqlite3 /opt/sark/db/sark.db "update globals set VCL=1"
+# open 80,443 and 22 in the firewall (otherwise we'll be locked out)
+    echo "WARNING!!!  Ports 80, 443 and 22 have been opened to prevent AWS lockout - you should review these and set sensible values"
+    sed -i 's/ACCEPT net:$LAN $FW tcp 80/ACCEPT net $FW tcp 80/' /etc/shorewall/sark_rules
+    sed -i 's/ACCEPT net:$LAN $FW tcp 443/ACCEPT net $FW tcp 443/' /etc/shorewall/sark_rules
+    sed -i 's/ACCEPT net:$LAN $FW tcp 22/ACCEPT net $FW tcp 22/' /etc/shorewall/sark_rules 
+}
+
+
 #Copy Asterisk file fragments
 [ ! -e /etc/asterisk/sark_customer_agents_main.conf ] && cp -f /opt/sark/cache/template_cust.conf /etc/asterisk/sark_customer_agents_main.conf 
 [ ! -e /etc/asterisk/sark_customer_extensions_globals.conf ] && cp -f /opt/sark/cache/template_cust.conf /etc/asterisk/sark_customer_extensions_globals.conf 
@@ -124,7 +136,20 @@ a2dissite default-ssl.conf
 chmod 750 /etc/ssl/private
 usermod -a -G ssl-cert www-data
 
-# enable sark always fragments
+# remove any previous sark references
+rm -rf /etc/apache2/sites-enabled/sark*
+rm -rf /etc/apache2/sites-available/sark*
+
+# link our sites
+[ ! -L /etc/apache2/sites-available/sark-certs.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-certs.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-default-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-default-ssl.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-http.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-http.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-name.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-name.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-ssl.conf /etc/apache2/sites-available
+[ ! -L /etc/apache2/sites-available/sark-prov-ssl.conf ] && ln -s /opt/sark/etc/apache2/sites-available/sark-prov-ssl.conf /etc/apache2/sites-available
+
+
+# enable sark apache fragments
 a2ensite sark-http
 a2ensite sark-ssl
 a2ensite sark-name
@@ -148,6 +173,8 @@ a2enmod ssl
 #enable listening on IPV6 for apache
 sed -i 's/Listen 80/Listen [::]:80/' /etc/apache2/ports.conf
 sed -i 's/Listen 443/Listen [::]:443/' /etc/apache2/ports.conf
+
+[ ! -e /etc/ssl/3pcerts ] && mkdir /etc/ssl/3pcerts 
 
 systemctl enable apache2.service
 systemctl stop apache2.service
@@ -267,16 +294,15 @@ if [  "$?" -ne "0" ] ; then
 fi
 
 #Check if I am an AWS instance and set defaults accordingly
-dmidecode -s bios-version | grep amazon
+
+dmidecode -s bios-version | grep -i amazon
 if [ "$?" -eq "0" ] ; then
-# turn on VCL in Globals
-    echo "AWS instance detected, setting cloud flags"
-    /usr/bin/sqlite3 /opt/sark/db/sark.db "update globals set VCL=1"
-# open 80,443 and 22 in the firewall (otherwise we'll be locked out)
-    echo "WARNING!!!  Ports 80, 443 and 22 have been opened to prevent AWS lockout - you should review these and set sensible values"
-    sed -i 's/ACCEPT net:$LAN $FW tcp 80/ACCEPT net $FW tcp 80/' /etc/shorewall/sark_rules
-    sed -i 's/ACCEPT net:$LAN $FW tcp 443/ACCEPT net $FW tcp 443/' /etc/shorewall/sark_rules
-    sed -i 's/ACCEPT net:$LAN $FW tcp 22/ACCEPT net $FW tcp 22/' /etc/shorewall/sark_rules
+    setvcl
+else
+    dmidecode -s bios-vendor | grep -i amazon
+    if [ "$?" -eq "0" ] ; then
+        setvcl
+    fi
 fi
 
 # enable shorewall

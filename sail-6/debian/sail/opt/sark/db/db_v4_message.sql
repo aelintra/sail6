@@ -231,7 +231,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('ntp-servers'
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('obeydnd','ObeyDND','When enabled, the ring group will not attempt to ring phones which it knows to be in DND');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('oclo','Timer State','The current state of the automatic day/night mode switch for the tenant.  It is set/unset by the timers in the timers panel.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('openroute','Open ','The OPEN inbound route. The route which will be used by the inbound route manager to process calls from this DDI during normal business hours.');
-INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('operator','System Operator(default 0)','The system operator.  The key press you wish to use to contact the operator (default is zero).');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('operator','System Operator(default 00)','The system operator.  The key press you wish to use to contact the operator (default is zero).');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('orideclosed','Override','Set this to YES if you want to force ALL extensions to have this closed restriction');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('orideopen','Override','Set this to YES if you want to force ALL extensions to have this open restriction');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('outcome','Outcome','Where the call will be delivered if the call group fails to terminate the call.');

@@ -27,28 +27,28 @@
 //
 
 $defltcallfile=array (		
-		archive=>"no",
-		callerid=>"",
-		context=>"mcstcnfxfer",
-		extension=>"s",
-		greeting=>"beep",
-		maxretries=>0,
-		priority=>1,
-		retrytime=>60,
-		room=>300,
-		waittime=>45
+		'archive' => "no",
+		'callerid' => "",
+		'context' => "mcstcnfxfer",
+		'extension' => "s",
+		'greeting' => "beep",
+		'maxretries' => 0,
+		'priority' => 1,
+		'retrytime' => 60,
+		'room' => 300,
+		'waittime' => 45
 );
 
 $defltsms=array(
-		smsapiid=>'',	// clickatel onlyΩ
-		smscpath=>"DAHDI/g0/17094009",
-		smshandler=>"smsc",
-		smsmsg=>"Incident - call incident room",
-		smsinfomsg=>"",
-		smsoriginator=>'AsteriskPBX',
-		smspassword=>'smspassword',
-		smsuser=>'smsuid',
-		smsretries=>3		
+		'smsapiid' => '',	// clickatel only
+		'smscpath' => "DAHDI/g0/17094009",
+		'smshandler' => "smsc",
+		'smsmsg' => "Incident - call incident room",
+		'smsinfomsg' => "",
+		'smsoriginator' => 'AsteriskPBX',
+		'smspassword' => 'smspassword',
+		'smsuser' => 'smsuid',
+		'smsretries' => 3		
 );
 
 $smsvars=array();
@@ -57,11 +57,12 @@ $smsvars=array();
  * get the parameters and do checks
  */ 
 $options = getopt("n:r::");
+syslog(LOG_WARNING, "Multicast caller invoked with params " . var_export($options, TRUE));
 $conf = parse_ini_file('/etc/asterisk/sark_mcstcnf.conf',1);
-var_dump($conf);
+syslog(LOG_WARNING, var_export($conf, TRUE));
 // check that a short code has been passed as -n
 if (!$options ["n"]) {
-	syslog(LOG_WARNING, "mstcaller.php called without n parameter " );
+	syslog(LOG_WARNING, "mstcaller.php called without n parameter - exit this iteration" );
 	exit;
 }
 else {
@@ -69,7 +70,7 @@ else {
 }
 // check if a room number has been passed as -r
 if (!$options ["r"]) {
-	syslog(LOG_WARNING, "mstcaller.php called without r parameter " );
+	syslog(LOG_WARNING, "mstcaller.php called without r parameter - use default" );
 }
 else {
 	$defltcallfile["room"] = $options["r"];
@@ -77,24 +78,31 @@ else {
 
 // check the short code exists in the conf file	
 if (!is_array($conf["$sc"])) {
-	syslog(LOG_WARNING, "mstcaller.php called with invalid n parameter $sc" );
+	syslog(LOG_WARNING, "mstcaller.php called with non-existing n parameter $sc - exit this iteration" );
 	exit;
 }
 // OK - build the callfiles for this list 
-if (is_array($conf["$sc"]["number"])) {
+if (array_key_exists("number", $conf["$sc"])) {
 	foreach ($conf["$sc"]["number"] as $channel) {
 		buildCallfile($conf,$sc,$channel,$defltcallfile);
 	}
 }
+else {
+	syslog(LOG_WARNING, "mstcaller.php called with no number array.  Nothing to dial ($sc)" );	
+}
 // Now send any sms messages requested
 $smsvars = array_merge($smsvars,$defltsms);
-if (is_array($conf["$sc"]["smsnum"])) {
+if (array_key_exists("smsnum", $conf["$sc"])) {
 	foreach ($conf["$sc"] as $key=>$value) {		
 		if (preg_match(' /^sms/ ',$key)) {
 				$smsvars[$key] = $value;
 		}
 	}
+	syslog(LOG_WARNING, "mstcaller.php calling smshandler " . $smsvars['smshandler'] . " for  ($sc)" ); 
 	$smsvars['smshandler']($smsvars);
+}
+else {
+	syslog(LOG_WARNING, "mstcaller.php called with no smsnum array. Nothing to SMS ($sc)" );	
 }
 // and out...
 exit;
@@ -108,6 +116,7 @@ function buildCallfile($conf,$sc,$channel,&$defltcallfile=array()) {
  */ 
 	$vars=null;
 	$callfile=array();
+	$OUT=null;
 	
 // set defaults for the callfile
 	$callfile = array_merge($callfile,$defltcallfile);
@@ -221,47 +230,26 @@ catch (Exception $ex) {
 
 }
 
+
 /*
- * Example 3 - Clickatel
+ * Example 3(A) - Clickatell HTTPS API GET
  */
 
-/*
-
-function clickatel(&$smsvars) { 
-/*
- * call the Clickatel gateway using HTTP GET
- 
-  	
-	$message = $smsvars['smsmsg'];
-	foreach ($smsvars['smsnum'] as $smsnum ) {
-        $result = file_get_contents('http://api.clickatell.com/http/sendmsg?api_id='.
-			$smsvars['smsapiid'].'&user='.$smsvars['smsuser'].'&password='.$smsvars['smspassword'].
-			'&to='.$smsnum.'&text='.substr(urlencode($message),0,160) );
-		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatel responded: " . $result );
-    } 
-}
-*/
-
-
-/*
- * Example 3(A) - Clickatel HTTPS API GET
- */
-
-function clickatel(&$smsvars) { 
+function clickatell(&$smsvars) { 
 /*
  * call the Clickatel gateway using HTTP GET
  */
-  	
+  	syslog(LOG_WARNING, var_export($smsvars, TRUE));
 	$message = $smsvars['smsmsg'];
 	foreach ($smsvars['smsnum'] as $smsnum ) {
-		$result = file_get_contents('https://api.clickatell.com/messages/http/send?apiKey=' .
+		$result = file_get_contents('https://platform.clickatell.com/messages/http/send?apiKey=' .
 			$smsvars['smsapiid'] .	
 			'&to=' .
 			$smsnum .
 			'&content=' .
 			substr(urlencode($message),0,160) 
 		);
-		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatel responded: " . $result );
+		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatell responded: " . $result );
     	} 
 }
 
@@ -281,3 +269,4 @@ function aql(&$smsvars) {
 }
 
 ?>
+
