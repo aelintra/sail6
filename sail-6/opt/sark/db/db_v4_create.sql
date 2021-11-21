@@ -83,7 +83,7 @@ name TEXT,							-- V2; not used
 oclo TEXT,        					-- calculated day/night throw
 operator TEXT,    					-- tenant sysop
 pickupgroup TEXT,  					-- asterisk pickupgroup number (1-63)
-devicerec TEXT DEFAULT 'default',		-- recordings settings for this tenant
+devicerec TEXT DEFAULT 'default',	-- recordings settings for this tenant
 routeclassoverride TEXT,			-- Holiday scheduler route class override
 routeoverride TEXT,					-- Holiday scheduler route override
 usemohcustom TEXT,
