@@ -1,3 +1,10 @@
+sail (6.2.0-21+ubuntu18) UNRELEASED; urgency=low
+
+   - add hpe dependancy >= 6.0.0-7
+   - set cursor correctly for Cluster/devicerec 
+
+ -- CoCoSoft <admin@aelintra.com>  Mon, 29  Nov 2021 18:00:00 +0000
+
 sail (6.2.0-20+ubuntu18) UNRELEASED; urgency=low
 
    - add recording options to Cluster table
