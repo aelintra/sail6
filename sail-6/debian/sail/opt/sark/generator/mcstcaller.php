@@ -241,7 +241,16 @@ function clickatell(&$smsvars) {
  */
   	syslog(LOG_WARNING, var_export($smsvars, TRUE));
 	$message = $smsvars['smsmsg'];
-	foreach ($smsvars['smsnum'] as $smsnum ) {
+	foreach ($smsvars['smsnum'] as $smsnum ) {		
+		$uri = 'https://platform.clickatell.com/messages/http/send?apiKey=';
+		$uri .= $smsvars['smsapiid']; 
+		$uri .= '&to=';
+		$uri .= $smsnum;
+		$uri .= '&content=';
+		$uri .= substr(urlencode($message),0,160);
+		syslog(LOG_WARNING, "mcstcaller invoking clickatell with $uri" );
+		$result = file_get_contents($uri);
+/*
 		$result = file_get_contents('https://platform.clickatell.com/messages/http/send?apiKey=' .
 			$smsvars['smsapiid'] .	
 			'&to=' .
@@ -249,6 +258,7 @@ function clickatell(&$smsvars) {
 			'&content=' .
 			substr(urlencode($message),0,160) 
 		);
+*/
 		syslog (LOG_WARNING, "mcstcaller sms to $smsnum Clickatell responded: " . $result );
     	} 
 }

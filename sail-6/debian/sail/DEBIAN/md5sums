@@ -298,7 +298,7 @@ f169442254928726cdf9e892167a37e8  opt/sark/generator/featuresSQL.php
 1acf0f78f843caeb0597878cb3899910  opt/sark/generator/generated_file_banner.php
 a77abea8528915685b0f67913a0bec25  opt/sark/generator/iaxSQL.php
 d9863f67656140df45e3fecec4fc37e2  opt/sark/generator/localvars.php
-29a683d5abe842a56d64f524d225ccf4  opt/sark/generator/mcstcaller.php
+e3ccc4b1cdc85a08dfa513980b849fc0  opt/sark/generator/mcstcaller.php
 7ad9a874365067bf9f103db41666a2a4  opt/sark/generator/meetmeSQL.php
 becf2ae458588bb003e6281aa0f42b70  opt/sark/generator/netTest.php
 744059614fc327cf2f03d4e39686cfff  opt/sark/generator/paging.php
@@ -400,7 +400,7 @@ ebf5a59c2de695606680c714dfb15982  opt/sark/php/sarkcallgroup/delete.php
 fc1cee1be2e47fce43c2dc2753053507  opt/sark/php/sarkcluster/javascript.js
 3c43d01c817392b8d1a8311d75d3be0c  opt/sark/php/sarkcluster/main.php
 1c2f4e8a47f2a13305beffdb7b283072  opt/sark/php/sarkcluster/update.php
-bc736c20a9daf9d778ac3b79c7295d9a  opt/sark/php/sarkcluster/view.php
+34241c369d8b49102607dca71945e711  opt/sark/php/sarkcluster/view.php
 3c850eaf1afbc12a6145175bdf59d82f  opt/sark/php/sarkconference/delete.php
 f4724417ea021ca07a9d09e5d59f5033  opt/sark/php/sarkconference/javascript.js
 3c43d01c817392b8d1a8311d75d3be0c  opt/sark/php/sarkconference/main.php
@@ -1265,5 +1265,5 @@ eb30975a1ff74f1cc5d6ceb09e6c7f67  opt/sark/www/sark-common/sark-colour-web.jpg
 da362eff5f073b336d4f0b861cd8e652  opt/sark/www/sark-common/smeserver_logo.jpg
 751d17d6f9c5aecd2a264c673af4577b  usr/share/asterisk/agi-bin/kwakeup
 0af8c3e30ef06285d251c45681703e6c  usr/share/doc/sail-4.0.0/COPYING.gz
-c33dda5302f41caed9a2b8133c8234fa  usr/share/doc/sail/changelog.Debian.gz
+ef8024fa497b63e3d773ba139b8fa700  usr/share/doc/sail/changelog.Debian.gz
 c007f37c8e4cfb4dfae4575723a0d6c1  usr/share/doc/sail/copyright
