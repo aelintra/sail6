@@ -33,12 +33,15 @@
         $diskusage = `df --output=pcent $rootdev | tr -dc '0-9'`;
         $var['disk'] = $diskusage; 
 
+/*
+    NOT USED - REMOVED DEC 7 2021
+
         $numCpus = `/bin/grep -c ^processor /proc/cpuinfo`;        
         $cpu_usage = sys_getloadavg();
         $var['lga'] = ($cpu_usage[0] / $numCpus);
         $var['lgb'] = ($cpu_usage[1] / $numCpus);
         $var['lgc'] = ($cpu_usage[2] / $numCpus);
-
+*/
         if (file_exists("/opt/sark/cache/speedtest")) {
             $downlink = `/bin/grep Down /opt/sark/cache/speedtest`;
             $uplink = `/bin/grep Up /opt/sark/cache/speedtest`;
