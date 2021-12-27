@@ -53,7 +53,7 @@ $defltsms=array(
 
 $smsvars=array();
 
-/*
+/*q
  * get the parameters and do checks
  */ 
 $options = getopt("n:r::");

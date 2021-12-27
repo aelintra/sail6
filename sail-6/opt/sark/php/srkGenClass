@@ -193,7 +193,7 @@ private function genIax() {
                 $OUT .= $row['sipiaxpeer'] . "\n";
                 if (isset($row['sipiaxuser'])) {
                     $OUT .= "[" . $row['desc'] . "]\n";
-                    $OUT .= $row['sipiaxuser'] . "\n\n";;
+                    $OUT .= $row['sipiaxuser'] . "\n\n";;/HD
                 }
             }
         }
@@ -316,7 +316,7 @@ private function genSip() {
 				$row['sipiaxfriend'] = preg_replace ( '/\$ext/', $row['pkey'], $row['sipiaxfriend']);
 				$nat='no';
 				if ($row['location'] == 'remote') {
-					$nat='yes';
+					$nat=$this->globals['NATPARAMS'];
 				}
 				$row['sipiaxfriend'] = preg_replace ( '/\$nat/', $nat, $row['sipiaxfriend']);
 				$row['sipiaxfriend'] = preg_replace ( '/\$transport/', $row['transport'], $row['sipiaxfriend']);
@@ -1428,32 +1428,32 @@ ANDHERE;
 ;	HD INVOCATION
 ;
 
-		exten=>_*0XX.,1,PlayBack(silence/1)
-		exten=>_*0XX.,n,VMAuthenticate(\${EXTEN:2},j)
-		exten=>_*0XX.,n,System(/opt/sark/scripts/aelhdlon.pl login \${EXTEN:2} \${CALLERID(number)} )
-		exten=>_*0XX.,n,Hangup
-		exten=>_*0XX.,101,Playtones(congestion)
+		exten =>_ *0XX.,1,PlayBack(silence/1)
+		exten => _*0XX.,n,VMAuthenticate(\${EXTEN:2},j)
+		exten => _*0XX.,n,System(/opt/sark/scripts/aelhdlon.pl login \${EXTEN:2} \${CALLERID(number)} )
+		exten => _*0XX.,n,Hangup
+		exten => _*0XX.,101,Playtones(congestion)
 		
-		exten=>_*01,1,PlayBack(silence/1)
-		;exten=>_*1,n,VMAuthenticate(\${CALLERID(number)},j)
-		exten=>_*01,n,System(/opt/sark/scripts/aelhdlon.pl logout \${CALLERID(number)} )
-		exten=>_*01,n,Hangup
-		exten=>_*01,101,Playtones(congestion)
+		exten => _*01,1,PlayBack(silence/1)
+		;exten => _*1,n,VMAuthenticate(\${CALLERID(number)},j)
+		exten => _*01,n,System(/opt/sark/scripts/aelhdlon.pl logout \${CALLERID(number)} )
+		exten => _*01,n,Hangup
+		exten => _*01,101,Playtones(congestion)
 
 
 ;
 ;   RSSH support sessions - requires rssh licence keys to be installed
 ;
-		exten=>_*44*XXX.,1,Authenticate(\${SYSPASS})
-		exten=>_*44*XXX.,n,system(echo "PORT1=\${EXTEN:4}" > /opt/sark/service/rssh/serviceport1)
-		exten=>_*44*XXX.,n,system(sudo /usr/bin/sv o srk-ua-rssh)
-		exten=>_*44*XXX.,n,Playback(activated)
-		exten=>*_44*XXX.,n,Hangup
+		exten => _*44*XXX.,1,Authenticate(\${SYSPASS})
+		exten => _*44*XXX.,n,system(echo "PORT1=\${EXTEN:4}" > /opt/sark/service/rssh/serviceport1)
+		exten => _*44*XXX.,n,system(sudo /usr/bin/sv o srk-ua-rssh)
+		exten => _*44*XXX.,n,Playback(activated)
+		exten => _*44*XXX.,n,Hangup
 
-		exten=>*44*,1,Authenticate(\${SYSPASS})
-		exten=>*44*,n,system(sudo /usr/bin/sv d srk-ua-rssh)
-		exten=>*44*,n,Playback(de-activated)
-		exten=>*44*,n,Hangup
+		exten => *44*,1,Authenticate(\${SYSPASS})
+		exten => *44*,n,system(sudo /usr/bin/sv d srk-ua-rssh)
+		exten => *44*,n,Playback(de-activated)
+		exten => *44*,n,Hangup
 
 ;
 ;	Wakeup call 

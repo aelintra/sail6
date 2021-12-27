@@ -114,6 +114,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('dl','D/L','D
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('dns','DNS Server','Set this to the correct value for your network');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('domain','Local Domain','This is the local Domain name within your IPV4 LAN. In most cases you can leave it as it is');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('dvrvmail','Voicemailbox','Number of the voice mailbox you wish to have voicemail delivered to. The default is the extension but you can have it delivered to a different extension if you wish');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('dynamicfeatures','Dynamic Features','This is the string which SARK will apply to Asterisk dynamic features.  The system default should be sufficient for most applications but you can change the feature list here if you wish');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('eclose','Reopen','Choose the time you want the closed period to end. ');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('ed','Edit','Edit this entry');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('edomain','Override Public IP Address', 'You should normally leave this blank.  However, you can use it to override the DiG calculated IP address if your network requires something different');
@@ -223,6 +224,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('mohhead','Mu
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('monitor','Monitor this resource','Set this to YES if you want the diagnostic routines to watch this resource.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('month','Month','Month Date when this segment is active (asterisk * means any month).');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('natdefault','Default NAT setting','The NAT setting is important when creating extension entries, it helps to manage RTP (voice) traffic across NAT firewalls.  Set this to &#34;local&#34; if most of your phones will be on the same network segment as the PBX (i.e. on the same LAN), otherwise set it to remote. SARK will initially set the value to &#34;local&#34; for CPE based deployments and &#34;remote&#34; for cloud based deployments but you can change it to suit your needs and also change it at the individual extension level.');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('natparams','Default NAT Parameter String','You can set the Asterisk nat parameter string for remote phones here.  Usually you should leave this as it is';
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('netmask','Netmask','Set this to the correct value for your subnet.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('new','New','Button Text');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('newpassword','New Password','Enter the new password ');
