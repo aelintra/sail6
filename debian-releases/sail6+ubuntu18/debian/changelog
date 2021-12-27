@@ -1,3 +1,17 @@
+sail (6.2.0-22+ubuntu18) UNRELEASED; urgency=low
+
+   - changed min/max message to minsecs/maxsecs in sark_vmail_header
+   - cleaned up Globals CREATE, added DYNAMIC_FEATURES and NATDEFAULT
+   - Added messages for dynamicfeatures and natparams to message table
+   - cleaned up mcstcaller
+   - exposed DYNAMIC_FEATURES and NATPARAMS in globals
+   - added NATPARAMS string to srkGenClass->genSip 
+   - cleaned up syntax in srkGenClass around 1437
+   - changed url in getmaclist due to Wireshark change
+   - extended URL search to 500 chars in sark_inline_fqdn 
+
+ -- CoCoSoft <admin@aelintra.com>  Mon, 27  Dec 2021 18:00:00 +0000
+
 sail (6.2.0-21+ubuntu18) UNRELEASED; urgency=low
 
    - add hpe dependancy >= 6.0.0-7

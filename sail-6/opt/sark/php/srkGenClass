@@ -193,7 +193,7 @@ private function genIax() {
                 $OUT .= $row['sipiaxpeer'] . "\n";
                 if (isset($row['sipiaxuser'])) {
                     $OUT .= "[" . $row['desc'] . "]\n";
-                    $OUT .= $row['sipiaxuser'] . "\n\n";;/HD
+                    $OUT .= $row['sipiaxuser'] . "\n\n";
                 }
             }
         }
@@ -680,7 +680,7 @@ try {
 	}
 	else {
 			$OUT .= "\tSET_DYNAMIC_FEATURES=>NO\n";
-        	$OUT .= "\tDYNAMIC_FEATURES=>automon\n";
+//        	$OUT .= "\tDYNAMIC_FEATURES=>automon\n";
 	}
 	$OUT .= "\n"; 
 //
@@ -1428,7 +1428,7 @@ ANDHERE;
 ;	HD INVOCATION
 ;
 
-		exten =>_ *0XX.,1,PlayBack(silence/1)
+		exten => _*0XX.,1,PlayBack(silence/1)
 		exten => _*0XX.,n,VMAuthenticate(\${EXTEN:2},j)
 		exten => _*0XX.,n,System(/opt/sark/scripts/aelhdlon.pl login \${EXTEN:2} \${CALLERID(number)} )
 		exten => _*0XX.,n,Hangup
@@ -1450,10 +1450,10 @@ ANDHERE;
 		exten => _*44*XXX.,n,Playback(activated)
 		exten => _*44*XXX.,n,Hangup
 
-		exten => *44*,1,Authenticate(\${SYSPASS})
-		exten => *44*,n,system(sudo /usr/bin/sv d srk-ua-rssh)
-		exten => *44*,n,Playback(de-activated)
-		exten => *44*,n,Hangup
+		exten => _*44*,1,Authenticate(\${SYSPASS})
+		exten => _*44*,n,system(sudo /usr/bin/sv d srk-ua-rssh)
+		exten => _*44*,n,Playback(de-activated)
+		exten => _*44*,n,Hangup
 
 ;
 ;	Wakeup call 

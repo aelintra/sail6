@@ -1,4 +1,4 @@
-<?php
+dd<?php
 //
 // Developed by CoCo
 // Copyright (C) 2012 CoCoSoft

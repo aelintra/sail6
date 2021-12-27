@@ -288,7 +288,7 @@ private function showMain() {
     $this->myPanel->radioSlide('callrecord1',$global['CALLRECORD1'],array('None','OTR','OTRR','In','Out','Both'));	
     $this->myPanel->displayInputFor('recmount',text,$global['RECMOUNT']);	
     $this->myPanel->displayInputFor('recage','number',$global['RECAGE']);
-    $this->myPanel->displayInputFor('recage','number',$global['DYNAMICFEATURES']);
+    $this->myPanel->displayInputFor('dynamicfeatures','text',$global['DYNAMICFEATURES']);
     $this->myPanel->displayInputFor('vmailage','number',$global['VMAILAGE']);
     $this->myPanel->displayInputFor('intringdelay','number',$global['INTRINGDELAY']);
     $this->myPanel->displayInputFor('abstimeout','number',$global['ABSTIMEOUT']);
