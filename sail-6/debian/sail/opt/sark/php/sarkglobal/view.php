@@ -276,6 +276,7 @@ private function showMain() {
  	$this->myPanel->internalEditBoxStart();
  	$this->myPanel->subjectBar("Control");  
     $this->myPanel->displayBooleanFor('lterm',$global['LTERM']);
+    $this->myPanel->displayInputFor('natparams',text,$global['NATPARAMS']);	
     $this->myPanel->displayBooleanFor('cfwdanswer',$global['CFWDANSWER']);
     $this->myPanel->displayBooleanFor('cfwdextrnrule',$global['CFWDEXTRNRULE']);
     $this->myPanel->displayBooleanFor('cfwdprogress',$global['CFWDPROGRESS']);
@@ -287,6 +288,7 @@ private function showMain() {
     $this->myPanel->radioSlide('callrecord1',$global['CALLRECORD1'],array('None','OTR','OTRR','In','Out','Both'));	
     $this->myPanel->displayInputFor('recmount',text,$global['RECMOUNT']);	
     $this->myPanel->displayInputFor('recage','number',$global['RECAGE']);
+    $this->myPanel->displayInputFor('dynamicfeatures','text',$global['DYNAMICFEATURES']);
     $this->myPanel->displayInputFor('vmailage','number',$global['VMAILAGE']);
     $this->myPanel->displayInputFor('intringdelay','number',$global['INTRINGDELAY']);
     $this->myPanel->displayInputFor('abstimeout','number',$global['ABSTIMEOUT']);

@@ -30,7 +30,7 @@ function wavDur($file)
         }
         $rawheader = fread($fp, 4);
         $data = unpack('Vdatasize',$rawheader);
-        $sec = $data[datasize]/$header[bytespersec];
+        $sec = $data['datasize']/$header['bytespersec'];
         $minutes = intval(($sec / 60) % 60);
         $seconds = intval($sec % 60);
 
