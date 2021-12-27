@@ -1,4 +1,4 @@
-dd<?php
+<?php
 //
 // Developed by CoCo
 // Copyright (C) 2012 CoCoSoft
@@ -28,7 +28,7 @@ Class sarkholiday {
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
-	""
+	
 public function showForm() {
 	
 	$this->myPanel = new page;
