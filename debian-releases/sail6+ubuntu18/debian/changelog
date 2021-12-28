@@ -1,3 +1,13 @@
+sail (6.2.0-23+ubuntu18) UNRELEASED; urgency=low
+
+   - rationalised debian/control across the three releases
+   - removed non-referenced files from debian-releases 
+   - updated the copyright file header
+   - removed speedtest from PageClass and sarksplash/system
+   - amalgamated postinst into a single version across the three releases
+
+ -- CoCoSoft <admin@aelintra.com>  Tue, 28  Dec 2021 18:00:00 +0000
+
 sail (6.2.0-22+ubuntu18) UNRELEASED; urgency=low
 
    - changed min/max message to minsecs/maxsecs in sark_vmail_header
