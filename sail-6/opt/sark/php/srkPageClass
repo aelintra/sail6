@@ -2026,22 +2026,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkNetHelperClass";
         echo "Comms IP: <strong>$commip</strong><br/>";
     }
 //    print "Netmask: <strong>$snmask</strong><br/>";
-/*
-    if (file_exists("/opt/sark/cache/speedtest")) {
-        $downlink = `/bin/grep Down /opt/sark/cache/speedtest`;
-        $uplink = `/bin/grep Up /opt/sark/cache/speedtest`;
-        if ($downlink) {
-            $speed = explode(':',$downlink); 
-            $num  = explode(' ',$speed[1]);
-            echo 'Inet Down: <strong>' . $num [1] . ' Mbps</strong><br/>';
-        }
-        if ($uplink) {
-            $speed = explode(':',$uplink); 
-            $num  = explode(' ',$speed[1]); 
-            echo 'Inet Up: <strong>' . $num [1] . ' Mbps</strong><br/>';
-        } 
-    }
-*/
+
 //  echo '<br/>'; 
 //    echo '</div>'; 
     echo '</div>';        

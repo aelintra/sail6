@@ -349,7 +349,7 @@ MONITORSTAGE TEXT,                  -- monstage folder
 MONITORTYPE TEXT,					-- Monitor or Mixmonitor
 MYCOMMIT TEXT,                      -- commit outstanding
 NATDEFAULT TEXT DEFAULT 'local', 		-- V6 NAT defaiult local/remote
-NATPARAMS TEXT DEFAULT 'force_rport,comedia' --V6 NAT default remote params
+NATPARAMS TEXT DEFAULT 'force_rport,comedia', --V6 NAT default remote params
 NUMGROUPS TEXT,                     -- not used in 4.x 
 ONBOARDMENU TEXT,                   -- not used in 4.x 
 OPERATOR TEXT DEFAULT 0,            -- sysop
