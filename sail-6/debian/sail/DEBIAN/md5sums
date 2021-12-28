@@ -257,9 +257,9 @@ f9cac0384d600bcaf8f8c378ae19a5e4  opt/sark/countries/za.zone
 dfced7667010a86c22b82ed77cdb4841  opt/sark/countries/zm.zone
 8c94efe3682ba36a21e6c56af65aa8a0  opt/sark/countries/zw.zone
 dd7462bbdfa72cd259a1e73d26bb5c0c  opt/sark/db/.sail-install-date
-1361d98380652e574f44531f3aa6343a  opt/sark/db/db_v4_create.sql
+02af0f57d087e0f63251bd57f22da6a5  opt/sark/db/db_v4_create.sql
 80b3f9cb80c33573c9490614fbf09e99  opt/sark/db/db_v4_device.sql
-475fc75b3c4cb123d08a7d07098793cd  opt/sark/db/db_v4_message.sql
+01887e94cb98c166d248d0fb16f64abf  opt/sark/db/db_v4_message.sql
 3092e452f495202b72bc4c3a87fd82e6  opt/sark/db/db_v4_system.sql
 fc6ff2307a71a374b7148da57410afcf  opt/sark/db/ldap_create.ldif
 d41d8cd98f00b204e9800998ecf8427e  opt/sark/db/srkaudit.log
@@ -539,7 +539,7 @@ d2e00e8d565a568f301754bcc6ec5b45  opt/sark/php/sarkshell/iframeChannels.php
 31d0e5e890c6a1904bfb118d806a1ae1  opt/sark/php/sarksplash/endpoints.php
 edc234b4811195f917fdeb464ed37cdc  opt/sark/php/sarksplash/javascript.js
 3c43d01c817392b8d1a8311d75d3be0c  opt/sark/php/sarksplash/main.php
-60f101cc12015fc05fec7cfa7dfa98f3  opt/sark/php/sarksplash/system.php
+9a0560eb95fc3af0d35d0ceaaba9bca1  opt/sark/php/sarksplash/system.php
 5f114cfe64798791f97ad4e160133432  opt/sark/php/sarksplash/view.php
 538e0e7349066bedd3ecba996f045ca5  opt/sark/php/sarksupt/main.php
 0373dbfe374f745c88c7bdf42710e081  opt/sark/php/sarksupt/view.php
@@ -574,7 +574,7 @@ cfca6bd9f8c1d98e2d1b133cc1e4248e  opt/sark/php/srkHelperClass
 bcf8e7edbdbee37b68f1e6e29f01a644  opt/sark/php/srkLDAPHelperClass
 c0cfb1f8884800f5357ed3d164a53342  opt/sark/php/srkNetHelperClass
 42aa2ec266b717c507ada6de6c252f83  opt/sark/php/srkPDFClass
-93065ce88ce436928a7861172ba0ec47  opt/sark/php/srkPageClass
+1ff34c2d2df3a62b31b83d0f8e84f4e8  opt/sark/php/srkPageClass
 05676f62be2f8a1fceb902e549c522d1  opt/sark/php/srkfoot.php
 e6fe7c00f12e5cd67f86d3fde97b00d7  opt/sark/php/srkhead.php
 cb67841354fba8d243b490de231862d2  opt/sark/php/srkmain.php
@@ -1265,5 +1265,5 @@ eb30975a1ff74f1cc5d6ceb09e6c7f67  opt/sark/www/sark-common/sark-colour-web.jpg
 da362eff5f073b336d4f0b861cd8e652  opt/sark/www/sark-common/smeserver_logo.jpg
 751d17d6f9c5aecd2a264c673af4577b  usr/share/asterisk/agi-bin/kwakeup
 0af8c3e30ef06285d251c45681703e6c  usr/share/doc/sail-4.0.0/COPYING.gz
-9a041183b990bd54ea2170bb549d0d38  usr/share/doc/sail/changelog.Debian.gz
-c007f37c8e4cfb4dfae4575723a0d6c1  usr/share/doc/sail/copyright
+26efb3fd43f6e792318fc49c67d4b883  usr/share/doc/sail/changelog.Debian.gz
+5023dad4457cd7a53760ccb3451c31de  usr/share/doc/sail/copyright
