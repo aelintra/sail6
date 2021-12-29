@@ -276,7 +276,7 @@ private function showMain() {
  	$this->myPanel->internalEditBoxStart();
  	$this->myPanel->subjectBar("Control");  
     $this->myPanel->displayBooleanFor('lterm',$global['LTERM']);
-    $this->myPanel->displayInputFor('natparams',text,$global['NATPARAMS']);	
+    $this->myPanel->displayInputFor('natparams','text',$global['NATPARAMS']);	
     $this->myPanel->displayBooleanFor('cfwdanswer',$global['CFWDANSWER']);
     $this->myPanel->displayBooleanFor('cfwdextrnrule',$global['CFWDEXTRNRULE']);
     $this->myPanel->displayBooleanFor('cfwdprogress',$global['CFWDPROGRESS']);
@@ -286,7 +286,8 @@ private function showMain() {
     $this->myPanel->radioSlide('playcongested',$global['PLAYCONGESTED'],array('YES','NO','SIGNAL'));
     $this->myPanel->radioSlide('playbusy',$global['PLAYBUSY'],array('YES','NO','SIGNAL'));
     $this->myPanel->radioSlide('callrecord1',$global['CALLRECORD1'],array('None','OTR','OTRR','In','Out','Both'));	
-    $this->myPanel->displayInputFor('recmount',text,$global['RECMOUNT']);	
+// Place holder for mount options 
+//    $this->myPanel->displayInputFor('recmount','text',$global['RECMOUNT']);	
     $this->myPanel->displayInputFor('recage','number',$global['RECAGE']);
     $this->myPanel->displayInputFor('dynamicfeatures','text',$global['DYNAMICFEATURES']);
     $this->myPanel->displayInputFor('vmailage','number',$global['VMAILAGE']);
@@ -299,7 +300,6 @@ private function showMain() {
 /*
  *       TAB DIVEND
  */
-//    echo "</div>". PHP_EOL;
 	
 
 	if ($global['CLUSTER'] == 'OFF') {
@@ -346,10 +346,8 @@ private function showMain() {
 
 private function saveEdit() {
 // save the data away
-// '
-	$this->myPanel->xlateBooleans($this->myBooleans);
 
-// print_r($_POST);
+	$this->myPanel->xlateBooleans($this->myBooleans);
 
 	$tuple = array();
 
@@ -383,11 +381,6 @@ private function saveEdit() {
     $this->validator->addValidation("agentstart","maxlen=4","Agent start must be 4 digits");
     $this->validator->addValidation("agentstart","minlen=4","Agent start must be 4 digits");    
     $this->validator->addValidation("operator","num","Operator must be numeric");   
-/*
-    $this->validator->addValidation("EDOMAIN",
-		"regexp=/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/",
-		"External IP address is invalid");
-*/
    
     //Now, validate the form
     if ($this->validator->ValidateForm()) {

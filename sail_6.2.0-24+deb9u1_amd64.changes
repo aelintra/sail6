@@ -1,0 +1,30 @@
+Format: 1.8
+Date: Wed, 29  Dec 2021 18:00:00 +0000
+Source: sail
+Binary: sail
+Architecture: all
+Version: 6.2.0-24+deb9u1
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: CoCo <admin@aelintra.com>
+Changed-By: CoCoSoft <admin@aelintra.com>
+Description:
+ sail       - SARK  Asterisk Integration Layer (SAIL) - A fast, lightweight swi
+Changes:
+ sail (6.2.0-24+deb9u1) UNRELEASED; urgency=low
+ .
+    - remove redundant countries folder from opt/sark
+    - remove recording mount point var from globals
+    -
+Checksums-Sha1:
+ 15c1b315e12e0d1559dc95731de76aa0ce491c22 3679 sail_6.2.0-24+deb10u1_amd64.buildinfo
+ 09af48f49f51583193a87c8651159bf0edcb2a24 5874042 sail_6.2.0-24+deb9u1_all.deb
+ f2f6bf6e08b6fcaebfd5d474be3bedcc09f8f142 3675 sail_6.2.0-24+deb9u1_amd64.buildinfo
+Checksums-Sha256:
+ 15b660fa25b46419337f3f39bc58323ec1097632d5249731bed6c08faf063309 3679 sail_6.2.0-24+deb10u1_amd64.buildinfo
+ 799b612fe43a1617ce03fa29c67373147b948532a0a05b9f9f4eb0da0ddc79fc 5874042 sail_6.2.0-24+deb9u1_all.deb
+ e1aa98aa4f09822c7a3d92a632df214184c768139c693d730e5cf4583ba6db68 3675 sail_6.2.0-24+deb9u1_amd64.buildinfo
+Files:
+ fd07288417ba10a3a3cd6032b5c6228d 3679 network extra sail_6.2.0-24+deb10u1_amd64.buildinfo
+ 41a30e198c4dcfac1ff8277b8606a3fc 5874042 network extra sail_6.2.0-24+deb9u1_all.deb
+ 8244bdb123bb9aad44d595ca15123538 3675 network extra sail_6.2.0-24+deb9u1_amd64.buildinfo

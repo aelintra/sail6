@@ -154,12 +154,18 @@ a2ensite sark-http
 a2ensite sark-ssl
 a2ensite sark-name
 
-# enabke sark opional fragments
+# enable sark opional fragments for certificates 
 if [ -e /etc/ssl/certs/ssl-cert-sark-customer.pem ]; then
-    a2dissite sark-certs
-    a2ensite sark-default-ssl
+    a2ensite sark-certs
+    a2dissite sark-default-ssl
 else 
     a2ensite sark-default-ssl
+fi
+
+if [ -e /etc/ssl/3pcerts/3pcerts.pem ]; then
+    a2ensite sark-prov-ssl
+else 
+    a2dissite sark-prov-ssl
 fi
 
 #HTTPD
