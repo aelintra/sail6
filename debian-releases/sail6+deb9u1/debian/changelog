@@ -5,6 +5,8 @@ sail (6.2.0-23+deb9u1) UNRELEASED; urgency=low
    - updated the copyright file header
    - removed speedtest from PageClass and sarksplash/system
    - amalgamated postinst into a single version across the three releases
+   - fixed bug in global (unquoted text)
+   - fixed bug in NetHelper - incorrect broadcast assignment
 
  -- CoCoSoft <admin@aelintra.com>  Tue, 28  Dec 2021 18:00:00 +0000
 
