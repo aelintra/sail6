@@ -1,4 +1,4 @@
-ail (6.2.0-25+ubuntu18) UNRELEASED; urgency=low
+sail (6.2.0-25+ubuntu18) UNRELEASED; urgency=low
 
    - fix for INLINE packet inspection max search length
    - fix for MAILBOX add in extensions
