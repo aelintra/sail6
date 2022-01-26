@@ -1,8 +1,15 @@
+ail (6.2.0-25+deb10u1) UNRELEASED; urgency=low
+
+   - fix for INLINE packet inspection max search length
+   - fix for MAILBOX add in extensions
+   - fix to ServerName include in network/view
+
+ -- CoCoSoft <admin@aelintra.com>  Wed, 26  Jan 2022 18:00:00 +0000
+
 sail (6.2.0-24+deb10u1) UNRELEASED; urgency=low
 
    - remove redundant countries folder from opt/sark
    - remove recording mount point var from globals
-   - 
 
  -- CoCoSoft <admin@aelintra.com>  Wed, 29  Dec 2021 18:00:00 +0000
 
