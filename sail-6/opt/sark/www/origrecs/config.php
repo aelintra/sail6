@@ -7,7 +7,7 @@ date_default_timezone_set('Europe/London');
 /*
  * The application will look in the following dir for recordings
  */
-define('RECORDING_DIR', '../../media/recordings/default/' . DIRECTORY_SEPARATOR);
+define('RECORDING_DIR', '../../media/recordings/' . DIRECTORY_SEPARATOR);
 
 
 /*

@@ -6,6 +6,12 @@ sail (6.2.0-25+ubuntu18) UNRELEASED; urgency=low
 
  -- CoCoSoft <admin@aelintra.com>  Wed, 26  Jan 2022 18:00:00 +0000
 
+sail (6.2.0-26+ubuntu18) UNRELEASED; urgency=low
+
+   - Drop back to /opt/sark/media/recordings for recording pool
+
+ -- CoCoSoft <admin@aelintra.com>  Wed, 26  Jan 2022 18:00:00 +0000
+
 sail (6.2.0-24+ubuntu18) UNRELEASED; urgency=low
 
    - remove redundant countries folder from opt/sark
