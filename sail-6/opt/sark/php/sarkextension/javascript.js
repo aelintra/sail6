@@ -39,6 +39,10 @@
 				$('#divrule').show();
 				$('#divblksize').show();					
 			}
+			if(this.value=='MAILBOX') {
+				$('#divrule').show();
+				$('#divcalleridname').show();
+			}
 			if(~this.value.indexOf("VXT")) {
 				$('#divrule').show();
 				$('#divdevicevxt').show();

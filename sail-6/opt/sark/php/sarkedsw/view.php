@@ -377,7 +377,7 @@ private function copyFirewallTemplates() {
 	if ($res['FQDNINSPECT'] == 'YES') {
 		$rule = "'INLINE(ACCEPT) net \$FW tcp ";
 		$rule .= $res['BINDPORT'];
-		$rule .= '; -m string --algo bm --to 100 --string "';
+		$rule .= '; -m string --algo bm --to 500 --string "';
 		$rule .= $res['FQDN'];
 		$rule .= '"';
 		$rule .= "'";
@@ -385,7 +385,7 @@ private function copyFirewallTemplates() {
 
 		$rule = "'INLINE(ACCEPT) net \$FW udp ";
 		$rule .= $res['BINDPORT'];
-		$rule .= '; -m string --algo bm --to 100 --string "';
+		$rule .= '; -m string --algo bm --to 500 --string "';
 		$rule .= $res['FQDN'];
 		$rule .= '"';
 		$rule .= "'";

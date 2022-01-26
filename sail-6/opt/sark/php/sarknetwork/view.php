@@ -484,7 +484,7 @@ private function saveEdit() {
 		}
 		else {
 			$tuple['fqdn'] = null;
-			`echo 'ServerName sark.local' > /opt/sark/etc/apache2/sark_includes/sarkServerName.conf`;
+			`echo 'ServerName sark.local' > /etc/apache2/sark_includes/sarkServerName.conf`;
 		}
 		
 

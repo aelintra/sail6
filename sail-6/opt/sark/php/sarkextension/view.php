@@ -640,7 +640,6 @@ private function saveNew() {
 			
 		case 'MAILBOX':
 			$tuple['device'] = 'MAILBOX';
-			$tuple['desc'] = $this->helper->displaykey($tuple['pkey']);;
 			$this->addNewExtension($tuple);
 			break;
 						

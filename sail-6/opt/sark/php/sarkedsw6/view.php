@@ -374,14 +374,14 @@ private function copyFirewallTemplates() {
 		$rc = $this->helper->request_syscmd ("cp $file /etc/shorewall");
 		$rule = 'INLINE(ACCEPT) net $FW tcp ';
 		$rule .= $res['FQDNINSPECT'];
-		$rule .= '; -m string --algo bm --to 100 --string "';
+		$rule .= '; -m string --algo bm --to 500 --string "';
 		$rule .= $res['FQDN'];
 		$rule .= '"';
 		$rc = $this->helper->request_syscmd ("echo $rule > /etc/shorewall/sark_inline_fqdn");
 
 		$rule = 'INLINE(ACCEPT) net $FW udp ';
 		$rule .= $res['FQDNINSPECT'];
-		$rule .= '; -m string --algo bm --to 100 --string "';
+		$rule .= '; -m string --algo bm --to 500 --string "';
 		$rule .= $res['FQDN'];
 		$rule .= '"';
 		$rc = $this->helper->request_syscmd ("echo $rule >> /etc/shorewall/sark_inline_fqdn");		
