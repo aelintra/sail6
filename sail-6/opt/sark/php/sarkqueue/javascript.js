@@ -2,8 +2,8 @@
   $(document).ready(function() {
 
 	$.validator.addMethod("alpha",function(value,element) {
-		return this.optional(element) || /^[A-Za-z0-9_-]{2,20}$/i.test(value); 
-	},"field can only contain alphanumerics and no spaces");	
+		return this.optional(element) || /^[A-Za-z0-9_]{2,20}$/i.test(value); 
+	},"field can only contain alphanumerics. No spaces and no hyphens");	
 		  
 	$("#sarkqueueForm").validate ( {
 	   rules: {
