@@ -82,11 +82,15 @@ masteroclo TEXT,  					-- master day/night throw
 name TEXT,							-- V2; not used
 oclo TEXT,        					-- calculated day/night throw
 operator TEXT,    					-- tenant sysop
-pickupgroup TEXT,  					-- asterisk pickupgroup number (1-63)
+pickupgroup TEXT,  					-- asterisk pickupgroup number (1-63).  Replaced namedpickupgroup.
 devicerec TEXT DEFAULT 'default',	-- recordings settings for this tenant
+recmaxage TEXT DEFAULT '0',			-- Max age in days of call recordings for this tenant
+recmaxsize TEXT DEFAULT '0',		-- Recording storage maximum for this tenant
+recused TEXT DEFAULT '0',			-- Recording storage used by this tenant (updated according to cron freq)						
 routeclassoverride TEXT,			-- Holiday scheduler route class override
 routeoverride TEXT,					-- Holiday scheduler route override
-usemohcustom TEXT,
+usemohcustom TEXT,					-- Turn custom MOH ON/OFF
+vmailage TEXT,						-- Maximum vmail age (in days) for this tenant
 z_created datetime,
 z_updated datetime,
 z_updater TEXT DEFAULT 'system'
@@ -305,7 +309,7 @@ EXTLIM TEXT,        				-- not used in 4.x
 FAX TEXT,                           -- FAX flag
 FAXDETECT TEXT,                     -- FAX detect on/off
 FOPPASS TEXT,                       -- Flash opeartor panel password
-FQDN TEXT,							-- FQDN V5+
+FQDN TEXT,							-- FQDN V5+ 
 FQDNDROPBUFF TEXT DEFAULT 100,		-- fqdn drop set size (in entries)
 FQDNINSPECT TEXT DEFAULT 'NO',		-- Require FQDN in SIP Ops Shorewall 4.6+
 FQDNHTTP TEXT DEFAULT 'NO',			-- Require FQDN in remote HTTP Ops 
@@ -365,7 +369,7 @@ PLAYCONGESTED TEXT,                 -- play congested message or tones
 PLAYTRANSFER TEXT DEFAULT 'YES',    -- play transfer message when transferring off the PBX
 PROXY TEXT,                         -- allow proxy operations
 PROXYIGNORE TEXT,                   -- not used in 4.x
-RECAGE INTEGER DEFAULT 60,			-- How long to keep voice recordings in days
+RECAGE INTEGER DEFAULT 60,			-- not used after 6.2.0-26
 RECFINALDEST TEXT,                  -- recordings folder
 RECLIMIT TEXT,                      -- Recording folder max size
 RECMOUNT TEXT,                   	-- Recording folder mount command

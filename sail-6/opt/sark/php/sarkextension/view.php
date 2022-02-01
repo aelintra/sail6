@@ -674,7 +674,30 @@ private function addNewExtension ($tuple) {
 	$sql->execute(array($tuple['device']));
 	$resdevice = $sql->fetch();
 
-	$tuple['sipiaxfriend'] 	= $resdevice['sipiaxfriend'];
+//
+//	backport V7 extension definition for new extensions
+//
+
+	$tuple['sipiaxfriend'] 	= 
+	"type=friend
+context=internal	
+defaultuser=\$desc
+secret=\$password
+mailbox=\$ext@\$clst
+host=dynamic
+qualify=yes
+call-limit=3
+callerid=\"\$desc\" <\$ext>
+subscribecontext=extensions
+namedcallgroup=\$clst
+namedpickupgroup=\$clst
+disallow=all 
+allow=alaw
+allow=ulaw
+nat=\$nat
+transport=\$transport
+encryption=\$encryption";
+
 	if ($resdevice['technology'] == 'SIP') {
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {
 			$tuple['provision']	.= "#INCLUDE " . $tuple['device'];

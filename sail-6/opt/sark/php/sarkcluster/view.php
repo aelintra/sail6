@@ -319,7 +319,9 @@ private function showEdit($pkey=false) {
 	$this->myPanel->displayInputFor('abstimeout','number',$res['abstimeout']);
 	$this->myPanel->displayInputFor('chanmax','number',$res['chanmax']);
 	$this->myPanel->selected = $res['devicerec'];
-	$this->myPanel->displayPopupFor('devicerec',$res['devicerec'],array('default','None','Inbound','Outbound','Both'));
+	$this->myPanel->displayPopupFor('devicerec',$res['devicerec'],array('default','None','Both'));
+	$this->myPanel->displayInputFor('recage','number',$res['recage']);
+	$this->myPanel->displayInputFor('recused','number',$res['recused']);
 	$this->myPanel->radioSlide('masterclose',$masterclose,array('AUTO','CLOSED'));
 //	$this->myPanel->displayInputFor('oclo','text',$res['oclo'],null,null,true);
 
@@ -420,6 +422,8 @@ private function saveEdit() {
     $this->validator->addValidation("localdplan","regexp=/^[_0-9XNZxnz!#\s\*\.\-\[\]]+$/","Local Dialplan must be a valid Asterisk dialplan");
     $this->validator->addValidation("abstimeout","num","Absolute Timeout must be numeric");
     $this->validator->addValidation("chanmax","num","Channels must be numeric");
+    $this->validator->addValidation("recage","num","recording age must be numeric");
+
     //Now, validate the form
     if ($this->validator->ValidateForm()) {
 /*
@@ -432,8 +436,6 @@ private function saveEdit() {
         );
 
 		$this->helper->buildTupleArray($_POST,$tuple,$custom);
-		
-//		$tuple[$key] = preg_replace ( "/\\\/", '', $tuple[$key]);
 
 /*
  * update the SQL database

@@ -324,7 +324,14 @@ private function genSip() {
 				if ($row['transport'] == 'tls') {
 					$encryption='yes';
 				}
-				$row['sipiaxfriend'] = preg_replace ( '/\$encryption/', $encryption, $row['sipiaxfriend']);				
+				$row['sipiaxfriend'] = preg_replace ( '/\$encryption/', $encryption, $row['sipiaxfriend']);	
+//
+//	Backport V7 named pickup usung tenant name as the target
+//	
+				$row['sipiaxfriend'] = preg_replace ( '/\$clst/', $row['cluster'], $row['sipiaxfriend']);
+//
+//	add the row to the output
+//						
 				$OUT .= $row['sipiaxfriend'] . "\n\n";
 			} 
 		}
