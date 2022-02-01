@@ -1318,8 +1318,11 @@ Class page {
             $dname=$dbname;
         }    
     	echo '<input ' . $this->inputClass . ' type="' . $type . '" name="' . $dname .'" id="' . $dname . '"';
-         if ($val) {
+        if ($val) {
             echo ' value="' . $val . '"';
+        }
+        else if ($type == 'number') {
+            echo ' value="0"';
         }
         if ($placeholder) {
             echo ' placeholder="' . $placeholder . '"';

@@ -212,7 +212,7 @@ private function showMain() {
     }
 
   	$this->myPanel->displayInputFor('agentstart','number',$global['AGENTSTART']);                          		  
-	$this->myPanel->displayInputFor('operator','text',$global['OPERATOR']);
+	$this->myPanel->displayInputFor('operator','number',$global['OPERATOR']);
 	
 	echo '<div class="w3-margin-bottom">';
 	$this->myPanel->aLabelFor('sysop');

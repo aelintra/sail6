@@ -84,7 +84,7 @@ oclo TEXT,        					-- calculated day/night throw
 operator TEXT,    					-- tenant sysop
 pickupgroup TEXT,  					-- asterisk pickupgroup number (1-63).  Replaced namedpickupgroup.
 devicerec TEXT DEFAULT 'default',	-- recordings settings for this tenant
-recmaxage TEXT DEFAULT '0',			-- Max age in days of call recordings for this tenant
+recmaxage TEXT DEFAULT '60',		-- Max age in days of call recordings for this tenant
 recmaxsize TEXT DEFAULT '0',		-- Recording storage maximum for this tenant
 recused TEXT DEFAULT '0',			-- Recording storage used by this tenant (updated according to cron freq)						
 routeclassoverride TEXT,			-- Holiday scheduler route class override
