@@ -310,7 +310,7 @@ private function showEdit($pkey=false) {
 	echo '</div>'; 
 	$this->myPanel->selected = $res['operator'];
 	$this->myPanel->sysSelect('operator',true,false,false,$pkey) . PHP_EOL;
-	$this->myPanel->aHelpBoxFor('clustersysop');
+	$this->myPanel->aHelpBoxFor('clustersysop');:
 
 	$this->myPanel->displayInputFor('include','text',$res['include']);
 	$this->myPanel->displayInputFor('clusterclid','text',$res['clusterclid']);
@@ -320,8 +320,8 @@ private function showEdit($pkey=false) {
 	$this->myPanel->displayInputFor('chanmax','number',$res['chanmax']);
 	$this->myPanel->selected = $res['devicerec'];
 	$this->myPanel->displayPopupFor('devicerec',$res['devicerec'],array('default','None','Both'));
-	$this->myPanel->displayInputFor('recage','number',$res['recage']);
-	$this->myPanel->displayInputFor('recused','number',$res['recused']);
+	$this->myPanel->displayInputFor('recmaxage','number',$res['recmaxage']);
+	$this->myPanel->displayInputFor('recused','number',$res['recused'],null,null,true);
 	$this->myPanel->radioSlide('masterclose',$masterclose,array('AUTO','CLOSED'));
 //	$this->myPanel->displayInputFor('oclo','text',$res['oclo'],null,null,true);
 

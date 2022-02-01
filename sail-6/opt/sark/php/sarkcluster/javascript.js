@@ -5,8 +5,8 @@
 		$('#file').click();
 	});
 	
-	$('#recused :input').prop('readonly', true);
-	$('#recused :input').css('background-color','#f1f1f1');
+//	$('#recused :input').prop('readonly', true);
+//	$('#recused :input').css('background-color','#f1f1f1');
 	
 	$('#file').change(function() {
 		$('#newmohclick').val("TRUE");
