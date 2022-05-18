@@ -313,28 +313,28 @@ private function showMain() {
 	}
 
 /*
- * ToDo - placeholder for the PJSIP generator
+ * choose SIP channel driver
+ */
+		$this->myPanel->internalEditBoxStart();
+ 		$this->myPanel->subjectBar("SIP Channel Driver");   
+    	$this->myPanel->radioSlide('sipdriver',$global['SIPDRIVER'],array('SIP','PJSIP'));
+    	echo '</div>';	
 
-	$this->myPanel->internalEditBoxStart();
- 	$this->myPanel->subjectBar("SIP Channel Driver");   
-    $this->myPanel->radioSlide('sipdriver',$global['SIPDRIVER'],array('chan_sip'));
-    echo '</div>';	
-*/
 
-	$this->myPanel->internalEditBoxStart();
- 	$this->myPanel->subjectBar("Phone Browser Security");   
-    $this->myPanel->displayInputFor('puserpass','text',$global['PUSERPASS']);
-    $this->myPanel->displayInputFor('padminpass','text',$global['PADMINPASS']);
-    echo '</div>';	
+		$this->myPanel->internalEditBoxStart();
+ 		$this->myPanel->subjectBar("Phone Browser Security");   
+    	$this->myPanel->displayInputFor('puserpass','text',$global['PUSERPASS']);
+    	$this->myPanel->displayInputFor('padminpass','text',$global['PADMINPASS']);
+    	echo '</div>';	
 
-	$this->myPanel->internalEditBoxStart();
- 	$this->myPanel->subjectBar("User Services");   
-    $this->myPanel->displayBooleanFor('usercreate',$global['USERCREATE']);
-    $this->myPanel->displayInputFor('userotp','text',$global['USEROTP']);    
-    echo '</div>';
+		$this->myPanel->internalEditBoxStart();
+ 		$this->myPanel->subjectBar("User Services");   
+    	$this->myPanel->displayBooleanFor('usercreate',$global['USERCREATE']);
+    	$this->myPanel->displayInputFor('userotp','text',$global['USEROTP']);    
+    	echo '</div>';
 	
-	$this->myPanel->responsiveClose();
-    echo '<div class="w3-left w3-container"></div>' . PHP_EOL;
+		$this->myPanel->responsiveClose();
+    	echo '<div class="w3-left w3-container"></div>' . PHP_EOL;
 	
 	$endButtonArray['update'] = "endupdate";
 	$this->myPanel->endBar($endButtonArray);
