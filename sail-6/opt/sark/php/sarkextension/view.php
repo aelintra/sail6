@@ -1322,12 +1322,12 @@ private function saveEdit() {
  * reset/empty voicemail if requested
  */
 
-	if (isset($_POST['vdelete'])) { 
+	if ($_POST['vdelete'] == 'YES') { 
 		$rc = $this->helper->request_syscmd ("/bin/rm -rf /var/spool/asterisk/voicemail/default/" . $_POST['pkey']."/*");	
 		$this->message = "Voicemail deleted";
 	}	
 	
-	if (isset($_POST['vreset'])) { 
+	if ($_POST['vreset'] == 'YES') { 
 		$skey = $_POST['pkey'];
 		$rc = $this->helper->request_syscmd ("/bin/sed -i 's/^$skey => [0-9]*\(.*\)/$skey => $skey\\1/' /etc/asterisk/voicemail.conf");	
 		$this->message = "Voicemail password reset";	

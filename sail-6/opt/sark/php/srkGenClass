@@ -1493,8 +1493,11 @@ ANDHERE;
        	exten => *98,1,agi(sarkhpe,*51*,,)
        	exten => _*99XXXX,1,agi(sarkhpe,*61*\${EXTEN:3},,)
 
-;       	exten => h,1,Hangup
-;       	exten => t,1,Hangup
+:
+:	Invalid dial processing
+:
+		exten => i,1,PlayBack(cannot-complete-as-dialed)
+        exten => i,2,PlayBack(please-hang-up-and-try-again)
        	exten => i,1,Playtones(congestion)
 
 [defaultOpenGreet]

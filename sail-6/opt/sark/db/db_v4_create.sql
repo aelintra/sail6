@@ -369,7 +369,7 @@ PLAYCONGESTED TEXT,                 -- play congested message or tones
 PLAYTRANSFER TEXT DEFAULT 'YES',    -- play transfer message when transferring off the PBX
 PROXY TEXT,                         -- allow proxy operations
 PROXYIGNORE TEXT,                   -- not used in 4.x
-RECAGE INTEGER DEFAULT 60,			-- not used after 6.2.0-26
+RECAGE INTEGER DEFAULT 60,			-- not used after 6.2.0-26 - moved to clusters
 RECFINALDEST TEXT,                  -- recordings folder
 RECLIMIT TEXT,                      -- Recording folder max size
 RECMOUNT TEXT,                   	-- Recording folder mount command
@@ -406,7 +406,7 @@ VCL TEXT,							-- V5 cloud enabled (true/false)
 VCLFULL TEXT,						-- V5 cloud param
 VDELAY TEXT,                        -- artificial ring on inbound SIP
 VLIBS TEXT,                         -- not used in 4.x 
-VMAILAGE TEXT,                      -- oldest age of vmail
+VMAILAGE TEXT,                      -- oldest age of vmail - moved to clusters in 6.2.26
 VOICEINSTR TEXT,                    -- play long or short Vmail instructions
 VOIPMAX TEXT,                       -- MAX outbound up calls
 VXT	TEXT DEFAULT 0,					-- Enable/disable VXT

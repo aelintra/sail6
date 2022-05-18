@@ -139,6 +139,7 @@ private function showMain() {
 	$this->myPanel->aHeaderFor('chanmax');
 	$this->myPanel->aHeaderFor('masterclose');
 	$this->myPanel->aHeaderFor('oclo');
+	$this->myPanel->aHeaderFor('recused');
 	$this->myPanel->aHeaderFor('ed');
 	$this->myPanel->aHeaderFor('del');
 	echo '</tr>' . PHP_EOL;
@@ -172,6 +173,7 @@ private function showMain() {
 		echo '<td >' . $row['chanmax'] . '</td>' . PHP_EOL;
 		echo '<td >' . $masterclose . '</td>' . PHP_EOL;
 		echo '<td >' . $row['oclo'] . '</td>' . PHP_EOL;
+		echo '<td >' . $row['recused'] . '</td>' . PHP_EOL;
 		$get = '?edit=yes&amp;pkey=';
 		$get .= $row['pkey'];	
 		$this->myPanel->editClick($_SERVER['PHP_SELF'],$get);
@@ -319,10 +321,11 @@ private function showEdit($pkey=false) {
 	$this->myPanel->displayInputFor('abstimeout','number',$res['abstimeout']);
 	$this->myPanel->displayInputFor('chanmax','number',$res['chanmax']);
 	$this->myPanel->selected = $res['devicerec'];
-	$this->myPanel->displayPopupFor('devicerec',$res['devicerec'],array('default','None','Both'));
-	$this->myPanel->displayInputFor('recmaxage','number',$res['recmaxage']);
 
+//	$this->myPanel->displayPopupFor('devicerec',$res['devicerec'],array('default','None','Both'));
+	$this->myPanel->displayInputFor('recmaxage','number',$res['recmaxage']);
 	$this->myPanel->displayInputFor('recused','number',$res['recused'],null,null,true);
+	
 	$this->myPanel->radioSlide('masterclose',$masterclose,array('AUTO','CLOSED'));
 //	$this->myPanel->displayInputFor('oclo','text',$res['oclo'],null,null,true);
 
