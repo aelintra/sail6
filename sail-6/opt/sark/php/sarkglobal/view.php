@@ -317,7 +317,7 @@ private function showMain() {
  */
 		$this->myPanel->internalEditBoxStart();
  		$this->myPanel->subjectBar("SIP Channel Driver");   
-    	$this->myPanel->radioSlide('sipdriver',$global['SIPDRIVER'],array('SIP','PJSIP'));
+    	$this->myPanel->radioSlide('sipdriver',$global['SIPDRIVER'],array('chan_sip','pjsip'));
     	echo '</div>';	
 
 

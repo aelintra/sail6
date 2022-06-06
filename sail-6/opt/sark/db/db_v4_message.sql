@@ -305,7 +305,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sclose','clo
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('searchkey','goKey','Here you can enter all or part of the key for any object in the database, for example: an extension number, ring group number, queue name etc.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('secondary','Secondary Path','The second choice trunk for this route.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('selectall','Select All','');
-INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipdriver','SIP Channel Driver','');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipdriver','SIP Channel Driver','You can use the older chan_sip (SIP) stack or the PJSIP stack.  You MUST issue a commit after you change this and then you MUST restart Asterisk or bad things will happen.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipflood','Throttle SIP floods?','Turning this on will throttle sipfloods in the firewall. This may help control SIP DOS attacks and over enthusiastic SIP crack robots');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipiaxfriend','SIP Peer entry','Asterisk SIP settings');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('sipiaxpeer','Sip Peer entry', 'Asterisk peer stanza name');
