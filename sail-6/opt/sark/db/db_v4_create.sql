@@ -1,3 +1,4 @@
+
 BEGIN TRANSACTION;
 
 /* Agent */
@@ -57,6 +58,7 @@ desc TEXT,
 host TEXT,
 md5encrypt TEXT,
 provision TEXT,
+pjsippeer TEXT,
 register TEXT,
 sipiaxpeer TEXT,
 sipiaxuser TEXT,
@@ -173,6 +175,7 @@ newformat TEXT,							-- set to YES for new format SIP entries
 openfirewall TEXT,                      -- not used
 passwd TEXT,                            -- asterisk password
 protocol DEFAULT 'IPV4',				-- IPV4/IPV6
+pjsippeer TEXT,							-- Asterisk pjsip peer stanzas							
 provision TEXT,                         -- provisioning string 
 provisionwith TEXT DEFAULT 'IP',		-- how to provision my id - IP address or FQDN   
 sndcreds TEXT DEFAULT 'Always',         -- send creds with provisioning
@@ -528,6 +531,8 @@ opensibling TEXT,			-- not used
 password TEXT,				-- far end password
 pat TEXT,					-- V2; no longer used
 peername TEXT,				-- strong Asterisk username
+pjsippeer TEXT,				-- Asterisk pjsip peer stanzas
+pjsipreg TEXT,				-- Asterisk pjsip registration stanza									
 postdial TEXT,				-- post dial string for custom trunks	
 predial TEXT,				-- pre dial string for custom trunks
 privileged TEXT,			-- IAX siblings ONLY

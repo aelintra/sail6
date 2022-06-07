@@ -385,7 +385,7 @@ private function saveSIPIAX(&$tuple) {
 			$tuple['peername'] = strip_tags($_POST['username']);
 		}
 		else {
-			$tuple['peername'] = "peer" . mt_rand(10000, 99999);
+			$tuple['peername'] = $trunkname;
 		}
 				
 		if ($tuple['technology'] == 'IAX2') {
@@ -716,7 +716,7 @@ private function copyTemplates (&$tuple) {
  * substitute into it the values from this create
  */ 
 		
-        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer FROM Carrier WHERE pkey = '" . $_POST['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
+        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer,pjsippeer FROM Carrier WHERE pkey = '" . $_POST['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
  
         if (isset( $template['sipiaxpeer'] )) {
       		$template['sipiaxpeer'] = preg_replace ('/username=/',"username=" . $tuple['username'], $template['sipiaxpeer']);
