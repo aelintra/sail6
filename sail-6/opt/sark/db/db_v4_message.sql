@@ -243,7 +243,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('path1','Path
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('path2','Path 2','You can specify up to 4 paths (1 primary and up to 3 failover) in descending order of priority.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('path3','Path 3','You can specify up to 4 paths (1 primary and up to 3 failover) in descending order of priority.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('path4','Path 4','You can specify up to 4 paths (1 primary and up to 3 failover) in descending order of priority.');
-INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('peername','Peer name','This is the Asterisk peername which appears in square brackets above the peer block in sip.conf or iax.conf.  SARK allocates a unique name to each peer but you can override it if you wish or if your ITSP has directed you to use a specific name.');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('peername','Peer name','This is the SIP or IAX peername.  If this is an upstream (vendor) trunk then it will have been given to you by your supplier. If it is a downstream (Asterisk) trunk then it should have a unique name.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('phone','Tel1','Extension or PSTN number');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('pin','PIN','Agent PIN.  This is a number unique to each agent. It is recommended you use 4 digit PINs');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('play','Play','Play the sound file');

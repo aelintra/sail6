@@ -141,7 +141,7 @@
 			$('#chooser').css('background-color','lightgrey');			
 			if(this.value=='GeneralSIP' || this.value=='GeneralIAX2' ) {
 				$('#divtrunkname').show();			
-				$('#divusername').show();
+//				$('#divusername').show();
 				$('#divpassword').show();
 				$('#divhost').show();
 				$('#divregister').show();										

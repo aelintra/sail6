@@ -264,19 +264,21 @@ private function showNew() {
 	echo '<div id="divtrunkname">' . PHP_EOL;
 	$this->myPanel->displayInputFor('trunkname','text');
 	echo '</div>' . PHP_EOL;
-	
-	echo '<div id="divpeername">' . PHP_EOL;	// Sibling only
+
+// Sibling only	
+	echo '<div id="divpeername">' . PHP_EOL;	
 	$this->myPanel->displayInputFor('peername','text');
 	echo '</div>' . PHP_EOL;	
 	
 	echo '<div id="divhost">' . PHP_EOL;
 	$this->myPanel->displayInputFor('host','text');	
 	echo '</div>' . PHP_EOL;
-	
+
+//	No longer used.   Username, peername and key will all be set to the same value
 	echo '<div id="divusername">' . PHP_EOL;
 	$this->myPanel->displayInputFor('username','text');
 	echo '</div>' . PHP_EOL;
-	
+
 	echo '<div id="divpassword">' . PHP_EOL;	
 	$this->myPanel->displayInputFor('password','text');
 	echo '</div>' . PHP_EOL;
@@ -372,7 +374,8 @@ private function saveSIPIAX(&$tuple) {
 	if ($this->validator->ValidateForm()) {
 		$tuple['trunkname'] 	= strip_tags($_POST['trunkname']);	
 		$tuple['host'] 			= strip_tags($_POST['host']);		
-		$tuple['username']		= strip_tags($_POST['username']);
+		$tuple['username']		= $tuple['trunkname'];
+		$tuple['peername'] 		= $tuple['trunkname']);
 		$tuple['password']		= strip_tags($_POST['password']);			
 		$tuple['carrier']		= $_POST['carrier'];
 		if ($tuple['carrier'] == 'GeneralSIP') {
@@ -380,12 +383,6 @@ private function saveSIPIAX(&$tuple) {
 		}
 		else {
 			$tuple['technology']	= 'IAX2';
-		}
-		if (!empty($_POST['username'])) {		
-			$tuple['peername'] = strip_tags($_POST['username']);
-		}
-		else {
-			$tuple['peername'] = $trunkname;
 		}
 				
 		if ($tuple['technology'] == 'IAX2') {
@@ -570,25 +567,37 @@ private function showEdit() {
 	$this->myPanel->aHelpBoxFor('cluster'); 
 	echo '</div>';    
 
-     if ($tuple['technology'] == 'SIP' ||  $tuple['technology'] == 'IAX2') {
-    	echo '<div id="peer">';
-    	$this->myPanel->displayInputFor('peername','text',$tuple['peername']);
-		$this->myPanel->aLabelFor('sipiaxpeer');
-		$this->myPanel->displayFile($tuple['sipiaxpeer'],"sipiaxpeer");
-		echo '</div>' . PHP_EOL;
+     if ($tuple['technology'] == 'SIP') {
+     	$this->myPanel->displayInputFor('peername','text',$tuple['pkey']);
+     	if ($this->helper->check_pjsip_enabled) {
+     		echo '<div id="peer">';   		
+			$this->myPanel->aLabelFor('pjsipuser');
+			$this->myPanel->displayFile($tuple['pjsipuser'],"pjsipuser");
+			$this->myPanel->displayInputFor('register','text',$tuple['register']);
+			echo '</div>' . PHP_EOL;
+     	}
+     	else {
+    		echo '<div id="peer">';
+			$this->myPanel->aLabelFor('sipiaxpeer');
+			$this->myPanel->displayFile($tuple['sipiaxpeer'],"sipiaxpeer");
+			$this->myPanel->displayInputFor('register','text',$tuple['register']);
+			echo '</div>' . PHP_EOL;
+		}
 	}
 	
 /*
  *   TAB User
  */
 	if ($tuple['technology'] == 'IAX2') {
+		echo '<div id="peer">';
+    	$this->myPanel->displayInputFor('peername','text',$tuple['pkey']);
+		$this->myPanel->aLabelFor('sipiaxpeer');
+		$this->myPanel->displayFile($tuple['sipiaxpeer'],"sipiaxpeer");
+		echo '</div>' . PHP_EOL;
     	echo '<div id="user" >';
     	$this->myPanel->displayInputFor('desc','text',$tuple['desc']);
 		$this->myPanel->displayFile($tuple['sipiaxuser'],"sipiaxuser");
 		echo '</div>' . PHP_EOL;
-	}
-
-	if ( $tuple['technology'] == 'SIP' || $tuple['technology'] == 'IAX2' )  {
 		$this->myPanel->displayInputFor('register','text',$tuple['register']);
 	}
 
@@ -733,6 +742,18 @@ private function copyTemplates (&$tuple) {
         		$template['sipiaxpeer'] .= "\ndisallow=all\nallow=alaw\nallow=ulaw";
         	}       	
         }
+
+/* Don't think these are needed
+		if (isset( $template['pjsipuser'] )) {
+      		$template['pjsipuser'] = preg_replace ('/^\s+/',"", $template['pjsipuser']);
+      		$template['pjsipuser'] = preg_replace ('/\s+$/',"", $template['pjsipuser']);   	
+        }
+
+		if (isset( $template['pjsipreg'] )) {
+      		$template['pjsipreg'] = preg_replace ('/^\s+/',"", $template['pjsipreg']);
+      		$template['pjsipreg'] = preg_replace ('/\s+$/',"", $template['pjsipreg']);   	
+        }        
+*/
         
         if (isset( $template['sipiaxuser'] )) {
       		$template['sipiaxuser'] = preg_replace ('/username=/',"username=" . $tuple['username'], $template['sipiaxuser']);
@@ -747,7 +768,10 @@ private function copyTemplates (&$tuple) {
         }
         $tuple['sipiaxpeer'] = $template['sipiaxpeer'];
 		$tuple['sipiaxuser'] = $template['sipiaxuser'];
-
+		$tuple['pjsipuser'] = $template['pjsipuser'];
+		if ( $_POST['regthistrunk'] == "YES" ) {
+			$tuple['pjsipreg'] = $template['pjsipreg'];
+		}
 }
 
 private function printEditNotes ($pkey,$endpoint,$si_peers) {

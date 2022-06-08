@@ -58,7 +58,8 @@ desc TEXT,
 host TEXT,
 md5encrypt TEXT,
 provision TEXT,
-pjsippeer TEXT,
+pjsipuser TEXT,				-- Asterisk pjsip stanzas
+pjsipreg TEXT,				-- Asterisk pjsip registration stanza
 register TEXT,
 sipiaxpeer TEXT,
 sipiaxuser TEXT,
@@ -531,7 +532,7 @@ opensibling TEXT,			-- not used
 password TEXT,				-- far end password
 pat TEXT,					-- V2; no longer used
 peername TEXT,				-- strong Asterisk username
-pjsippeer TEXT,				-- Asterisk pjsip peer stanzas
+pjsipuser TEXT,				-- Asterisk pjsip stanzas
 pjsipreg TEXT,				-- Asterisk pjsip registration stanza									
 postdial TEXT,				-- post dial string for custom trunks	
 predial TEXT,				-- pre dial string for custom trunks
