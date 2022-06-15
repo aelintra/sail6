@@ -725,7 +725,7 @@ private function copyTemplates (&$tuple) {
  * substitute into it the values from this create
  */ 
 		
-        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer,pjsippeer FROM Carrier WHERE pkey = '" . $_POST['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
+        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer,pjsipuser FROM Carrier WHERE pkey = '" . $_POST['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
  
         if (isset( $template['sipiaxpeer'] )) {
       		$template['sipiaxpeer'] = preg_replace ('/username=/',"username=" . $tuple['username'], $template['sipiaxpeer']);
