@@ -375,7 +375,7 @@ private function saveSIPIAX(&$tuple) {
 		$tuple['trunkname'] 	= strip_tags($_POST['trunkname']);	
 		$tuple['host'] 			= strip_tags($_POST['host']);		
 		$tuple['username']		= $tuple['trunkname'];
-		$tuple['peername'] 		= $tuple['trunkname']);
+		$tuple['peername'] 		= $tuple['trunkname'];
 		$tuple['password']		= strip_tags($_POST['password']);			
 		$tuple['carrier']		= $_POST['carrier'];
 		if ($tuple['carrier'] == 'GeneralSIP') {
@@ -754,7 +754,7 @@ private function copyTemplates (&$tuple) {
       		$template['pjsipreg'] = preg_replace ('/\s+$/',"", $template['pjsipreg']);   	
         }        
 */
-        
+
         if (isset( $template['sipiaxuser'] )) {
       		$template['sipiaxuser'] = preg_replace ('/username=/',"username=" . $tuple['username'], $template['sipiaxuser']);
       		$template['sipiaxuser'] = preg_replace ('/fromuser=/',"fromuser=" . $tuple['username'], $template['sipiaxuser']);
