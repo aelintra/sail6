@@ -23,7 +23,10 @@
 			return true;
 		if (  $('#EXTLEN').val() == 4)
 			if (value.length==4) 
-			return true;			
+			return true;
+		if (  $('#EXTLEN').val() == 5)
+			if (value.length==5) 
+			return true;				
 		return false;
 	}, "* sipisaxstart should match extension length");	
             

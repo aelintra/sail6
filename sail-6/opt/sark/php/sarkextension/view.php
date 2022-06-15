@@ -1253,7 +1253,7 @@ private function saveEdit() {
 	$this->validator->addValidation("newkey","num","Invalid extension number");
 	$this->validator->addValidation("newkey","req","You must specify an extension number");
 	$this->validator->addValidation("newkey","minlen=3","Invalid minimum extension number");
-	$this->validator->addValidation("newkey","maxlen=4","Invalid maximum extension number");
+	$this->validator->addValidation("newkey","maxlen=5","Invalid maximum extension number");
 	$this->validator->addValidation("cellphone","num","cellphone number must be numeric");
     $this->validator->addValidation("vmailfwd","email","Invalid email address format");
 //    $this->validator->addValidation("callgroup","alnum","Call Group name must be alphanumeric(no spaces)");  

@@ -202,7 +202,7 @@ private function showMain() {
   	$this->myPanel->displayPopupFor('countrycode',$global['COUNTRYCODE'],$country);  
 	
 	if ( ! $extensions ) {	
-		$this->myPanel->displayPopupFor('extlen',$global['EXTLEN'],array('3','4'));
+		$this->myPanel->displayPopupFor('extlen',$global['EXTLEN'],array('3','4','5'));
 	} 
 
     $this->myPanel->displayInputFor('sipiaxstart','number',$global['SIPIAXSTART']);
@@ -371,8 +371,8 @@ private function saveEdit() {
     $this->validator->addValidation("voipmax","req","Max Outbound VOIP Calls must be entered");
     $this->validator->addValidation("voipmax","num","Max Outbound VOIP Calls must be numeric");    
     $this->validator->addValidation("extlen","num","Extension Length must be numeric");
-    $this->validator->addValidation("extlen","gt=2","Extension Length must 3 or 4");
-    $this->validator->addValidation("extlen","lt=5","Extension Length must 3 or 4");    
+    $this->validator->addValidation("extlen","gt=2","Extension Length must be 3 to 5");
+    $this->validator->addValidation("extlen","lt=5","Extension Length must be 3 to 5");    
     $this->validator->addValidation("sipiaxstart","req","Extension start must be entered");
     $this->validator->addValidation("sipiaxstart","num","Extension start must be numeric");
     $this->validator->addValidation("sipiaxstart","maxlen=4","Extension start must be 3 or 4 digits (same as extension length)"); 

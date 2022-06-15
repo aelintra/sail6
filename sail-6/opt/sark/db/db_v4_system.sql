@@ -13,12 +13,12 @@ fromuser=
 secret=','type=user
 context=mainmenu
 requirecalltoken=no','IAX2');
-INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,pjsipreg,pjsipuser,register,sipiaxpeer,technology) values ('GeneralSIP','GeneralSIP','VOIP','A general SIP carrier','NO',';[$trunk]
+INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,pjsipreg,pjsipuser,register,sipiaxpeer,technology) values ('GeneralSIP','GeneralSIP','VOIP','A general SIP carrier','NO','[$trunk]
 type=registration
 transport=transport-udp
 outbound_auth=$trunk_auth
 server_uri=sip:$host
-client_uri=sip:$trunk@sip.example.com
+client_uri=sip:$trunk@$host
 contact_user=$trunk
 retry_interval=60
 forbidden_retry_interval=600
@@ -29,7 +29,7 @@ type=auth
 auth_type=userpass
 password=$password
 username=$trunk
-realm=sip.example.com
+realm=$host
 
 [$trunk]
 type=endpoint
@@ -49,7 +49,7 @@ contact=sip:$host:5060
 [$trunk]
 type=identify
 endpoint=$trunk
-match=$host',username:password@url/username','type=peer
+match=$host','username:password@url/username','type=peer
 host=
 port=5060
 qualify=yes
