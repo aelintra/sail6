@@ -1110,12 +1110,8 @@ private function showEdit() {
 	if ($extension['technology'] == 'Custom' ) {
 		$this->myPanel->displayInputFor('cdialstring','text',$extension['cdialstring']);
 	}
-	echo '</div>';
 */
-
-/*
- *
- */	
+	echo '</div>';
 		
 
 	echo '<input type="hidden" name="pkey" id="pkey" size="20"  value="' . $pkey . '"  />' . PHP_EOL;
