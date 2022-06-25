@@ -1227,9 +1227,14 @@ private function showEdit() {
 		echo '<div id="asterisk" >';
 		$this->myPanel->displayFile(htmlspecialchars($extension['sipiaxfriend']),"sipiaxfriend");
 		echo '</div>' . PHP_EOL;
+
+		echo '<div class="w3-margin-bottom">';
+		$this->myPanel->aLabelFor("pjsipuser");
+		echo '</div>';		
 		echo '<div id="pjsip" >';
 		$this->myPanel->displayFile(htmlspecialchars($extension['pjsipuser']),"pjsipuser");
-		echo '</div>' . PHP_EOL;		
+		echo '</div>' . PHP_EOL;	
+
 		if ( $_SESSION['user']['pkey'] != 'admin' ) {
 			echo '</div>';
 		}
