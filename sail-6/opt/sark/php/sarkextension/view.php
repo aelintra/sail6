@@ -698,6 +698,40 @@ nat=\$nat
 transport=\$transport
 encryption=\$encryption";
 
+	$tuple['pjsipuser'] =
+	"[\$ext]
+type = aor
+max_contacts = 1
+maximum_expiration = 3600
+minimum_expiration = 60
+default_expiration = 600
+qualify_frequency = 30
+qualify_timeout=3.0
+
+[\$ext]
+type = auth
+username = \$ext
+password = \$password
+
+[$ext]
+type = endpoint
+context = internal
+disallow = all
+allow = alaw
+allow = ulaw
+direct_media = no
+callerid=\"\$desc\"<\$ext>
+send_pai = yes
+named_call_group = \$clust     
+named_pickup_group = \$clust    
+mailboxes = \$ext@\$clst
+transport = \$transport
+rtp_symmetric = \$nat
+media_encryption_optimistic = yes
+auth = \$ext
+outbound_auth = \$ext
+aors = \$ext";
+
 	if ($resdevice['technology'] == 'SIP') {
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {
 			$tuple['provision']	.= "#INCLUDE " . $tuple['device'];
@@ -1070,11 +1104,14 @@ private function showEdit() {
 	if ($extension['technology'] == 'SIP' ) {
 		$this->myPanel->displayInputFor('extalert','text',$extension['extalert']);
 	}	
+/*
+ * Never used in practice but leave as a placeholder
+ *
 	if ($extension['technology'] == 'Custom' ) {
 		$this->myPanel->displayInputFor('cdialstring','text',$extension['cdialstring']);
 	}
-
 	echo '</div>';
+*/
 
 /*
  *
@@ -1190,6 +1227,9 @@ private function showEdit() {
 		echo '<div id="asterisk" >';
 		$this->myPanel->displayFile(htmlspecialchars($extension['sipiaxfriend']),"sipiaxfriend");
 		echo '</div>' . PHP_EOL;
+		echo '<div id="pjsip" >';
+		$this->myPanel->displayFile(htmlspecialchars($extension['pjsipuser']),"pjsipuser");
+		echo '</div>' . PHP_EOL;		
 		if ( $_SESSION['user']['pkey'] != 'admin' ) {
 			echo '</div>';
 		}

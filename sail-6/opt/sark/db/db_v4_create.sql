@@ -156,6 +156,7 @@ active TEXT DEFAULT 'YES',				-- Active/inactive flag
 basemacaddr TEXT,                       -- not used             
 callerid TEXT,                          -- CLID
 callbackto TEXT DEFAULT 'desk',			-- who we callback (ext/cell)
+callmax TEXT DEFAULT 3,					-- PJSIP does not support call-limit so we have to do it using GROUP
 cellphone TEXT,							-- cellphone twin
 celltwin TEXT,							-- cell twin on/off
 channel TEXT,                           -- not used
@@ -176,7 +177,7 @@ newformat TEXT,							-- set to YES for new format SIP entries
 openfirewall TEXT,                      -- not used
 passwd TEXT,                            -- asterisk password
 protocol DEFAULT 'IPV4',				-- IPV4/IPV6
-pjsippeer TEXT,							-- Asterisk pjsip peer stanzas							
+pjsipuser TEXT,							-- Asterisk PJSIP string							
 provision TEXT,                         -- provisioning string 
 provisionwith TEXT DEFAULT 'IP',		-- how to provision my id - IP address or FQDN   
 sndcreds TEXT DEFAULT 'Always',         -- send creds with provisioning
@@ -389,7 +390,7 @@ SENDEDOMAIN TEXT DEFAULT 'YES',  	-- Send public IP in SIP header YES/NO
 SIPIAXSTART TEXT,                   -- lowest extension number
 SIPFLOOD TEXT DEFAULT 'NO',			-- detect SIP flood YES/NO
 SIPMULTICAST TEXT,                  -- listen for multicast provisioning requests
-SIPDRIVER TEXT DEFAULT 'chan_sip',	-- SIP backend chan_sip or pjsip
+SIPDRIVER TEXT DEFAULT 'SIP',		-- SIP backend. SIP or PJSIP
 SMSALERT TEXT,                      -- not used in 4.x 
 SMSC TEXT,                          -- not used in 4.x 
 SNO TEXT,                           -- not used in 4.x 
