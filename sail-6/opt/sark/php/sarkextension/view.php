@@ -699,38 +699,12 @@ transport=\$transport
 encryption=\$encryption";
 
 	$tuple['pjsipuser'] =
-	"[\$ext]
-type = aor
-max_contacts = 1
-maximum_expiration = 3600
-minimum_expiration = 60
-default_expiration = 600
-qualify_frequency = 30
-qualify_timeout=3.0
-
-[\$ext]
-type = auth
-username = \$ext
-password = \$password
-
-[$ext]
-type = endpoint
-context = internal
-disallow = all
-allow = alaw
-allow = ulaw
-direct_media = no
-callerid=\"\$desc\"<\$ext>
-send_pai = yes
-named_call_group = \$clust     
-named_pickup_group = \$clust    
-mailboxes = \$ext@\$clst
+	"[\$ext](extension_defaults)
+hint_exten = \$ext
+endpoint/callerid = \$desc <1001>
 transport = \$transport
-rtp_symmetric = \$nat
-media_encryption_optimistic = yes
-auth = \$ext
-outbound_auth = \$ext
-aors = \$ext";
+inbound_auth/username = \$ext
+inbound_auth/password = \$password";	
 
 	if ($resdevice['technology'] == 'SIP') {
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {
