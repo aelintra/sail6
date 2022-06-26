@@ -434,6 +434,8 @@ private function genPjsip() {
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_preamble.conf');
 	fclose($fh);
 
+	$OUT = NULL;
+
 //
 //  SIP extensions (phones)
 //
@@ -499,6 +501,7 @@ private function genPjsip() {
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_extensions.conf');
 	fclose($fh);
 
+	$OUT = NULL;
 //
 //  SIP peers (Lines)
 //
