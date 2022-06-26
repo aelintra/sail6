@@ -447,8 +447,7 @@ private function genPjsip() {
 			$row['pjsipuser'] = preg_replace ( '/\$password/', $row['passwd'], $row['pjsipuser']);
 
 			$transportWork = "udp";
-			switch ($transport) {
-
+			switch ($row['transport']) {
 				case "udp":
 					if ($row['location'] == 'remote') {
 						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-udp-nat', $row['pjsipuser']);
