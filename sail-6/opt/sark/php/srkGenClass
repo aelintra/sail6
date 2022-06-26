@@ -54,6 +54,7 @@ public function genAsterisk() {
     $this->genMoh();
     $this->genIax();
     $this->genSip();
+    $this->genPjsip();
     $this->genConferences();
     $this->genQueues();
     $this->genFeatures();
@@ -402,7 +403,153 @@ private function genSip() {
 }
 
 
+private function genPjsip() {
 
+	$OUT = $this->genFileBanner();
+
+
+	if ($this->globals['SENDEDOMAIN'] = "YES") {
+		if ($this->globals['EDOMAIN'] != "") { 
+			$myExternip = $this->globals['EDOMAIN'];	   
+		}	
+		else {
+			$edomaindig = $this->nethelper->get_externip();
+			if ($edomaindig) {
+            	$myExternip = $edomaindig;
+            }
+		}
+	}
+
+
+	$pjsipBuff = file_get_contents("/etc/asterisk/sark_pjsip_header.conf") or die('Could not open sark_pjsip_header.conf file!');
+	$pjsipBuff = preg_replace ( '/\$externip/', $myExternip, $pjsipBuff);
+	$OUT .= $pjsipBuff;
+	$OUT .= "\n\n";
+
+	$pjsipBuff = file_get_contents("/etc/asterisk/sark_pjsip_wizard_templates.conf") or die('Could not open ark_pjsip_wizard_templates.conf file!');
+	$OUT .= $pjsipBuff;
+	$OUT .= "\n\n";
+
+	$fh = fopen("/etc/asterisk/sark_pjsip_preamble.conf", 'w') or die('Could not open sark_pjsip_preamble.conf!');
+	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_preamble.conf');
+	fclose($fh);
+
+//
+//  SIP extensions (phones)
+//
+//  
+	$result = $this->helper->getTable("ipphone",null,false);
+
+    foreach ($result as $row) {
+		if ($row['active'] == "YES") {       
+			$row['pjsipuser'] = preg_replace ( '/\$ext/', $row['pkey'], $row['pjsipuser']);
+			$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
+			$row['pjsipuser'] = preg_replace ( '/\$password/', $row['passwd'], $row['pjsipuser']);
+
+			$transportWork = "udp";
+			switch (transport) {
+
+				case "udp":
+					if $row['location'] == 'remote') {
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-udp-nat', $row['pjsipuser']);
+					}
+					else {
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-udp', $row['pjsipuser']);
+					}
+					break;
+
+				case "tcp":
+					if $row['location'] == 'remote') {
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tcp-nat', $row['pjsipuser']);
+					}
+					else {
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tcp', $row['pjsipuser']);
+					}
+					break;
+
+				case "tls"
+					if $row['location'] == 'remote') {
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tls-nat', $row['pjsipuser']);
+					}
+					else {
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tls', $row['pjsipuser']);
+					}
+					break;
+				break;
+			}
+/*
+ *		ToDo - deal with encryption 
+ */
+
+
+//
+//	Backport V7 named pickup usung tenant name as the target
+//	
+				$row['pjsipuser'] = preg_replace ( '/\$clst/', $row['cluster'], $row['pjsipuser']);
+
+				$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
+//
+//	add the row to the output
+//						
+				$OUT .= $row['pjsipuser'] . "\n\n";
+			} 
+		}
+	}
+	$fh = fopen("/etc/asterisk/sark_pjsip_extensions.conf", 'w') or die('Could not open file!');
+	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_extensions.conf');
+	fclose($fh);
+
+//
+//  SIP peers (Lines)
+//
+
+	$result = $this->helper->getTable("lineio",null,false);
+
+    foreach ($result as $row) {             
+    	if ($row['active'] == "YES") {    
+			try {
+				$sql = $this->dbh->prepare("SELECT * from Carrier where pkey=?");
+				$sql->execute(array($row['carrier']));		
+				$carrier = $sql->fetch();	
+				$sql=NULL;
+			} catch (PDOException $e) {
+				$errorMsg = $e->getMessage();
+				return $errorMsg;
+			}
+			if ($carrier['technology'] == "SIP"  || $carrier['technology'] == "Gateway") {
+				$result['pjsipuser'] = preg_replace ( '/\$host/',$result['host'], $result['pjsipuser'] );
+				if ($row['privileged'] == "NO") {
+					$result['pjsipuser'] = preg_replace ( '/\$context/','mainmenu', $result['pjsipuser'] );	
+					}
+				else {
+					$result['pjsipuser'] = preg_replace ( '/\$context/','internal', $result['pjsipuser'] );
+				}
+					 	
+				$OUT .= "\n[" . $row['pjsipuser'] . "]\n";
+			}	
+		}
+	}
+	$fh = fopen("/etc/asterisk/sark_pjsip_trunks.conf", 'w') or die('Could not open file!');
+	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_trunks.conf');
+	fclose($fh);
+
+	`/bin/cat /etc/asterisk/sark_pjsip_preamble.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_extensions.conf > /etc/asterisk/sark_pjsip_complete.conf`;
+
+/*
+	$fh = fopen("/etc/asterisk/pjsip.conf", 'w') or die('Could not open file!');
+    $OUT = $this->genFileBanner();        
+	fwrite($fh, $OUT. " \n" .
+				"#include sark_pjsip_header.conf  \n" .
+				"#include sark_pjsip_wizard_template.conf  \n" .
+				"#include sark_pjsip_extensions.conf  \n" .
+				"#include sark_pjsip_trunks.conf  \n" .
+		or die('Could not write to file /etc/asterisk/pjsip.conf');
+	fclose($fh);
+*/
+
+// clean up any DOS type stuff from the generated files 
+	`dos2unix /etc/asterisk/sark_pjsip* >/dev/null 2>&1`;
+}
 
 private function genConferences() {
 

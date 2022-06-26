@@ -701,10 +701,12 @@ encryption=\$encryption";
 	$tuple['pjsipuser'] =
 	"[\$ext](phone)
 hint_exten = \$ext
-endpoint/callerid = \$desc <1001>
+endpoint/callerid = \$desc <\$ext>
 transport = \$transport
 inbound_auth/username = \$ext
-inbound_auth/password = \$password";	
+inbound_auth/password = \$password
+mailboxes = \$ext@\$clst";
+
 
 	if ($resdevice['technology'] == 'SIP') {
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {

@@ -16,7 +16,7 @@ requirecalltoken=no','IAX2');
 INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,pjsipuser,register,sipiaxpeer,technology) values ('GeneralSIP','GeneralSIP','VOIP','A general SIP carrier','NO','[\$pkey](trunk)
 sends_auth = yes
 sends_registrations = yes
-endpoint/context = mainmenu
+endpoint/context = $context
 remote_hosts = \$host
 accepts_registrations = no
 endpoint/send_pai = yes
