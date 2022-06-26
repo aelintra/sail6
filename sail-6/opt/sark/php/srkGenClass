@@ -451,28 +451,28 @@ private function genPjsip() {
 
 				case "udp":
 					if ($row['location'] == 'remote') {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-udp-nat', $row['pjsipuser']);
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-udp-nat', $row['pjsipuser']);
 					}
 					else {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-udp', $row['pjsipuser']);
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-udp', $row['pjsipuser']);
 					}
 					break;
 
 				case "tcp":
 					if $row['location'] == 'remote') {
-						($row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tcp-nat', $row['pjsipuser']);
+						($row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tcp-nat', $row['pjsipuser']);
 					}
 					else {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tcp', $row['pjsipuser']);
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tcp', $row['pjsipuser']);
 					}
 					break;
 
 				case "tls"
 					if ($row['location'] == 'remote') {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tls-nat', $row['pjsipuser']);
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tls-nat', $row['pjsipuser']);
 					}
 					else {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', $'transport-tls', $row['pjsipuser']);
+						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tls', $row['pjsipuser']);
 					}
 					break;
 				break;
