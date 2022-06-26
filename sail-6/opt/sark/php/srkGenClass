@@ -467,7 +467,7 @@ private function genPjsip() {
 					}
 					break;
 
-				case "tls"
+				case "tls":
 					if ($row['location'] == 'remote') {
 						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tls-nat', $row['pjsipuser']);
 					}
