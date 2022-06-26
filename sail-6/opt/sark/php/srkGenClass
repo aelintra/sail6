@@ -421,17 +421,19 @@ private function genPjsip() {
 	}
 
 
-	$pjsipBuff = file_get_contents("/etc/asterisk/sark_pjsip_header.conf") or die('Could not open sark_pjsip_header.conf file!');
+	$pjsipBuff = file_get_contents("/etc/asterisk/sark_pjsip_head_template.conf") or die('Could not open sark_pjsip_head_template.conf file!');
 	$pjsipBuff = preg_replace ( '/\$externip/', $myExternip, $pjsipBuff);
+/* 
+ * N.B. deal with cert/key location here also
+ */	
 	$OUT .= $pjsipBuff;
 	$OUT .= "\n\n";
 
-	$pjsipBuff = file_get_contents("/etc/asterisk/sark_pjsip_wizard_templates.conf") or die('Could not open ark_pjsip_wizard_templates.conf file!');
 	$OUT .= $pjsipBuff;
-	$OUT .= "\n\n";
+	$OUT .= "\n\n";	
 
-	$fh = fopen("/etc/asterisk/sark_pjsip_preamble.conf", 'w') or die('Could not open sark_pjsip_preamble.conf!');
-	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_preamble.conf');
+	$fh = fopen("/etc/asterisk/sark_pjsip_head.conf", 'w') or die('Could not open sark_pjsip_head.conf!');
+	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_head.conf');
 	fclose($fh);
 
 	$OUT = NULL;
@@ -497,8 +499,8 @@ private function genPjsip() {
 		
 	}
 
-	$fh = fopen("/etc/asterisk/sark_pjsip_extensions.conf", 'w') or die('Could not open file!');
-	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_extensions.conf');
+	$fh = fopen("/etc/asterisk/sark_pjsip_phones.conf", 'w') or die('Could not open file!');
+	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_phones.conf');
 	fclose($fh);
 
 	$OUT = NULL;
@@ -533,16 +535,16 @@ private function genPjsip() {
 		}
 	}
 	if (!$OUT) {
-		$OUT = ';sark_pjsip_trunks.conf';
+		$OUT = ";sark_pjsip_trunks.conf" . "\n\n";
 	}
-	
+
 	$fh = fopen("/etc/asterisk/sark_pjsip_trunks.conf", 'w') or die('Could not open file!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_trunks.conf');
 	fclose($fh);
 	
 
 
-	`/bin/cat /etc/asterisk/sark_pjsip_preamble.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_extensions.conf > /etc/asterisk/sark_pjsip_complete.conf`;
+	`/bin/cat /etc/asterisk/sark_pjsip_wizard_template.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_phones.conf > /etc/asterisk/sark_pjsip_wizard.conf`;
 
 /*
 	$fh = fopen("/etc/asterisk/pjsip.conf", 'w') or die('Could not open file!');
