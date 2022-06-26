@@ -485,16 +485,17 @@ private function genPjsip() {
 //
 //	Backport V7 named pickup usung tenant name as the target
 //	
-				$row['pjsipuser'] = preg_replace ( '/\$clst/', $row['cluster'], $row['pjsipuser']);
+			$row['pjsipuser'] = preg_replace ( '/\$clst/', $row['cluster'], $row['pjsipuser']);
 
-				$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
+			$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
 //
 //	add the row to the output
 //						
-				$OUT .= $row['pjsipuser'] . "\n\n";
-			} 
-		}
+			$OUT .= $row['pjsipuser'] . "\n\n";
+		} 
+		
 	}
+
 	$fh = fopen("/etc/asterisk/sark_pjsip_extensions.conf", 'w') or die('Could not open file!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_extensions.conf');
 	fclose($fh);
