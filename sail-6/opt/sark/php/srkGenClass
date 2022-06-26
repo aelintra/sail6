@@ -532,9 +532,15 @@ private function genPjsip() {
 			}	
 		}
 	}
+	if (!$OUT) {
+		$OUT = ';sark_pjsip_trunks.conf';
+	}
+	
 	$fh = fopen("/etc/asterisk/sark_pjsip_trunks.conf", 'w') or die('Could not open file!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_trunks.conf');
 	fclose($fh);
+	
+
 
 	`/bin/cat /etc/asterisk/sark_pjsip_preamble.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_extensions.conf > /etc/asterisk/sark_pjsip_complete.conf`;
 
