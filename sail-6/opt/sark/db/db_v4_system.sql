@@ -13,15 +13,15 @@ fromuser=
 secret=','type=user
 context=mainmenu
 requirecalltoken=no','IAX2');
-INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,pjsipuser,register,sipiaxpeer,technology) values ('GeneralSIP','GeneralSIP','VOIP','A general SIP carrier','NO','[\$pkey](trunk)
+INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,pjsipuser,register,sipiaxpeer,technology) values ('GeneralSIP','GeneralSIP','VOIP','A general SIP carrier','NO','[$pkey](trunk)
 sends_auth = yes
 sends_registrations = yes
 endpoint/context = $context
-remote_hosts = \$host
+remote_hosts = $host
 accepts_registrations = no
 endpoint/send_pai = yes
-outbound_auth/username = \$user
-outbound_auth/password = \$password','username:password@url/username','type=peer
+outbound_auth/username = $user
+outbound_auth/password = $password','username:password@url/username','type=peer
 host=
 port=5060
 qualify=yes

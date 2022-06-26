@@ -528,7 +528,7 @@ private function genPjsip() {
 					$result['pjsipuser'] = preg_replace ( '/\$context/','internal', $result['pjsipuser'] );
 				}
 					 	
-				$OUT .= "\n[" . $row['pjsipuser'] . "]\n";
+				$OUT .= "\n" . $row['pjsipuser'] . "\n";
 			}	
 		}
 	}
