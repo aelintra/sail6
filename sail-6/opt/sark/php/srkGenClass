@@ -429,9 +429,6 @@ private function genPjsip() {
 	$OUT .= $pjsipBuff;
 	$OUT .= "\n\n";
 
-	$OUT .= $pjsipBuff;
-	$OUT .= "\n\n";	
-
 	$fh = fopen("/etc/asterisk/sark_pjsip_head.conf", 'w') or die('Could not open sark_pjsip_head.conf!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_head.conf');
 	fclose($fh);
