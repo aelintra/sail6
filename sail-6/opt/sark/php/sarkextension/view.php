@@ -699,7 +699,7 @@ transport=\$transport
 encryption=\$encryption";
 
 	$tuple['pjsipuser'] =
-	"[\$ext](extension_defaults)
+	"[\$ext](phone)
 hint_exten = \$ext
 endpoint/callerid = \$desc <1001>
 transport = \$transport
