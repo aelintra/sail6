@@ -1393,8 +1393,8 @@ THERE;
     	if ($count > 30) {
     		break;
     	}    
-		$dialstr .= "SIP/" . $row['pkey'] .'&';
-		$ringall .= "SIP/" . $row['pkey'] .'&';
+		$dialstr .= $this->globals['SIPDRIVER'] . "/" . $row['pkey'] .'&';
+		$ringall .= $this->globals['SIPDRIVER'] . "/" . $row['pkey'] .'&';
 		$count++;
     } 
 //  strip trailing space and generate ringall
