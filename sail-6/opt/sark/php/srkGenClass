@@ -405,6 +405,8 @@ private function genSip() {
 
 private function genPjsip() {
 
+	
+	$local_net = "10.0.0.0/8.172.168.0.0/12,192.168.0.0/16";
 	$OUT = $this->genFileBanner();
 
 
@@ -423,6 +425,8 @@ private function genPjsip() {
 
 	$pjsipBuff = file_get_contents("/etc/asterisk/sark_pjsip_head_template.conf") or die('Could not open sark_pjsip_head_template.conf file!');
 	$pjsipBuff = preg_replace ( '/\$externip/', $myExternip, $pjsipBuff);
+	$pjsipBuff = preg_replace ( '/\$localip/', $local_net, $pjsipBuff);
+	
 /* 
  * N.B. deal with cert/key location here also
  */	
@@ -519,12 +523,16 @@ private function genPjsip() {
 				return $errorMsg;
 			}
 			if ($carrier['technology'] == "SIP"  || $carrier['technology'] == "Gateway") {
-				$result['pjsipuser'] = preg_replace ( '/\$host/',$result['host'], $result['pjsipuser'] );
+				$row['pjsipuser'] = preg_replace ( '/\$host/',$row['host'], $row['pjsipuser'] );
+				$row['pjsipuser'] = preg_replace ( '/\$pkey/',$row['pkey'], $row['pjsipuser'] );
+				$row['pjsipuser'] = preg_replace ( '/\$user/',$row['pkey'], $row['pjsipuser'] );
+				$row['pjsipuser'] = preg_replace ( '/\$upassword/',$row['password'], $row['pjsipuser'] );
+
 				if ($row['privileged'] == "NO") {
-					$result['pjsipuser'] = preg_replace ( '/\$context/','mainmenu', $result['pjsipuser'] );	
+					$row['pjsipuser'] = preg_replace ( '/\$context/','mainmenu', $row['pjsipuser'] );	
 					}
 				else {
-					$result['pjsipuser'] = preg_replace ( '/\$context/','internal', $result['pjsipuser'] );
+					$row['pjsipuser'] = preg_replace ( '/\$context/','internal', $row['pjsipuser'] );
 				}
 					 	
 				$OUT .= "\n" . $row['pjsipuser'] . "\n";
@@ -534,6 +542,7 @@ private function genPjsip() {
 	if (!$OUT) {
 		$OUT = ";sark_pjsip_trunks.conf" . "\n\n";
 	}
+
 
 	$fh = fopen("/etc/asterisk/sark_pjsip_trunks.conf", 'w') or die('Could not open file!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_trunks.conf');
