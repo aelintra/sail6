@@ -542,6 +542,7 @@ private function genPjsip() {
 	if (!$OUT) {
 		$OUT = ";sark_pjsip_trunks.conf" . "\n\n";
 	}
+	$OUT .= "\n\n";
 
 
 	$fh = fopen("/etc/asterisk/sark_pjsip_trunks.conf", 'w') or die('Could not open file!');
