@@ -1424,7 +1424,7 @@ THERE;
 				$qRes = $this->dbh->query($sql);
 				$IPphone = $qRes->fetch();
 				$qRes = NULL;	
-				$dialstr .= "Local/$ep@internal&";			
+				$dialstr .= $this->globals['SIPDRIVER'] . "/$ep&";			
 /*
 				if ($IPphone['technology'] == "Analogue") {
 					$IPphone['technology'] = "DAHDI";
