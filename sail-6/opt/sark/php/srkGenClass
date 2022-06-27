@@ -1393,17 +1393,14 @@ THERE;
     	if ($count > 30) {
     		break;
     	}    
-		$dialstr .= $this->globals['SIPDRIVER'] . "/" . $row['pkey'];
-		$ringall .= $this->globals['SIPDRIVER'] . "/" . $row['pkey'];
+		$ringall .= $this->globals['SIPDRIVER'] . "/" . $row['pkey'] . '&';
 		$count++;
     } 
 //  strip trailing space and generate ringall
-//	$ringall = preg_replace ('/&/'," ", $ringall );
 	$ringall = preg_replace ( '/&$/',"", $ringall ); 
 
 	if ($ringall != '') {
 		$OUT .= "\texten => RINGALL,1,agi(sarkhpe,Alias,$ringall,\${EXTEN},)\n"; 
-//		$count = $dbh->exec("UPDATE speed SET out = '". $ringall . "' WHERE pkey = 'RINGALL'" );  
 	}
 //  strip last & and save pageall
 //    $dialstr = preg_replace ( '/&$/',"", $dialstr );
@@ -1424,27 +1421,7 @@ THERE;
 				$qRes = $this->dbh->query($sql);
 				$IPphone = $qRes->fetch();
 				$qRes = NULL;	
-				$dialstr .= $this->globals['SIPDRIVER'] . "/$ep&";			
-/*
-				if ($IPphone['technology'] == "Analogue") {
-					$IPphone['technology'] = "DAHDI";
-					$dialstr .= $IPphone['technology'] . "/" . $IPphone['channel'] ."&";
-				}
-				elseif ($IPphone['technology'] == "Custom") {
-					continue;
-				}
-				elseif ($IPphone['technology'] == "SIP") {
-					if ($this->globals['SIPDRIVER'] == 'PJSIP') {
-						$IPphone['technology'] = "PJSIP";
-					}
-				}
-				else { 
-// check if we found a technology - if not skip expansion of this endpoint
-					if ($IPphone['technology']) {
-						$dialstr .= $IPphone['technology'] . "/" . $ep . "&";
-					}	
-				}
-*/					
+				$dialstr .= $this->globals['SIPDRIVER'] . "/$ep&";								
 			}
 
 			elseif (preg_match(' /\// ',$ep)) {
