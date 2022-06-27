@@ -1393,8 +1393,8 @@ THERE;
     	if ($count > 30) {
     		break;
     	}    
-		$dialstr .= $this->globals['SIPDRIVER'] . "/" . $row['pkey'] .'&';
-		$ringall .= $this->globals['SIPDRIVER'] . "/" . $row['pkey'] .'&';
+		$dialstr .= "Local/" . $row['pkey'] .'@internal&';
+		$ringall .= "Local/" . $row['pkey'] .'@internal&';
 		$count++;
     } 
 //  strip trailing space and generate ringall
@@ -1424,7 +1424,7 @@ THERE;
 				$qRes = $this->dbh->query($sql);
 				$IPphone = $qRes->fetch();
 				$qRes = NULL;	
-				$dialstr .= "Local/$ep@extensions&";			
+				$dialstr .= "Local/$ep@internal&";			
 /*
 				if ($IPphone['technology'] == "Analogue") {
 					$IPphone['technology'] = "DAHDI";
