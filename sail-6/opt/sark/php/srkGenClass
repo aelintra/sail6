@@ -526,7 +526,7 @@ private function genPjsip() {
 				$row['pjsipuser'] = preg_replace ( '/\$host/',$row['host'], $row['pjsipuser'] );
 				$row['pjsipuser'] = preg_replace ( '/\$pkey/',$row['pkey'], $row['pjsipuser'] );
 				$row['pjsipuser'] = preg_replace ( '/\$user/',$row['pkey'], $row['pjsipuser'] );
-				$row['pjsipuser'] = preg_replace ( '/\$upassword/',$row['password'], $row['pjsipuser'] );
+				$row['pjsipuser'] = preg_replace ( '/\$password/',$row['secret'], $row['pjsipuser'] );
 
 				if ($row['privileged'] == "NO") {
 					$row['pjsipuser'] = preg_replace ( '/\$context/','mainmenu', $row['pjsipuser'] );	
