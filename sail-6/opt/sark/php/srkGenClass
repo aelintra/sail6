@@ -1443,9 +1443,10 @@ THERE;
 					if ($IPphone['technology']) {
 						$dialstr .= $IPphone['technology'] . "/" . $ep . "&";
 					}	
-				}	
+				}
+*/					
 			}
-*/
+
 			elseif (preg_match(' /\// ',$ep)) {
 				$dialstr .= $ep . "&";
 			}
