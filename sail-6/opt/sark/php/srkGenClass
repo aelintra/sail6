@@ -1362,7 +1362,7 @@ $OUT .= "\n[mainmenu]\n";
 	exten => t,4,Goto(extensions,\${SYSOP},1)
 ;	exten => t,5,Hangup
 ;	exten => h,1,Hangup
-	exten => i,1,Goto(extensions,\${SYSOP},1)
+;	exten => i,1,Goto(extensions,\${SYSOP},1)
 	
 [macro-clear]
         exten=>s,1,System(/bin/touch /opt/sark/var/spool/asterisk/monitor/\${filename})
@@ -1423,16 +1423,20 @@ THERE;
 				$sql = "select * from IPphone WHERE pkey = '" . $ep . "'"; 
 				$qRes = $this->dbh->query($sql);
 				$IPphone = $qRes->fetch();
-				$qRes = NULL;				
-
-//				$IPphone = $dbh->query($sql2)->fetch(PDO::FETCH_ASSOC);
+				$qRes = NULL;	
+				$dialstr .= "Local/$ep@extensions&";			
+/*
 				if ($IPphone['technology'] == "Analogue") {
 					$IPphone['technology'] = "DAHDI";
 					$dialstr .= $IPphone['technology'] . "/" . $IPphone['channel'] ."&";
 				}
 				elseif ($IPphone['technology'] == "Custom") {
 					continue;
-//					$dialstr .= $IPphone['dialstring'] ." ";
+				}
+				elseif ($IPphone['technology'] == "SIP") {
+					if ($this->globals['SIPDRIVER'] == 'PJSIP') {
+						$IPphone['technology'] = "PJSIP";
+					}
 				}
 				else { 
 // check if we found a technology - if not skip expansion of this endpoint
@@ -1441,6 +1445,7 @@ THERE;
 					}	
 				}	
 			}
+*/
 			elseif (preg_match(' /\// ',$ep)) {
 				$dialstr .= $ep . "&";
 			}
@@ -1648,9 +1653,9 @@ ANDHERE;
        	exten => *98,1,agi(sarkhpe,*51*,,)
        	exten => _*99XXXX,1,agi(sarkhpe,*61*\${EXTEN:3},,)
 
-:
-:	Invalid dial processing
-:
+;
+;	Invalid dial processing
+;
 		exten => i,1,PlayBack(cannot-complete-as-dialed)
         exten => i,2,PlayBack(please-hang-up-and-try-again)
        	exten => i,1,Playtones(congestion)
