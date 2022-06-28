@@ -195,7 +195,6 @@ private function showMain() {
 	if ( $this->astrunning ) {	
 		$amiHelper = new amiHelper();
 		$sip_peers = $amiHelper->get_peer_array(false,true);
-		print_r($sip_peers);
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
