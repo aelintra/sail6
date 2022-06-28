@@ -36,12 +36,12 @@ public function get_peer_array($iax=false,$pjsip=false) {
 	}
 	else {
 		if ($pjsip) {
-			$amisiprets = $this->amiHdle->getPjsipPeers();
-		}
-		else {
 			$helper = new helper;
+			$amisiprets = $this->amiHdle->getPjsipPeers();
+						$helper->logit($amisiprets);
+		}
+		else {			
 			$amisiprets = $this->amiHdle->getSipPeers();
-			$helper->logit($amisiprets);
 		}
 	}
 	$sip_peers = $this->build_peer_array($amisiprets);
