@@ -701,7 +701,9 @@ encryption=\$encryption";
 	$tuple['pjsipuser'] =
 	"[\$ext](phone)
 hint_exten = \$ext
-endpoint/callerid = \$desc <\$ext>
+endpoint/callerid = \"\$desc\" <\$ext>
+endpoint/namedcallgroup=\$clst
+endpoint/namedpickupgroup=\$clst
 transport = \$transport
 inbound_auth/username = \$ext
 inbound_auth/password = \$password

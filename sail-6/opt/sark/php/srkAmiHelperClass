@@ -19,11 +19,12 @@
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/AsteriskManager.php";
 
+
 class amiHelper {
 
 protected $amiHdle;
 
-public function get_peer_array($iax=false) {
+public function get_peer_array($iax=false,$pjsip=false) {
 
 	if ( ! $this->amiHelperLogin()) {
 		return false;
@@ -34,7 +35,14 @@ public function get_peer_array($iax=false) {
 		$amisiprets = $this->amiHdle->getIaxPeers();
 	}
 	else {
-		$amisiprets = $this->amiHdle->getSipPeers();
+		if ($pjsip) {
+			$amisiprets = $this->amiHdle->getPjsipPeers();
+		}
+		else {
+			$helper = new helper;
+			$amisiprets = $this->amiHdle->getSipPeers();
+			$helper->logit($amisiprets);
+		}
 	}
 	$sip_peers = $this->build_peer_array($amisiprets);
 	$this->amiHdle->logout();
@@ -53,16 +61,6 @@ public function get_coreShowChannels() {
 }
 
 public function get_database($pkey,&$cfim,&$cfbs,&$ringdelay,&$twin) {
-/*
-	if ( ! $this->amiHelperLogin()) {
-		return false;
-	}
-	$cfim = $this->amiHdle->GetDB('cfim', $pkey);
-	$cfbs = $this->amiHdle->GetDB('cfbs', $pkey);
-	$ringdelay = $this->amiHdle->GetDB('ringdelay', $pkey);
-	$twin = $this->amiHdle->GetDB('srktwin', $pkey);
-	$this->amiHdle->logout();
-*/
 
 	$rets = trim(`sudo asterisk -rx "database get cfim $pkey"`);
 	preg_match("/^Value:\s*(\d+)$/",$rets,$matches);
@@ -93,11 +91,7 @@ public function get_database($pkey,&$cfim,&$cfbs,&$ringdelay,&$twin) {
 
 public function put_database($newkey) {
 
-/*	
-	if ( ! $this->amiHelperLogin()) {
-		return false;
-	}
-*/			
+		
 	if (isset($_POST['cfim'])) {
 		$cfim			= strip_tags($_POST['cfim']);
 		if ($cfim) {

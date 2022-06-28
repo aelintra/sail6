@@ -520,6 +520,19 @@ class ami
     }
 
     /**
+     * Get a list of PJSIP peers and their status
+     *
+     * @return string|bool
+     */
+    public function getPjsipPeers()
+    {
+        $this->_checkSocket();
+
+        $response = $this->_sendCommand("Action: PJSIPShowEndpoints\r\n\r\n", 'ListItems', false);
+        return $response;
+    }    
+
+    /**
      * Return a list of IAX peers and their status
      *
      * @return string|bool

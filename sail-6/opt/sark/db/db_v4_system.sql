@@ -18,6 +18,7 @@ sends_auth = yes
 sends_registrations = yes
 endpoint/context = $context
 remote_hosts = $host
+transport = $transport
 accepts_registrations = no
 endpoint/send_pai = yes
 outbound_auth/username = $user
