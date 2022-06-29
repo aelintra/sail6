@@ -918,7 +918,7 @@ private function showEdit() {
 		}
 	}
 
-	$res = $this->dbh->query("SELECT FQDN,PROXY,VXT FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
+	$res = $this->dbh->query("SELECT FQDN,PROXY,VXT,SIPDRIVER FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
 	$proxy = $res['PROXY'];
 	$fqdn = $res['FQDN'];
 	$vxt = $res['VXT'];
