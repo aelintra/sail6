@@ -956,7 +956,7 @@ private function showEdit() {
 			$sip_peers = $amiHelper->get_peer_array();
 		}
 		if ($sipdriver == "PJSIP") {
-			$sip_peers = $amiHelper->get_pjsip_array($extension);
+			$sip_peers = $amiHelper->get_pjsip_endpoint($pkey);
 		}		
 		$amiHelper->get_database($pkey,$cfim,$cfbs,$ringdelay,$celltwin);			
 		$latency = $sip_peers [$pkey]['Status'];	
