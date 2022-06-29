@@ -18,6 +18,7 @@
 //
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/AsteriskManager.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";
 
 class amiHelper {
 
