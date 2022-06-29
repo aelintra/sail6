@@ -64,7 +64,7 @@ public function get_pjsip_array($endpoints) {
 			continue;
 		}
 		$amisiprets = $this->amiHdle->getPjsipPeer($extrow['pkey']);
-		$sip_peers[] = $this->build_peer_array($amisiprets);
+		$sip_peers[] = $this->build_pjsip_array($amisiprets);
 	}
 	$this->amiHdle->logout();
 	$this->helper->logit(json_encode($sip_peers));
@@ -229,8 +229,7 @@ private function build_peer_array($amirets) {
 		$couplet = explode(': ', $line);
 		
 		// ignore events and ListItems
-		if ($couplet[0] == 'Event' || $couplet[0] == 'ListItems'
-			|| $couplet[0] == 'EventList' || $couplet[0] == 'ObjectType') {
+		if ($couplet[0] == 'Event' || $couplet[0] == 'ListItems') {
 			continue;
 		}
 		
@@ -252,6 +251,34 @@ private function build_peer_array($amirets) {
 				$peer_array [$peer][$couplet[0]] = $couplet[1];
 			}
 		}
+	}
+	return $peer_array;	
+}
+
+private function build_pjsip_array($amirets) {
+/*
+ * build an array of peers by cleaning up the AMI output
+ * (which contains stuff we don't want).
+ */ 
+	$peer_array=array();
+	$lines = explode("\r\n",$amirets);	
+	$peer = 0;
+	foreach ($lines as $line) {
+		// ignore lines that aren't couplets
+		if (!preg_match(' /:/ ',$line)) { 
+				continue;
+		}
+		
+		// parse the couplet	
+		$couplet = explode(': ', $line);
+		
+		// ignore events and ListItems
+		if ($couplet[0] == 'Event' || $couplet[0] == 'ListItems'
+			|| $couplet[0] == 'EventList' || $couplet[0] == 'ObjectType'
+			|| $couplet[0] == 'ObjectName' ) {
+			continue;
+		}
+		$peer_array [$peer][$couplet[0]] = $couplet[1];
 	}
 	return $peer_array;	
 }
