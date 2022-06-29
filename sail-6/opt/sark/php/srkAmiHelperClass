@@ -64,7 +64,7 @@ public function get_pjsip_array($endpoints) {
 			continue;
 		}
 		$amisiprets = $this->amiHdle->getPjsipPeer($extrow['pkey']);
-		$sip_peers[$extrow['pkey']] = $this->build_pjsip_array($amisiprets);
+		$sip_peers[$extrow['pkey']] = $this->build_pjsip_array($amisiprets,$extrow['pkey']);
 	}
 	$this->amiHdle->logout();
 	$this->helper->logit(json_encode($sip_peers));
@@ -255,14 +255,13 @@ private function build_peer_array($amirets) {
 	return $peer_array;	
 }
 
-private function build_pjsip_array($amirets) {
+private function build_pjsip_array($amirets,$peer) {
 /*
  * build an array of peers by cleaning up the AMI output
  * (which contains stuff we don't want).
  */ 
 	$peer_array=array();
 	$lines = explode("\r\n",$amirets);	
-	$peer = 0;
 	foreach ($lines as $line) {
 		// ignore lines that aren't couplets
 		if (!preg_match(' /:/ ',$line)) { 
