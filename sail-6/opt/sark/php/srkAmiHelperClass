@@ -45,9 +45,9 @@ public function get_peer_array($iax=false) {
 }
     /**
      * Get data for all PJSIP endpoints
-     * PJSIP does not return what we want when we ask for all endpints.   
+     * PJSIP does not return what we want when we ask for all endpoints.   
      * Instead, we must recirsively call the AMI for each indivdual endpoint
-     * and amalgamate the results
+     * and amalgamate the results into our final peer array
      * @return string|bool
      */
 public function get_pjsip_array($endpoints) {
@@ -66,7 +66,7 @@ public function get_pjsip_array($endpoints) {
 		}
 		$amisiprets = $this->amiHdle->getPjsipPeer($extrow['pkey']);
 		$sip_work = $this->build_pjsip_array($amisiprets,$extrow['pkey']);
-		$sip_peers[] = $sip_work[0];
+		$sip_peers[$extrow['pkey']]  = $sip_work[$extrow['pkey']];
 	}
 	$this->amiHdle->logout();
 	$this->helper->logit(json_encode($sip_peers));
