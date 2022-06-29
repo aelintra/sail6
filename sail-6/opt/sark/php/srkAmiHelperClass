@@ -50,7 +50,7 @@ public function get_peer_array($iax=false) {
      * and amalgamate the results
      * @return string|bool
      */
-public function get_pjsip_array($extensions) {
+public function get_pjsip_array($endpoints) {
 
 
 	if ( ! $this->amiHelperLogin()) {
@@ -59,12 +59,12 @@ public function get_pjsip_array($extensions) {
 	$this->helper = new helper;
 	$sip_peers = array();
 
-	foreach ($extensions as $extrow) {
+	foreach ($endpoints as $extrow) {
 		if ($extrow['active'] == 'NO') {
 			continue;
 		}
 		$amisiprets = $this->amiHdle->getPjsipPeer($extrow['pkey']);
-		$sip_peers[$key] = $this->build_peer_array($amisiprets);
+		$sip_peers[] = $this->build_peer_array($amisiprets);
 	}
 	$this->amiHdle->logout();
 	$this->helper->logit(json_encode($sip_peers));
@@ -229,7 +229,8 @@ private function build_peer_array($amirets) {
 		$couplet = explode(': ', $line);
 		
 		// ignore events and ListItems
-		if ($couplet[0] == 'Event' || $couplet[0] == 'ListItems') {
+		if ($couplet[0] == 'Event' || $couplet[0] == 'ListItems'
+			|| $couplet[0] == 'EventList' || $couplet[0] == 'ObjectType') {
 			continue;
 		}
 		
