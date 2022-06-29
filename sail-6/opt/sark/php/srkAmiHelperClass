@@ -67,7 +67,7 @@ public function get_pjsip_array($extensions) {
 		$sip_peers[$key] = $this->build_peer_array($amisiprets);
 	}
 	$this->amiHdle->logout();
-	$this->helper->logit(jason_encode($sip_peers));
+	$this->helper->logit(json_encode($sip_peers));
 	return $sip_peers;
 }
 
