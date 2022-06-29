@@ -204,7 +204,7 @@ private function showMain() {
 			$sip_peers = $amiHelper->get_peer_array();
 		}
 		if ($sipdriver == "PJSIP") {
-			$sip_peers = $amiHelper->get_pjsip_array($rows);
+			$sip_peers = $amiHelper->get_pjsip_array($extensions);
 		}		
 	}
 	else {
