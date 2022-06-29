@@ -20,11 +20,11 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/AsteriskManager.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";
 
-protected $helper;
 
 class amiHelper {
 
 protected $amiHdle;
+protected $helper;
 
 public function get_peer_array($iax=false) {
 
@@ -51,6 +51,7 @@ public function get_peer_array($iax=false) {
      * @return string|bool
      */
 public function get_pjsip_array($extensions) {
+
 
 	if ( ! $this->amiHelperLogin()) {
 		return false;
