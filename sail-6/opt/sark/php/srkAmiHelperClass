@@ -20,6 +20,8 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/AsteriskManager.php";
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";
 
+protected $helper;
+
 class amiHelper {
 
 protected $amiHdle;
@@ -53,7 +55,7 @@ public function get_pjsip_array($extensions) {
 	if ( ! $this->amiHelperLogin()) {
 		return false;
 	}
-	$helper = new helper;
+	$this->helper = new helper;
 	$sip_peers = array();
 
 	foreach ($extensions as $extrow) {
