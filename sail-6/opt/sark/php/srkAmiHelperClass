@@ -64,7 +64,8 @@ public function get_pjsip_array($endpoints) {
 			continue;
 		}
 		$amisiprets = $this->amiHdle->getPjsipPeer($extrow['pkey']);
-		$sip_peers = array_merge($sip_peers,$this->build_pjsip_array($amisiprets,$extrow['pkey']));
+		$sip_array = $this->build_pjsip_array($amisiprets,$extrow['pkey'])
+		$sip_peers = array_merge($sip_peers,$sip_array);
 	}
 	$this->amiHdle->logout();
 	$this->helper->logit(json_encode($sip_peers));
