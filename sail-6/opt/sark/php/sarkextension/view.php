@@ -191,10 +191,21 @@ private function showMain() {
 	
 	if (isset($this->message)) {
 		$this->myPanel->msg = $this->message;
-	} 
+	}
+	$res = $this->dbh->query("SELECT PROXY,CLUSTER,SIPDRIVER FROM globals")->fetch(PDO::FETCH_ASSOC);
+	$proxy = $res['PROXY'];
+	$cluster = $res['CLUSTER'];
+	$sipdriver = $res['SIPDRIVER'];
+	$extensions = $this->helper->getTable("ipphone","select ip.*, de.noproxy from ipphone ip inner join device de on ip.device=de.pkey",true,false,'ip.pkey');
+
 	if ( $this->astrunning ) {	
 		$amiHelper = new amiHelper();
-		$sip_peers = $amiHelper->get_peer_array(false,true);
+		if ($sipdriver == "SIP") {
+			$sip_peers = $amiHelper->get_peer_array();
+		}
+		if ($sipdriver == "PJSIP") {
+			$sip_peers = $amiHelper->get_pjsip_array($rows);
+		}		
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
@@ -204,9 +215,7 @@ private function showMain() {
  * start page output
  */
 	
-	$res = $this->dbh->query("SELECT PROXY,CLUSTER FROM globals where pkey = 'global'")->fetch(PDO::FETCH_ASSOC);
-	$proxy = $res['PROXY'];
-	$cluster = $res['CLUSTER'];
+
 	
 	
 	$buttonArray=array();
@@ -261,8 +270,8 @@ private function showMain() {
 		
 /*** table rows ****/
 
-	$rows = $this->helper->getTable("ipphone","select ip.*, de.noproxy from ipphone ip inner join device de on ip.device=de.pkey",true,false,'ip.pkey');
-	foreach ($rows as $row ) {
+	
+	foreach ($extensions as $row ) {
 		echo '<tr id="' . $row['pkey'] . '">'. PHP_EOL; 
 
 		echo '<td class="read_only">' . $row['pkey'] . '</td>' . PHP_EOL;
@@ -1824,8 +1833,8 @@ private function chkMailbox(&$mailbox,&$friend)
 		if ( preg_match(' /mailbox=\$ext/ ',$friend))	{
 			$friend = preg_replace ( '/mailbox=\$ext/', $astmailbox, $friend);
 		}
-		else if ( preg_match(' /mailbox=\d{3,4}/ ',$friend))	{	
-			$friend = preg_replace ( '/mailbox=\d{3,4}/', $astmailbox, $friend);
+		else if ( preg_match(' /mailbox=\d{3,5}/ ',$friend))	{	
+			$friend = preg_replace ( '/mailbox=\d{3,5}/', $astmailbox, $friend);
 		}
 		else if ( preg_match(' /mailbox=/ ',$friend))	{	
 			$friend = preg_replace ( '/mailbox=/', $astmailbox, $friend);

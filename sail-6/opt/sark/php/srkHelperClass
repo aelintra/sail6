@@ -757,6 +757,7 @@ public function buildTupleArray($post,&$tuple,$custom=false,$stripslash=array())
 	$dont_strip_tags = array(
 		"provision" => True,
 		"sipiaxfriend" => True,
+		"pjsipuser" => True,
 		"extalert" => True,
 		"extcode" => True,
 		"speedalert" => True,

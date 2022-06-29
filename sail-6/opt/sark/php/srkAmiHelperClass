@@ -19,12 +19,11 @@
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/AsteriskManager.php";
 
-
 class amiHelper {
 
 protected $amiHdle;
 
-public function get_peer_array($iax=false,$pjsip=false) {
+public function get_peer_array($iax=false) {
 
 	if ( ! $this->amiHelperLogin()) {
 		return false;
@@ -35,17 +34,36 @@ public function get_peer_array($iax=false,$pjsip=false) {
 		$amisiprets = $this->amiHdle->getIaxPeers();
 	}
 	else {
-		if ($pjsip) {
-			$helper = new helper;
-			$amisiprets = $this->amiHdle->getPjsipPeer('44100');
-			$helper->logit($amisiprets);
-		}
-		else {			
-			$amisiprets = $this->amiHdle->getSipPeers();
-		}
+		$amisiprets = $this->amiHdle->getSipPeers();
 	}
 	$sip_peers = $this->build_peer_array($amisiprets);
 	$this->amiHdle->logout();
+	return $sip_peers;
+}
+    /**
+     * Get data for all PJSIP endpoints
+     * PJSIP does not return what we want when we ask for all endpints.   
+     * Instead, we must recirsively call the AMI for each indivdual endpoint
+     * and amalgamate the results
+     * @return string|bool
+     */
+public function get_pjsip_array($extensions) {
+
+	if ( ! $this->amiHelperLogin()) {
+		return false;
+	}
+	$helper = new helper;
+	$sip_peers = array();
+
+	foreach ($extensions as $extrow) {
+		if ($extrow['active'] == 'NO') {
+			continue;
+		}
+		$amisiprets = $this->amiHdle->getPjsipPeer($extrow['pkey']);
+		$sip_peers[$key] = $this->build_peer_array($amisiprets);
+	}
+	$this->amiHdle->logout();
+	$this->helper->logit(jason_encode($sip_peers));
 	return $sip_peers;
 }
 
@@ -61,6 +79,16 @@ public function get_coreShowChannels() {
 }
 
 public function get_database($pkey,&$cfim,&$cfbs,&$ringdelay,&$twin) {
+/*
+	if ( ! $this->amiHelperLogin()) {
+		return false;
+	}
+	$cfim = $this->amiHdle->GetDB('cfim', $pkey);
+	$cfbs = $this->amiHdle->GetDB('cfbs', $pkey);
+	$ringdelay = $this->amiHdle->GetDB('ringdelay', $pkey);
+	$twin = $this->amiHdle->GetDB('srktwin', $pkey);
+	$this->amiHdle->logout();
+*/
 
 	$rets = trim(`sudo asterisk -rx "database get cfim $pkey"`);
 	preg_match("/^Value:\s*(\d+)$/",$rets,$matches);
@@ -91,7 +119,11 @@ public function get_database($pkey,&$cfim,&$cfbs,&$ringdelay,&$twin) {
 
 public function put_database($newkey) {
 
-		
+/*	
+	if ( ! $this->amiHelperLogin()) {
+		return false;
+	}
+*/			
 	if (isset($_POST['cfim'])) {
 		$cfim			= strip_tags($_POST['cfim']);
 		if ($cfim) {

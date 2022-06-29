@@ -528,17 +528,23 @@ class ami
     {
         $this->_checkSocket();
 
-        $response = $this->_sendCommand("Action: PJSIPShowEndpoints\r\n\r\n", 'ListItems', false);
+        $response = $this->_sendCommand("Action: PJSIPShowEndpoint\r\n\r\n", 'ListItems', false);
         return $response;
     }  
 
-        public function getPjsipPeer($endpoint)
+
+    /**
+     * Get data for a PJSIP endpoint
+     *
+     * @return string|bool
+     */
+    public function getPjsipPeer($endpoint)
     {
         $this->_checkSocket();
 
 //        $response = $this->_sendCommand("Action: PJSIPShowEndpoint\r\n\r\n", 'ListItems', false);
         $response = $this->_sendCommand("Action: PJSIPShowEndpoint\r\n"
-            ."Parameters: ActionID\r\n", "Endpoint:" . $endpoint . "\r\n\r\n");
+            . "Endpoint: " . $endpoint . "\r\n\r\n",'ListItems', false);
         return $response;
     }    
 
