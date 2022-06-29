@@ -951,7 +951,12 @@ private function showEdit() {
 	$latency = 'N/A';
 	if ($this->astrunning) {
 		$amiHelper = new amiHelper();
-		$sip_peers = $amiHelper->get_peer_array();
+		if ($sipdriver == "SIP") {
+			$sip_peers = $amiHelper->get_peer_array();
+		}
+		if ($sipdriver == "PJSIP") {
+			$sip_peers = $amiHelper->get_pjsip_array($extensions);
+		}		
 		$amiHelper->get_database($pkey,$cfim,$cfbs,$ringdelay,$celltwin);			
 		$latency = $sip_peers [$pkey]['Status'];	
 	}
