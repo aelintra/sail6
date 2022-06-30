@@ -123,7 +123,9 @@ public function getIpAddressFromPeer($key,$peers) {
 public function getLatencyFromPeer($key,$peers) {
 
 		if (!empty($peers [$key]['RoundtripUsec'])) {
-			return round($peers [$key]['RoundtripUsec']/1000) . "ms";	
+			if (is_numeric($peers [$key]['RoundtripUsec'])) {
+				return round($peers [$key]['RoundtripUsec']/1000) . "ms";	
+			}
 		}
 
 		if (isset($peers [$key]['Status'])) {
