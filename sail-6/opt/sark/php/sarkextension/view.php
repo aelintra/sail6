@@ -309,13 +309,13 @@ private function showMain() {
 		}		
 		echo '<td class="w3-hide-small">' . $display_macaddr . '</td>' . PHP_EOL;
 		
-		$display = $this->getIpAddressFromPeer($row);
+		$display = $this->getIpAddressFromPeer($row['pkey']);
 
     	echo '<td  class="w3-hide-small" title = "IP address" >' . $display  . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
 
 
-		$latency = $this->getLatencyFromPeer($row);
+		$latency = $this->getLatencyFromPeer($row['pkey']);
 
 		
 		echo '<td class="icons" title = "Device State">' . $latency . '</td>' . PHP_EOL;
@@ -1967,14 +1967,14 @@ private function checkThisMacForDups($mac) {
      * @return string
      */
  
-private function getIpAddressFromPeer($row) {
+private function getIpAddressFromPeer($key) {
 
 		$display_ipaddr = 'N/A';		
 
-		if (isset ($this->sip_peers [$row['pkey']]['IPaddress'])) {
+		if (isset ($this->sip_peers [$key]['IPaddress'])) {
 			$display_ipaddr = $this->sip_peers [$row['pkey']]['IPaddress'];
 		}
-		else if (isset ($this->sip_peers [$row['pkey']]['ViaAddress'])) {
+		else if (isset ($this->sip_peers [$key]['ViaAddress'])) {
 			$via_parts = explode(':',$this->sip_peers [$row['pkey']]['ViaAddress']);
 			$display_ipaddr = $via_parts[0];
 		}				
@@ -1983,14 +1983,14 @@ private function getIpAddressFromPeer($row) {
 
 }
 
-private function getLatencyFromPeer($row) {
+private function getLatencyFromPeer($key) {
 
 		$latency = 'N/A';
 
-		if (isset($this->sip_peers [$row['pkey']]['Status'])) {
+		if (isset($this->sip_peers [$key']['Status'])) {
 			$latency = $this->sip_peers [$row['pkey']]['Status'];	
 		}
-		if (isset($this->sip_peers [$row['pkey']]['RoundtripUsec'])) {
+		if (isset($this->sip_peers [$key']['RoundtripUsec'])) {
 			$latency = round($this->sip_peers [$row['pkey']]['RoundtripUsec']/1000) . "ms";	
 		} 
 		if ($row['stolen']) {
