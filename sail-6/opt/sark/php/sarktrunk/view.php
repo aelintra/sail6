@@ -112,19 +112,7 @@ private function showMain() {
  * so we'll only work with 1.8 or higher
  */
 
-	if ( $this->astrunning ) {	
-		$amiHelper = new amiHelper();
-		if ($this->helper->checkPjsipEnabled()) {
-			$this->sip_peers = $amiHelper->get_pjsip_array($extensions);
-		}
-		else {
-			$this->sip_peers = $amiHelper->get_peer_array();
-		}
-		$this->iax_peers = $amiHelper->get_peer_array(true);		
-	}
-	else {
-		$this->myPanel->msg .= "  (No Asterisk running)";
-	}		
+		
 
 /* 
  * start page output
@@ -173,6 +161,21 @@ private function showMain() {
 	$sql = "select li.pkey,cluster,description,trunkname,peername,routeclassopen,routeclassclosed,active,ca.technology,ca.carriertype " . 
 			"from lineio li inner join carrier ca  on li.carrier=ca.pkey";
 	$rows = $this->helper->getTable("lineio", $sql,true,false,'li.pkey');
+
+	if ( $this->astrunning ) {	
+		$amiHelper = new amiHelper();
+		if ($this->helper->checkPjsipEnabled()) {
+			$this->sip_peers = $amiHelper->get_pjsip_array($rows);
+		}
+		else {
+			$this->sip_peers = $amiHelper->get_peer_array();
+		}
+		$this->iax_peers = $amiHelper->get_peer_array(true);		
+	}
+	else {
+		$this->myPanel->msg .= "  (No Asterisk running)";
+	}
+
 	foreach ($rows as $row ) {
 		if ($row['carriertype'] == 'DiD' || $row['carriertype'] == 'CLID' || $row['carriertype'] == 'Class' ) {
 			continue;
@@ -199,14 +202,14 @@ private function showMain() {
 		$searchkey = $row['peername'];
 		if ($row['active'] == 'YES' && $this->astrunning) {
 			if ($row['technology'] == 'SIP' ) {
-				if (preg_match(' /\((\d+)\sms/ ',$sip_peers [$searchkey]['Status'],$matches)) {
+				if (preg_match(' /\((\d+)\sms/ ',$this->sip_peers [$searchkey]['Status'],$matches)) {
 					$latency = 	$matches[1] . 'ms';
 				}
 				$hostip = $amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
 				$status = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
 
-				$hostip = $sip_peers [$searchkey]['IPaddress'];
-				$status = $sip_peers [$searchkey]['Status'];
+				$hostip = $this->sip_peers [$searchkey]['IPaddress'];
+				$status = $this->_peers [$searchkey]['Status'];
 			}		
 	
 			else if ($row['technology'] == 'IAX2') {
