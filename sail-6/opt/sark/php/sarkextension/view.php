@@ -36,6 +36,7 @@ Class sarkextension {
 	protected $keychange=NULL;
 	protected $cosresult;
 	protected $passwordLength=12;
+	protected $sip_peers = array();
 	protected $myBooleans = array(
 		'active',
 		'celltwin',
@@ -201,10 +202,10 @@ private function showMain() {
 	if ( $this->astrunning ) {	
 		$amiHelper = new amiHelper();
 		if ($sipdriver == "SIP") {
-			$sip_peers = $amiHelper->get_peer_array();
+			$this->sip_peers = $amiHelper->get_peer_array();
 		}
 		if ($sipdriver == "PJSIP") {
-			$sip_peers = $amiHelper->get_pjsip_array($extensions);
+			$this->sip_peers = $amiHelper->get_pjsip_array($extensions);
 		}		
 	}
 	else {
@@ -308,30 +309,9 @@ private function showMain() {
 		}		
 		echo '<td class="w3-hide-small">' . $display_macaddr . '</td>' . PHP_EOL;
 		
-		$display_ipaddr = 'N/A';		
-		if ($row['technology'] != 'SIP') {
-			$display_ipaddr = $row['technology'];
-		}		
-		else if (isset ($sip_peers [$row['pkey']]['IPaddress']) && $sip_peers [$row['pkey']]['IPaddress'] == '-none-') {		
-			if (preg_match(' /(..)(..)(..)(..)(..)(..)/ ',$row['macaddr'],$matches)) {
-				$formalmac = strtoupper($matches[1] . ':' . $matches[2] . ':' . $matches[3] . ':' . $matches[4] . ':' . $matches[5] . ':' . $matches[6]);		
-				$mac = `/bin/grep $formalmac /proc/net/arp`;			
-				if (!empty ($mac)) {
-					preg_match(' /^(\d+\.\d+\.\d+\.\d+)/ ',$mac,$match);
-					$display_ipaddr = $match[1];
-				}
-			}
-		}
-		else if (isset ($sip_peers [$row['pkey']]['IPaddress'])) {
-			$display_ipaddr = $sip_peers [$row['pkey']]['IPaddress'];
-		}		
-		
-		$display = $display_ipaddr;
-        if ( strlen($display_ipaddr) > 15 ) {
-			$display = substr($display_ipaddr , 0, 13);
-			$display .= '..';
-		}
-    	echo '<td  class="w3-hide-small" title = "' . $display_ipaddr . '" >' . $display  . '</td>' . PHP_EOL;
+		$display = getIpAddressFromPeer($row);
+
+    	echo '<td  class="w3-hide-small" title = "IP address" >' . $display  . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
 		
 //		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['sndcreds'] . '</td>' . PHP_EOL;
@@ -340,6 +320,9 @@ private function showMain() {
 		if (isset($sip_peers [$row['pkey']]['Status'])) {
 			$latency = $sip_peers [$row['pkey']]['Status'];	
 		}
+		if (isset($sip_peers [$row['pkey']]['RoundtripUsec'])) {
+			$latency = round($sip_peers [$row['pkey']]['RoundtripUsec']/1000) . "ms";	
+		} 
 		if ($row['stolen']) {
 			if (!preg_match(" /VXT/i ", $row['device'])) {
 				$latency = "Stolen(" . $row['stolen'] . ")";
@@ -1969,6 +1952,12 @@ private function checkHeadRoom($count,$pkey) {
 	return false;
 }
 
+    /**
+     * check we don't have this Mac already
+     *
+     * @return boolean
+     */
+
 private function checkThisMacForDups($mac) {	
 	
 	$sql = $this->dbh->prepare("select count(*) from ipphone where macaddr=?");
@@ -1978,6 +1967,31 @@ private function checkThisMacForDups($mac) {
 		return true;
 	}
 	return false;
+}
+
+
+    /**
+     * return an IP address if we can
+     * the peer table may have been built from either chan_sip or PJsip and they differ in their naming
+     * conventions so we just have to figure it out
+     *
+     * @return string
+     */
+ 
+private function getIpAddressFromPeer($row) {
+
+		$display_ipaddr = 'N/A';		
+
+		if (isset ($this->sip_peers [$row['pkey']]['IPaddress'])) {
+			$display_ipaddr = $this->sip_peers [$row['pkey']]['IPaddress'];
+		}
+		else if (isset ($this->sip_peers [$row['pkey']]['ViaAddress'])) {
+			$via_parts = explode(':',$this->sip_peers [$row['pkey']]['ViaAddress']);
+			$display_ipaddr = $via_parts[0];}
+		}				
+
+		return $display_ipaddr;
+
 }
 
 private function getVendorFromMac($mac) {
