@@ -98,18 +98,17 @@ public function get_pjsip_endpoint($endpoint) {
      */
  
 public function getIpAddressFromPeer($key,$peers) {
+		
 
-		$display_ipaddr = 'N/A';		
-
-		if (isset ($peers [$key]['IPaddress'])) {
-			$display_ipaddr = $peers [$key]['IPaddress'];
+		if (!empty($peers [$key]['IPaddress'])) {
+			return $peers [$key]['IPaddress'];
 		}
-		else if (isset ($peers [$key]['ViaAddress'])) {
+		else if (!empty($peers [$key]['ViaAddress'])) {
 			$via_parts = explode(':',$peers [$key]['ViaAddress']);
-			$display_ipaddr = $via_parts[0];
+			return $via_parts[0];
 		}				
 
-		return $display_ipaddr;
+		return 'Unknown';
 
 }
 
@@ -123,16 +122,15 @@ public function getIpAddressFromPeer($key,$peers) {
 
 public function getLatencyFromPeer($key,$peers) {
 
-		$latency = 'N/A';
+		if (!empty($peers [$key]['RoundtripUsec'])) {
+			return round($peers [$key]['RoundtripUsec']/1000) . "ms";	
+		}
 
 		if (isset($peers [$key]['Status'])) {
-			$latency = $peers [$key]['Status'];	
+			return $peers [$key]['Status'];	
 		}
-		if (isset($peers [$key]['RoundtripUsec'])) {
-			$latency = round($peers [$key]['RoundtripUsec']/1000) . "ms";	
-		} 
-
-		return $latency;
+ 
+		return 'Unknown';
 
 }
 

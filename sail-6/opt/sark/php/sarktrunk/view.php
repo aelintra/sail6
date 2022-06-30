@@ -202,8 +202,8 @@ private function showMain() {
 				if (preg_match(' /\((\d+)\sms/ ',$sip_peers [$searchkey]['Status'],$matches)) {
 					$latency = 	$matches[1] . 'ms';
 				}
-				$hostip = $this->getIpAddressFromPeer($row['pkey']);
-				$status = $this->getLatencyFromPeer($row['pkey']);
+				$hostip = $amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
+				$status = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
 
 				$hostip = $sip_peers [$searchkey]['IPaddress'];
 				$status = $sip_peers [$searchkey]['Status'];
@@ -353,7 +353,7 @@ private function saveNew() {
 			$this->saveCustom($tuple);
 			break;
 		default: 
-			$this->helper->logit("Switch ERROR!!! - switching on " . $_POST['chooser'] )
+			$this->helper->logit("Switch ERROR!!! - switching on " . $_POST['chooser'] );
 			return;						
 	}
 /*

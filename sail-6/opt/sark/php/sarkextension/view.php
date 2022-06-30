@@ -1969,7 +1969,7 @@ private function checkThisMacForDups($mac) {
      *
      * @return string
      */
- 
+/* 
 private function getIpAddressFromPeer($key) {
 
 		$display_ipaddr = 'N/A';		
@@ -1993,7 +1993,7 @@ private function getIpAddressFromPeer($key) {
      *
      * @return string
      */
-
+/*
 private function getLatencyFromPeer($key) {
 
 		$latency = 'N/A';
