@@ -1854,7 +1854,7 @@ private function printEditNotes ($pkey,$extension) {
 	
 	$display = $this->getIpAddressFromPeer($pkey);
 
-	echo 'IP: <strong>' . $sdisplay . '</strong><br/>' . PHP_EOL;
+	echo 'IP: <strong>' . $display . '</strong><br/>' . PHP_EOL;
 	echo '<input type="hidden" id="ipaddress" name="ipaddress" value="' . $display . '" />' . PHP_EOL;	 		
 
 
