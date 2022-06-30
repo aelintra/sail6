@@ -313,21 +313,10 @@ private function showMain() {
 
     	echo '<td  class="w3-hide-small" title = "IP address" >' . $display  . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
-		
-//		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['sndcreds'] . '</td>' . PHP_EOL;
-		
-		$latency = 'N/A';
-		if (isset($this->sip_peers [$row['pkey']]['Status'])) {
-			$latency = $this->sip_peers [$row['pkey']]['Status'];	
-		}
-		if (isset($this->sip_peers [$row['pkey']]['RoundtripUsec'])) {
-			$latency = round($this->sip_peers [$row['pkey']]['RoundtripUsec']/1000) . "ms";	
-		} 
-		if ($row['stolen']) {
-			if (!preg_match(" /VXT/i ", $row['device'])) {
-				$latency = "Stolen(" . $row['stolen'] . ")";
-			} 
-		}
+
+
+		$latency = $this->getLatencyFromPeer($row);
+
 		
 		echo '<td class="icons" title = "Device State">' . $latency . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small" >' . $row['active'] . '</td>' . PHP_EOL;				
@@ -1993,6 +1982,26 @@ private function getIpAddressFromPeer($row) {
 		return $display_ipaddr;
 
 }
+
+private function getLatencyFromPeer($row) {
+
+		$latency = 'N/A';
+
+		if (isset($this->sip_peers [$row['pkey']]['Status'])) {
+			$latency = $this->sip_peers [$row['pkey']]['Status'];	
+		}
+		if (isset($this->sip_peers [$row['pkey']]['RoundtripUsec'])) {
+			$latency = round($this->sip_peers [$row['pkey']]['RoundtripUsec']/1000) . "ms";	
+		} 
+		if ($row['stolen']) {
+			if (!preg_match(" /VXT/i ", $row['device'])) {
+				$latency = "Stolen(" . $row['stolen'] . ")";
+			} 
+		}
+
+		return $latency;
+
+} 
 
 private function getVendorFromMac($mac) {
 		$this->helper->logit("GETV mac is $mac  ",5 );
