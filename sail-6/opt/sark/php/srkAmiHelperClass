@@ -103,10 +103,16 @@ public function getIpAddressFromPeer($key,$peers) {
 		if (!empty($peers [$key]['IPaddress'])) {
 			return $peers [$key]['IPaddress'];
 		}
-		else if (!empty($peers [$key]['ViaAddress'])) {
+		if (!empty($peers [$key]['ViaAddress'])) {
 			$via_parts = explode(':',$peers [$key]['ViaAddress']);
 			return $via_parts[0];
-		}				
+		}
+		if (!empty($peers [$key]['Match'])) {
+			$match_parts = explode('/',$peers [$key]['matches']);
+			if (!empty($match_parts[0])) {
+				return $match_parts[0];
+			}
+		}						
 
 		return 'Unknown';
 
