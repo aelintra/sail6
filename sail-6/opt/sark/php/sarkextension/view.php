@@ -204,7 +204,7 @@ private function showMain() {
 		if ($this->helper->checkPjsipEnabled()) {
 			$this->sip_peers = $amiHelper->get_pjsip_array($extensions);
 		}
-		else (
+		else {
 			$this->sip_peers = $amiHelper->get_peer_array();
 		}	
 	}
