@@ -1972,10 +1972,10 @@ private function getIpAddressFromPeer($key) {
 		$display_ipaddr = 'N/A';		
 
 		if (isset ($this->sip_peers [$key]['IPaddress'])) {
-			$display_ipaddr = $this->sip_peers [$row['pkey']]['IPaddress'];
+			$display_ipaddr = $this->sip_peers [$key]['IPaddress'];
 		}
 		else if (isset ($this->sip_peers [$key]['ViaAddress'])) {
-			$via_parts = explode(':',$this->sip_peers [$row['pkey']]['ViaAddress']);
+			$via_parts = explode(':',$this->sip_peers [$key]['ViaAddress']);
 			$display_ipaddr = $via_parts[0];
 		}				
 
@@ -1987,11 +1987,11 @@ private function getLatencyFromPeer($key) {
 
 		$latency = 'N/A';
 
-		if (isset($this->sip_peers [$key']['Status'])) {
-			$latency = $this->sip_peers [$row['pkey']]['Status'];	
+		if (isset($this->sip_peers [$key]['Status']) {
+			$latency = $this->sip_peers [$key]['Status'];	
 		}
-		if (isset($this->sip_peers [$key']['RoundtripUsec'])) {
-			$latency = round($this->sip_peers [$row['pkey']]['RoundtripUsec']/1000) . "ms";	
+		if (isset($this->sip_peers [$key]['RoundtripUsec']) {
+			$latency = round($this->sip_peers [$key]['RoundtripUsec']/1000) . "ms";	
 		} 
 		if ($row['stolen']) {
 			if (!preg_match(" /VXT/i ", $row['device'])) {
