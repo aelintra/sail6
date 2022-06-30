@@ -314,9 +314,14 @@ private function showMain() {
     	echo '<td  class="w3-hide-small" title = "IP address" >' . $display  . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
 
-
-		$latency = $this->getLatencyFromPeer($row['pkey']);
-
+		if ($row['stolen']) {
+			if (!preg_match(" /VXT/i ", $row['device'])) {
+				$latency = "Stolen(" . $row['stolen'] . ")";
+			} 
+		}
+		else {
+			$latency = $this->getLatencyFromPeer($row['pkey']);
+		}
 		
 		echo '<td class="icons" title = "Device State">' . $latency . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small" >' . $row['active'] . '</td>' . PHP_EOL;				
@@ -1993,11 +1998,6 @@ private function getLatencyFromPeer($key) {
 		if (isset($this->sip_peers [$key]['RoundtripUsec'])) {
 			$latency = round($this->sip_peers [$key]['RoundtripUsec']/1000) . "ms";	
 		} 
-		if ($row['stolen']) {
-			if (!preg_match(" /VXT/i ", $row['device'])) {
-				$latency = "Stolen(" . $row['stolen'] . ")";
-			} 
-		}
 
 		return $latency;
 
