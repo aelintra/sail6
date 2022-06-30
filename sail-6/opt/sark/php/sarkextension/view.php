@@ -309,7 +309,7 @@ private function showMain() {
 		}		
 		echo '<td class="w3-hide-small">' . $display_macaddr . '</td>' . PHP_EOL;
 		
-		$display = getIpAddressFromPeer($row);
+		$display = $this->getIpAddressFromPeer($row);
 
     	echo '<td  class="w3-hide-small" title = "IP address" >' . $display  . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
@@ -317,11 +317,11 @@ private function showMain() {
 //		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['sndcreds'] . '</td>' . PHP_EOL;
 		
 		$latency = 'N/A';
-		if (isset($sip_peers [$row['pkey']]['Status'])) {
-			$latency = $sip_peers [$row['pkey']]['Status'];	
+		if (isset($this->sip_peers [$row['pkey']]['Status'])) {
+			$latency = $this->sip_peers [$row['pkey']]['Status'];	
 		}
-		if (isset($sip_peers [$row['pkey']]['RoundtripUsec'])) {
-			$latency = round($sip_peers [$row['pkey']]['RoundtripUsec']/1000) . "ms";	
+		if (isset($this->sip_peers [$row['pkey']]['RoundtripUsec'])) {
+			$latency = round($this->sip_peers [$row['pkey']]['RoundtripUsec']/1000) . "ms";	
 		} 
 		if ($row['stolen']) {
 			if (!preg_match(" /VXT/i ", $row['device'])) {
@@ -1987,7 +1987,7 @@ private function getIpAddressFromPeer($row) {
 		}
 		else if (isset ($this->sip_peers [$row['pkey']]['ViaAddress'])) {
 			$via_parts = explode(':',$this->sip_peers [$row['pkey']]['ViaAddress']);
-			$display_ipaddr = $via_parts[0];}
+			$display_ipaddr = $via_parts[0];
 		}				
 
 		return $display_ipaddr;
