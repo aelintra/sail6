@@ -201,12 +201,12 @@ private function showMain() {
 
 	if ( $this->astrunning ) {	
 		$amiHelper = new amiHelper();
-		if ($sipdriver == "SIP") {
-			$this->sip_peers = $amiHelper->get_peer_array();
-		}
-		if ($sipdriver == "PJSIP") {
+		if ($this->helper->checkPjsipEnabled()) {
 			$this->sip_peers = $amiHelper->get_pjsip_array($extensions);
-		}		
+		}
+		else 
+			$this->sip_peers = $amiHelper->get_peer_array();
+		}	
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
@@ -322,7 +322,7 @@ private function showMain() {
 		else {
 			$latency = $this->getLatencyFromPeer($row['pkey']);
 		}
-		
+
 		echo '<td class="icons" title = "Device State">' . $latency . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small" >' . $row['active'] . '</td>' . PHP_EOL;				
 
@@ -929,14 +929,14 @@ private function showEdit() {
 	$latency = 'N/A';
 	if ($this->astrunning) {
 		$amiHelper = new amiHelper();
-		if ($sipdriver == "SIP") {
-			$sip_peers = $amiHelper->get_peer_array();
+		if ($this->helper->checkPjsipEnabled()) {
+			$this->sip_peers = $amiHelper->get_pjsip_endpoint($pkey);
 		}
-		if ($sipdriver == "PJSIP") {
-			$sip_peers = $amiHelper->get_pjsip_endpoint($pkey);
+		else {
+			$this->sip_peers = $amiHelper->get_peer_array();
 		}		
 		$amiHelper->get_database($pkey,$cfim,$cfbs,$ringdelay,$celltwin);			
-		$latency = $sip_peers [$pkey]['Status'];	
+		$latency = $this->getLatencyFromPeer($pkey);	
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
@@ -992,16 +992,8 @@ private function showEdit() {
 
 	echo '<form id="sarkextensionForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 
-/* ToDo - PROXY PANEL			
-	if ($extension['location'] == "remote" || $proxy == "NO" || $extension['noproxy']  ) {
-	}
-	else {
-		echo '<img src="/sark-common/buttons/connect.png" id="connect" alt="connect" title="Proxy to the phone" />'. PHP_EOL;
-	}
-*/
-
 	echo '<div class="w3-padding w3-margin-bottom w3-card-4 w3-white w3-hide-large w3-hide-medium">';   
-    $this->printEditNotes($pkey,$extension,$sip_peers);
+    $this->printEditNotes($pkey,$extension);
     echo '</div>';
 
 /*
@@ -1085,17 +1077,18 @@ private function showEdit() {
 		
 
 	echo '<input type="hidden" name="pkey" id="pkey" size="20"  value="' . $pkey . '"  />' . PHP_EOL;
+/*	
 	if (preg_match(' /^OK/ ', $latency)) {
 		echo '<input type="hidden" name="latency" id="latency" size="20"  value="' . $latency . '"  />' . PHP_EOL;
 	} 
-	
+*/	
 	echo '<div class="w3-left w3-padding w3-container"></div>' . PHP_EOL;
 
 
 	$this->myPanel->responsiveTwoColRight();
 
 	echo '<div class="w3-padding w3-margin-bottom w3-card-4 w3-white w3-hide-small">';   
-    $this->printEditNotes($pkey,$extension,$sip_peers);
+    $this->printEditNotes($pkey,$extension);
     echo '</div>';
 
     $this->blfkeys($extension);
@@ -1824,7 +1817,7 @@ private function chkMailbox(&$mailbox,&$friend)
 		}
 }
 
-private function printEditNotes ($pkey,$extension,$sip_peers) {
+private function printEditNotes ($pkey,$extension) {
 #
 #   prints info Box
 #
@@ -1851,32 +1844,19 @@ private function printEditNotes ($pkey,$extension,$sip_peers) {
 		}
 	}
 	
+	$latency = $this->getLatencyFromPeer($pkey);
+
+	if ($latency == 'N/A' && $virtExt) {	
+		echo 'State: <strong>Idle(VXT)</strong><br/>' . PHP_EOL;
+		return; 
+	}	
+	echo 'State: <strong>' . $latency . '</strong><br/>' . PHP_EOL;
 	
-	if (isset($sip_peers [$pkey]['Status'])) {
-		if ($sip_peers [$pkey]['Status'] == "UNKNOWN") {
-			if ($virtExt) {
-				echo 'State: <strong>Idle(VXT)</strong><br/>' . PHP_EOL;
-				return; 
-			}
-			else {
-				echo 'State: <strong>' . $sip_peers [$pkey]['Status'] . '</strong><br/>' . PHP_EOL;
-			}
-		}	 
-	}
-	else  {
-		echo 'State: <strong>UNKNOWN</strong><br/>' . PHP_EOL; 
-	}		
-	
-	
-	if (preg_match(' /^OK/ ', $sip_peers [$pkey]['Status'])) {
-		if (isset ($sip_peers [$pkey]['IPport'])) {
-			echo 'IPport: <strong>' . $sip_peers [$pkey]['IPport'] . '</strong><br/>' . PHP_EOL;
-		}		
-		if (isset ($sip_peers [$pkey]['IPaddress'])) {
-			echo 'IP: <strong>' . $sip_peers [$pkey]['IPaddress'] . '</strong><br/>' . PHP_EOL;
-			echo '<input type="hidden" id="ipaddress" name="ipaddress" value="' . $sip_peers [$pkey]['IPaddress'] . '" />' . PHP_EOL;	 
-		}		
-	}
+	$display = $this->getIpAddressFromPeer($pkey);
+
+	echo 'IP: <strong>' . $sdisplay . '</strong><br/>' . PHP_EOL;
+	echo '<input type="hidden" id="ipaddress" name="ipaddress" value="' . $display . '" />' . PHP_EOL;	 		
+
 
     echo 'Transport: <strong>' . $extension['transport'] . '</strong><br/>' . PHP_EOL;
 

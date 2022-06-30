@@ -451,14 +451,14 @@ public function check_hapid_installed () {
 	return (false);
 }  
 
-public function check_pjsip_enabled() {
+public function checkPjsipEnabled() {
 /*
  *  Check if we are using chan_sip or pjsip
  */	
 	
 	$dbh = DB::getInstance();
 	$res = $dbh->query("SELECT SIPDRIVER FROM globals")->fetch(PDO::FETCH_ASSOC);
-	if ($res['SIPDRIVER'] == 'pjsip') {
+	if ($res['SIPDRIVER'] == 'PJSIP') {
 		return (true);
 	}
 	return (false);	
