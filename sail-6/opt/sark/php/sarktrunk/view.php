@@ -207,9 +207,6 @@ private function showMain() {
 				}
 				$hostip = $amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
 				$status = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
-
-				$hostip = $this->sip_peers [$searchkey]['IPaddress'];
-				$status = $this->_peers [$searchkey]['Status'];
 			}		
 	
 			else if ($row['technology'] == 'IAX2') {
