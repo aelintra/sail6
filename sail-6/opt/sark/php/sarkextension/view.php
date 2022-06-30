@@ -1987,10 +1987,10 @@ private function getLatencyFromPeer($key) {
 
 		$latency = 'N/A';
 
-		if (isset($this->sip_peers [$key]['Status']) {
+		if (isset($this->sip_peers [$key]['Status'])) {
 			$latency = $this->sip_peers [$key]['Status'];	
 		}
-		if (isset($this->sip_peers [$key]['RoundtripUsec']) {
+		if (isset($this->sip_peers [$key]['RoundtripUsec'])) {
 			$latency = round($this->sip_peers [$key]['RoundtripUsec']/1000) . "ms";	
 		} 
 		if ($row['stolen']) {
