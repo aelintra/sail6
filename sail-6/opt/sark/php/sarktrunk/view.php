@@ -46,7 +46,7 @@ Class sarktrunk {
 	);
 	
 public function showForm() {
-	$params = array('server' => '127.0.0.1', 'port' => '5038');
+
 	$this->myPanel = new page;
 	$this->dbh = DB::getInstance();
 	$this->helper = new helper;
@@ -117,12 +117,6 @@ private function showMain() {
 /* 
  * start page output
  */
-
-/*
-	if ( $_SESSION['user']['pkey'] == 'admin' ) {
-		echo '<a  href="/php/downloadpdf.php?pdf=trunks"><img id="pdfprint" src="/sark-common/buttons/print.png" alt = "Click to Download PDF" title = "Click to Download PDF" ></a>' . PHP_EOL;									
-	}
-*/
 	$buttonArray['new'] = true;
 	$this->myPanel->actionBar($buttonArray,"sarktrunkForm",false);
 
@@ -132,7 +126,6 @@ private function showMain() {
 	$this->myPanel->Heading($this->head,$this->message);
 	$bigTable=true;
 	$this->myPanel->responsiveSetup($bigTable);
-//	$this->myPanel->subjectBar("Trunks");
 
 	echo '<form id="sarktrunkForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 
@@ -144,7 +137,7 @@ private function showMain() {
 	$this->myPanel->aHeaderFor('trunkname'); 	
 	$this->myPanel->aHeaderFor('cluster',false,'cluster w3-hide-small w3-hide-medium');
 	$this->myPanel->aHeaderFor('description',false,'w3-hide-small w3-hide-medium');
-//	$this->myPanel->aHeaderFor('carriertype');
+	$this->myPanel->aHeaderFor('carriertype');
 	$this->myPanel->aHeaderFor('ipaddr',false,'w3-hide-small');
 	$this->myPanel->aHeaderFor('Active?',false,'w3-hide-small  w3-hide-medium');		
 	$this->myPanel->aHeaderFor('tstate');	
@@ -191,20 +184,14 @@ private function showMain() {
 		else {
 			echo '<td class="w3-hide-small w3-hide-medium">' . $row['trunkname'] . '</td>' . PHP_EOL;
 		}
-//		echo '<td class="icons">' . $row['carriertype'] . '</td>' . PHP_EOL;
+		echo '<td class="icons">' . $row['technology'] . '</td>' . PHP_EOL;
 		
 		$latency = 'N/A';
-		$hostip = 'N/A';
-		$status = 'N/A';
-		
-		
-		
+				
 		$searchkey = $row['peername'];
 		if ($row['active'] == 'YES' && $this->astrunning) {
 			if ($row['technology'] == 'SIP' ) {
-				if (preg_match(' /\((\d+)\sms/ ',$this->sip_peers [$searchkey]['Status'],$matches)) {
-					$latency = 	$matches[1] . 'ms';
-				}
+
 				$hostip = $amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
 				$status = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
 			}		

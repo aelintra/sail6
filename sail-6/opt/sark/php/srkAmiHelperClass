@@ -108,7 +108,7 @@ public function getIpAddressFromPeer($key,$peers) {
 			return $via_parts[0];
 		}
 		if (!empty($peers [$key]['Match'])) {
-			$match_parts = explode('/',$peers [$key]['matches']);
+			$match_parts = explode('/',$peers [$key]['Match']);
 			if (!empty($match_parts[0])) {
 				return $match_parts[0];
 			}
