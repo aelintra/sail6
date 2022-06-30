@@ -309,7 +309,7 @@ private function showMain() {
 		}		
 		echo '<td class="w3-hide-small">' . $display_macaddr . '</td>' . PHP_EOL;
 		
-		$display = $this->getIpAddressFromPeer($row['pkey']);
+		$display = $amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
 
     	echo '<td  class="w3-hide-small" title = "IP address" >' . $display  . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
@@ -320,7 +320,7 @@ private function showMain() {
 			} 
 		}
 		else {
-			$latency = $this->getLatencyFromPeer($row['pkey']);
+			$latency = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
 		}
 
 		echo '<td class="icons" title = "Device State">' . $latency . '</td>' . PHP_EOL;
@@ -1583,6 +1583,12 @@ private function doCOS($cosSetArray) {
 	
 }
 
+    /**
+     * Return an HTML formatted Xref of the database keys
+     *
+     * @return HTML
+     */
+
 private function xRef($pkey) {
 /*
  * Build Xrefs
@@ -1736,6 +1742,12 @@ private function sipNotify () {
     	$this->message = "Issued SIP Notify";
 }
 
+    /**
+     * Push a 'check-config' to the phone via SIP Notify
+     *
+     * @return null
+     */
+
 private function sipNotifyPush () {
 /*
  * send a notify to a phone to reboot it
@@ -1781,6 +1793,12 @@ private function sipNotifyPush () {
 
 }
 
+    /**
+     * Return a virtual extension (Hotdesk) to the pool
+     *
+     * @return null
+     */
+
 private function sipRelease() {
 	
 		$pkey = $_REQUEST['pkey'];
@@ -1799,7 +1817,7 @@ private function sipRelease() {
 
 private function chkMailbox(&$mailbox,&$friend)
 {
-	/*
+/*
  * check mailbox setting
  */
 		$astmailbox = 'mailbox=';
@@ -1818,9 +1836,9 @@ private function chkMailbox(&$mailbox,&$friend)
 }
 
 private function printEditNotes ($pkey,$extension) {
-#
-#   prints info Box
-#
+/*
+ *  prints info Box
+ */
 	$virtExt = false; 
     echo '<span style="color: #696969;" >';
     echo 'Vendor: <strong>' . $extension['device'] . '</strong><br/>' . PHP_EOL;
@@ -1844,7 +1862,7 @@ private function printEditNotes ($pkey,$extension) {
 		}
 	}
 	
-	$latency = $this->getLatencyFromPeer($pkey);
+	$latency = $this->getLatencyFromPeer($pkey,$this->sip_peers);
 
 	if ($latency == 'N/A' && $virtExt) {	
 		echo 'State: <strong>Idle(VXT)</strong><br/>' . PHP_EOL;
@@ -1852,7 +1870,7 @@ private function printEditNotes ($pkey,$extension) {
 	}	
 	echo 'State: <strong>' . $latency . '</strong><br/>' . PHP_EOL;
 	
-	$display = $this->getIpAddressFromPeer($pkey);
+	$display = $this->getIpAddressFromPeer($pkey,$this->sip_peers);
 
 	echo 'IP: <strong>' . $display . '</strong><br/>' . PHP_EOL;
 	echo '<input type="hidden" id="ipaddress" name="ipaddress" value="' . $display . '" />' . PHP_EOL;	 		
@@ -1968,6 +1986,14 @@ private function getIpAddressFromPeer($key) {
 
 }
 
+    /**
+     * Return the endpoint RTT (latency) as observed from the PBX
+     * the peer table may have been built from either chan_sip or PJsip and they differ in their naming
+     * conventions so we just have to figure it out
+     *
+     * @return string
+     */
+
 private function getLatencyFromPeer($key) {
 
 		$latency = 'N/A';
@@ -1981,7 +2007,13 @@ private function getLatencyFromPeer($key) {
 
 		return $latency;
 
-} 
+}
+
+    /**
+     * Look up the vendor from the wireshark MAC/Vandor database
+     *
+     * @return string
+     */ 
 
 private function getVendorFromMac($mac) {
 		$this->helper->logit("GETV mac is $mac  ",5 );

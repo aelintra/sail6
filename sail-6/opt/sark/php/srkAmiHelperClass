@@ -82,11 +82,58 @@ public function get_pjsip_endpoint($endpoint) {
 	$sip_peers = array();
 	$sip_work = array();
 	$amisiprets = $this->amiHdle->getPjsipPeer($endpoint);
-	$sip_peers = $this->build_pjsip_array($amisiprets);
+	$sip_peers = $this->build_pjsip_array($amisiprets,$endpoint);
 
 	$this->amiHdle->logout();
 	$this->helper->logit(json_encode($sip_peers));
 	return $sip_peers;
+}
+
+    /**
+     * return an IP address if we can
+     * the peer table may have been built from either chan_sip or PJsip and they differ in their naming
+     * conventions so we just have to figure it out
+     *
+     * @return string
+     */
+ 
+public function getIpAddressFromPeer($key,$peers) {
+
+		$display_ipaddr = 'N/A';		
+
+		if (isset ($peers [$key]['IPaddress'])) {
+			$display_ipaddr = $peers [$key]['IPaddress'];
+		}
+		else if (isset ($peers [$key]['ViaAddress'])) {
+			$via_parts = explode(':',$peers [$key]['ViaAddress']);
+			$display_ipaddr = $via_parts[0];
+		}				
+
+		return $display_ipaddr;
+
+}
+
+    /**
+     * Return the endpoint RTT (latency) as observed from the PBX
+     * the peer table may have been built from either chan_sip or PJsip and they differ in their naming
+     * conventions so we just have to figure it out
+     *
+     * @return string
+     */
+
+public function getLatencyFromPeer($key,$peers) {
+
+		$latency = 'N/A';
+
+		if (isset($peers [$key]['Status'])) {
+			$latency = $peers [$key]['Status'];	
+		}
+		if (isset($peers [$key]['RoundtripUsec'])) {
+			$latency = round($peers [$key]['RoundtripUsec']/1000) . "ms";	
+		} 
+
+		return $latency;
+
 }
 
 public function get_coreShowChannels() {

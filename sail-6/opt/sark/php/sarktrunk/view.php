@@ -33,6 +33,8 @@ Class sarktrunk {
 	protected $astrunning=false;	
 	protected $span = 1;
 	protected $smartlink;
+	protected $sip_peers = array();
+	protected $iax_peers = array();
 	protected $myBooleans = array(
 		'active',
 		'callprogress',
@@ -110,18 +112,19 @@ private function showMain() {
  * so we'll only work with 1.8 or higher
  */
 
-	$sip_peers = array(); 
-	$iax_peers = array(); 
-	$iax_lines = array();	
-	
-	if ( $this->astrunning ) {
+	if ( $this->astrunning ) {	
 		$amiHelper = new amiHelper();
-		$sip_peers = $amiHelper->get_peer_array();	
-		$iax_peers = $amiHelper->get_peer_array(true);			
+		if ($this->helper->checkPjsipEnabled()) {
+			$this->sip_peers = $amiHelper->get_pjsip_array($extensions);
+		}
+		else {
+			$this->sip_peers = $amiHelper->get_peer_array();
+		}
+		$this->iax_peers = $amiHelper->get_peer_array(true);		
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
-	}
+	}		
 
 /* 
  * start page output
@@ -199,16 +202,19 @@ private function showMain() {
 				if (preg_match(' /\((\d+)\sms/ ',$sip_peers [$searchkey]['Status'],$matches)) {
 					$latency = 	$matches[1] . 'ms';
 				}
+				$hostip = $this->getIpAddressFromPeer($row['pkey']);
+				$status = $this->getLatencyFromPeer($row['pkey']);
+
 				$hostip = $sip_peers [$searchkey]['IPaddress'];
 				$status = $sip_peers [$searchkey]['Status'];
 			}		
 	
 			else if ($row['technology'] == 'IAX2') {
-				if (preg_match(' /\((\d+)\sms/ ',$iax_peers [$searchkey]['Status'],$matches)) {
+				if (preg_match(' /\((\d+)\sms/ ',$this->iax_peers [$searchkey]['Status'],$matches)) {
 					$latency = 	$matches[1] . 'ms';
 				}
-				$hostip = $iax_peers[$searchkey]['IPaddress'];
-				$status = $iax_peers[$searchkey]['Status'];
+				$hostip = $this->iax_peers[$searchkey]['IPaddress'];
+				$status = $this->iax_peers[$searchkey]['Status'];
 			}
 			else {
 				$status = 'OK';
@@ -328,10 +334,14 @@ private function saveNew() {
 // save the data away
 	$this->myPanel->xlateBooleans($this->myBooleans);
 	$tuple = array();
+
+	$this->helper->logit(json($_POST));
 /*
  * call the correct routine to prepare the record array
- */ 	
-	switch ($_POST['carrier']) {
+ */ 
+	$_POST['carrier'] = $_POST['chooser'];	
+
+	switch ($_POST['chooser']) {
 		case "GeneralSIP":
 		case "GeneralIAX2":
 			$this->saveSIPIAX($tuple);
@@ -343,6 +353,7 @@ private function saveNew() {
 			$this->saveCustom($tuple);
 			break;
 		default: 
+			$this->helper->logit("Switch ERROR!!! - switching on " . $_POST['chooser'] )
 			return;						
 	}
 /*
@@ -357,7 +368,7 @@ private function saveNew() {
 		else {
 			$this->invalidForm = True;
 			$this->message = "<B>  --  Validation Errors!(3)</B>";	
-			$this->error_hash[trunk] = $ret;	
+			$this->error_hash['trunk'] = $ret;	
 		}
 	}	
 }
@@ -483,12 +494,8 @@ private function showEdit() {
 	
 //	$printline = "Trunk " . $tuple['technology'] . "/" . $tuple['pkey'];
 	
-	if ( $this->astrunning ) {			
-		$amiHelper = new amiHelper();
-		$sip_peers = $amiHelper->get_peer_array();	
-		$iax_peers = $amiHelper->get_peer_array(true);
-	}
-	else {
+	if ( ! $this->astrunning ) {			
+
 		$this->myPanel->msg .= "  (No Asterisk running)";
 	}
 
@@ -660,7 +667,7 @@ private function saveEdit() {
 	else {
 		$this->invalidForm = True;
 		$this->message = "<B>  --  Validation Errors!</B>";	
-		$this->error_hash[trunk] = $ret;	
+		$this->error_hash['trunk'] = $ret;	
 	}	
 }
 
@@ -697,18 +704,6 @@ private function copyTemplates (&$tuple) {
         	}       	
         }
 
-/* Don't think these are needed
-		if (isset( $template['pjsipuser'] )) {
-      		$template['pjsipuser'] = preg_replace ('/^\s+/',"", $template['pjsipuser']);
-      		$template['pjsipuser'] = preg_replace ('/\s+$/',"", $template['pjsipuser']);   	
-        }
-
-		if (isset( $template['pjsipreg'] )) {
-      		$template['pjsipreg'] = preg_replace ('/^\s+/',"", $template['pjsipreg']);
-      		$template['pjsipreg'] = preg_replace ('/\s+$/',"", $template['pjsipreg']);   	
-        }        
-*/
-
         if (isset( $template['sipiaxuser'] )) {
       		$template['sipiaxuser'] = preg_replace ('/username=/',"username=" . $tuple['username'], $template['sipiaxuser']);
       		$template['sipiaxuser'] = preg_replace ('/fromuser=/',"fromuser=" . $tuple['username'], $template['sipiaxuser']);
@@ -728,30 +723,5 @@ private function copyTemplates (&$tuple) {
 		}
 }
 
-private function printEditNotes ($pkey,$endpoint,$si_peers) {
-#
-#   prints info Box
-#
-
-	echo '<div  class="extnotes">' . PHP_EOL;
-    echo '<span style="font-weight:bold; color: #696969;"></span><br/><br/>';
-    echo 'Peer: <strong>' . $pkey . '</strong><br/>' . PHP_EOL;
-    echo 'Name: <strong>' . $endpoint['pkey'] . '</strong><br/>' . PHP_EOL;
-    echo 'Type: <strong>' . $endpoint['technology'] . '</strong><br/>' . PHP_EOL;
-    
-    if (!empty ($si_peers [$pkey])) {
-		echo 'State: <strong>' . $si_peers [$pkey]['Status'] . '</strong><br/>' . PHP_EOL; 	
-		if (preg_match(' /^OK/ ', $si_peers [$pkey]['Status'])) {
-			if (isset ($si_peers [$pkey]['IPport'])) {
-				echo 'IPport: <strong>' . $si_peers [$pkey]['IPport'] . '</strong><br/>' . PHP_EOL;
-			}		
-			if (isset ($si_peers [$pkey]['IPaddress'])) {
-				echo 'IP: <strong>' . $si_peers [$pkey]['IPaddress'] . '</strong><br/>' . PHP_EOL;
-			}
-		}		
-	}
-    echo '</div>' . PHP_EOL;
-
-}
 
 }
