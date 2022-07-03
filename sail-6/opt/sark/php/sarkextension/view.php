@@ -936,7 +936,7 @@ private function showEdit() {
 			$this->sip_peers = $amiHelper->get_peer_array();
 		}		
 		$amiHelper->get_database($pkey,$cfim,$cfbs,$ringdelay,$celltwin);			
-		$latency = $this->getLatencyFromPeer($pkey);	
+		$latency = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);	
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
@@ -1862,7 +1862,7 @@ private function printEditNotes ($pkey,$extension) {
 		}
 	}
 	
-	$latency = $this->getLatencyFromPeer($pkey,$this->sip_peers);
+	$latency = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
 
 	if ($latency == 'N/A' && $virtExt) {	
 		echo 'State: <strong>Idle(VXT)</strong><br/>' . PHP_EOL;
@@ -1870,7 +1870,7 @@ private function printEditNotes ($pkey,$extension) {
 	}	
 	echo 'State: <strong>' . $latency . '</strong><br/>' . PHP_EOL;
 	
-	$display = $this->getIpAddressFromPeer($pkey,$this->sip_peers);
+	$display = $amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
 
 	echo 'IP: <strong>' . $display . '</strong><br/>' . PHP_EOL;
 	echo '<input type="hidden" id="ipaddress" name="ipaddress" value="' . $display . '" />' . PHP_EOL;	 		
