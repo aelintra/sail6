@@ -322,13 +322,12 @@ private function saveNew() {
 	$this->myPanel->xlateBooleans($this->myBooleans);
 	$tuple = array();
 
-	$this->helper->logit(json($_POST));
+//	$this->helper->logit(json_encode($_POST));
 /*
  * call the correct routine to prepare the record array
- */ 
-	$_POST['carrier'] = $_POST['chooser'];	
+ */ 	
 
-	switch ($_POST['chooser']) {
+	switch ($_POST['carrier']) {
 		case "GeneralSIP":
 		case "GeneralIAX2":
 			$this->saveSIPIAX($tuple);
