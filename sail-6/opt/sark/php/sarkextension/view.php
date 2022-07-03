@@ -1863,7 +1863,7 @@ private function printEditNotes ($pkey,$extension) {
 		}
 	}
 	
-	$latency = $this->amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
+	$latency = $this->amiHelper->getLatencyFromPeer($pkey],$this->sip_peers);
 
 	if ($latency == 'N/A' && $virtExt) {	
 		echo 'State: <strong>Idle(VXT)</strong><br/>' . PHP_EOL;
@@ -1871,7 +1871,7 @@ private function printEditNotes ($pkey,$extension) {
 	}	
 	echo 'State: <strong>' . $latency . '</strong><br/>' . PHP_EOL;
 	
-	$display = $this->amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
+	$display = $this->amiHelper->getIpAddressFromPeer($pkey],$this->sip_peers);
 
 	echo 'IP: <strong>' . $display . '</strong><br/>' . PHP_EOL;
 	echo '<input type="hidden" id="ipaddress" name="ipaddress" value="' . $display . '" />' . PHP_EOL;	 		
