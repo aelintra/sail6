@@ -422,7 +422,7 @@ private function genPjsip() {
 	}
 
 
-	$pjsipBuff = file_get_contents("PJSIP" . "PJSIP_TRANSPORT_TEMPLATE") or die("Could not open PJSIP_TRANSPORT_TEMPLATE file!");
+	$pjsipBuff = file_get_contents(PJSIP . PJSIP_TRANSPORT_TEMPLATE) or die("Could not open" . PJSIP_TRANSPORT_TEMPLATE ." file!");
 	$pjsipBuff = preg_replace ( '/\$externip/', $myExternip, $pjsipBuff);
 	
 /* 
@@ -431,8 +431,8 @@ private function genPjsip() {
 	$OUT .= $pjsipBuff;
 	$OUT .= "\n\n";
 
-	$fh = fopen("PJSIP" . "PJSIP_TRANSPORT", 'w') or die("Could not open PJSIP_TRANSPORT!");
-	fwrite($fh,$OUT) or die("Could not write to file PJSIP_TRANSPORT");
+	$fh = fopen(PJSIP . PJSIP_TRANSPORT, 'w') or die("Could not open " . PJSIP_TRANSPORT . "!");
+	fwrite($fh,$OUT) or die("Could not write to file " . PJSIP_TRANSPORT);
 	fclose($fh);
 
 	$OUT = NULL;
@@ -508,9 +508,9 @@ private function genPjsip() {
 //
 //
 
-	$pjsipRegFromBuff = file_get_contents("PJSIP" . "PJSIP_TRUNK_REGFROM_TEMPLATE") or die("Could not open PJSIP_TRUNK_REGFROM_TEMPLATE file!");
-	$pjsipRegToBuff = file_get_contents("PJSIP" . "PJSIP_TRUNK_REGTO_TEMPLATE") or die("Could not open PJSIP_TRUNK_REGTO_TEMPLATE file!");
-	$pjsipTrustedBuff = file_get_contents("PJSIP" . "PJSIP_TRUNK_TRUSTED_TEMPLATE") or die("Could not open PJSIP_TRUNK_TRUSTED_TEMPLATE file!");
+	$pjsipRegFromBuff = file_get_contents(PJSIP . PJSIP_TRUNK_REGFROM_TEMPLATE) or die("Could not open " . PJSIP_TRUNK_REGFROM_TEMPLATE . " file!");
+	$pjsipRegToBuff = file_get_contents(PJSIP . PJSIP_TRUNK_REGTO_TEMPLATE) or die("Could not open " . PJSIP_TRUNK_REGTO_TEMPLATE . " file!");
+	$pjsipTrustedBuff = file_get_contents(PJSIP . PJSIP_TRUNK_TRUSTED_TEMPLATE) or die("Could not open " . PJSIP_TRUNK_TRUSTED_TEMPLATE . " file!");
 
 	
 
