@@ -63,15 +63,6 @@ public function genAsterisk() {
 
     $dbh = NULL;
 
-/*	
-	if ($this->globals['RUNFOP'] == 'enabled') {
-		$rc = $this->request_syscmd ("perl /opt/sark/scripts/op_buttons.pl >/dev/null 2>&1");
-		$rc = $this->request_syscmd ("perl /opt/sark/scripts/name_op_buttons.pl >/dev/null 2>&1");	
-	}
-
-	$this->helper->logit(" commit - ended", 5 );
-// run FOP gen if enabled
-*/
 
 /*
  * take a snapshot
@@ -554,9 +545,9 @@ private function genPjsip() {
  */
 		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
 		if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
-			$rc = $this->request_syscmd ("/bin/touch $targetFile >/dev/null 2>&1");
-			$rc = $this->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
-			$rc = $this->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
+			$rc = $this->helper->request_syscmd ("/bin/touch $targetFile >/dev/null 2>&1");
+			$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
+			$rc = $this->helper->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
 			$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
 			fwrite($fh,$OUT) or die("Could not write to file $targetFile !");
 			fclose($fh);
