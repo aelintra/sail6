@@ -368,9 +368,7 @@ private function saveSIPreg(&$tuple) {
 /**
  * for chan_sip
  */
-			$tuple['register'] = $tuple['username'].':'.$tuple['password'].'@'.$tuple['host'];
-
-									
+		$tuple['register'] = $tuple['username'].':'.$tuple['password'].'@'.$tuple['host'];									
 		$template = $this->copyTemplates ($tuple);
 
 	}
@@ -401,7 +399,9 @@ private function saveSIPdynamic(&$tuple) {
 		$tuple['technology']	= 'SIP';				
 		$tuple['desc'] 			= $tuple['trunkname'];					
 		$tuple['pjsipreg'] 		= 'RCV';
-									
+/**
+ * for chan_sip
+ */									
 		$template = $this->copyTemplates ($tuple);
 
 	}
@@ -431,7 +431,9 @@ private function saveSIPsimple(&$tuple) {
 		$tuple['technology']	= 'SIP';				
 		$tuple['desc'] 			= $tuple['trunkname'];
 		$tuple['pjsipreg'] 		= 'NONE';					
-									
+/**
+ * for chan_sip
+ */									
 		$template = $this->copyTemplates ($tuple);
 
 	}
@@ -726,7 +728,7 @@ private function copyTemplates (&$tuple) {
  * substitute into it the values from this create
  */ 
 		
-        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer FROM Carrier WHERE pkey = '" . $_POST['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
+        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer FROM Carrier WHERE pkey = '" . $tuple['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
  
         if (isset( $template['sipiaxpeer'] )) {
       		$template['sipiaxpeer'] = preg_replace ('/username=/',"username=" . $tuple['username'], $template['sipiaxpeer']);

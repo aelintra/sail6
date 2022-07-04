@@ -1,44 +1,56 @@
 
   $(document).ready(function() {
 
-  	
-/*	
-	$.validator.addMethod("xform",function(value,element) {
-		return this.optional(element) || /^[0-9#*\+: ]+$/i.test(value); 
-	},"Mask can only contain 0-9#*+: and space characters");
-	
-	$.validator.addMethod("alpha",function(value,element) {
-		return this.optional(element) || /^[A-Za-z0-9_-]{2,20}$/i.test(value); 
-	},"field can only contain alphanumerics and no spaces");
-	
-	$("#sarktrunkForm").change(function() {		  
-	  $("#update").attr("src", "/sark-common/buttons/save-red.png");
-	  $("#commit").attr("src", "/sark-common/buttons/commitClick.png");
-	});	
-	
-		  
-	$("#sarktrunkForm").validate ( {
-	   rules: {
-			transform: "xform",
-			trunkname: "alpha",
-			tag: "alpha",
-			match: {digits: true, 
-						maxlength: 2},
-			inprefix: {digits: true, 
-						maxlength: 2},
-			disapass: {range:[100,9999]}
-//			callerid: {digits:true},
-//			didnumber: "dialplan",
-//			clinumber: "dialplan"
-/*						
-			host: "required",			
-								 			   
-	   },
-	   messages: {
-//		   idname: "message"
-	   }					
-	});  
-*/
+ /*
+ * hide/reveal logic for trunk create
+ */         
+       $('#divtrunkname').hide();	
+       $('#divusername').hide();
+       $('#divpassword').hide();
+       $('#divhost').hide();
+       $('#divpeername').hide();
+       $('#divregister').hide();
+       $('#divprivileged').hide();
+
+				
+	$('#chooser').change(function(){
+			$('#chooser').attr('disabled', true);
+			$('#chooser').css('background-color','lightgrey');
+			if(this.value=='SIP (send registration)') {
+				$('#divtrunkname').show();	
+				$('#divhost').show();		
+				$('#divpassword').show();
+				$('#divprivileged').show();									
+			}
+			if(this.value=='SIP (accept registration)') {
+				$('#divtrunkname').show();			
+				$('#divpassword').show();
+				$('#divprivileged').show();									
+			}
+			if(this.value=='SIP (trusted peer)') {
+				$('#divtrunkname').show();
+				$('#divhost').show();
+				$('#divprivileged').show();											
+			}
+			if(this.value=='GeneralIAX2' ) {
+				$('#divtrunkname').show();			
+				$('#divpassword').show();
+				$('#divhost').show();
+				$('#divregister').show();										
+			}
+			if(this.value=='InterSARK') {
+				$('#divtrunkname').show();
+				$('#divpeername').show();
+				$('#divhost').show();
+				$('#divpassword').show();
+				$('#divpeername').show();
+				$('#divprivileged').show();						
+			}
+
+			$("#carrier").val($(this).val());			
+					
+	}); 
+
 	var scrollPosition;
 	
 	$('#trunktable').dataTable ( {
@@ -55,7 +67,7 @@
 			{ "sName": "pkey" },
 			{ "sName": "cluster" },
 			{ "sName": "description" },
-//			{ "sName": "carriertype" },
+			{ "sName": "carriertype" },
 			{ "sName": "ipaddr" },					
 			{ "sName": "active" },	
 			{ "sName": "connect"},
@@ -116,60 +128,9 @@
 		scrollPosition = $(".dataTables_scrollBody").scrollTop();
 	})        
 
-/*
- * 	call permissions code
- */
-	srkPerms('trunktable');
 
-/*
- * hide/reveal logic for trunk create
- */         
-        $('#divtrunkname').hide();	
-        $('#divusername').hide();
-        $('#divpassword').hide();
-        $('#divhost').hide();
-        $('#divpeername').hide();
-        $('#divregister').hide();
-        $('#divprivileged').hide();
 
-				
-		$('#chooser').change(function(){
-			$('#chooser').attr('disabled', true);
-			$('#chooser').css('background-color','lightgrey');
-			if(this.value=='SIP (send registration)') {
-				$('#divtrunkname').show();	
-				$('#divhost').show();		
-				$('#divpassword').show();
-				$('#divprivileged').show();									
-			}
-			if(this.value=='SIP (accept registration)') {
-				$('#divtrunkname').show();			
-				$('#divpassword').show();
-				$('#divprivileged').show();									
-			}
-			if(this.value=='SIP (trusted peer)') {
-				$('#divtrunkname').show();
-				$('#divhost').show();
-				$('#divprivileged').show();											
-			}
-			if(this.value=='GeneralIAX2' ) {
-				$('#divtrunkname').show();			
-				$('#divpassword').show();
-				$('#divhost').show();
-				$('#divregister').show();										
-			}
-			if(this.value=='InterSARK') {
-				$('#divtrunkname').show();
-				$('#divpeername').show();
-				$('#divhost').show();
-				$('#divpassword').show();
-				$('#divpeername').show();
-				$('#divprivileged').show();						
-			}
 
-			$("#carrier").val($(this).val());			
-					
-		}); 
 		
       });
       
