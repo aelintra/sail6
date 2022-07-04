@@ -566,9 +566,9 @@ private function genPjsip() {
  * Only write to the target if it doen not exist
  * 
  */
-		if (!file_exists("PJSIP" . $row['pkey'] . '_' . "PJSIP_TRUNK")) {
-			$fh = fopen("PJSIP" . $row['pkey'] . '_' . "PJSIP_TRUNK", 'w') or die("Could not open file PJSIP" . $row['pkey'] . "_PJSIP_TRUNK!");
-			fwrite($fh,$OUT) or die("Could not write to file PJSIP" . $row['pkey'] . "_PJSIP_TRUNK!");
+		if (!file_exists(PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK)) {
+			$fh = fopen(PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK, 'w') or die("Could not open file " . PJSIP . $row['pkey'] . "_" . PJSIP_TRUNK ."!");
+			fwrite($fh,$OUT) or die("Could not write to file " . PJSIP . $row['pkey'] . "_" . PJSIP_TRUNK . "!");
 			fclose($fh);
 		}
 	}
