@@ -63,7 +63,7 @@ public function genAsterisk() {
 
     $dbh = NULL;
 
-	
+/*	
 	if ($this->globals['RUNFOP'] == 'enabled') {
 		$rc = $this->request_syscmd ("perl /opt/sark/scripts/op_buttons.pl >/dev/null 2>&1");
 		$rc = $this->request_syscmd ("perl /opt/sark/scripts/name_op_buttons.pl >/dev/null 2>&1");	
@@ -71,7 +71,7 @@ public function genAsterisk() {
 
 	$this->helper->logit(" commit - ended", 5 );
 // run FOP gen if enabled
-
+*/
 
 /*
  * take a snapshot
@@ -514,28 +514,14 @@ private function genPjsip() {
 
 	
 
-	//$lineio = $this->helper->getTable("lineio",null,false);
+	$lineio = $this->helper->getTable("lineio",null,false);
 
-	try {
-		$sql = $this->dbh->prepare("SELECT * from lineio where technology=? ORDER BY pkey");
-		$sql->execute(array('SIP'));		
-		$lineio = $sql->fetch();	
-		$sql=NULL;
-	} catch (PDOException $e) {
-		$errorMsg = $e->getMessage();
-		return $errorMsg;
-	}
 
-    foreach ($lineio as $row) {                
-		try {
-			$sql = $this->dbh->prepare("SELECT * from Carrier where pkey=?");
-			$sql->execute(array($row['carrier']));		
-			$carrier = $sql->fetch();	
-			$sql=NULL;
-		} catch (PDOException $e) {
-			$errorMsg = $e->getMessage();
-			return $errorMsg;
-		}
+    foreach ($lineio as $row) {  
+
+	    	if ($row['technology'] != "SIP") {
+	    		continue;
+	    	}              
 
 		$pjsipTrunkBuff = NULL;
 
@@ -563,12 +549,16 @@ private function genPjsip() {
 			$pjsipTrunkBuff = preg_replace ( '/\$context/','internal', $pjsipTrunkBuff );
 		}
 /**
- * Only write to the target if it doen not exist
+ * Only write to the target if it does not exist or it is empty
  * 
  */
-		if (!file_exists(PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK)) {
-			$fh = fopen(PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK, 'w') or die("Could not open file " . PJSIP . $row['pkey'] . "_" . PJSIP_TRUNK ."!");
-			fwrite($fh,$OUT) or die("Could not write to file " . PJSIP . $row['pkey'] . "_" . PJSIP_TRUNK . "!");
+		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK
+		if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
+			$rc = $this->request_syscmd ("/bin/touch $targetFile >/dev/null 2>&1");
+			$rc = $this->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
+			$rc = $this->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
+			$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
+			fwrite($fh,$OUT) or die("Could not write to file $targetFile !");
 			fclose($fh);
 		}
 	}
