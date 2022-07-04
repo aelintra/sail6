@@ -552,7 +552,7 @@ private function genPjsip() {
  * Only write to the target if it does not exist or it is empty
  * 
  */
-		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK
+		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
 		if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
 			$rc = $this->request_syscmd ("/bin/touch $targetFile >/dev/null 2>&1");
 			$rc = $this->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
