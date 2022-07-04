@@ -528,10 +528,9 @@ class ami
     {
         $this->_checkSocket();
 
-        $response = $this->_sendCommand("Action: PJSIPShowEndpoint\r\n\r\n", 'ListItems', false);
+        $response = $this->_sendCommand("Action: PJSIPShowEndpoints\r\n\r\n", 'ListItems', false);
         return $response;
     }  
-
 
     /**
      * Get data for a PJSIP endpoint
@@ -542,7 +541,6 @@ class ami
     {
         $this->_checkSocket();
 
-//        $response = $this->_sendCommand("Action: PJSIPShowEndpoint\r\n\r\n", 'ListItems', false);
         $response = $this->_sendCommand("Action: PJSIPShowEndpoint\r\n"
             . "Endpoint: " . $endpoint . "\r\n\r\n",'ListItems', false);
         return $response;

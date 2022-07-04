@@ -1,4 +1,5 @@
 <?php 
+	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/config.php";
 	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkPageClass";
 	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkDbClass";
 	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";

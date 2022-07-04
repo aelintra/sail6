@@ -172,7 +172,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('header','Ast
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('headlocation','L/R','Local or remote.  Denotes whether the phone will run inside or outside the local firewall. If it is outside then SARK will use symmetrical RTP.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('home','Tel3','Alt Number (if applicable)');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('hhmm','Time (hh:mm)','Time (hh:mm)');
-INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('host','URI/IP address','Enter the URI or the IP address of the target host.');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('host','Host address','Enter the URL or the IP address of the target host (unless this host will register with you, in which case enter the string &#39;dynamic&#39;)');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('hostname','Hostname','The local hostname of this server.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('httppassword','Password','Enter the existing password ');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('icmp','Accept ping requests?','Set to NO if you want to ignore ping requests');
@@ -344,7 +344,7 @@ INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('toggleDhcpEl
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('toggleDhcpd','Run as DHCP Server?','');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('transform','Transformation mask','Used to transform numbers using value comparisons and proceeding left to right... xx:xx xx:xx.  Nulls in the left operand result in addition.  Nulls in the right operand result in suppression.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('transport','Transport Protocol','Set the SIP transport protocol you wish to use for this endpoint. The default is UDP but SARK can also use TCP or TLS.  If you are unsure which to choose then you should leave it set to UDP.');
-INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('trunkname','Name','This is a name you can give to the trunk to help identify it.');
+INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('trunkname','Name','This is the unique name of the trunk.  It will usually be a userID given to you by your ITSP or a username you have given to a downstream client PBX.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('tstate','State','State of the endpoint');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('twin','Enable Twinning','Set this on to enable cellphone call twinning.');
 INSERT OR IGNORE INTO tt_help_core(pkey,displayname,htext) values ('uname','User','Name of the endpoint or the endpoint user ');

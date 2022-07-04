@@ -131,15 +131,28 @@
         $('#divpeername').hide();
         $('#divregister').hide();
         $('#divprivileged').hide();
-		$('#divsmartlink').hide();
-		$('#divpredial').hide();
-		$('#divpostdial').hide();
-		$('#divrouteable').hide();
+
 				
 		$('#chooser').change(function(){
 			$('#chooser').attr('disabled', true);
-			$('#chooser').css('background-color','lightgrey');			
-			if(this.value=='GeneralSIP' || this.value=='GeneralIAX2' ) {
+			$('#chooser').css('background-color','lightgrey');
+			if(this.value=='SIP (send registration)') {
+				$('#divtrunkname').show();	
+				$('#divhost').show();		
+				$('#divpassword').show();
+				$('#divprivileged').show();									
+			}
+			if(this.value=='SIP (accept registration)') {
+				$('#divtrunkname').show();			
+				$('#divpassword').show();
+				$('#divprivileged').show();									
+			}
+			if(this.value=='SIP (trusted peer)') {
+				$('#divtrunkname').show();
+				$('#divprivileged').show();											
+			}
+
+			if(this.value=='GeneralIAX2' ) {
 				$('#divtrunkname').show();			
 //				$('#divusername').show();
 				$('#divpassword').show();
@@ -154,12 +167,6 @@
 				$('#divpeername').show();
 				$('#divprivileged').show();						
 			}
-			if(this.value=='Custom') {
-				$('#divtrunkname').show();
-				$('#divpredial').show();
-				$('#divpostdial').show();
-				$('#divrouteable').show();
-			}	
 
 			$("#carrier").val($(this).val());			
 					

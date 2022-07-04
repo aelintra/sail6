@@ -534,13 +534,13 @@ password TEXT,				-- far end password
 pat TEXT,					-- V2; no longer used
 peername TEXT,				-- strong Asterisk username
 pjsipuser TEXT,				-- Asterisk pjsip stanzas
-pjsipreg TEXT,				-- Asterisk pjsip registration stanza									
+pjsipreg TEXT DEFAULT NULL,	-- Asterisk pjsip registration (SND/RCV/NULL)									
 postdial TEXT,				-- post dial string for custom trunks	
 predial TEXT,				-- pre dial string for custom trunks
-privileged TEXT,			-- IAX siblings ONLY
+privileged TEXT DEFAULT 'NO',	-- controls context (internal/mainmenu)
 provision TEXT,				-- not used
 queue TEXT,					-- not used
-register TEXT,				-- registration string
+register TEXT,				-- registration string (chan_sip only)
 remotenum TEXT,				-- used in sibling links
 routeable TEXT,				-- denotes whether Analogue lines are routeable 
 routeclassopen TEXT,		-- routeclass

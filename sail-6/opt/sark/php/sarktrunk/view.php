@@ -250,7 +250,7 @@ private function showNew() {
 /*
  * trunk control dropdown
  */ 
-	$this->myPanel->displayPopupFor('chooser','Choose a trunk type',Array('Choose a trunk type','GeneralSIP','GeneralIAX2','Custom','InterSARK')); 
+	$this->myPanel->displayPopupFor('chooser','Choose a trunk type',Array('Choose a trunk type','SIP (send registration)','SIP (accept registration)','SIP (trusted peer)''GeneralIAX2','InterSARK')); 
 /*
  * Trunk variables - they will be hidden/revealed according to the chooser dropdown
  */	
@@ -280,28 +280,10 @@ private function showNew() {
 	$this->myPanel->displayBooleanFor('regthistrunk','NO');
 	echo '</div>' . PHP_EOL;
 
-/*
- *  Sibling only
- */	
-
 	echo '<div id="divprivileged">' . PHP_EOL;						
 	$this->myPanel->displayBooleanFor('privileged','YES');
-	echo '</div>' . PHP_EOL;	
-						
-/*
- * Custom Trunk only
- */ 
-	echo '<div id="divpredial">' . PHP_EOL;	
-	$this->myPanel->displayInputFor('predial','text');
 	echo '</div>' . PHP_EOL;
 
-	echo '<div id="divpostdial">' . PHP_EOL;	
-	$this->myPanel->displayInputFor('postdial','text');
-	echo '</div>' . PHP_EOL;
-	
-	echo '<div id="divrouteable">' . PHP_EOL;			
-	$this->myPanel->displayBooleanFor('routeable','YES');
-	echo '</div>' . PHP_EOL;
 	
 	echo '<input type="hidden" id="carrier" name="carrier" value="" />' . PHP_EOL; 
 
@@ -328,16 +310,21 @@ private function saveNew() {
  */ 	
 
 	switch ($_POST['carrier']) {
-		case "GeneralSIP":
-		case "GeneralIAX2":
-			$this->saveSIPIAX($tuple);
-			break;		
+		case "SIP (send registration)":
+			$this->saveSIPreg($tuple);
+			break;
+		case "SIP (accept registration)":
+			$this->saveSIPdynamic($tuple);
+			break;	
+		case "SIP (trusted peer)":
+			$this->saveSIPsimple($tuple);
+			break;					
+		case "IAX2":
+			$this->saveIAX($tuple);
+			break;				
 		case "InterSARK":
 			$this->saveSibling($tuple);
 			break;				
-		case "Custom":
-			$this->saveCustom($tuple);
-			break;
 		default: 
 			$this->helper->logit("Switch ERROR!!! - switching on " . $_POST['chooser'] );
 			return;						
@@ -359,7 +346,104 @@ private function saveNew() {
 	}	
 }
 
-private function saveSIPIAX(&$tuple) {
+private function saveSIPreg(&$tuple) {
+
+	$this->validator = new FormValidator();
+	$this->validator->addValidation("host","req","No host address");
+	$this->validator->addValidation("trunkname","req","No trunk name");
+	$this->validator->addValidation("password","req","No password");
+	
+	$tuple['pkey'] = strip_tags($_POST['trunkname']);
+	
+	if ($this->validator->ValidateForm()) {
+		$tuple['trunkname'] 	= strip_tags($_POST['trunkname']);	
+		$tuple['host'] 			= strip_tags($_POST['host']);
+		$tuple['peername'] 		= $tuple['trunkname'];		
+		$tuple['username']		= $tuple['trunkname'];		
+		$tuple['password']		= strip_tags($_POST['password']);			
+		$tuple['carrier']		= 'GeneralSIP';
+		$tuple['technology']	= 'SIP';				
+		$tuple['desc'] 			= $tuple['trunkname'];
+		$tuple['pjsipreg'] 		= 'SND';				
+/**
+ * for chan_sip
+ */
+			$tuple['register'] = $tuple['username'].':'.$tuple['password'].'@'.$tuple['host'];
+
+									
+		$template = $this->copyTemplates ($tuple);
+
+	}
+    else {
+		$this->invalidForm = True;
+		$this->error_hash = $this->validator->GetErrors();
+		$this->message = "<B>  --  Validation Errors!</B>";		
+    }
+    unset ($this->validator);    
+}
+
+private function saveSIPdynamic(&$tuple) {
+
+	$this->validator = new FormValidator();
+	$this->validator->addValidation("host","req","No host address");
+	$this->validator->addValidation("trunkname","req","No trunk name");
+	$this->validator->addValidation("password","req","No password");
+	
+	$tuple['pkey'] = strip_tags($_POST['trunkname']);
+	
+	if ($this->validator->ValidateForm()) {
+		$tuple['trunkname'] 	= strip_tags($_POST['trunkname']);	
+		$tuple['host'] 			= 'dynamic';
+		$tuple['peername'] 		= $tuple['trunkname'];		
+		$tuple['username']		= NULL;		
+		$tuple['password']		= NULL;			
+		$tuple['carrier']		= 'GeneralSIP';
+		$tuple['technology']	= 'SIP';				
+		$tuple['desc'] 			= $tuple['trunkname'];					
+		$tuple['pjsipreg'] 		= 'RCV';
+									
+		$template = $this->copyTemplates ($tuple);
+
+	}
+    else {
+		$this->invalidForm = True;
+		$this->error_hash = $this->validator->GetErrors();
+		$this->message = "<B>  --  Validation Errors!</B>";		
+    }
+    unset ($this->validator);    
+}
+
+private function saveSIPsimple(&$tuple) {
+
+	$this->validator = new FormValidator();
+	$this->validator->addValidation("host","req","No host address");
+	$this->validator->addValidation("trunkname","req","No trunk name");
+	
+	$tuple['pkey'] = strip_tags($_POST['trunkname']);
+	
+	if ($this->validator->ValidateForm()) {
+		$tuple['trunkname'] 	= strip_tags($_POST['trunkname']);	
+		$tuple['host'] 			= strip_tags($_POST['host']);
+		$tuple['peername'] 		= $tuple['trunkname'];		
+		$tuple['username']		= $tuple['trunkname'];		
+		$tuple['password']		= strip_tags($_POST['password']);			
+		$tuple['carrier']		= 'GeneralSIP';
+		$tuple['technology']	= 'SIP';				
+		$tuple['desc'] 			= $tuple['trunkname'];
+		$tuple['pjsipreg'] 		= 'NONE';					
+									
+		$template = $this->copyTemplates ($tuple);
+
+	}
+    else {
+		$this->invalidForm = True;
+		$this->error_hash = $this->validator->GetErrors();
+		$this->message = "<B>  --  Validation Errors!</B>";		
+    }
+    unset ($this->validator);    
+}
+
+private function saveIAX(&$tuple) {
 
 	$this->validator = new FormValidator();
 	$this->validator->addValidation("host","req","No host address");
@@ -375,16 +459,9 @@ private function saveSIPIAX(&$tuple) {
 		$tuple['peername'] 		= $tuple['trunkname'];
 		$tuple['password']		= strip_tags($_POST['password']);			
 		$tuple['carrier']		= $_POST['carrier'];
-		if ($tuple['carrier'] == 'GeneralSIP') {
-			$tuple['technology']	= 'SIP';
-		}
-		else {
-			$tuple['technology']	= 'IAX2';
-		}
-				
-		if ($tuple['technology'] == 'IAX2') {
-			$tuple['desc'] = $tuple['peername'];
-		}
+		$tuple['technology']	= 'IAX2';				
+		$tuple['desc'] 			= $tuple['peername'];
+
 					
 		if ( $_POST['regthistrunk'] == "YES" ) {
 			$tuple['register'] = $tuple['username'].':'.$tuple['password'].'@'.$tuple['host'];
@@ -435,29 +512,6 @@ private function saveSibling(&$tuple) {
 		$this->message = "<B>  --  Validation Errors!</B>";		
     }
     unset ($this->validator);   
-}
-
-private function saveCustom(&$tuple) {
-
-	$this->validator = new FormValidator();
-	$this->validator->addValidation("trunkname","req","No trunk name ");
-	
-	if ($this->validator->ValidateForm()) {
-		$tuple['pkey'] 			= strip_tags($_POST['trunkname']);
-		$tuple['trunkname'] 	= strip_tags($_POST['trunkname']);	
-		$tuple['host'] 			= strip_tags($_POST['host']);		
-		$tuple['predial']		= strip_tags($_POST['predial']);
-		$tuple['postdial']		= strip_tags($_POST['postdial']);			
-		$tuple['carrier']		= $_POST['carrier'];
-		$tuple['technology']	= $_POST['carrier'];
-		$tuple['routeable']		= $_POST['routeable'];			
-	}
-    else {
-		$this->invalidForm = True;
-		$this->error_hash = $this->validator->GetErrors();
-		$this->message = "<B>  --  Validation Errors!</B>";		
-    }
-    unset ($this->validator);    
 }
 
 
@@ -672,7 +726,7 @@ private function copyTemplates (&$tuple) {
  * substitute into it the values from this create
  */ 
 		
-        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer,pjsipreg,pjsipuser FROM Carrier WHERE pkey = '" . $_POST['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
+        $template = $this->dbh->query("SELECT sipiaxuser,sipiaxpeer FROM Carrier WHERE pkey = '" . $_POST['carrier'] . "'")->fetch(PDO::FETCH_ASSOC);
  
         if (isset( $template['sipiaxpeer'] )) {
       		$template['sipiaxpeer'] = preg_replace ('/username=/',"username=" . $tuple['username'], $template['sipiaxpeer']);
@@ -703,10 +757,7 @@ private function copyTemplates (&$tuple) {
         }
         $tuple['sipiaxpeer'] = $template['sipiaxpeer'];
 		$tuple['sipiaxuser'] = $template['sipiaxuser'];
-		$tuple['pjsipuser'] = $template['pjsipuser'];
-		if ( $_POST['regthistrunk'] == "YES" ) {
-			$tuple['pjsipreg'] = $template['pjsipreg'];
-		}
+
 }
 
 

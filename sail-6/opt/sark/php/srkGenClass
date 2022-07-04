@@ -406,7 +406,6 @@ private function genSip() {
 private function genPjsip() {
 
 	
-	$local_net = "10.0.0.0/8.172.168.0.0/12,192.168.0.0/16";
 	$OUT = $this->genFileBanner();
 
 
@@ -423,9 +422,8 @@ private function genPjsip() {
 	}
 
 
-	$pjsipBuff = file_get_contents("/etc/asterisk/sark_pjsip_head_template.conf") or die('Could not open sark_pjsip_head_template.conf file!');
+	$pjsipBuff = file_get_contents('PJSIP' . 'PJSIP_TRANSPORT_TEMPLATE') or die('Could not open PJSIP_TRANSPORT_TEMPLATE file!');
 	$pjsipBuff = preg_replace ( '/\$externip/', $myExternip, $pjsipBuff);
-	$pjsipBuff = preg_replace ( '/\$localip/', $local_net, $pjsipBuff);
 	
 /* 
  * N.B. deal with cert/key location here also
@@ -433,8 +431,8 @@ private function genPjsip() {
 	$OUT .= $pjsipBuff;
 	$OUT .= "\n\n";
 
-	$fh = fopen("/etc/asterisk/sark_pjsip_head.conf", 'w') or die('Could not open sark_pjsip_head.conf!');
-	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_head.conf');
+	$fh = fopen('PJSIP' . 'PJSIP_TRANSPORT', 'w') or die('Could not open PJSIP_TRANSPORT!');
+	fwrite($fh,$OUT) or die('Could not write to file PJSIP_TRANSPORT');
 	fclose($fh);
 
 	$OUT = NULL;
@@ -508,65 +506,73 @@ private function genPjsip() {
 //
 //  SIP peers (Lines)
 //
+//
 
-	$result = $this->helper->getTable("lineio",null,false);
+	$pjsipRegFromBuff = file_get_contents('PJSIP' . 'PJSIP_TRUNK_REGFROM_TEMPLATE') or die('Could not open PJSIP_TRUNK_REGFROM_TEMPLATE file!');
+	$pjsipRegToBuff = file_get_contents('PJSIP' . 'PJSIP_TRUNK_REGTO_TEMPLATE') or die('Could not open PJSIP_TRUNK_REGTO_TEMPLATE file!');
+	$pjsipTrustedBuff = file_get_contents('PJSIP' . 'PJSIP_TRUNK_TRUSTED_TEMPLATE') or die('Could not open PJSIP_TRUNK_TRUSTED_TEMPLATE file!');
 
-    foreach ($result as $row) {             
-    	if ($row['active'] == "YES") {    
-			try {
-				$sql = $this->dbh->prepare("SELECT * from Carrier where pkey=?");
-				$sql->execute(array($row['carrier']));		
-				$carrier = $sql->fetch();	
-				$sql=NULL;
-			} catch (PDOException $e) {
-				$errorMsg = $e->getMessage();
-				return $errorMsg;
-			}
-			if ($carrier['technology'] == "SIP"  || $carrier['technology'] == "Gateway") {
-				$row['pjsipuser'] = preg_replace ( '/\$host/',$row['host'], $row['pjsipuser'] );
-				$row['pjsipuser'] = preg_replace ( '/\$pkey/',$row['pkey'], $row['pjsipuser'] );
-				$row['pjsipuser'] = preg_replace ( '/\$user/',$row['pkey'], $row['pjsipuser'] );
-				$row['pjsipuser'] = preg_replace ( '/\$password/',$row['password'], $row['pjsipuser'] );
+	
 
-				if ($row['privileged'] == "NO") {
-					$row['pjsipuser'] = preg_replace ( '/\$context/','mainmenu', $row['pjsipuser'] );	
-					}
-				else {
-					$row['pjsipuser'] = preg_replace ( '/\$context/','internal', $row['pjsipuser'] );
-				}
-					 	
-				$OUT .= "\n" . $row['pjsipuser'] . "\n";
-			}	
+	//$lineio = $this->helper->getTable("lineio",null,false);
+
+	try {
+		$sql = $this->dbh->prepare("SELECT * from lineio where technology=? ORDER BY pkey");
+		$sql->execute(array('SIP'));		
+		$lineio = $sql->fetch();	
+		$sql=NULL;
+	} catch (PDOException $e) {
+		$errorMsg = $e->getMessage();
+		return $errorMsg;
+	}
+
+    foreach ($lineio as $row) {                
+		try {
+			$sql = $this->dbh->prepare("SELECT * from Carrier where pkey=?");
+			$sql->execute(array($row['carrier']));		
+			$carrier = $sql->fetch();	
+			$sql=NULL;
+		} catch (PDOException $e) {
+			$errorMsg = $e->getMessage();
+			return $errorMsg;
 		}
-	}
-	if (!$OUT) {
-		$OUT = ";sark_pjsip_trunks.conf" . "\n\n";
-	}
-	$OUT .= "\n\n";
+
+		$pjsipTrunkBuff = NULL;
+
+		switch ($row['pjsipreg']) {
+
+			case "SND":
+				$pjsipTrunkBuff = $pjsipRegToBuff;
+				break;
+			case "RCV":
+				$pjsipTrunkBuff = $pjsipRegFromBuff;
+				break;				
+			default: 
+				$pjsipTrunkBuff = $pjsipTrustedBuff;					
+		}
+
+		$pjsipTrunkBuff = preg_replace ( '/\$host/',$row['host'], $pjsipTrunkBuff );
+		$pjsipTrunkBuff = preg_replace ( '/\$pkey/',$row['pkey'], $pjsipTrunkBuff );
+		$pjsipTrunkBuff = preg_replace ( '/\$user/',$row['pkey'], $pjsipTrunkBuff );
+		$pjsipTrunkBuff = preg_replace ( '/\$password/',$row['password'], $pjsipTrunkBuff );
+
+		if ($row['privileged'] == "NO") {
+			$pjsipTrunkBuff = preg_replace ( '/\$context/','mainmenu', $pjsipTrunkBuff );	
+		}
+		else {
+			$pjsipTrunkBuff = preg_replace ( '/\$context/','internal', $pjsipTrunkBuff );
+		}
+					 	
 
 
-	$fh = fopen("/etc/asterisk/sark_pjsip_trunks.conf", 'w') or die('Could not open file!');
-	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_trunks.conf');
+	$fh = fopen('PJSIP' . $row['pkey'] . '_' . 'PJSIP_TRUNK', 'w') or die('Could not open file PJSIP' . $row['pkey'] . '_PJSIP_TRUNK!');
+	fwrite($fh,$OUT) or die('Could not write to file PJSIP' . $row['pkey'] . '_PJSIP_TRUNK!');
 	fclose($fh);
 	
 
 
-	`/bin/cat /etc/asterisk/sark_pjsip_wizard_template.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_phones.conf > /etc/asterisk/sark_pjsip_wizard.conf`;
+//	`/bin/cat /etc/asterisk/sark_pjsip_wizard_template.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_phones.conf > /etc/asterisk/sark_pjsip_wizard.conf`;
 
-/*
-	$fh = fopen("/etc/asterisk/pjsip.conf", 'w') or die('Could not open file!');
-    $OUT = $this->genFileBanner();        
-	fwrite($fh, $OUT. " \n" .
-				"#include sark_pjsip_header.conf  \n" .
-				"#include sark_pjsip_wizard_template.conf  \n" .
-				"#include sark_pjsip_extensions.conf  \n" .
-				"#include sark_pjsip_trunks.conf  \n" .
-		or die('Could not write to file /etc/asterisk/pjsip.conf');
-	fclose($fh);
-*/
-
-// clean up any DOS type stuff from the generated files 
-	`dos2unix /etc/asterisk/sark_pjsip* >/dev/null 2>&1`;
 }
 
 private function genConferences() {
