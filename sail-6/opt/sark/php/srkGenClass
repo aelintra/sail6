@@ -562,13 +562,16 @@ private function genPjsip() {
 		else {
 			$pjsipTrunkBuff = preg_replace ( '/\$context/','internal', $pjsipTrunkBuff );
 		}
-					 	
-
-
-	$fh = fopen('PJSIP' . $row['pkey'] . '_' . 'PJSIP_TRUNK', 'w') or die('Could not open file PJSIP' . $row['pkey'] . '_PJSIP_TRUNK!');
-	fwrite($fh,$OUT) or die('Could not write to file PJSIP' . $row['pkey'] . '_PJSIP_TRUNK!');
-	fclose($fh);
-	
+/**
+ * Only write to the target if it doen not exist
+ * 
+ */
+		if (!file_exists('PJSIP' . $row['pkey'] . '_' . 'PJSIP_TRUNK')) {
+			$fh = fopen('PJSIP' . $row['pkey'] . '_' . 'PJSIP_TRUNK', 'w') or die('Could not open file PJSIP' . $row['pkey'] . '_PJSIP_TRUNK!');
+			fwrite($fh,$OUT) or die('Could not write to file PJSIP' . $row['pkey'] . '_PJSIP_TRUNK!');
+			fclose($fh);
+		}
+	}
 
 
 //	`/bin/cat /etc/asterisk/sark_pjsip_wizard_template.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_phones.conf > /etc/asterisk/sark_pjsip_wizard.conf`;
