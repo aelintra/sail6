@@ -149,12 +149,11 @@
 			}
 			if(this.value=='SIP (trusted peer)') {
 				$('#divtrunkname').show();
+				$('#divhost').show();
 				$('#divprivileged').show();											
 			}
-
 			if(this.value=='GeneralIAX2' ) {
 				$('#divtrunkname').show();			
-//				$('#divusername').show();
 				$('#divpassword').show();
 				$('#divhost').show();
 				$('#divregister').show();										

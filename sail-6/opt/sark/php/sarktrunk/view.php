@@ -250,7 +250,7 @@ private function showNew() {
 /*
  * trunk control dropdown
  */ 
-	$this->myPanel->displayPopupFor('chooser','Choose a trunk type',Array('Choose a trunk type','SIP (send registration)','SIP (accept registration)','SIP (trusted peer)''GeneralIAX2','InterSARK')); 
+	$this->myPanel->displayPopupFor('chooser','Choose a trunk type',Array('Choose a trunk type','SIP (send registration)','SIP (accept registration)','SIP (trusted peer)','GeneralIAX2','InterSARK')); 
 /*
  * Trunk variables - they will be hidden/revealed according to the chooser dropdown
  */	
@@ -281,7 +281,7 @@ private function showNew() {
 	echo '</div>' . PHP_EOL;
 
 	echo '<div id="divprivileged">' . PHP_EOL;						
-	$this->myPanel->displayBooleanFor('privileged','YES');
+	$this->myPanel->displayBooleanFor('privileged','NO');
 	echo '</div>' . PHP_EOL;
 
 	
