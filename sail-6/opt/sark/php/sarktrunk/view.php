@@ -346,6 +346,17 @@ private function saveNew() {
 	}	
 }
 
+private function copyTrunkTemplate($template,$target) {
+
+	if (!file_exists($target) || 0 == filesize( $target )) {
+		$rc = $this->helper->request_syscmd ("/bin/cp $template $target >/dev/null 2>&1");		
+		$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $target >/dev/null 2>&1");
+		$rc = $this->helper->request_syscmd ("/bin/chmod 664 $target >/dev/null 2>&1");
+		return TRUE;
+	}
+	return FALSE;
+} 
+
 private function saveSIPreg(&$tuple) {
 
 	$this->validator = new FormValidator();
@@ -364,7 +375,12 @@ private function saveSIPreg(&$tuple) {
 		$tuple['carrier']		= 'GeneralSIP';
 		$tuple['technology']	= 'SIP';				
 		$tuple['desc'] 			= $tuple['trunkname'];
-		$tuple['pjsipreg'] 		= 'SND';				
+		$tuple['pjsipreg'] 		= 'SND';	
+
+		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$templateFile = PJSIP . PJSIP_TRUNK_REGTO_TEMPLATE;
+		$this->copyTrunkTemplate($templateFile,$targetFile);
+		
 /**
  * for chan_sip
  */
@@ -399,6 +415,10 @@ private function saveSIPdynamic(&$tuple) {
 		$tuple['technology']	= 'SIP';				
 		$tuple['desc'] 			= $tuple['trunkname'];					
 		$tuple['pjsipreg'] 		= 'RCV';
+
+		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$templateFile = PJSIP . PJSIP_TRUNK_REGFROM_TEMPLATE;
+		$this->copyTrunkTemplate($templateFile,$targetFile);
 /**
  * for chan_sip
  */									
@@ -430,7 +450,11 @@ private function saveSIPsimple(&$tuple) {
 		$tuple['carrier']		= 'GeneralSIP';
 		$tuple['technology']	= 'SIP';				
 		$tuple['desc'] 			= $tuple['trunkname'];
-		$tuple['pjsipreg'] 		= 'NONE';					
+		$tuple['pjsipreg'] 		= 'NONE';
+
+		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$templateFile = PJSIP . PJSIP_TRUNK_TRUSTED_TEMPLATE;
+		$this->copyTrunkTemplate($templateFile,$targetFile);							
 /**
  * for chan_sip
  */									
@@ -569,7 +593,7 @@ private function showEdit() {
 	$this->myPanel->aHelpBoxFor('cluster'); 
 	echo '</div>';    
 
-     if ($tuple['technology'] == 'SIP') {
+    if ($tuple['technology'] == 'SIP') {
      	$this->myPanel->displayInputFor('peername','text',$tuple['pkey']);
 
     	echo '<div id="peer">';
@@ -578,12 +602,12 @@ private function showEdit() {
 		$this->myPanel->displayInputFor('register','text',$tuple['register']);
 		echo '</div>' . PHP_EOL;
 
-		if (!empty($tuple['pjsipuser'])) {
+		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		if (!file_exists($targetFile)) {
+			$fileData = file_get_contents($targetFile);
      		echo '<div id="pjsipuser">';   		
 			$this->myPanel->aLabelFor('pjsipuser');
-			$this->myPanel->displayFile($tuple['pjsipuser'],"pjsipuser");
-			$this->myPanel->aLabelFor('pjsipreg');
-			$this->myPanel->displayFile($tuple['pjsipreg'],"pjsipreg");
+			$this->myPanel->displayFile($fileData,"pjsipuser");
 			echo '</div>' . PHP_EOL;
 		}
 	}
