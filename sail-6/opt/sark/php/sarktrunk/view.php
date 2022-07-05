@@ -377,7 +377,7 @@ private function saveSIPreg(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];
 		$tuple['pjsipreg'] 		= 'SND';	
 
-		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
 		$templateFile = PJSIP . PJSIP_TRUNK_REGTO_TEMPLATE;
 		$this->copyTrunkTemplate($templateFile,$targetFile);
 		
@@ -416,7 +416,7 @@ private function saveSIPdynamic(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];					
 		$tuple['pjsipreg'] 		= 'RCV';
 
-		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
 		$templateFile = PJSIP . PJSIP_TRUNK_REGFROM_TEMPLATE;
 		$this->copyTrunkTemplate($templateFile,$targetFile);
 /**
@@ -452,7 +452,7 @@ private function saveSIPsimple(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];
 		$tuple['pjsipreg'] 		= 'NONE';
 
-		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
 		$templateFile = PJSIP . PJSIP_TRUNK_TRUSTED_TEMPLATE;
 		$this->copyTrunkTemplate($templateFile,$targetFile);							
 /**
@@ -602,7 +602,7 @@ private function showEdit() {
 		$this->myPanel->displayInputFor('register','text',$tuple['register']);
 		echo '</div>' . PHP_EOL;
 
-		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
 		if (!file_exists($targetFile)) {
 			$fileData = file_get_contents($targetFile);
      		echo '<div id="pjsipuser">';   		
@@ -723,6 +723,18 @@ private function saveEdit() {
  * call the setter
  */ 
 	$ret = $this->helper->setTuple("lineio",$tuple);
+/*
+ * deal with the templated PJSIP file
+ */
+	if (!empty($_POST['pjsippeer'])) {
+		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
+		$rc = $this->helper->request_syscmd ("/bin/echo '######' > $targetFile >/dev/null 2>&1");		
+		$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
+		$rc = $this->helper->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
+		$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
+		fwrite($fh,$_POST['pjsippeer']) or die("Could not write to file $targetFile !");
+		fclose($fh);
+	}		
 /*
  * flag errors
  */ 	
