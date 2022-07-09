@@ -498,7 +498,7 @@ public function getPjsipTrunkTemplate($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
 
-	if (file_exists($targetFile) || 0 == filesize( $targetFile )) {
+	if (file_exists($targetFile)) {
 		return file_get_contents($targetFile);
 	}
 	return false;

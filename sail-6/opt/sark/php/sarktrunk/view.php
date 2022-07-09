@@ -616,10 +616,9 @@ private function showEdit() {
 		$this->myPanel->displayInputFor('register','text',$tuple['register']);
 		echo '</div>' . PHP_EOL;
 
-		$targetFile = $this->helper->getPjsipTrunkTemplate($tuple['pkey']);
+		$fileData = $this->helper->getPjsipTrunkTemplate($tuple['pkey']);
 
 		if ($targetFile) {
-			$fileData = file_get_contents($targetFile);
      		echo '<div id="pjsipuser">';   		
 			$this->myPanel->aLabelFor('pjsipuser');
 			$this->myPanel->displayFile($fileData,"pjsipuser");
