@@ -350,7 +350,7 @@ private function saveNew() {
  * Copy pjsip file template to named trunk file
  * @param  array $tuple Trunk row
  * @return bool  
- */
+ 
 private function createPjsipTrunkTemplate($tuple) {
 
 	switch ($tuple['pjsipreg']) {
@@ -373,7 +373,7 @@ private function createPjsipTrunkTemplate($tuple) {
 	}
 	return FALSE;
 } 
-
+*/
 private function saveSIPreg(&$tuple) {
 
 	$this->validator = new FormValidator();
