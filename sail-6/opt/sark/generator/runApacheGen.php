@@ -18,9 +18,11 @@
 include("generated_file_banner.php");
 include("localvars.php");
 
+include ("/opt/sark/php/config.php");
 include ("/opt/sark/php/srkDbClass");
 include ("/opt/sark/php/srkHelperClass");
 include ("/opt/sark/php/srkGenClass");
+
 
 $run = new genAsteriskObjects();
 $run->genAsterisk();

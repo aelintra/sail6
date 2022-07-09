@@ -16,24 +16,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+//
+
+/**
+ *  A bunch of, primarily db and/or backend, helpers
+ */
  
 Class helper {
+
+
 public $navRowDisplayMsg;
-	
+
+/**
+ * [sysCommit perform a system Commit - i.e. generate from local to live]
+ * @return NULL
+ */
 public function sysCommit() {
-require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkGenClass";
+
+	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkGenClass";
+
 // ask the helper to run a regen for us.
-    $this->logit(" commit - starting shell task", 5 );
-//    `/bin/sh /opt/sark/scripts/srkgenAst`;
-//    $rc = $this->request_syscmd ("/bin/sh /opt/sark/scripts/srkgenAst >/dev/null 2>&1");  
+   $this->logit(" commit - starting task", 5 ); 
 
 	$this->gen = new genAsteriskObjects;
 	$this->gen->genAsterisk();
 
-	$this->logit(" commit - ended shell task", 5 );
-// run FOP gen if enabled
-
-
+	$this->logit(" commit - ended task", 5 );
 
 /*
  * take a snapshot
@@ -491,7 +499,7 @@ private function getPjsipTrunkTemplate($key) {
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
 
 	if (file_exists($targetFile) || 0 == filesize( $targetFile )) {
-		return file_get_contents($targetFile)[]
+		return file_get_contents($targetFile);
 	}
 	return false;
 } 

@@ -554,7 +554,7 @@ tag TEXT,					-- Alpha tag
 technology TEXT,			-- SIP/IAX/DAHDI/Custom
 transform TEXT,				-- Transformation mask
 transformclip TEXT,			-- Not used
-transport TEXT DEFAULT 'udp' -- protocol (udp/tcp/tls)
+transport TEXT DEFAULT 'udp',	-- protocol (udp/tcp/tls)
 trunk TEXT,					-- old V2 value, no longer used
 trunkname TEXT,				-- freeform trunkname
 username TEXT,				-- far end username
