@@ -466,7 +466,7 @@ public function checkPjsipEnabled() {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-public function createPjsipTrunkTemplate($tuple) {
+public function createPjsipTrunkInstance($tuple) {
 
 	switch ($tuple['pjsipreg']) {
 		case "SND":
@@ -494,7 +494,7 @@ public function createPjsipTrunkTemplate($tuple) {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-public function getPjsipTrunkTemplate($key) {
+public function getPjsipTrunkInstance($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
 
@@ -509,11 +509,11 @@ public function getPjsipTrunkTemplate($key) {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-public function setPjsipTrunkTemplate($tuple) {
+public function setPjsipTrunkInstance($tuple) {
 
 	$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
 	if (!empty($tuple['pjsippeer'])) {		
-		$this->createPjsipTrunkTemplate($tuple);
+		$this->createPjsipTrunkInstance($tuple);
 		$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
 		fwrite($fh,$_POST['pjsippeer']) or die("Could not write to file $targetFile !");
 		fclose($fh);
@@ -527,11 +527,13 @@ public function setPjsipTrunkTemplate($tuple) {
  * @param  array $tuple Trunk row
  * @return RC  
  */
-public function deletePjsipTrunkTemplate($key) {
+public function deletePjsipTrunkInstance($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
-	return $this->helper->request_syscmd ("/bin/rm $$targetFile >/dev/null 2>&1");	
-
+	if (file_exists($targetFile)) {
+		return $this->helper->request_syscmd ("/bin/rm $$targetFile >/dev/null 2>&1");
+	}
+	return False;	
 } 
 
 public function getNextFreeExt() {
@@ -777,6 +779,16 @@ public function delTuple($tab,$pkey) {
  $sql->execute(array($pkey));
  $this->commitOn();
  $this->logit("I'm deleting $tab key $pkey", 5 );
+
+
+/*
+ *	Check for a PJSIP trunk instance file and delete it
+ */
+
+ if ($tab == 'lineio' || $tab == 'lineIO') {
+ 	$this->deletePjsipTrunkInstance;
+ }
+
  return 'OK';
 
 }

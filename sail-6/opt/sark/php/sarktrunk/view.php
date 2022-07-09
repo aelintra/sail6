@@ -346,34 +346,7 @@ private function saveNew() {
 	}	
 }
 
-/**
- * Copy pjsip file template to named trunk file
- * @param  array $tuple Trunk row
- * @return bool  
- 
-private function createPjsipTrunkTemplate($tuple) {
 
-	switch ($tuple['pjsipreg']) {
-		case "SND":
-			$templateFile = PJSIP . PJSIP_TRUNK_SNDREG_TEMPLATE;
-			break;
-		case "RCV":
-			$templateFile = PJSIP . PJSIP_TRUNK_RCVREG_TEMPLATE;
-			break;									
-		default: 
-			$templateFile = PJSIP . PJSIP_TRUNK_TRUSTED_TEMPLATE;					
-	}
-	$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
-
-	if (!file_exists($target) || 0 == filesize( $target )) {
-		$rc = $this->helper->request_syscmd ("/bin/cp $template $target >/dev/null 2>&1");		
-		$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $target >/dev/null 2>&1");
-		$rc = $this->helper->request_syscmd ("/bin/chmod 664 $target >/dev/null 2>&1");
-		return TRUE;
-	}
-	return FALSE;
-} 
-*/
 private function saveSIPreg(&$tuple) {
 
 	$this->validator = new FormValidator();
@@ -394,7 +367,7 @@ private function saveSIPreg(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];
 		$tuple['pjsipreg'] 		= 'SND';	
 
-		$this->createPjsipTrunkTemplate($tuple);
+		$this->createPjsipTrunkInstance($tuple);
 		
 /**
  * for chan_sip
@@ -431,7 +404,7 @@ private function saveSIPdynamic(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];					
 		$tuple['pjsipreg'] 		= 'RCV';
 
-		$this->createPjsipTrunkTemplate($tuple);
+		$this->createPjsipTrunkInstance($tuple);
 /**
  * for chan_sip
  */									
@@ -465,7 +438,7 @@ private function saveSIPsimple(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];
 		$tuple['pjsipreg'] 		= 'NONE';
 
-		$this->createPjsipTrunkTemplate($tuple);						
+		$this->createPjsipTrunkInstance($tuple);						
 /**
  * for chan_sip
  */									
@@ -616,9 +589,9 @@ private function showEdit() {
 		$this->myPanel->displayInputFor('register','text',$tuple['register']);
 		echo '</div>' . PHP_EOL;
 
-		$fileData = $this->helper->getPjsipTrunkTemplate($tuple['pkey']);
+		$fileData = $this->helper->getPjsipTrunkInstance($tuple['pkey']);
 
-		if ($targetFile) {
+		if ($fileData) {
      		echo '<div id="pjsipuser">';   		
 			$this->myPanel->aLabelFor('pjsipuser');
 			$this->myPanel->displayFile($fileData,"pjsipuser");
@@ -737,7 +710,7 @@ private function saveEdit() {
  * call the setter
  */ 
 
-	$ret = $this->helper->setPjsipTrunkTemplate($tuple);
+	$ret = $this->helper->setPjsipTrunkInstance($tuple);
 	$ret = $this->helper->setTuple("lineio",$tuple);
 	
 /*
