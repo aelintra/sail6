@@ -422,7 +422,7 @@ private function genPjsipTransport() {
 	fclose($fh);
 
 	$OUT = NULL;
-)
+}
 
 
 
@@ -470,7 +470,7 @@ private function genPjsipTrunks() {
 
 	$pjsipReadyTrunks = $this->genFileBanner();
 	$pjsipTrunkBuff = NULL;
-	
+
     foreach ($lineio as $row) {  
 
 	    if ($row['technology'] != "SIP") {

@@ -786,7 +786,7 @@ public function delTuple($tab,$pkey) {
  */
 
  if ($tab == 'lineio' || $tab == 'lineIO') {
- 	$this->deletePjsipTrunkInstance;
+ 	$this->deletePjsipTrunkInstance($pkey);
  }
 
  return 'OK';
