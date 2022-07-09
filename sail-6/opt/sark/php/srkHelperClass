@@ -466,7 +466,7 @@ public function checkPjsipEnabled() {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-private function createPjsipTrunkTemplate($tuple) {
+public function createPjsipTrunkTemplate($tuple) {
 
 	switch ($tuple['pjsipreg']) {
 		case "SND":
@@ -494,7 +494,7 @@ private function createPjsipTrunkTemplate($tuple) {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-private function getPjsipTrunkTemplate($key) {
+public function getPjsipTrunkTemplate($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
 
@@ -509,7 +509,7 @@ private function getPjsipTrunkTemplate($key) {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-private function setPjsipTrunkTemplate($tuple) {
+public function setPjsipTrunkTemplate($tuple) {
 
 	$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
 	if (!empty($tuple['pjsippeer'])) {		
@@ -527,7 +527,7 @@ private function setPjsipTrunkTemplate($tuple) {
  * @param  array $tuple Trunk row
  * @return RC  
  */
-private function deletePjsipTrunkTemplate($key) {
+public function deletePjsipTrunkTemplate($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
 	return $this->helper->request_syscmd ("/bin/rm $$targetFile >/dev/null 2>&1");	
