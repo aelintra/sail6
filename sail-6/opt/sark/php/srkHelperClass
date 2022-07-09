@@ -481,9 +481,9 @@ public function createPjsipTrunkInstance($tuple) {
 	$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
 
 	if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
-		$rc = $this->helper->request_syscmd ("/bin/cp $template $targetFile >/dev/null 2>&1");		
-		$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
-		$rc = $this->helper->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
+		$rc = $this->request_syscmd ("/bin/cp $template $targetFile >/dev/null 2>&1");		
+		$rc = $this->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
+		$rc = $this->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
 		return true;
 	}
 	return false;
@@ -531,7 +531,7 @@ public function deletePjsipTrunkInstance($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
 	if (file_exists($targetFile)) {
-		return $this->helper->request_syscmd ("/bin/rm $$targetFile >/dev/null 2>&1");
+		return $this->request_syscmd ("/bin/rm $$targetFile >/dev/null 2>&1");
 	}
 	return False;	
 } 
