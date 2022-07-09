@@ -20,3 +20,5 @@ define('PJSIP_TRUNK_SNDREG_TEMPLATE',	'trunk_sndreg.tmpl');
 define('PJSIP_TRUNK_RCVREG_TEMPLATE',	'trunk_rcvreg.tmpl');
 define('PJSIP_TRUNK_TRUSTED_TEMPLATE',	'trunk_trusted.tmpl');
 define('PJSIP_READY_TRUNKS',            'ready_trunks.conf');
+
+define('PJSIP_WIZARD',                  'wizard.conf');

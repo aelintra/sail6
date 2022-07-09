@@ -48,7 +48,6 @@ public function genAsterisk() {
 // ask the helper to run a regen for us.
     $this->helper->logit(" commit - starting commit", 5 );
 
-
     $this->genCdr();
     $this->genExtensions();
     $this->genMoh();
@@ -57,6 +56,7 @@ public function genAsterisk() {
     $this->genPjsipTransport();
     $this->genPjsipPhones();
     $this->genPjsipTrunks();
+    $this->genPjsipWizard()
     $this->genConferences();
     $this->genQueues();
     $this->genFeatures();
@@ -454,7 +454,7 @@ private function genPjsipPhones() {
 	$targetFile = PJSIP . PJSIP_READY_PHONES;
 
 	$fh = fopen($targetFile, 'w') or die('Could not open file!');
-	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_phones.conf');
+	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_ready_phones.conf');
 	fclose($fh);
 
 	$OUT = NULL;
@@ -526,6 +526,21 @@ private function genPjsipTrunks() {
 		fclose($fh);
 	}
 
+}
+
+private function genPjsipWizard() {
+
+//
+//  SIP extensions (phones)
+//
+
+	$OUT = $this->genFileBanner();
+	$phoneTmpl = PJSIP . PJSIP_PHONE;
+	$phones =  PJSIP . PJSIP_READY_PHONES;
+
+ 	$this->helper->request_syscmd ("/bin/cat $OUT >> " . PJSIP . PJSIP_WIZARD;
+	$this->helper->request_syscmd ("/bin/cat $phoneTmpl >> " . PJSIP . PJSIP_WIZARD;
+	$this->helper->request_syscmd ("/bin/cat $phones >> " . PJSIP . PJSIP_WIZARD;
 }
 
 private function genConferences() {
