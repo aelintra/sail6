@@ -54,7 +54,8 @@ public function genAsterisk() {
     $this->genMoh();
     $this->genIax();
     $this->genSip();
-    $this->genPjsip();
+    $this->genPjsipPhones();
+    $this->genPjsipTrunks();
     $this->genConferences();
     $this->genQueues();
     $this->genFeatures();
@@ -329,15 +330,13 @@ private function genSip() {
 		}
 	}
 //
-//  SIP peers (Lines)
+//  SIP peers (Trunks)
 //
 
 	$result = $this->helper->getTable("lineio",null,false);
 
     foreach ($result as $row) {             
     	if ($row['active'] == "YES") {    
-//			$cquery = "select * from Carrier where pkey='" . $row['carrier'] . "'";
-
 			try {
 				$sql = $this->dbh->prepare("SELECT * from Carrier where pkey=?");
 				$sql->execute(array($row['carrier']));		
@@ -348,7 +347,6 @@ private function genSip() {
 				return $errorMsg;
 			}
 
-//			$carrier = $dbh->query($cquery)->fetch();
 			if ($carrier['technology'] == "SIP"  || $carrier['technology'] == "Gateway") {
 				if ($row['privileged'] == "NO") {
 					if (!preg_match(" /context=mainmenu/",$row['sipiaxuser'])) { 
@@ -394,7 +392,7 @@ private function genSip() {
 }
 
 
-private function genPjsip() {
+private function genPjsipPhones() {
 
 	
 	$OUT = $this->genFileBanner();
@@ -435,58 +433,18 @@ private function genPjsip() {
 	$result = $this->helper->getTable("ipphone",null,false);
 
     foreach ($result as $row) {
-		if ($row['active'] == "YES") {       
-			$row['pjsipuser'] = preg_replace ( '/\$ext/', $row['pkey'], $row['pjsipuser']);
-			$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
-			$row['pjsipuser'] = preg_replace ( '/\$password/', $row['passwd'], $row['pjsipuser']);
 
-			$transportWork = "udp";
-			switch ($row['transport']) {
-				case "udp":
-					if ($row['location'] == 'remote') {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-udp-nat', $row['pjsipuser']);
-					}
-					else {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-udp', $row['pjsipuser']);
-					}
-					break;
-
-				case "tcp":
-					if ($row['location'] == 'remote') {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tcp-nat', $row['pjsipuser']);
-					}
-					else {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tcp', $row['pjsipuser']);
-					}
-					break;
-
-				case "tls":
-					if ($row['location'] == 'remote') {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tls-nat', $row['pjsipuser']);
-					}
-					else {
-						$row['pjsipuser'] = preg_replace ( '/\$transport/', 'transport-tls', $row['pjsipuser']);
-					}
-					break;
-				break;
-			}
-/*
- *		ToDo - deal with encryption 
- */
-
-
-//
-//	Backport V7 named pickup usung tenant name as the target
-//	
-			$row['pjsipuser'] = preg_replace ( '/\$clst/', $row['cluster'], $row['pjsipuser']);
-
-			$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
-//
-//	add the row to the output
-//						
-			$OUT .= $row['pjsipuser'] . "\n\n";
-		} 
-		
+		if ($row['active'] != "YES") { 
+			continue;
+		}      
+			
+		$row['pjsipuser'] = preg_replace ( '/\$ext/', $row['pkey'], $row['pjsipuser']);
+		$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
+		$row['pjsipuser'] = preg_replace ( '/\$password/', $row['passwd'], $row['pjsipuser']);
+		$row['pjsipuser'] = preg_replace ( '/\$transport/', $row['transport'], $row['pjsipuser']);
+		$row['pjsipuser'] = preg_replace ( '/\$clst/', $row['cluster'], $row['pjsipuser']);
+		$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);					
+		$OUT .= $row['pjsipuser'] . "\n";		
 	}
 
 	$fh = fopen("/etc/asterisk/sark_pjsip_phones.conf", 'w') or die('Could not open file!');
@@ -494,10 +452,13 @@ private function genPjsip() {
 	fclose($fh);
 
 	$OUT = NULL;
+}
+
 //
-//  SIP peers (Lines)
+//  SIP peers (Trunks)
 //
-//
+
+private function genPjsipTrunks() {
 	
 	$lineio = $this->helper->getTable("lineio",null,false);
 	$pjsipReadyTrunks = NULL;
@@ -508,30 +469,31 @@ private function genPjsip() {
 	    		continue;
 	    }
 
-	    if ($row['active'] == "NO") {
-	    		continue;
-	    }	                
+		if ($row['active'] != "YES") { 
+			continue;
+		} 	                
 
 
 		$pjsipTrunkBuff = $this->helper->getPjsipTrunkInstance($row['pkey']);
 
-		if ($pjsipTrunkBuff)
+		if ($pjsipTrunkBuff) {
 
-		$pjsipTrunkBuff = preg_replace ( '/\$trunk/',$row['pkey'], $pjsipTrunkBuff );
-		$pjsipTrunkBuff = preg_replace ( '/\$transport/',$row['transport'], $pjsipTrunkBuff );
-		$pjsipTrunkBuff = preg_replace ( '/\$host/',$row['host'], $pjsipTrunkBuff );
-		$pjsipTrunkBuff = preg_replace ( '/\$pkey/',$row['pkey'], $pjsipTrunkBuff );
-		$pjsipTrunkBuff = preg_replace ( '/\$username/',$row['pkey'], $pjsipTrunkBuff );
-		$pjsipTrunkBuff = preg_replace ( '/\$password/',$row['password'], $pjsipTrunkBuff );
+			$pjsipTrunkBuff = preg_replace ( '/\$trunk/',$row['pkey'], $pjsipTrunkBuff );
+			$pjsipTrunkBuff = preg_replace ( '/\$transport/',$row['transport'], $pjsipTrunkBuff );
+			$pjsipTrunkBuff = preg_replace ( '/\$host/',$row['host'], $pjsipTrunkBuff );
+			$pjsipTrunkBuff = preg_replace ( '/\$pkey/',$row['pkey'], $pjsipTrunkBuff );
+			$pjsipTrunkBuff = preg_replace ( '/\$username/',$row['pkey'], $pjsipTrunkBuff );
+			$pjsipTrunkBuff = preg_replace ( '/\$password/',$row['password'], $pjsipTrunkBuff );
 
-		if ($row['privileged'] == "NO") {
-			$pjsipTrunkBuff = preg_replace ( '/\$context/','mainmenu', $pjsipTrunkBuff );	
+			if ($row['privileged'] == "NO") {
+				$pjsipTrunkBuff = preg_replace ( '/\$context/','mainmenu', $pjsipTrunkBuff );	
+			}
+			else {
+				$pjsipTrunkBuff = preg_replace ( '/\$context/','internal', $pjsipTrunkBuff );
+			}
+			$pjsipReadyTrunks .= $pjsipTrunkBuff . "\n";
+			$pjsipTrunkBuff = NULL;
 		}
-		else {
-			$pjsipTrunkBuff = preg_replace ( '/\$context/','internal', $pjsipTrunkBuff );
-		}
-		$pjsipReadyTrunks .= $pjsipTrunkBuff . "\n";
-		$pjsipTrunkBuff = NULL;
 	}
 
 /**
@@ -539,21 +501,17 @@ private function genPjsip() {
  * write to the ready_trunks file
  * 
  */
-		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_READY_TRUNKS;
-		if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
+	$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_READY_TRUNKS;
+	if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
 			$rc = $this->helper->request_syscmd ("/bin/echo '######' > $targetFile >/dev/null 2>&1");		
 			$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
 			$rc = $this->helper->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
-		}
-		if ($pjsipReadyTrunks) {
+	}
+	if ($pjsipReadyTrunks) {
 			$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
 			fwrite($fh,$pjsipReadyTrunks) or die("Could not write to file $targetFile !");
 			fclose($fh);
-		}
 	}
-
-
-//	`/bin/cat /etc/asterisk/sark_pjsip_wizard_template.conf /etc/asterisk/sark_pjsip_trunks.conf /etc/asterisk/sark_pjsip_phones.conf > /etc/asterisk/sark_pjsip_wizard.conf`;
 
 }
 
