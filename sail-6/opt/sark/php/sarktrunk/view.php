@@ -367,7 +367,7 @@ private function saveSIPreg(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];
 		$tuple['pjsipreg'] 		= 'SND';	
 
-		$this->createPjsipTrunkInstance($tuple);
+		$this->helper->createPjsipTrunkInstance($tuple);
 		
 /**
  * for chan_sip
@@ -404,7 +404,7 @@ private function saveSIPdynamic(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];					
 		$tuple['pjsipreg'] 		= 'RCV';
 
-		$this->createPjsipTrunkInstance($tuple);
+		$this->helper->createPjsipTrunkInstance($tuple);
 /**
  * for chan_sip
  */									
@@ -438,7 +438,7 @@ private function saveSIPsimple(&$tuple) {
 		$tuple['desc'] 			= $tuple['trunkname'];
 		$tuple['pjsipreg'] 		= 'NONE';
 
-		$this->createPjsipTrunkInstance($tuple);						
+		$this->helper->createPjsipTrunkInstance($tuple);						
 /**
  * for chan_sip
  */									
