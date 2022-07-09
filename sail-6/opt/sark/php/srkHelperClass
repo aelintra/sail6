@@ -32,8 +32,6 @@ function __construct(){
 }
 
 
-
-
 public $navRowDisplayMsg;
 
 /**
@@ -540,7 +538,7 @@ public function deletePjsipTrunkInstance($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
 	if (file_exists($targetFile)) {
-		return $this->request_syscmd ("/bin/rm $$targetFile >/dev/null 2>&1");
+		return $this->request_syscmd ("/bin/rm $targetFile >/dev/null 2>&1");
 	}
 	return False;	
 } 
