@@ -24,6 +24,15 @@
  
 Class helper {
 
+function __construct(){
+
+	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/config.php";
+
+
+}
+
+
+
 
 public $navRowDisplayMsg;
 
