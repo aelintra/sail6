@@ -52,6 +52,10 @@ public function get_peer_array($iax=false) {
      */
 public function get_pjsip_array($endpoints) {
 
+	if (empty($endpoints) {
+		$this->helper->logit("bad call to " . __FUNCTION__)
+		return false;
+	}
 
 	if ( ! $this->amiHelperLogin()) {
 		return false;
@@ -61,6 +65,10 @@ public function get_pjsip_array($endpoints) {
 	$sip_work = array();
 
 	foreach ($endpoints as $extrow) {
+		if (empty($extrow['pkey'])) {
+			$this->helper->logit(json_encode($extrow));
+			continue;
+		}
 		if ($extrow['active'] == 'NO') {
 			continue;
 		}

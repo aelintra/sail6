@@ -56,7 +56,7 @@ public function genAsterisk() {
     $this->genPjsipTransport();
     $this->genPjsipPhones();
     $this->genPjsipTrunks();
-    $this->genPjsipWizard()
+    $this->genPjsipWizard();
     $this->genConferences();
     $this->genQueues();
     $this->genFeatures();
@@ -538,9 +538,9 @@ private function genPjsipWizard() {
 	$phoneTmpl = PJSIP . PJSIP_PHONE;
 	$phones =  PJSIP . PJSIP_READY_PHONES;
 
- 	$this->helper->request_syscmd ("/bin/cat $OUT >> " . PJSIP . PJSIP_WIZARD;
-	$this->helper->request_syscmd ("/bin/cat $phoneTmpl >> " . PJSIP . PJSIP_WIZARD;
-	$this->helper->request_syscmd ("/bin/cat $phones >> " . PJSIP . PJSIP_WIZARD;
+ 	$this->helper->request_syscmd ("/bin/cat $OUT >> " . PJSIP . PJSIP_WIZARD);
+	$this->helper->request_syscmd ("/bin/cat $phoneTmpl >> " . PJSIP . PJSIP_WIZARD);
+	$this->helper->request_syscmd ("/bin/cat $phones >> " . PJSIP . PJSIP_WIZARD);
 }
 
 private function genConferences() {
