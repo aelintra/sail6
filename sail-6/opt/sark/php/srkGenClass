@@ -538,9 +538,9 @@ private function genPjsipWizard() {
 	$phoneTmpl = PJSIP . PJSIP_PHONE;
 	$phones =  PJSIP . PJSIP_READY_PHONES;
 
- 	$this->helper->request_syscmd ("/bin/cat $OUT >> " . PJSIP . PJSIP_WIZARD);
-	$this->helper->request_syscmd ("/bin/cat $phoneTmpl >> " . PJSIP . PJSIP_WIZARD);
-	$this->helper->request_syscmd ("/bin/cat $phones >> " . PJSIP . PJSIP_WIZARD);
+// 	$this->helper->request_syscmd ("/bin/cat $OUT >> " . PJSIP . PJSIP_WIZARD);
+	$this->helper->request_syscmd ("/bin/echo $phoneTmpl > " . PJSIP . PJSIP_WIZARD);
+	$this->helper->request_syscmd ("/bin/echo $phones >> " . PJSIP . PJSIP_WIZARD);
 }
 
 private function genConferences() {
