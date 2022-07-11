@@ -438,7 +438,7 @@ private function genPjsipPhones() {
 //
 
 	$OUT = NULL;
- 
+ 	$pjsipPhoneBuff = NULL;
 	$phones = $this->helper->getTable("ipphone",null,false);
 
     foreach ($phones as $row) {
@@ -461,7 +461,8 @@ private function genPjsipPhones() {
 		$pjsipPhoneBuff = preg_replace ( '/\$clst/', $row['cluster'], $pjsipPhoneBuff);
 */
 					
-		$OUT .= $pjsipPhoneBuff . "\n";		
+		$OUT .= $pjsipPhoneBuff . "\n";
+		$pjsipPhoneBuff = NULL;		
 	}
 
 	$targetFile = PJSIP . PJSIP_READY_PHONES;
@@ -575,7 +576,7 @@ private function genPjsipWizard() {
 private function xlatePjsipBuff(&$buffer,$row) {
 
 	$symbols = array(
-		'$pkey' => 'pkey'
+		'$pkey' => 'pkey',
 		'$trunk' => 'pkey',	
 		'$ext' => 'pkey',
 		'$username' => 'pkey',
@@ -586,9 +587,8 @@ private function xlatePjsipBuff(&$buffer,$row) {
 
 	foreach ($symbols as $symbol => $columnName)  {
 
-		if (!empty) {
-			$row[$columnName];
-			if (preg_match('/' . $symbol . '/',$row[$columnName], $buffer)) { 
+		if (!empty($row[$columnName])) {
+			if (preg_match('/' . $symbol . '/', $buffer)) { 
 				$buffer = preg_replace ( '/' . $symbol . '/',$row[$columnName], $buffer );
 			}
 		}		
@@ -606,9 +606,9 @@ private function xlatePjsipBuff(&$buffer,$row) {
 	$buffer = preg_replace ( '/\$pkey/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$username/',$row['pkey'], $buffer );
 */
-	
+
 /*
- * Accident of history but trunks and phones do not use the same column name
+ * Accident of history; trunks and phones do not use the same column name
  * for password (password and passwd)
  */
 	if (!empty($row['password'])) {
