@@ -591,6 +591,9 @@ private function xlatePjsipBuff(&$buffer,$row) {
 			if (preg_match('/' . $symbol . '/', $buffer)) { 
 				$buffer = preg_replace ( '/' . $symbol . '/',$row[$columnName], $buffer );
 			}
+		}
+		else {
+			$this->helper->logit("Column " . $row[$columnName] . "is empty",0);
 		}		
 	}
 
