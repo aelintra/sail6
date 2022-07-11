@@ -437,7 +437,7 @@ private function genPjsipPhones() {
 //  PJSIP extensions (phones)
 //
 
-	//$OUT = $this->genFileBanner();
+	$OUT = NULL;
  
 	$phones = $this->helper->getTable("ipphone",null,false);
 
@@ -518,7 +518,7 @@ private function genPjsipTrunks() {
 			}
 			$pjsipReadyTrunks .= $pjsipTrunkBuff . "\n";
 			$pjsipTrunkBuff = NULL;
-		}
+//		}
 	}
 
 /**
@@ -574,16 +574,49 @@ private function genPjsipWizard() {
  */
 private function xlatePjsipBuff(&$buffer,$row) {
 
+	$symbols = array(
+		'$pkey' => 'pkey'
+		'$trunk' => 'pkey',	
+		'$ext' => 'pkey',
+		'$username' => 'pkey',
+		'$host' => 'host',
+		'$transport' => 'transport',
+		'$clst' => 'cluster'
+	);
+
+	foreach ($symbols as $symbol => $columnName)  {
+
+		if (!empty) {
+			$row[$columnName];
+			if (preg_match('/' . $symbol . '/',$row[$columnName], $buffer)) { 
+				$buffer = preg_replace ( '/' . $symbol . '/',$row[$columnName], $buffer );
+			}
+		}		
+	}
+
+/*
 	$buffer = preg_replace ( '/\$trunk/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$ext/', $row['pkey'], $buffer);
 	$buffer = preg_replace ( '/\$clst/', $row['cluster'], $buffer);
 	$buffer = preg_replace ( '/\$desc/', $row['desc'], $buffer);
 	$buffer = preg_replace ( '/\$transport/',$row['transport'], $buffer );
-	$buffer = preg_replace ( '/\$host/',$row['host'], $buffer );
+	if (!empty($row['host'])) {
+		$buffer = preg_replace ( '/\$host/',$row['host'], $buffer );
+	}
 	$buffer = preg_replace ( '/\$pkey/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$username/',$row['pkey'], $buffer );
-	$buffer = preg_replace ( '/\$password/',$row['password'], $buffer );
-
+*/
+	
+/*
+ * Accident of history but trunks and phones do not use the same column name
+ * for password (password and passwd)
+ */
+	if (!empty($row['password'])) {
+		$buffer = preg_replace ( '/\$password/',$row['password'], $buffer );
+	}
+	else if (!empty($row['passwd'])) {
+		$buffer = preg_replace ( '/\$password/',$row['passwd'], $buffer );
+	}	
 	return True;			
 }
 
