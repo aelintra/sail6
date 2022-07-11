@@ -22,6 +22,11 @@
 //  
 require_once "/opt/sark/php/srkNetHelperClass";
 
+/**
+ *  Asterisk object generator
+ *  It reads the database and generates
+ *  the various Asterisk object and then calls a reload
+ */
 Class genAsteriskObjects {
 
 	private $helper;
@@ -373,7 +378,7 @@ private function genSip() {
 	 
 // write the generated include file 
 	$fh = fopen("/etc/asterisk/sark_sip_main.conf", 'w') or die('Could not open file!');
-	fwrite($fh,$OUT) or die('Could not write to file SIPpeerss');
+	fwrite($fh,$OUT) or die('Could not write to file SIPpeers');
 	fclose($fh); 
 
 	$fh = fopen("/etc/asterisk/sip.conf", 'w') or die('Could not open file!');
@@ -528,6 +533,13 @@ private function genPjsipTrunks() {
 
 }
 
+/**
+ * genPjsipWizard
+ * Here we simpky cat the extension template wizardfile and the generated 
+ * phones (extensions) into the pjsip wizard 
+ * 
+ * @return NULL
+ */
 private function genPjsipWizard() {
 
 //
@@ -535,16 +547,13 @@ private function genPjsipWizard() {
 //
 
 	$OUT = $this->genFileBanner();
-	$phoneTmpl = PJSIP . PJSIP_PHONE;
+	$phoneTmpl = PJSIP . PJSIP_PHONE_TEMPLATE;
 	$phones =  PJSIP . PJSIP_READY_PHONES;
 
-// 	$this->helper->request_syscmd ("/bin/cat $OUT >> " . PJSIP . PJSIP_WIZARD);
-	$this->helper->request_syscmd ("/bin/echo $phoneTmpl > " . PJSIP . PJSIP_WIZARD);
-	$this->helper->request_syscmd ("/bin/echo $phones >> " . PJSIP . PJSIP_WIZARD);
+	$this->helper->request_syscmd ("/bin/cat $phoneTmpl $phones  > " . PJSIP . PJSIP_WIZARD);
 }
 
 private function genConferences() {
-
 //
 //  generate the meetme conferences.  Later ConfBridge needs no gen
 //

@@ -685,17 +685,6 @@ nat=\$nat
 transport=\$transport
 encryption=\$encryption";
 
-	$tuple['pjsipuser'] =
-	"[\$ext](phone)
-hint_exten = \$ext
-endpoint/callerid = \"\$desc\" <\$ext>
-endpoint/namedcallgroup=\$clst
-endpoint/namedpickupgroup=\$clst
-transport = transport-\$transport
-inbound_auth/username = \$ext
-inbound_auth/password = \$password
-mailboxes = \$ext@\$clst";
-
 
 	if ($resdevice['technology'] == 'SIP') {
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {
@@ -718,18 +707,6 @@ mailboxes = \$ext@\$clst";
 	$tuple['technology'] = $resdevice['technology'];			
 	$tuple['passwd'] = $this->helper->ret_password ($this->passwordLength);
 	$tuple['dvrvmail'] = $tuple['pkey'];
-			
-// ToDo permit ipv6 acl
-/*
-	if ($tuple['acl'] == 'YES' && $tuple['location'] == 'local') {
-		if ( !preg_match(' /deny=/ ',$tuple['sipiaxfriend'])) {
-			$tuple['sipiaxfriend'] .= "\ndeny=0.0.0.0/0.0.0.0";
-		}
-		if ( !preg_match(' /permit=/ ',$tuple['sipiaxfriend'])) {
-			$tuple['sipiaxfriend'] .= "\npermit=" . $this->netHelper->get_networkIPV4() . '/' . $this->netHelper->get_networkCIDR();
-		}			
-	}
-*/
 	$tuple['sipiaxfriend'] = trim($tuple['sipiaxfriend']);
 
 /*
@@ -741,8 +718,10 @@ mailboxes = \$ext@\$clst";
  *	Add the row
  */
 	$ret = $this->helper->createTuple("ipphone",$tuple);
+
 	if ($ret == 'OK') {
 		$this->createCos(); 
+		$this->helper->createPjsipPhoneInstance($tuple);
 		$this->message = "Saved new extension(s) ";
 	}
 	else {
@@ -868,6 +847,7 @@ private function deleteLastBlf() {
 
 private function deleteRow() {
 	$pkey = $_REQUEST['pkey'];
+	$this->helper->deletePjsipPhoneInstance($pkey);
 	$this->helper->delTuple("ipphone",$pkey); 
 /* delete COS information */
 	$this->helper->predDelTuple("IPphoneCOSopen","IPphone_pkey",$pkey);
@@ -1190,9 +1170,12 @@ private function showEdit() {
 
 		echo '<div class="w3-margin-bottom">';
 		$this->myPanel->aLabelFor("pjsipuser");
-		echo '</div>';		
+		echo '</div>';
+
+		$fileData = $this->helper->getPjsipPhoneInstance($extension['pkey']);
+
 		echo '<div id="pjsip" >';
-		$this->myPanel->displayFile(htmlspecialchars($extension['pjsipuser']),"pjsipuser");
+		$this->myPanel->displayFile(htmlspecialchars($fileData,"pjsipuser");
 		echo '</div>' . PHP_EOL;	
 
 		if ( $_SESSION['user']['pkey'] != 'admin' ) {
@@ -1366,8 +1349,12 @@ private function saveEdit() {
 				// set the mailbox to the new extension
 				$tuple['dvrvmail'] = $newkey;
 				$this->chkMailbox($tuple['dvrvmail'],$tuple['sipiaxfriend']);
+
+				$this->helper->movePjsipPhoneInstance($extension['pkey'],$newkey);
+				$this->helper->setTuple("ipphone",$tuple,$newkey);
 				
 				$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
+
 				if ($ret == 'OK') {
 					$this->message = "Updated extension " . $tuple['pkey'];
 					// move any mail
@@ -1524,31 +1511,10 @@ private function adjustAstProvSettings(&$tuple) {
 					}
 					break;		
 */
-/*					
-				case 'Vtec':					
-					switch ($tuple['transport']) {						
-						case 'tcp':
-							$tuple['provision'] .= "\n#INCLUDE vtech.tcp";
-							break;
-						case 'tls':
-							$tuple['provision'] .= "\n#INCLUDE vtech.tls";
-							break;	
-						default: 
-							$tuple['provision'] .= "\n#INCLUDE vtech.udp";
-					}
-					switch ($tuple['protocol']) {
-						case 'IPV6':
-							$tuple['provision'] .= "\n#INCLUDE vtech.ipv6";
-							break;
-						default:
-							$tuple['provision'] .= "\n#INCLUDE vtech.ipv4";
-					}
-*/			
+		
 			}
 
 		}
-
-
 }
 
 private function doCOS($cosSetArray) {
@@ -1879,7 +1845,15 @@ private function printEditNotes ($pkey,$extension) {
 
     echo 'Transport: <strong>' . $extension['transport'] . '</strong><br/>' . PHP_EOL;
 
-/* ToDo   
+/* ToDo 
+ * Firstseen/lastseen updates cause database locks.  Solution is perhaps to use a separate copy of the 
+ * db just for the provisioning server to use.  We can spin it at the same time as we create the runtime 
+ * copy. Alternatively, we can keep firstseen/lastseen completely separately, perhapa in a couple of MAC files:-
+ * e.g. 
+ * 		MACFILES/
+ * 			{mac}/first - EPOCH
+ *      	(mac}/last  - EPOCH
+ *
     if (isset($extension['firstseen'])) {
     	$epoch = $extension['firstseen'];
     	$dt = new DateTime("@$epoch");
@@ -1962,54 +1936,6 @@ private function checkThisMacForDups($mac) {
 	return false;
 }
 
-
-    /**
-     * return an IP address if we can
-     * the peer table may have been built from either chan_sip or PJsip and they differ in their naming
-     * conventions so we just have to figure it out
-     *
-     * @return string
-     */
-/* 
-private function getIpAddressFromPeer($key) {
-
-		$display_ipaddr = 'N/A';		
-
-		if (isset ($this->sip_peers [$key]['IPaddress'])) {
-			$display_ipaddr = $this->sip_peers [$key]['IPaddress'];
-		}
-		else if (isset ($this->sip_peers [$key]['ViaAddress'])) {
-			$via_parts = explode(':',$this->sip_peers [$key]['ViaAddress']);
-			$display_ipaddr = $via_parts[0];
-		}				
-
-		return $display_ipaddr;
-
-}
-
-    /**
-     * Return the endpoint RTT (latency) as observed from the PBX
-     * the peer table may have been built from either chan_sip or PJsip and they differ in their naming
-     * conventions so we just have to figure it out
-     *
-     * @return string
-     */
-/*
-private function getLatencyFromPeer($key) {
-
-		$latency = 'N/A';
-
-		if (isset($this->sip_peers [$key]['Status'])) {
-			$latency = $this->sip_peers [$key]['Status'];	
-		}
-		if (isset($this->sip_peers [$key]['RoundtripUsec'])) {
-			$latency = round($this->sip_peers [$key]['RoundtripUsec']/1000) . "ms";	
-		} 
-
-		return $latency;
-
-}
-
     /**
      * Look up the vendor from the wireshark MAC/Vandor database
      *
@@ -2051,8 +1977,6 @@ private function getVendorFromMac($mac) {
 
 private function removeQuotes(&$string) {
 		$string = preg_replace ( "/\\\/", '', $string);
-
-// $tuple['sipiaxfriend'] = preg_replace ( "/\\\/", '', $tuple['sipiaxfriend']);
 
 }
 
