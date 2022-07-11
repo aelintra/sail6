@@ -52,6 +52,7 @@ public function get_peer_array($iax=false) {
      */
 public function get_pjsip_array($endpoints) {
 
+	$this->helper = new helper;
 	if (empty($endpoints)) {
 		$this->helper->logit("bad call to " . __FUNCTION__);
 		return false;
@@ -60,7 +61,7 @@ public function get_pjsip_array($endpoints) {
 	if ( ! $this->amiHelperLogin()) {
 		return false;
 	}
-	$this->helper = new helper;
+	
 	$sip_peers = array();
 	$sip_work = array();
 

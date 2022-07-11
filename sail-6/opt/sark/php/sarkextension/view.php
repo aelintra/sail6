@@ -1175,7 +1175,7 @@ private function showEdit() {
 		$fileData = $this->helper->getPjsipPhoneInstance($extension['pkey']);
 
 		echo '<div id="pjsip" >';
-		$this->myPanel->displayFile(htmlspecialchars($fileData,"pjsipuser");
+		$this->myPanel->displayFile(htmlspecialchars($fileData),"pjsipuser");
 		echo '</div>' . PHP_EOL;	
 
 		if ( $_SESSION['user']['pkey'] != 'admin' ) {
