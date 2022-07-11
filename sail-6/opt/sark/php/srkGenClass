@@ -495,7 +495,6 @@ private function genPjsipTrunks() {
 			continue;
 		} 	                
 
-
 		$pjsipTrunkBuff = $this->helper->getPjsipTrunkInstance($row['pkey']);
 		if ($pjsipTrunkBuff) {
 			$this->xlatePjsipBuff($pjsipTrunkBuff,$row);
@@ -575,6 +574,7 @@ private function genPjsipWizard() {
  */
 private function xlatePjsipBuff(&$buffer,$row) {
 
+/*
 	$symbols = array(
 		'$pkey' => 'pkey',
 		'$trunk' => 'pkey',	
@@ -584,31 +584,18 @@ private function xlatePjsipBuff(&$buffer,$row) {
 		'$transport' => 'transport',
 		'$clst' => 'cluster'
 	);
-
-	foreach ($symbols as $symbol => $columnName)  {
-
-		if (!empty($row[$columnName])) {
-			if (preg_match('/' . $symbol . '/', $buffer)) { 
-				$buffer = preg_replace ( '/' . $symbol . '/',$row[$columnName], $buffer );
-			}
-		}
-		else {
-			$this->helper->logit("Column " . $row[$columnName] . "is empty",0);
-		}		
-	}
-
-/*
+*/
+	$buffer = preg_replace ( '/\$pkey/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$trunk/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$ext/', $row['pkey'], $buffer);
+	$buffer = preg_replace ( '/\$username/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$clst/', $row['cluster'], $buffer);
 	$buffer = preg_replace ( '/\$desc/', $row['desc'], $buffer);
 	$buffer = preg_replace ( '/\$transport/',$row['transport'], $buffer );
 	if (!empty($row['host'])) {
 		$buffer = preg_replace ( '/\$host/',$row['host'], $buffer );
 	}
-	$buffer = preg_replace ( '/\$pkey/',$row['pkey'], $buffer );
-	$buffer = preg_replace ( '/\$username/',$row['pkey'], $buffer );
-*/
+	
 
 /*
  * Accident of history; trunks and phones do not use the same column name

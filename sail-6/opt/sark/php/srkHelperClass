@@ -534,20 +534,7 @@ public function setPjsipTrunkInstance($tuple) {
 	return false;
 } 
 
-/**
- * delete named pjsip template
- * @param  array $tuple Trunk row
- * @return RC  
- */
-public function movePjsipTrunkInstance($key,$newkey) {
 
-	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
-	$newFile = PJSIP . $newkey . '_' . PJSIP_TRUNK;
-	if (file_exists($targetFile)) {
-		return $this->request_syscmd ("/bin/mv $targetFile $newfile >/dev/null 2>&1");
-	}
-	return False;	
-} 
 
 /**
  * delete named pjsip template
@@ -614,6 +601,21 @@ public function setPjsipPhoneInstance($tuple) {
 		return 'OK';
 	}		
 	return false;
+} 
+
+/**
+ * move named pjsip object unstance
+ * @param  array $tuple Trunk row
+ * @return RC  
+ */
+public function movePjsipPhoneInstance($key,$newkey) {
+
+	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
+	$newFile = PJSIP . $newkey . '_' . PJSIP_PHONE;
+	if (file_exists($targetFile)) {
+		return $this->request_syscmd ("/bin/mv $targetFile $newfile >/dev/null 2>&1");
+	}
+	return False;	
 } 
 
 /**
