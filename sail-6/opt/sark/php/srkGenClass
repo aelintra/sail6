@@ -434,26 +434,34 @@ private function genPjsipTransport() {
 private function genPjsipPhones() {
 
 //
-//  SIP extensions (phones)
+//  PJSIP extensions (phones)
 //
 
-	$OUT = $this->genFileBanner();
+	//$OUT = $this->genFileBanner();
  
-	$result = $this->helper->getTable("ipphone",null,false);
+	$phones = $this->helper->getTable("ipphone",null,false);
 
-    foreach ($result as $row) {
+    foreach ($phones as $row) {
 
 		if ($row['active'] != "YES") { 
 			continue;
-		}      
-			
-		$row['pjsipuser'] = preg_replace ( '/\$ext/', $row['pkey'], $row['pjsipuser']);
-		$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);
-		$row['pjsipuser'] = preg_replace ( '/\$password/', $row['passwd'], $row['pjsipuser']);
-		$row['pjsipuser'] = preg_replace ( '/\$transport/', $row['transport'], $row['pjsipuser']);
-		$row['pjsipuser'] = preg_replace ( '/\$clst/', $row['cluster'], $row['pjsipuser']);
-		$row['pjsipuser'] = preg_replace ( '/\$desc/', $row['desc'], $row['pjsipuser']);					
-		$OUT .= $row['pjsipuser'] . "\n";		
+		}  
+
+		$pjsipPhoneBuff = $this->helper->getPjsipPhoneInstance($row['pkey']); 
+
+		if ($pjsipPhoneBuff) {
+			$this->xlatePjsipBuff($pjsipPhoneBuff,$row);
+		}   
+/*			
+		$pjsipPhoneBuff = preg_replace ( '/\$ext/', $row['pkey'], $pjsipPhoneBuff);
+		$pjsipPhoneBuff = preg_replace ( '/\$desc/', $row['desc'], $pjsipPhoneBuff);
+		$pjsipPhoneBuff = preg_replace ( '/\$username/', $row['pkey'], $pjsipPhoneBuff);
+		$pjsipPhoneBuff = preg_replace ( '/\$password/', $row['passwd'], $pjsipPhoneBuff);
+		$pjsipPhoneBuff = preg_replace ( '/\$transport/', $row['transport'], $pjsipPhoneBuff);
+		$pjsipPhoneBuff = preg_replace ( '/\$clst/', $row['cluster'], $pjsipPhoneBuff);
+*/
+					
+		$OUT .= $pjsipPhoneBuff . "\n";		
 	}
 
 	$targetFile = PJSIP . PJSIP_READY_PHONES;
@@ -466,7 +474,7 @@ private function genPjsipPhones() {
 }
 
 //
-//  SIP peers (Trunks)
+//  PJSIP peers (Trunks)
 //
 
 private function genPjsipTrunks() {
@@ -488,7 +496,11 @@ private function genPjsipTrunks() {
 
 
 		$pjsipTrunkBuff = $this->helper->getPjsipTrunkInstance($row['pkey']);
-
+		if ($pjsipTrunkBuff) {
+			$this->xlatePjsipBuff($pjsipTrunkBuff,$row);
+		}
+		
+/*
 		if ($pjsipTrunkBuff) {
 
 			$pjsipTrunkBuff = preg_replace ( '/\$trunk/',$row['pkey'], $pjsipTrunkBuff );
@@ -497,7 +509,7 @@ private function genPjsipTrunks() {
 			$pjsipTrunkBuff = preg_replace ( '/\$pkey/',$row['pkey'], $pjsipTrunkBuff );
 			$pjsipTrunkBuff = preg_replace ( '/\$username/',$row['pkey'], $pjsipTrunkBuff );
 			$pjsipTrunkBuff = preg_replace ( '/\$password/',$row['password'], $pjsipTrunkBuff );
-
+*/
 			if ($row['privileged'] == "NO") {
 				$pjsipTrunkBuff = preg_replace ( '/\$context/','mainmenu', $pjsipTrunkBuff );	
 			}
@@ -551,6 +563,28 @@ private function genPjsipWizard() {
 	$phones =  PJSIP . PJSIP_READY_PHONES;
 
 	$this->helper->request_syscmd ("/bin/cat $phoneTmpl $phones  > " . PJSIP . PJSIP_WIZARD);
+}
+
+/**
+ * xlatePjsipBuff  - substitute the symbolic values in the template with real 
+ * ones from the tuple
+ * @param  string &$buffer The template to be transformed
+ * @param  Array $row     The DB tuple for the object
+ * @return Bool TRUE  
+ */
+private function xlatePjsipBuff(&$buffer,$row) {
+
+	$buffer = preg_replace ( '/\$trunk/',$row['pkey'], $buffer );
+	$buffer = preg_replace ( '/\$ext/', $row['pkey'], $buffer);
+	$buffer = preg_replace ( '/\$clst/', $row['cluster'], $buffer);
+	$buffer = preg_replace ( '/\$desc/', $row['desc'], $buffer);
+	$buffer = preg_replace ( '/\$transport/',$row['transport'], $buffer );
+	$buffer = preg_replace ( '/\$host/',$row['host'], $buffer );
+	$buffer = preg_replace ( '/\$pkey/',$row['pkey'], $buffer );
+	$buffer = preg_replace ( '/\$username/',$row['pkey'], $buffer );
+	$buffer = preg_replace ( '/\$password/',$row['password'], $buffer );
+
+	return True;			
 }
 
 private function genConferences() {
