@@ -1209,13 +1209,14 @@ private function showEdit() {
 		}
 	}
 
-
-    echo '<div id="provExpand" style="display:none">';
-    $this->myPanel->displayFile(htmlspecialchars($expand_prov),"provisioning",true);
-    echo '<div class="w3-container w3-padding w3-margin-top">' . PHP_EOL;
-	echo '<span onclick="document.getElementById(\'provExpand\').style.display=\'none\'" class="w3-blue w3-small w3-round-xxlarge w3-padding w3-right">Close</spann>';
-	echo '</div>' . PHP_EOL;
-  	echo '</div>';
+	if ( ! empty($expand_prov)) {
+    	echo '<div id="provExpand" style="display:none">';
+    	$this->myPanel->displayFile(htmlspecialchars($expand_prov),"provisioning",true);
+    	echo '<div class="w3-container w3-padding w3-margin-top">' . PHP_EOL;
+		echo '<span onclick="document.getElementById(\'provExpand\').style.display=\'none\'" class="w3-blue w3-small w3-round-xxlarge w3-padding w3-right">Close</spann>';
+		echo '</div>' . PHP_EOL;
+  		echo '</div>';
+  	}
 
   	if (isset($extension['macaddr'])) {
   		echo '<input type="hidden" id="macaddr" name="macaddr" value="' . $extension['macaddr'] . '" />' . PHP_EOL;	
