@@ -467,6 +467,13 @@ private function genPjsipPhones() {
 
 	$targetFile = PJSIP . PJSIP_READY_PHONES;
 
+/*
+ *	If $OUT is empty, put a single comment in it
+ */
+	if (empty($OUT)) {
+		$OUT = ";";
+	}
+
 	$fh = fopen($targetFile, 'w') or die('Could not open file!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_ready_phones.conf');
 	fclose($fh);
@@ -566,37 +573,27 @@ private function genPjsipWizard() {
 }
 
 /**
- * xlatePjsipBuff  - substitute the symbolic values in the template with real 
+ * xlatePjsipBuff  - substitute the symbolic values in the template buffer with real 
  * ones from the tuple
  * @param  string &$buffer The template to be transformed
  * @param  Array $row     The DB tuple for the object
- * @return Bool TRUE  
+ * @return Bool   
  */
 private function xlatePjsipBuff(&$buffer,$row) {
 
-/*
-	$symbols = array(
-		'$pkey' => 'pkey',
-		'$trunk' => 'pkey',	
-		'$ext' => 'pkey',
-		'$username' => 'pkey',
-		'$host' => 'host',
-		'$transport' => 'transport',
-		'$clst' => 'cluster'
-	);
-*/
 	$buffer = preg_replace ( '/\$pkey/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$trunk/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$ext/', $row['pkey'], $buffer);
 	$buffer = preg_replace ( '/\$username/',$row['pkey'], $buffer );
 	$buffer = preg_replace ( '/\$clst/', $row['cluster'], $buffer);
-	$buffer = preg_replace ( '/\$desc/', $row['desc'], $buffer);
 	$buffer = preg_replace ( '/\$transport/',$row['transport'], $buffer );
+
+	if (!empty($row['desc'])) {
+		$buffer = preg_replace ( '/\$desc/', $row['desc'], $buffer);
+	}
 	if (!empty($row['host'])) {
 		$buffer = preg_replace ( '/\$host/',$row['host'], $buffer );
 	}
-	
-
 /*
  * Accident of history; trunks and phones do not use the same column name
  * for password (password and passwd)
