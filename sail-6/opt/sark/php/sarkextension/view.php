@@ -721,7 +721,7 @@ encryption=\$encryption";
 
 	if ($ret == 'OK') {
 		$this->createCos(); 
-		$this->helper->createPjsipPhoneInstance($tuple);
+		$this->helper->createPjsipPhoneInstance($tuple['pkey']);
 		$this->message = "Saved new extension(s) ";
 	}
 	else {
@@ -1349,10 +1349,7 @@ private function saveEdit() {
 				// set the mailbox to the new extension
 				$tuple['dvrvmail'] = $newkey;
 				$this->chkMailbox($tuple['dvrvmail'],$tuple['sipiaxfriend']);
-
-				$this->helper->movePjsipPhoneInstance($extension['pkey'],$newkey);
-				$this->helper->setTuple("ipphone",$tuple,$newkey);
-				
+				$this->helper->movePjsipPhoneInstance($tuple['pkey'],$newkey);				
 				$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
 
 				if ($ret == 'OK') {
@@ -1379,7 +1376,9 @@ private function saveEdit() {
 		else {
 			$this->chkMailbox($tuple['dvrvmail'],$tuple['sipiaxfriend']);		
 			$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
+
 			if ($ret == 'OK') {
+				$this->helper->setPjsipPhoneInstance($tuple['pkey'],$_POST['pjsippeer']);
 				$this->message = "Updated extension " . $tuple['pkey'];
 			}
 			else {

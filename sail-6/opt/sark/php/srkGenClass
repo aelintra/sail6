@@ -452,14 +452,6 @@ private function genPjsipPhones() {
 		if ($pjsipPhoneBuff) {
 			$this->xlatePjsipBuff($pjsipPhoneBuff,$row);
 		}   
-/*			
-		$pjsipPhoneBuff = preg_replace ( '/\$ext/', $row['pkey'], $pjsipPhoneBuff);
-		$pjsipPhoneBuff = preg_replace ( '/\$desc/', $row['desc'], $pjsipPhoneBuff);
-		$pjsipPhoneBuff = preg_replace ( '/\$username/', $row['pkey'], $pjsipPhoneBuff);
-		$pjsipPhoneBuff = preg_replace ( '/\$password/', $row['passwd'], $pjsipPhoneBuff);
-		$pjsipPhoneBuff = preg_replace ( '/\$transport/', $row['transport'], $pjsipPhoneBuff);
-		$pjsipPhoneBuff = preg_replace ( '/\$clst/', $row['cluster'], $pjsipPhoneBuff);
-*/
 					
 		$OUT .= $pjsipPhoneBuff . "\n";
 		$pjsipPhoneBuff = NULL;		
@@ -507,16 +499,7 @@ private function genPjsipTrunks() {
 			$this->xlatePjsipBuff($pjsipTrunkBuff,$row);
 		}
 		
-/*
-		if ($pjsipTrunkBuff) {
 
-			$pjsipTrunkBuff = preg_replace ( '/\$trunk/',$row['pkey'], $pjsipTrunkBuff );
-			$pjsipTrunkBuff = preg_replace ( '/\$transport/',$row['transport'], $pjsipTrunkBuff );
-			$pjsipTrunkBuff = preg_replace ( '/\$host/',$row['host'], $pjsipTrunkBuff );
-			$pjsipTrunkBuff = preg_replace ( '/\$pkey/',$row['pkey'], $pjsipTrunkBuff );
-			$pjsipTrunkBuff = preg_replace ( '/\$username/',$row['pkey'], $pjsipTrunkBuff );
-			$pjsipTrunkBuff = preg_replace ( '/\$password/',$row['password'], $pjsipTrunkBuff );
-*/
 			if ($row['privileged'] == "NO") {
 				$pjsipTrunkBuff = preg_replace ( '/\$context/','mainmenu', $pjsipTrunkBuff );	
 			}
@@ -525,7 +508,6 @@ private function genPjsipTrunks() {
 			}
 			$pjsipReadyTrunks .= $pjsipTrunkBuff . "\n";
 			$pjsipTrunkBuff = NULL;
-//		}
 	}
 
 /**

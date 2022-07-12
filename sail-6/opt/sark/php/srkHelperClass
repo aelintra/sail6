@@ -556,10 +556,10 @@ public function deletePjsipTrunkInstance($key) {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-public function createPjsipPhoneInstance($tuple) {
+public function createPjsipPhoneInstance($key) {
 
 	$templateFile = PJSIP . PJSIP_PHONE_INSTANCE_TEMPLATE;
-	$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_PHONE;
+	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
 
 	if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
 		$rc = $this->request_syscmd ("/bin/cp $templateFile $targetFile >/dev/null 2>&1");		
@@ -590,17 +590,17 @@ public function getPjsipPhoneInstance($key) {
  * @param  array $tuple ipphone row
  * @return bool  
  */
-public function setPjsipPhoneInstance($tuple) {
+public function setPjsipPhoneInstance($key,$data) {
 
-	$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_PHONE;
-	if (!empty($tuple['pjsippeer'])) {		
-		$this->createPjsipPhoneInstance($tuple);
-		$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
-		fwrite($fh,$_POST['pjsippeer']) or die("Could not write to file $targetFile !");
-		fclose($fh);
-		return 'OK';
-	}		
-	return false;
+	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
+	if (empty($data) {		
+		$this->createPjsipPhoneInstance($key);
+	}
+		
+	$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
+	fwrite($fh,$data) or die("Could not write to file $targetFile !");
+	fclose($fh);
+	return 'OK';		
 } 
 
 /**
@@ -931,7 +931,8 @@ public function buildTupleArray($post,&$tuple,$custom=false,$stripslash=array())
 		"oldpkey" => True,
 		"latency" => True,
 		"regthistrunk" => True,
-		"tabselect" => True
+		"tabselect" => True,
+		"pjsipuser" => True
 	);
 	$dont_strip_tags = array(
 		"provision" => True,
