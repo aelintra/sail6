@@ -509,7 +509,6 @@ public function createPjsipTrunkInstance($tuple) {
 public function getPjsipTrunkInstance($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
-
 	if (file_exists($targetFile)) {
 		return file_get_contents($targetFile);
 	}
@@ -521,17 +520,16 @@ public function getPjsipTrunkInstance($key) {
  * @param  array $tuple Trunk row
  * @return bool  
  */
-public function setPjsipTrunkInstance($tuple) {
+public function setPjsipTrunkInstance($key,$data) {
 
-	$targetFile = PJSIP . $tuple['pkey'] . '_' . PJSIP_TRUNK;
-	if (!empty($tuple['pjsippeer'])) {		
-		$this->createPjsipTrunkInstance($tuple);
-		$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
-		fwrite($fh,$_POST['pjsippeer']) or die("Could not write to file $targetFile !");
-		fclose($fh);
-		return 'OK';
+	$targetFile = PJSIP . $key . '_' . PJSIP_TRUNK;
+	if (empty($data)) {		
+		$this->createPjsipPTrunkInstance($key);
 	}		
-	return false;
+	$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
+	fwrite($fh,$data) or die("Could not write to file $targetFile !");
+	fclose($fh);
+	return True;	
 } 
 
 
@@ -560,7 +558,6 @@ public function createPjsipPhoneInstance($key) {
 
 	$templateFile = PJSIP . PJSIP_PHONE_INSTANCE_TEMPLATE;
 	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
-
 	if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
 		$rc = $this->request_syscmd ("/bin/cp $templateFile $targetFile >/dev/null 2>&1");		
 		$rc = $this->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
@@ -578,7 +575,6 @@ public function createPjsipPhoneInstance($key) {
 public function getPjsipPhoneInstance($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
-
 	if (file_exists($targetFile)) {
 		return file_get_contents($targetFile);
 	}
@@ -593,14 +589,14 @@ public function getPjsipPhoneInstance($key) {
 public function setPjsipPhoneInstance($key,$data) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
-	if (empty($data) {		
+	if (empty($data)) {		
 		$this->createPjsipPhoneInstance($key);
 	}
 		
 	$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
 	fwrite($fh,$data) or die("Could not write to file $targetFile !");
 	fclose($fh);
-	return 'OK';		
+	return True;		
 } 
 
 /**

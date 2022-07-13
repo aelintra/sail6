@@ -1379,7 +1379,7 @@ private function saveEdit() {
 			$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
 
 			if ($ret == 'OK') {
-				$this->helper->setPjsipPhoneInstance($tuple['pkey'],$_POST['pjsippeer']);
+				$this->helper->setPjsipPhoneInstance($tuple['pkey'],$_POST['pjsipuser']);
 				$this->message = "Updated extension " . $tuple['pkey'];
 			}
 			else {

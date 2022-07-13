@@ -816,8 +816,6 @@ $OUT .= "static=yes \n";
 $OUT .= "writeprotect=yes \n";
 $OUT .= "[globals] \n";
 
-//$nethelper = new netHelper;	
-//$helper = new Helper;
 
 $OUT.="\tLOCALIP=" . $this->nethelper->get_localIPV4() ."\n";
 
@@ -992,50 +990,7 @@ try {
 			if ($linerow['active'] == "YES" && $linerow['match'] != "" ) {
 				$OUT .= "\texten => _" . $linerow['match'] . "X.,1,agi(sarkhpe,OutTrunk," . $linerow['pkey'] . ",,)\n";    	
 			}
-		}
-//
-//   Tidy up clusters
-//
-//	$OUT .= "\n\texten => t,1,Hangup\n";
-//    	$OUT .= "\texten => h,1,Hangup\n";
-//    	$OUT .= "\texten => i,1,Playtones(congestion)\n";
-//    	
-//    	
-
-/*   This section has been temporarily remove in V6 until we harmonise the extension allocation with V7
-
-		$sql = "SELECT * FROM Queue WHERE cluster='" . $row['pkey'] . "' ORDER BY id";
-		$qRes = $this->dbh->query($sql);
-		$queue = $qRes->fetchAll();
-		$qRes = NULL;			
-		foreach ($queue as $qrow) {
-				$qExten = 12200 + $qrow['id'];
-				$OUT .= "\texten => " . $qExten . ",1,Answer()\n";
-				$outstring =  "\texten => " . $qExten . ",n,Queue(";
-				$outstring .= $qrow['pkey'];
-				$outstring .= ',';
-				$outstring .= $qrow['options'];
-				$outstring .= ',,,,';
-				if ($qrow['devicerec'] != 'None') {
-					$outstring .= 'sarkhpe';
-				}
-				$outstring .= ")\n";
-				if ($qrow['greetnum'] != 'None') {
-					$OUT .= "\texten => " . $qExten . ",n,Playback(" . $qrow['greetnum'] . ")\n";
-				}
-				$OUT .= $outstring;    	
-		} 
-
-		$sql = "SELECT * FROM IVRmenu WHERE cluster='" . $row['pkey'] . "' ORDER BY id";
-		$qRes = $this->dbh->query($sql);
-		$ivr = $qRes->fetchAll();
-		$qRes = NULL;			
-		foreach ($ivr as $irow) {
-				$qExten = 11200 + $irow['id'];
-				$OUT .= "\texten => " . $qExten . ",1,Answer()\n"; 
-				$OUT .= "\texten => " . $qExten . ",n,agi(sarkhpe,IVR," . $irow['pkey'] . ")\n";    	
 		}	
-*/			   	   				
 	}
 
 
@@ -1157,9 +1112,7 @@ try {
     	$OUT .= "\texten => o,1,Playback(pls-hold-while-try)\n";
     	$OUT .= "\texten => o,2,GoTo(0,1)\n";
     	$OUT .= "\texten => t,1,Hangup\n";
-//    	$OUT .= "\texten => h,1,Hangup\n";
-//    	$OUT .= "\texten => i,1,Playtones(congestion)\n";
-//    	$OUT .= "\texten => i,2,Hangup\n";
+
 //
 //	Queues
 //
@@ -1173,13 +1126,6 @@ try {
 			$OUT .= "\texten => " . $IPphone['pkey'] . ",1,agi(sarkhpe,Dial," . $IPphone['pkey'] . ",queue,)\n";
 	  	}
     }
-//
-//	Clean up
-//
-//    	$OUT .= "\texten => t,1,Hangup\n";
-//    	$OUT .= "\texten => h,1,Hangup\n";
-//    	$OUT .= "\texten => i,1,Playtones(congestion)\n\n";
-
 
 //
 //  Class Of Service
@@ -1292,9 +1238,6 @@ try {
 	else {
 		$this->confBridge($OUT,$this->dbh);
 	}
-		
-
-	   	
 	   
 //
 //  begin mainmenu (inbound context) 
@@ -1389,9 +1332,6 @@ $OUT .= "\n[mainmenu]\n";
 	exten => t,2,Voicemail(\${SYSOP},su)
 	exten => t,3,Hangup
 	exten => t,4,Goto(extensions,\${SYSOP},1)
-;	exten => t,5,Hangup
-;	exten => h,1,Hangup
-;	exten => i,1,Goto(extensions,\${SYSOP},1)
 	
 [macro-clear]
         exten=>s,1,System(/bin/touch /opt/sark/var/spool/asterisk/monitor/\${filename})
@@ -1548,7 +1488,7 @@ THERE;
 ANDHERE;
 
 	$OUT .= "\n";
-//	$sql = "select pkey from Cluster order by pkey";
+
  	foreach ($cluster as $row) {
 		$OUT .= "\texten => " . $row['pkey'] . ",1,Set(state=\${DB(" . $row['pkey'] . "/OCSTAT)})\n";
 		$OUT .= "\texten => " . $row['pkey'] . ",n,GoToIf(\$[\"\${state}\" = \"AUTO\"]?" . $row['pkey'] . "close:" . $row['pkey'] . "open)\n";
@@ -1665,73 +1605,9 @@ ANDHERE;
 ;
 		exten => i,1,PlayBack(cannot-complete-as-dialed)
         exten => i,2,PlayBack(please-hang-up-and-try-again)
-       	exten => i,1,Playtones(congestion)
+       	exten => i,3,Playtones(congestion)
 
-[defaultOpenGreet]
-        include => extensions
-	include => internal-presets
-;	include => conferences
 
-        exten => s,1,Background(if-u-know-ext-dial)
-        exten => s,2,Background(otherwise)
-        exten => s,3,Background(pls-hold-while-try)
-        exten => s,4,Background(silence/5)
-        exten => s,5,Goto(defaultOpenGreet,t,1)
-
-        exten => t,1,Goto(extensions,\${SYSOP},1)                ;to operator
-        exten => t,2,Hangup
-
-	exten => i,1,Background(invalid)
-	exten => i,2,Goto(defaultOpenGreet,s,4)
-
-[defaultClosedGreet]
-        include => extensions
-	include => internal-presets
-;	include => conferences
-
-	exten => s,1,Background(were-sorry)
-	exten => s,2,Background(nbdy-avail-to-take-call)
-        exten => s,3,Background(if-u-know-ext-dial)
-        exten => s,4,Background(otherwise)
-        exten => s,5,Background(pls-hold-while-try)
-        exten => s,6,Background(silence/5)
-        exten => s,7,Goto(defaultClosedGreet,t,1)
-
-        exten => t,1,Goto(extensions,\${CLUSTEROP},1)                ;to operator
-        exten => t,2,Hangup
-
-	exten => i,1,Background(invalid)
-	exten => i,2,Goto(defaultClosedGreet,s,6)
-
-[customOpenGreet]
-        include => extensions
-	include => internal-presets
-;	include => conferences
-
-        exten => s,1,Background(\${CUSTOMGREET})
-        exten => s,2,Background(silence/3)
-        exten => s,3,Goto(customOpenGreet,t,1)
-
-        exten => t,1,Goto(extensions,\${SYSOP},1)                ;to operator
-        exten => t,2,Hangup
-
-	exten => i,1,Background(invalid)
-	exten => i,2,Goto(customOpenGreet,s,2)
-
-[customClosedGreet]
-        include => extensions
-	include => internal-presets
-;	include => conferences
-
-	exten => s,1,Background(\${CUSTOMGREET})
-        exten => s,2,Background(silence/1)
-        exten => s,3,Goto(customClosedGreet,t,1)
-
-        exten => t,1,Voicemail(\${CLUSTEROP},s)                ;to operator
-        exten => t,2,Hangup
-
-	exten => i,1,Background(invalid)
-	exten => i,2,Goto(customClosedGreet,s,2)
 ;
 ;#####################################################################
 ;

@@ -683,8 +683,6 @@ private function showEdit() {
 
 	echo '</form>' . PHP_EOL;
 	
-
-//	$this->myPanel->navRowDisplay("lineio", $pkey, "TRUNK");
 }
 
 private function saveEdit() {
@@ -710,22 +708,10 @@ private function saveEdit() {
  * call the setter
  */ 
 
-	$ret = $this->helper->setPjsipTrunkInstance($tuple);
+	$ret = $this->helper->setPjsipTrunkInstance($pkey,$_POST['pjsipuser']);
 	$ret = $this->helper->setTuple("lineio",$tuple);
 	
-/*
-	if (!empty($_POST['pjsippeer'])) {		
-		$targetFile = PJSIP . $row['pkey'] . '_' . PJSIP_TRUNK;
-		if (!file_exists($targetFile)) {
-			$rc = $this->helper->request_syscmd ("/bin/echo '######' > $targetFile >/dev/null 2>&1");		
-			$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
-			$rc = $this->helper->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
-		}
-		$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
-		fwrite($fh,$_POST['pjsippeer']) or die("Could not write to file $targetFile !");
-		fclose($fh);
-	}		
-/*
+
  * flag errors
  */ 	
 	if ($ret == 'OK') {
