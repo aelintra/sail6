@@ -78,7 +78,6 @@ public function get_pjsip_array($endpoints) {
 		$sip_peers[$extrow['pkey']]  = $sip_work[$extrow['pkey']];
 	}
 	$this->amiHdle->logout();
-	$this->helper->logit(json_encode($sip_peers));
 	return $sip_peers;
 }
 
@@ -164,6 +163,12 @@ public function get_coreShowChannels() {
 
 public function get_database($pkey,&$cfim,&$cfbs,&$ringdelay,&$twin) {
 /*
+ * It turns out the AMI is very slow in processing AstDB tuples
+ * so we use an asterisk -rx call instead.   It is much quicker.
+ * the AMI code has been left here in case the AMI ever gets 
+ * this fixed.
+ * 
+	
 	if ( ! $this->amiHelperLogin()) {
 		return false;
 	}
