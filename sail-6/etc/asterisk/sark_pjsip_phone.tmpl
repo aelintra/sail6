@@ -4,7 +4,7 @@ accepts_registrations = yes
 sends_registrations = no
 accepts_auth = yes
 sends_auth = no
-has_hint = yes
+;has_hint = yes
 hint_context = extensions
 endpoint/context = internal
 endpoint/allow_subscribe = yes
@@ -25,12 +25,6 @@ aor/authenticate_qualify = no
 aor/max_contacts = 1
 aor/remove_existing = yes
 aor/minimum_expiration = 60
+aor/default_expiration = 120
 aor/support_path = yes
-
-[trunk](!)
-type = wizard
-endpoint/allow_subscribe = no
-endpoint/allow = !all,ulaw,alaw
-aor/qualify_frequency = 30
-registration/expiration = 600
 
