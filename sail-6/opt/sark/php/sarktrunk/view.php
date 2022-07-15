@@ -708,7 +708,7 @@ private function saveEdit() {
  * call the setter
  */ 
 
-	$ret = $this->helper->setPjsipTrunkInstance($pkey,$_POST['pjsipuser']);
+	$ret = $this->helper->setPjsipTrunkInstance($tuple['pkey'],$_POST['pjsipuser']);
 	$ret = $this->helper->setTuple("lineio",$tuple);
 	
 /*
