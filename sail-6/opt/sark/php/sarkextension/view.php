@@ -1865,49 +1865,37 @@ private function printEditNotes ($pkey,$extension) {
     	$dt = new DateTime("@$epoch");
     	echo 'Provisioned: <strong>' . $dt->format('d-m-y H:i') . '</strong><br/>' . PHP_EOL;
     } 
-*/       
-    $images='/sark-common/phoneimages/';
-    if (isset($extension['devicemodel'])) {
+*/
 
-		if (preg_match ( " /Aastra/ ", $extension['device'])) {
-			$images .= 'aastra';
-		}
-		if (preg_match ( " /Cisco/ ", $extension['device'])) {	
-			$images .= 'cisco';
-		}
-		if (preg_match ( " /Panasonic/ ", $extension['device'])) {	
-			$images .= 'panasonic';
-		}				
-		if (preg_match ( " /Polycom/ ", $extension['device'])) {	
-			$images .= 'polycom';
-		}	
-		if (preg_match ( " /[S|s]nom/ ", $extension['device'])) {
+	$uaManDev = Array();
+	$uaManDev = $this->amiHelper->getUaFromPeer($pkey,$this->sip_peers);   
+
+
+    $images='/sark-common/phoneimages/';
+    if (!empty($uaManDev)) {
+
+		if ($uaManDev['manuf'] == 'snom') {
 			$images .= 'snom';
 		}
-		if (preg_match ( " /Fanvil/ ", $extension['device'])) {
-			$images .= 'fanvil';
-		}		
-		if (preg_match ( " /Vtech/ ", $extension['device'])) {
-			$images .= 'vtech';
-		}
-		if (preg_match ( " /Yealink/ ", $extension['device'])) {
+
+		if ($uaManDev['manuf'] == 'Yealink') {
 			$images .= 'yealink';
 		}
 		
 // for Yealinks, just use first three characters - they keep changing the last few
 		
-		if (preg_match ( " /Yealink/ ", $extension['device'])) {
-			$images .= '/' . substr($extension['devicemodel'],0,3) . '.jpg';
+		if (preg_match ( " /Yealink/ ", $images)) {
+			$images .= '/' . substr($uaManDev['model'],0,3) . '.jpg';
 		}
 		else {
-			$images .= '/' . $extension['devicemodel'] . '.jpg';
+			$images .= '/' . $uaManDev['model'] . '.jpg';
 		}	
 				    	
 		if (file_exists("/opt/sark/www" . $images)) {	
 			echo '<br/><br/><img src="' . $images . '" width="190px" />' . PHP_EOL;
 		}
 		else {
-			$this->helper->logit("Phone Image not found $images ",1 );
+			$this->helper->logit("Phone Image $images not found",0 );
 		}
 	}	
 //    echo '</div>' . PHP_EOL;

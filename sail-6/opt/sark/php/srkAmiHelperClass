@@ -164,7 +164,7 @@ public function getUaFromPeer($key,$peers) {
 		if (!empty($peers [$key]['UserAgent'])) {
 			return getUaElementsFromPeer($peers [$key]['UserAgent']);	
 		}
-		
+
 /*
  * chan_sip
  */
@@ -177,12 +177,12 @@ public function getUaFromPeer($key,$peers) {
 
 private function getUaElementsFromPeer($ua) {
 
-	uaArray = array (
+	$uaArray = array (
 		"manuf" => 'N/A',
 		"model" => 'N/A'
 	);
 
-	delimArray = array(
+	$delimArray = array(
 		"snom" => '/',
 		"Panasonic" => '_'
 		"Yealink" => ' ',
