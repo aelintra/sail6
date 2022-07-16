@@ -1808,18 +1808,30 @@ private function printEditNotes ($pkey,$extension) {
  */
 	$virtExt = false; 
     echo '<span style="color: #696969;" >';
-    echo 'Vendor: <strong>' . $extension['device'] . '</strong><br/>' . PHP_EOL;
-    if (preg_match("/VXT/", $extension['device'])) {
-    	$virtExt = true;
-    }
-    if (!empty($extension['devicemodel'])) {
-    	echo 'Model: <strong>' . $extension['devicemodel'] . '</strong><br/>' . PHP_EOL;
-    }
+
+    $uaManDev = Array();
+	$uaManDev = $this->amiHelper->getUaFromPeer($pkey,$this->sip_peers);   
+
+	if ( ! empty($uaManDev['manuf'])) {
+		echo 'Vendor: <strong>' . $uaManDev['manuf'] . '</strong><br/>' . PHP_EOL;
+		if ( ! empty($uaManDev['model'])) { 
+			echo 'Model: <strong>' . $uaManDev['model'] . '</strong><br/>' . PHP_EOL;		
+	}
+	else {
+    	echo 'Vendor: <strong>' . $extension['device'] . '</strong><br/>' . PHP_EOL;
+    	if (preg_match("/VXT/", $extension['device'])) {
+    		$virtExt = true;
+    	}
+    	if (!empty($extension['devicemodel'])) {
+    		echo 'Model: <strong>' . $extension['devicemodel'] . '</strong><br/>' . PHP_EOL;
+    	}
+	}
+
     if (!empty ($extension['macaddr'])) {
-			echo 'MAC: <strong>' . $extension['macaddr'] . '</strong><br/>' . PHP_EOL;
-			if ($virtExt) {
-				echo '(Stolen From: <strong>' . $extension['stolen'] . ')</strong><br/>' . PHP_EOL;
-			}
+		echo 'MAC: <strong>' . $extension['macaddr'] . '</strong><br/>' . PHP_EOL;
+		if ($virtExt) {
+			echo '(Stolen From: <strong>' . $extension['stolen'] . ')</strong><br/>' . PHP_EOL;
+		}
 	}
 	else {
 		if (!empty($extension['stolen'])) {
@@ -1827,7 +1839,7 @@ private function printEditNotes ($pkey,$extension) {
 			echo '(Stolen By: <strong>' . $extension['stolen'] . ')</strong><br/>' . PHP_EOL;
 			return;
 		}
-	}
+	}		
 	
 	$latency = $this->amiHelper->getLatencyFromPeer($pkey,$this->sip_peers);
 
@@ -1867,9 +1879,6 @@ private function printEditNotes ($pkey,$extension) {
     } 
 */
 
-	$uaManDev = Array();
-	$uaManDev = $this->amiHelper->getUaFromPeer($pkey,$this->sip_peers);   
-
 
     $images='/sark-common/phoneimages/';
     if (!empty($uaManDev)) {
@@ -1888,7 +1897,7 @@ private function printEditNotes ($pkey,$extension) {
 			$images .= '/' . substr($uaManDev['model'],0,3) . '.jpg';
 		}
 		else {
-			$images .= '/' . $uaManDev['model'] . '.jpg';
+			$images .= '/' . $uaManDev['manuf'] . $uaManDev['model'] . '.jpg';
 		}	
 				    	
 		if (file_exists("/opt/sark/www" . $images)) {	
