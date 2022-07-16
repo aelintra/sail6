@@ -184,14 +184,14 @@ private function getUaElementsFromPeer($ua) {
 
 	$delimArray = array(
 		"snom" => '/',
-		"Panasonic" => '_'
+		"Panasonic" => '_',
 		"Yealink" => ' ',
 		"yealink" => ' '
 	);
 
 	if (preg_match('/(Snom|Panasonic|Yealink|Polycom|Fanvil|Cisco|Gigaset|Grandstream)/i',$ua,$matches)) {
-				uaArray['manuf'] = $matches[1];
-				uaArray['model'] = $matches[2];
+				$uaArray['manuf'] = $matches[1];
+				$uaArray['model'] = $matches[2];
 				return $uaArray;
 	}
 	return False;
