@@ -150,6 +150,53 @@ public function getLatencyFromPeer($key,$peers) {
 
 }
 
+/**
+ * [getUaFromPeer description]
+ * @param  str $key   endpoint ID]
+ * @param  array $peers peer array
+ * @return array        array from UA (see below)
+ */
+public function getUaFromPeer($key,$peers) {
+
+/*
+ * PJSIP
+ */
+		if (!empty($peers [$key]['UserAgent'])) {
+			return getUaElementsFromPeer($peers [$key]['UserAgent']);	
+		}
+		
+/*
+ * chan_sip
+ */
+		if (!empty($peers [$key]['SIP-Useragent'])) {
+			return getUaElementsFromPeer($peers [$key]['SIP-Useragent']);	
+		}
+ 
+		return False;
+}
+
+private function getUaElementsFromPeer($ua) {
+
+	uaArray = array (
+		"manuf" => 'N/A',
+		"model" => 'N/A'
+	);
+
+	delimArray = array(
+		"snom" => '/',
+		"Panasonic" => '_'
+		"Yealink" => ' ',
+		"yealink" => ' '
+	);
+
+	if (preg_match('/(Snom|Panasonic|Yealink|Polycom|Fanvil|Cisco|Gigaset|Grandstream)/i',$ua,$matches)) {
+				uaArray['manuf'] = $matches[1];
+				uaArray['model'] = $matches[2];
+				return $uaArray;
+	}
+	return False;
+}
+
 public function get_coreShowChannels() {
 
 	if ( ! $this->amiHelperLogin()) {

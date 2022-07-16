@@ -256,10 +256,10 @@ private function showMain() {
 	$this->myPanel->aHeaderFor('device',false,'w3-hide-small w3-hide-medium');
 	$this->myPanel->aHeaderFor('macaddr',false,'w3-hide-small');
 	$this->myPanel->aHeaderFor('ipaddr',false,'w3-hide-small');
-	$this->myPanel->aHeaderFor('headlocation',false,'w3-hide-small w3-hide-medium');	
+//	$this->myPanel->aHeaderFor('headlocation',false,'w3-hide-small w3-hide-medium');	
 //	$this->myPanel->aHeaderFor('sndcreds',false,'w3-hide-small w3-hide-medium');
 //	$this->myPanel->aHeaderFor('bt',false,'w3-hide-small w3-hide-medium');
-//	$this->myPanel->aHeaderFor('trns',false,'w3-hide-small w3-hide-medium');
+	$this->myPanel->aHeaderFor('trns',false,'w3-hide-small w3-hide-medium');
 	$this->myPanel->aHeaderFor('tstate');
 	$this->myPanel->aHeaderFor('active',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('ed',false,'editcol');
@@ -313,7 +313,7 @@ private function showMain() {
 		$display = $this->amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
 
     	echo '<td  class="w3-hide-small" title = "IP address" >' . $display  . '</td>' . PHP_EOL;
-		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['location'] . '</td>' . PHP_EOL;
+		echo '<td class="w3-hide-small  w3-hide-medium">' . $row['transport'] . '</td>' . PHP_EOL;
 
 		if ($row['stolen']) {
 			if (!preg_match(" /VXT/i ", $row['device'])) {
