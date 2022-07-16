@@ -1815,7 +1815,8 @@ private function printEditNotes ($pkey,$extension) {
 	if ( ! empty($uaManDev['manuf'])) {
 		echo 'Vendor: <strong>' . $uaManDev['manuf'] . '</strong><br/>' . PHP_EOL;
 		if ( ! empty($uaManDev['model'])) { 
-			echo 'Model: <strong>' . $uaManDev['model'] . '</strong><br/>' . PHP_EOL;		
+			echo 'Model: <strong>' . $uaManDev['model'] . '</strong><br/>' . PHP_EOL;	
+		}	
 	}
 	else {
     	echo 'Vendor: <strong>' . $extension['device'] . '</strong><br/>' . PHP_EOL;
