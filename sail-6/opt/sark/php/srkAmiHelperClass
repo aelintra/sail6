@@ -190,9 +190,19 @@ private function getUaElementsFromPeer($ua) {
 	);
 
 	if (preg_match('/(Snom|Panasonic|Yealink|Polycom|Fanvil|Cisco|Gigaset|Grandstream)/i',$ua,$matches)) {
-				$uaArray['manuf'] = $matches[1];
-				$uaArray['model'] = $matches[2];
-				return $uaArray;
+			$uaArray['manuf'] = $matches[1];
+			switch ($uaArray['manuf']) {
+				case "snom)": 
+					$uastring = explode ('/',$ua);
+					$uaArray['model'] = substring($uastring[1],3,3); 
+					break;
+				case "Yealink":
+				case "yealink":
+					$uastring = explode ('-',$ua);
+					$uaArray['model'] = substring($uastring[1],0,3); 					
+			}
+
+			return $uaArray;
 	}
 	return False;
 }
