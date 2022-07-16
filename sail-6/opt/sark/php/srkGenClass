@@ -95,6 +95,25 @@ private function genCdr() {
     fclose($fh);
 }
 
+/**
+ * checkFileIsWriteable
+ * @param  string $fileName
+ * @return bool
+ *
+ *  Checks if a file exists in the Asterisk folder and opens it
+ *  If the file does not exist then create it and write a single comment into it
+ */
+private function checkFileIsWriteable($fileName) {
+
+	if (! file_exists($fileName)) {
+		$rc = $this->helper->request_syscmd ("/bin/echo ';;;' > $fileName >/dev/null 2>&1");		
+		$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $fileName >/dev/null 2>&1");
+		$rc = $this->helper->request_syscmd ("/bin/chmod 664 $fileName >/dev/null 2>&1");		
+	}
+
+	return True;
+}
+
 private function genMoh() {
 	$OUT = $this->genFileBanner();
 	$res = $this->dbh->query('SELECT pkey from cluster');
@@ -413,6 +432,7 @@ private function genPjsipTransport() {
 		}
 	}
 
+	$this->checkFileIsWriteable(PJSIP . PJSIP_TRANSPORT_TEMPLATE);
 	$pjsipBuff = file_get_contents(PJSIP . PJSIP_TRANSPORT_TEMPLATE) or die("Could not open" . PJSIP_TRANSPORT_TEMPLATE ." file!");
 	$pjsipBuff = preg_replace ( '/\$externip/', $myExternip, $pjsipBuff);
 	
@@ -422,7 +442,8 @@ private function genPjsipTransport() {
 	$OUT .= $pjsipBuff;
 	$OUT .= "\n";
 
-	$fh = fopen(PJSIP . PJSIP_TRANSPORT, 'w') or die("Could not open " . PJSIP_TRANSPORT . "!");
+	$this->checkFileIsWriteable(PJSIP . PJSIP_TRANSPORT);
+	$fh = fopen($pjsipTransport, 'w') or die("Could not open " . PJSIP_TRANSPORT . "!");
 	fwrite($fh,$OUT) or die("Could not write to file " . PJSIP_TRANSPORT);
 	fclose($fh);
 
@@ -458,6 +479,7 @@ private function genPjsipPhones() {
 	}
 
 	$targetFile = PJSIP . PJSIP_READY_PHONES;
+	$this->checkFileIsWriteable($targetFile);
 
 /*
  *	If $OUT is empty, put a single comment in it
@@ -466,7 +488,7 @@ private function genPjsipPhones() {
 		$OUT = ";";
 	}
 
-	$fh = fopen($targetFile, 'w') or die('Could not open file!');
+	$fh = fopen($targetFile, 'w') or die('Could not open file PJSIP_READY_PHONES!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_ready_phones.conf');
 	fclose($fh);
 
@@ -520,9 +542,8 @@ private function genPjsipTrunks() {
  * First, initialise the file with an empty comment
  */
 	$targetFile = PJSIP . PJSIP_READY_TRUNKS;
-	$rc = $this->helper->request_syscmd ("/bin/echo '######' > $targetFile >/dev/null 2>&1");		
-	$rc = $this->helper->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
-	$rc = $this->helper->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
+	$this->checkFileIsWriteable($targetFile);
+
 /*
  * Now write the trunk definitions to it (if there are any)
  */
@@ -548,9 +569,13 @@ private function genPjsipWizard() {
 //
 
 	$OUT = $this->genFileBanner();
-	$phoneTmpl = PJSIP . PJSIP_PHONE_TEMPLATE;
-	$phones =  PJSIP . PJSIP_READY_PHONES;
 
+	$phoneTmpl = PJSIP . PJSIP_PHONE_TEMPLATE;
+	$this->checkFileIsWriteable($phoneTmpl);
+	$phones =  PJSIP . PJSIP_READY_PHONES;
+	$this->checkFileIsWriteable($phones);
+
+	$this->checkFileIsWriteable(PJSIP . PJSIP_WIZARD);
 	$this->helper->request_syscmd ("/bin/cat $phoneTmpl $phones  > " . PJSIP . PJSIP_WIZARD);
 }
 
