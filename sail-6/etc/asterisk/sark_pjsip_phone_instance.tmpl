@@ -1,9 +1,11 @@
 [$ext](phone)
 hint_exten = $ext
+transport = transport-$transport
 endpoint/callerid = "$desc" 
 endpoint/named_call_group=$clst
 endpoint/named_pickup_group=$clst
-transport = transport-$transport
+endpoint/device_state_busy_at = 1
+endpoint/mailboxes = $ext@$clst
 inbound_auth/username = $ext
 inbound_auth/password = $password
-mailboxes = $ext@$clst
+aor/max_contacts = 1
