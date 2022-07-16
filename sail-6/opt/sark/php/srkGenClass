@@ -442,7 +442,9 @@ private function genPjsipTransport() {
 	$OUT .= $pjsipBuff;
 	$OUT .= "\n";
 
-	$this->checkFileIsWriteable(PJSIP . PJSIP_TRANSPORT);
+	$pjsipTransport = PJSIP . PJSIP_TRANSPORT;
+	$this->checkFileIsWriteable($pjsipTransport);
+
 	$fh = fopen($pjsipTransport, 'w') or die("Could not open " . PJSIP_TRANSPORT . "!");
 	fwrite($fh,$OUT) or die("Could not write to file " . PJSIP_TRANSPORT);
 	fclose($fh);
