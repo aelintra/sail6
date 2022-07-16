@@ -162,14 +162,14 @@ public function getUaFromPeer($key,$peers) {
  * PJSIP
  */
 		if (!empty($peers [$key]['UserAgent'])) {
-			return getUaElementsFromPeer($peers [$key]['UserAgent']);	
+			return $this->getUaElementsFromPeer($peers [$key]['UserAgent']);	
 		}
 
 /*
  * chan_sip
  */
 		if (!empty($peers [$key]['SIP-Useragent'])) {
-			return getUaElementsFromPeer($peers [$key]['SIP-Useragent']);	
+			return $this->getUaElementsFromPeer($peers [$key]['SIP-Useragent']);	
 		}
  
 		return False;
