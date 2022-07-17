@@ -30,6 +30,10 @@ define('PJSIP_PHONE',					'phone.conf');
 define('PJSIP_PHONE_TEMPLATE',          'phone.tmpl');
 define('PJSIP_PHONE_INSTANCE_TEMPLATE', 'phone_instance.tmpl');
 define('PJSIP_READY_PHONES',            'ready_phones.conf');
+
+define('PJSIP_WEBRTC',					'webrtc.conf');
+define('PJSIP_WEBRTC_TEMPLATE',         'webrtc.tmpl');
+define('PJSIP_READY_WEBRTC',            'ready_webrtc.conf');
 	      
 define('PJSIP_TRANSPORT',				'transport.conf');	
 define('PJSIP_TRANSPORT_TEMPLATE',		'transport.tmpl');

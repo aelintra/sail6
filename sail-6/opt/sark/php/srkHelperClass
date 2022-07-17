@@ -629,7 +629,7 @@ public function deletePjsipPhoneInstance($key) {
 	return False;	
 } 
 
-**
+/**
  * Copy webrtc template to named webrtc file
  * @param  array $tuple WebRTC row
  * @return bool  
@@ -645,7 +645,22 @@ public function createPjsipWebrtcInstance($key) {
 		return true;
 	}
 	return false;
-} 
+}
+
+/**
+ * get named pjsip template
+ * @param  array $tuple ipphone row
+ * @return bool  
+ */
+public function getPjsipWebrtcInstance($key) {
+
+	$targetFile = PJSIP . $key . '_' . PJSIP_WEBRTC;
+
+	$this->createPjsipWebrtcInstance($key);
+	return file_get_contents($targetFile);
+
+	return false;
+}  
 
 /**
  * set named pjsip template

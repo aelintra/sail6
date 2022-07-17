@@ -39,6 +39,14 @@
 				$('#divrule').show();
 				$('#divblksize').show();					
 			}
+			if(this.value=='WebRTC') {
+				$('#divrule').show();
+				$('#divcalleridname').show();
+			}
+			if(this.value=='WebRTC batch') {
+				$('#divrule').show();
+				$('#divblksize').show();					
+			}			
 			if(this.value=='MAILBOX') {
 				$('#divrule').show();
 				$('#divcalleridname').show();
