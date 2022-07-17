@@ -1335,6 +1335,15 @@ private function saveEdit() {
 		$newkey =  trim(strip_tags($_POST['newkey']));
 
 /*
+ *	Get the device type for later
+ */
+
+	$sql = $this->dbh->prepare("SELECT pkey,device FROM ipphone WHERE pkey=?");
+	$sql->execute(array($tuple['pkey']));
+	$res = $sql->fetch();
+	$device = $res['device'];	
+
+/*
  * 	Adjust the Asterisk and provisioning boxes
  */
 
