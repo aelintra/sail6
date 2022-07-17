@@ -1377,9 +1377,10 @@ private function saveEdit() {
  * check for keychange
  */
 		if ($newkey != $tuple['pkey']) {
-			$sql = $this->dbh->prepare("SELECT pkey FROM ipphone WHERE pkey=?");
+			$sql = $this->dbh->prepare("SELECT pkey,device FROM ipphone WHERE pkey=?");
 			$sql->execute(array($newkey));
-			$res = $sql->fetch();	
+			$res = $sql->fetch();
+			$device = $res['device'];	
 			if ( isset($res['pkey']) ) { 
 				$this->invalidForm = True;
 				$this->message = "<B>  --  Validation Errors!</B>";	
@@ -1425,7 +1426,7 @@ private function saveEdit() {
 			$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
 
 			if ($ret == 'OK') {
-				if ($tuple['device'] == "WebRTC") {
+				if ($device == "WebRTC") {
 					$this->helper->setPjsipPWebrtcInstance($tuple['pkey'],$newkey);
 				}
 				else {
