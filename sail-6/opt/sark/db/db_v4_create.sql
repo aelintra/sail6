@@ -186,7 +186,7 @@ stealtime TEXT,                         -- time this extension was stolen by HD
 stolen TEXT,                            -- HD thief 
 technology TEXT,                        -- SIP 
 tls TEXT,                        		-- SSIP on/off
-transport TEXT DEFAULT 'udp',			-- transport(udp/tcp/tls)
+transport TEXT DEFAULT 'udp',			-- transport(udp/tcp/tls/wss)
 twin TEXT,                              -- not used
 vmailfwd TEXT,                          -- not used
 z_created datetime,

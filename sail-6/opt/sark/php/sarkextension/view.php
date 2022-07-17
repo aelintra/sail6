@@ -283,7 +283,7 @@ private function showMain() {
 		$display = $row['desc'];
 		
 		if ( strlen($row['desc']) > 7 ) {
-			$display = substr($row['desc'] , 0, 5);
+			$display = substr($row['desc'] , 0, 8);
 			$display .= '.';
 		}
 			 

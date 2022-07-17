@@ -34,3 +34,8 @@ priv_key_file=/etc/ssl/private/ssl-cert-sark-customer.key
 external_media_address=$externip
 external_signaling_address=$externip
 method=sslv23
+
+[transport-wss]
+type=transport
+protocol=wss
+bind=0.0.0.0

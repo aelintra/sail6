@@ -166,6 +166,7 @@ nat=$nat
 transport=$transport
 encryption=$encryption','SIP');
 INSERT OR IGNORE INTO Device(pkey,desc,device,legacy,owner,technology) values ('General IAX','General IAX definition','General IAX','1','system','IAX2');
+INSERT OR IGNORE INTO Device(pkey,desc,device,owner,technology) values ('WebRTC','WebRTC definition','WebRTC','system','SIP');
 INSERT OR IGNORE INTO Device(pkey,desc,device,noproxy,owner,sipiaxfriend,technology) values ('General SIP','General SIP definition','General SIP','1','system','type=peer
 defaultuser=$desc
 secret=$password

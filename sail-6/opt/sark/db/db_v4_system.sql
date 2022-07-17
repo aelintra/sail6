@@ -49,6 +49,7 @@ trunk=no','type=user
 secret=
 context=internal
 requirecalltoken=no','IAX2');
+INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,technology) values ('WebRTC','WebRTC','WebRTC','WebRTC','NO','WebRTC');
 INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,technology) values ('PTT_CLID','PTT_CLID','CLID','CLID ','NO','CLID');
 INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,technology) values ('PTT_CLID_Class','PTT_CLID_Class','Class','CLID Class ','NO','Class');
 INSERT OR IGNORE INTO Carrier(pkey,carrier,carriertype,desc,md5encrypt,technology) values ('PTT_DiD_Class','PTT_DiD_Class','Class','DiD Class ','NO','Class');
