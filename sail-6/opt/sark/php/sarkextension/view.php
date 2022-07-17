@@ -288,21 +288,19 @@ private function showMain() {
 		}
 			 
 		echo '<td class="w3-hide-small  w3-hide-medium" title = "' . $row['desc'] . '" >' . $display  . '</td>' . PHP_EOL;
+
+		$uaManDev = Array();
+		$uaManDev = $this->amiHelper->getUaFromPeer($row['pkey'],$this->sip_peers); 
 		
-		$display = $row['device'];
-/*		
-		preg_match('/^(\w+)\s+/',$display,$matches);
-		if (isset($matches[1])) {
-			if (strlen($matches[1]) > 12) {
-				$display = substr($row['device'] , 0, 11);
-				$display .= '.';
+		if ($row['device'] == 'General SIP') {
+			if ( ! empty ($uaManDev['manuf'])) {
+				$display = $uaManDev['manuf'];
 			}
 			else {
-				$display = $matches[1];
+				$display = $row['device'];
 			}
 		}
-*/
-		echo '<td class="w3-hide-small  w3-hide-medium" title = "' . $row['device'] . '" >' . $display  . '</td>' . PHP_EOL;	
+		echo '<td class="w3-hide-small  w3-hide-medium" title = "' . $display . '" >' . $display  . '</td>' . PHP_EOL;	
 		
 		$display_macaddr = 'N/A';
 		if (!empty ($row['macaddr'])) {
