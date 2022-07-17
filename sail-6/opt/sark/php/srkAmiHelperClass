@@ -198,6 +198,10 @@ private function getUaElementsFromPeer($ua) {
 					break;
 				case "Yealink":
 				case "yealink":
+					if (preg_match('/(W\d\d)/i',$ua,$matches)) {
+						$uaArray['model'] = $matches[1];
+						return $uaArray;
+					}
 					$uastring = explode ('-',$ua);
 					$uaArray['model'] = substr($uastring[1],0,3); 					
 			}

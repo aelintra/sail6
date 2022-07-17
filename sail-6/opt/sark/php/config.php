@@ -1,6 +1,24 @@
 <?php
 
 /**
+ * System
+ */
+
+define('EXEC_DB_RELOAD',				'sh /opt/sark/scripts/srkV4reloader.sh');
+
+define('SNAPSHOTS', 					'/opt/sark/snap/');
+define('BACKUPS', 						'/opt/sark/bkup/');
+
+
+define('MONITOR',						'/var/spool/asterisk/monitor/');
+define('MONOUT',						'/var/spool/asterisk/monout/');
+define('MONSTAGE',						'/var/spool/asterisk/monstage/');
+
+define('SARK_DB',						'/opt/sark/db/sark.db'); 
+define('SARK_READONLY_DB',				'/opt/sark/db/sark.rdonly.db');
+
+
+/**
  * PJSIP
  */
 

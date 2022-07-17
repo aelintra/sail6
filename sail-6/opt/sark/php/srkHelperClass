@@ -195,10 +195,10 @@ public function setRouteClass($var) {
         if ($var == "None") {
         	return 0;
         }
-        if (preg_match('/^\*\d{3,4}$/', $var)) {
+        if (preg_match('/^\*\d{3,5}$/', $var)) {
         	return 1;
         }
-        if (preg_match('/^\d{3,4}$/', $var)) {
+        if (preg_match('/^\d{3,5}$/', $var)) {
         	return 1;
         }
 
@@ -575,9 +575,10 @@ public function createPjsipPhoneInstance($key) {
 public function getPjsipPhoneInstance($key) {
 
 	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
-	if (file_exists($targetFile)) {
-		return file_get_contents($targetFile);
-	}
+
+	$this->createPjsipPhoneInstance($key);
+	return file_get_contents($targetFile);
+
 	return false;
 } 
 

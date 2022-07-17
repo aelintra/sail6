@@ -1894,7 +1894,7 @@ private function printEditNotes ($pkey,$extension) {
 		
 // for Yealinks, just use first three characters - they keep changing the last few
 		
-		if (preg_match ( " /Yealink/ ", $images)) {
+		if (preg_match ( " /yealink/ ", $images)) {
 			$images .= '/' . substr($uaManDev['model'],0,3) . '.jpg';
 		}
 		else {
