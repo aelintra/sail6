@@ -53,8 +53,10 @@ Class sarkextension {
 		'Choose extension type',
 		'Provisioned',
 		'Unprovisioned',
+		'WebRTC',
 		'Provisioned batch',		
 		'Unprovisioned batch',
+		'WebRTC batch',
 		'VXT batch',
 		'MAILBOX'		
 	);
@@ -63,8 +65,10 @@ Class sarkextension {
 		'Choose extension type',
 		'Provisioned',
 		'Unprovisioned',
+		'WebRTC',
 		'Provisioned batch',		
-		'Unprovisioned batch',	
+		'Unprovisioned batch',
+		'WebRTC batch',	
 		'MAILBOX'		
 	);	 
 
@@ -548,6 +552,11 @@ private function saveNew() {
 			$tuple['device'] = 'General SIP';
 			$this->addNewExtension($tuple);
 			break;
+
+		case 'WebRTC':
+			$tuple['device'] = 'WebRTC';
+			$this->addNewExtension($tuple);
+			break;	
 			
 		case 'Provisioned batch':
 			$macArray=array();
@@ -596,6 +605,23 @@ private function saveNew() {
 				return;					
 			}
 			$tuple['device'] = 'General SIP';
+			$blksize = strip_tags($_POST['blksize']);
+			while ($blksize) {
+				$tuple['desc'] = 'Ext' . $tuple['pkey'];
+				$this->addNewExtension($tuple);
+				$tuple['pkey'] ++;
+				$blksize--;
+			}
+			return;
+			break;
+
+		case 'WebRTC batch':
+			if ($this->checkHeadRoom($_POST['blksize'],$pkey)) {
+				$this->error_hash['blksize'] = "Insufficient extension slots for block operation";
+				$this->invalidForm = True;
+				return;					
+			}
+			$tuple['device'] = 'WebRTC';
 			$blksize = strip_tags($_POST['blksize']);
 			while ($blksize) {
 				$tuple['desc'] = 'Ext' . $tuple['pkey'];
@@ -718,8 +744,13 @@ encryption=\$encryption";
 	$ret = $this->helper->createTuple("ipphone",$tuple);
 
 	if ($ret == 'OK') {
-		$this->createCos(); 
-		$this->helper->createPjsipPhoneInstance($tuple['pkey']);
+		$this->createCos();
+		if ($tuple['device'] == "WebRTC") {
+			$this->helper->createPjsipWebrtcInstance($tuple['pkey']);
+		} 
+		else {
+			$this->helper->createPjsipPhoneInstance($tuple['pkey']);
+		}
 		$this->message = "Saved new extension(s) ";
 	}
 	else {
@@ -1018,7 +1049,10 @@ private function showEdit() {
 
 	$this->myPanel->internalEditBoxStart();
 //	$this->myPanel->displayBooleanFor('location',$extension['location']);
-	$this->myPanel->radioSlide('location',$extension['location'],array('local','remote'));
+
+	if ($sipdriver != 'PJSIP') {
+		$this->myPanel->radioSlide('location',$extension['location'],array('local','remote'));
+	}
 
 	if (isset($extension['macaddr'])) {
 		if (isset($fqdn)) {
@@ -1028,17 +1062,20 @@ private function showEdit() {
 //		$this->myPanel->radioSlide('sndcreds',$extension['sndcreds'],array('No','Once','Always'));	
 	}
 	
-	if (count($protocol) > 1)	{
-		$this->myPanel->aLabelFor('protocol');
-		$this->myPanel->selected = $extension['protocol'];
-		$this->myPanel->popUp('protocol', $protocol);
-		$this->myPanel->aHelpBoxFor('protocol');
+	if ($extension['device'] != "WebRTC") {
+		if (count($protocol) > 1)	{
+			$this->myPanel->aLabelFor('protocol');
+			$this->myPanel->selected = $extension['protocol'];
+			$this->myPanel->popUp('protocol', $protocol);
+			$this->myPanel->aHelpBoxFor('protocol');
+		}		
+		$transportArray=array('udp','tcp','tls');
+		if (preg_match(" /[Cc]isco/ ", $extension['device'])) {
+			$transportArray=array('udp','tcp');
+		}
+		$this->myPanel->radioSlide('transport',$extension['transport'],$transportArray);
 	}
-	$transportArray=array('udp','tcp','tls');
-	if (preg_match(" /[Cc]isco/ ", $extension['device'])) {
-		$transportArray=array('udp','tcp');
-	}
-	$this->myPanel->radioSlide('transport',$extension['transport'],$transportArray);
+	
 
 	$this->myPanel->displayPopupFor('devicerec',$extension['devicerec'],array('default','None','OTR','OTRR','Inbound','Outbound','Both'));	
 
@@ -1159,18 +1196,25 @@ private function showEdit() {
 		if ( $_SESSION['user']['pkey'] != 'admin' ) {
 			echo '<div style="display:none">';
 		}
-		echo '<div class="w3-margin-bottom">';
-		$this->myPanel->aLabelFor("sipiaxfriend");
-		echo '</div>';
-		echo '<div id="asterisk" >';
-		$this->myPanel->displayFile(htmlspecialchars($extension['sipiaxfriend']),"sipiaxfriend");
-		echo '</div>' . PHP_EOL;
+		if ($sipdriver != 'PJSIP') {
+			echo '<div class="w3-margin-bottom">';
+			$this->myPanel->aLabelFor("sipiaxfriend");
+			echo '</div>';
+			echo '<div id="asterisk" >';
+			$this->myPanel->displayFile(htmlspecialchars($extension['sipiaxfriend']),"sipiaxfriend");
+			echo '</div>' . PHP_EOL;
+		}
 
 		echo '<div class="w3-margin-bottom">';
 		$this->myPanel->aLabelFor("pjsipuser");
 		echo '</div>';
 
-		$fileData = $this->helper->getPjsipPhoneInstance($extension['pkey']);
+		if ($extension['device'] == "WebRTC") {
+			$fileData = $this->helper->getPjsipWebrtcInstance($extension['pkey']);
+		}
+		else {
+			$fileData = $this->helper->getPjsipPhoneInstance($extension['pkey']);
+		}
 
 		echo '<div id="pjsip" >';
 		$this->myPanel->displayFile(htmlspecialchars($fileData),"pjsipuser");
@@ -1348,7 +1392,12 @@ private function saveEdit() {
 				// set the mailbox to the new extension
 				$tuple['dvrvmail'] = $newkey;
 				$this->chkMailbox($tuple['dvrvmail'],$tuple['sipiaxfriend']);
-				$this->helper->movePjsipPhoneInstance($tuple['pkey'],$newkey);				
+				if ($tuple['device'] == "WebRTC") {
+					$this->helper->movePjsipPWebrtcInstance($tuple['pkey'],$newkey);
+				}
+				else {
+					$this->helper->movePjsipPhoneInstance($tuple['pkey'],$newkey);	
+				}			
 				$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
 
 				if ($ret == 'OK') {
@@ -1377,7 +1426,12 @@ private function saveEdit() {
 			$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
 
 			if ($ret == 'OK') {
-				$this->helper->setPjsipPhoneInstance($tuple['pkey'],$_POST['pjsipuser']);
+				if ($tuple['device'] == "WebRTC") {
+					$this->helper->setPjsipPWebrtcInstance($tuple['pkey'],$newkey);
+				}
+				else {
+					$this->helper->setPjsipPhoneInstance($tuple['pkey'],$newkey);	
+				}					
 				$this->message = "Updated extension " . $tuple['pkey'];
 			}
 			else {

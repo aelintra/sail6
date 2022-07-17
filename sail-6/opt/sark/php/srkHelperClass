@@ -550,8 +550,8 @@ public function deletePjsipTrunkInstance($key) {
 
 
 /**
- * Copy pjsip file template to named trunk file
- * @param  array $tuple Trunk row
+ * Copy pjsip file template to named phone file
+ * @param  array $tuple phone row
  * @return bool  
  */
 public function createPjsipPhoneInstance($key) {
@@ -629,6 +629,70 @@ public function deletePjsipPhoneInstance($key) {
 	return False;	
 } 
 
+**
+ * Copy webrtc template to named webrtc file
+ * @param  array $tuple WebRTC row
+ * @return bool  
+ */
+public function createPjsipWebrtcInstance($key) {
+
+	$templateFile = PJSIP . PJSIP_WEBRTC_TEMPLATE;
+	$targetFile = PJSIP . $key . '_' . PJSIP_WEBRTC;
+	if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
+		$rc = $this->request_syscmd ("/bin/cp $templateFile $targetFile >/dev/null 2>&1");		
+		$rc = $this->request_syscmd ("/bin/chown asterisk:asterisk $targetFile >/dev/null 2>&1");
+		$rc = $this->request_syscmd ("/bin/chmod 664 $targetFile >/dev/null 2>&1");
+		return true;
+	}
+	return false;
+} 
+
+/**
+ * set named pjsip template
+ * @param  array $tuple ipphone row
+ * @return bool  
+ */
+public function setPjsipWebrtcInstance($key,$data) {
+
+	$targetFile = PJSIP . $key . '_' . PJSIP_WEBRTC;
+	if (empty($data)) {		
+		$this->createPjsipWebrtcInstance($key);
+	}
+		
+	$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
+	fwrite($fh,$data) or die("Could not write to file $targetFile !");
+	fclose($fh);
+	return True;		
+} 
+
+/**
+ * move named pjsip object unstance
+ * @param  array $tuple Trunk row
+ * @return RC  
+ */
+public function movePjsipWebrtcInstance($key,$newkey) {
+
+	$targetFile = PJSIP . $key . '_' . PJSIP_WEBRTC;
+	$newFile = PJSIP . $newkey . '_' . PJSIP_WEBRTC;
+	if (file_exists($targetFile)) {
+		return $this->request_syscmd ("/bin/mv $targetFile $newfile >/dev/null 2>&1");
+	}
+	return False;	
+} 
+
+/**
+ * delete named pjsip template
+ * @param  array $tuple ipphone row
+ * @return RC  
+ */
+public function deletePjsipWebrtcInstance($key) {
+
+	$targetFile = PJSIP . $key . '_' . PJSIP_WEBRTC;;
+	if (file_exists($targetFile)) {
+		return $this->request_syscmd ("/bin/rm $targetFile >/dev/null 2>&1");
+	}
+	return False;	
+} 
 
 public function getNextFreeExt() {
 /*

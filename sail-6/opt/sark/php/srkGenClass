@@ -60,6 +60,7 @@ public function genAsterisk() {
     $this->genSip();
     $this->genPjsipTransport();
     $this->genPjsipPhones();
+    $this->genPjsipWebrtc();
     $this->genPjsipTrunks();
     $this->genPjsipWizard();
     $this->genConferences();
@@ -468,7 +469,11 @@ private function genPjsipPhones() {
 
 		if ($row['active'] != "YES") { 
 			continue;
-		}  
+		}
+
+		if ($row['device'] == "WebRTC") { 
+			continue;
+		}		  
 
 		$pjsipPhoneBuff = $this->helper->getPjsipPhoneInstance($row['pkey']); 
 
@@ -492,6 +497,53 @@ private function genPjsipPhones() {
 
 	$fh = fopen($targetFile, 'w') or die('Could not open file PJSIP_READY_PHONES!');
 	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_ready_phones.conf');
+	fclose($fh);
+
+	$OUT = NULL;
+}
+
+private function genPjsipWebrtc() {
+
+//
+//  PJSIP WebRTC extensions (phones)
+//
+
+	$OUT = NULL;
+ 	$pjsipPhoneBuff = NULL;
+	$phones = $this->helper->getTable("ipphone",null,false);
+
+    foreach ($phones as $row) {
+
+		if ($row['active'] != "YES") { 
+			continue;
+		}
+
+		if ($row['device'] != "WebRTC") { 
+			continue;
+		}		  
+
+		$pjsipPhoneBuff = $this->helper->getPjsipWebrtcInstance($row['pkey']); 
+
+		if ($pjsipPhoneBuff) {
+			$this->xlatePjsipBuff($pjsipPhoneBuff,$row);
+		}   
+					
+		$OUT .= $pjsipPhoneBuff . "\n";
+		$pjsipPhoneBuff = NULL;		
+	}
+
+	$targetFile = PJSIP . PJSIP_READY_WEBRTC;
+	$this->checkFileIsWriteable($targetFile);
+
+/*
+ *	If $OUT is empty, put a single comment in it
+ */
+	if (empty($OUT)) {
+		$OUT = ";";
+	}
+
+	$fh = fopen($targetFile, 'w') or die('Could not open file PJSIP_READY_WEBRTC!');
+	fwrite($fh,$OUT) or die('Could not write to file sark_pjsip_ready_webrtc.conf');
 	fclose($fh);
 
 	$OUT = NULL;
