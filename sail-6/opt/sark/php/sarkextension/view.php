@@ -293,15 +293,14 @@ private function showMain() {
 			 
 		echo '<td class="w3-hide-small  w3-hide-medium" title = "' . $row['desc'] . '" >' . $display  . '</td>' . PHP_EOL;
 
+
 		$uaManDev = Array();
 		$uaManDev = $this->amiHelper->getUaFromPeer($row['pkey'],$this->sip_peers); 
 		
+		$display = $row['device'];
 		if ($row['device'] == 'General SIP') {
 			if ( ! empty ($uaManDev['manuf'])) {
 				$display = $uaManDev['manuf'];
-			}
-			else {
-				$display = $row['device'];
 			}
 		}
 		echo '<td class="w3-hide-small  w3-hide-medium" title = "' . $display . '" >' . $display  . '</td>' . PHP_EOL;	
