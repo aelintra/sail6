@@ -1311,6 +1311,7 @@ private function saveEdit() {
 						'celltwin' => True,
 						'ipaddress' => True,
 						'provisioning' => True,
+						'pjsipuser' => True,
 		);
 
 		$cosSetArray = array();
@@ -1401,11 +1402,11 @@ private function saveEdit() {
 				// set the mailbox to the new extension
 				$tuple['dvrvmail'] = $newkey;
 				$this->chkMailbox($tuple['dvrvmail'],$tuple['sipiaxfriend']);
-				if ($tuple['device'] == "WebRTC") {
-					$this->helper->movePjsipPWebrtcInstance($tuple['pkey'],$newkey);
+				if ($device == "WebRTC") {
+					$this->helper->movePjsipPWebrtcInstance($tuple['pkey'],$_POST['pjsipuser']);
 				}
 				else {
-					$this->helper->movePjsipPhoneInstance($tuple['pkey'],$newkey);	
+					$this->helper->movePjsipPhoneInstance($tuple['pkey'],$_POST['pjsipuser']);	
 				}			
 				$ret = $this->helper->setTuple("ipphone",$tuple,$newkey);
 
@@ -1436,10 +1437,10 @@ private function saveEdit() {
 
 			if ($ret == 'OK') {
 				if ($device == "WebRTC") {
-					$this->helper->setPjsipPWebrtcInstance($tuple['pkey'],$newkey);
+					$this->helper->setPjsipWebrtcInstance($tuple['pkey'],$_POST['pjsipuser']);
 				}
 				else {
-					$this->helper->setPjsipPhoneInstance($tuple['pkey'],$newkey);	
+					$this->helper->setPjsipPhoneInstance($tuple['pkey'],$_POST['pjsipuser']);	
 				}					
 				$this->message = "Updated extension " . $tuple['pkey'];
 			}

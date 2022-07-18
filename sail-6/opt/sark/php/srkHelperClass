@@ -674,7 +674,7 @@ public function setPjsipWebrtcInstance($key,$data) {
 		$this->createPjsipWebrtcInstance($key);
 	}
 		
-	$fh = fopen($targetFile, 'w') or die("Could not open file $targetFile!");
+	$fh = fopen($targetFile, 'w') or die("__function__ Could not open file $targetFile!");
 	fwrite($fh,$data) or die("Could not write to file $targetFile !");
 	fclose($fh);
 	return True;		
@@ -1008,7 +1008,7 @@ public function buildTupleArray($post,&$tuple,$custom=false,$stripslash=array())
 		"latency" => True,
 		"regthistrunk" => True,
 		"tabselect" => True,
-		"pjsipuser" => True
+//		"pjsipuser" => True
 	);
 	$dont_strip_tags = array(
 		"provision" => True,
