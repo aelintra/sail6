@@ -713,6 +713,10 @@ encryption=\$encryption";
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {
 			$tuple['provision']	.= "#INCLUDE " . $tuple['device'];
 		}
+
+		if ($tuple['device'] == 'WebRTC') {
+			$tuple['device'] = "wss";
+		}		
 			
 		if (!preg_match('/^[Pp]olycom/', $tuple['device']) ) {
 			if ( $resdevice['blfkeyname'] && $resdevice['blfkeyname'] != 'None' ) {
