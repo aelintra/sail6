@@ -715,7 +715,7 @@ encryption=\$encryption";
 		}
 
 		if ($tuple['device'] == 'WebRTC') {
-			$tuple['device'] = "wss";
+			$tuple['transport'] = "wss";
 		}		
 			
 		if (!preg_match('/^[Pp]olycom/', $tuple['device']) ) {

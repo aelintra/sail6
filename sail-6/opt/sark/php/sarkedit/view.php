@@ -159,10 +159,12 @@ private function showEdit() {
    	if (array_key_exists($pkey,$readOnlyFiles)) {
    		$readonly=true;
 //		echo '<h2>Asterisk File ' . $pkey . ' (Readonly) </h2>' . PHP_EOL;
-		$this->myPanel->displayFile($astfile,"astfile",true);
+//		$this->myPanel->displayFile($astfile,"astfile",true);
+		$this->myPanel->displayFile(htmlspecialchars($astfile),"astfile",true);
 	}
 	else {
-		$this->myPanel->displayFile($astfile,"astfile");	  
+		$this->myPanel->displayFile(htmlspecialchars($astfile),"astfile");
+
 	}
 	echo '<input type="hidden" name="pkey" id="pkey" value="' . $pkey . '"  />' . PHP_EOL;
 
