@@ -528,7 +528,7 @@ private function genPjsipWebrtc() {
 			$this->xlatePjsipBuff($pjsipPhoneBuff,$row);
 		}   
 					
-		$OUT .= $pjsipPhoneBuff . "\n";
+		$OUT .= $pjsipPhoneBuff . "\n\n";
 		$pjsipPhoneBuff = NULL;		
 	}
 

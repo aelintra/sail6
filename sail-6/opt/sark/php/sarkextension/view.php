@@ -707,7 +707,10 @@ allow=ulaw
 nat=\$nat
 transport=\$transport
 encryption=\$encryption";
-
+	
+	if (empty($tuple['provision'])) {
+		$tuple['provision'] = "\n";
+	}
 
 	if ($resdevice['technology'] == 'SIP') {
 		if ($tuple['device'] != 'General SIP' && $tuple['device'] != 'MAILBOX') {
@@ -879,7 +882,7 @@ private function deleteLastBlf() {
 
 private function deleteRow() {
 	$pkey = $_REQUEST['pkey'];
-	$this->helper->deletePjsipPhoneInstance($pkey);
+	$this->helper->request_syscmd ("rm /etc/asterisk/sark_pjsip_" . $pkey . "*"); 
 	$this->helper->delTuple("ipphone",$pkey); 
 /* delete COS information */
 	$this->helper->predDelTuple("IPphoneCOSopen","IPphone_pkey",$pkey);
@@ -1495,12 +1498,13 @@ private function adjustAstProvSettings(&$tuple) {
 		
 		
 		
-		if (isset($_POST['macaddr'])) {
+		if (! empty ($_POST['macaddr'])) {
 			$res = $this->dbh->query("SELECT device FROM ipphone where pkey = '" . $tuple['pkey'] . "'")->fetch(PDO::FETCH_ASSOC);
-			$device = $res['device'];
-			$shortdevice = substr($device,0,4);
+			if ( ! empty ($res['device'])) {
+				$device = $res['device'];
+				$shortdevice = substr($device,0,4);
 
-			switch ($shortdevice) {			
+				switch ($shortdevice) {			
 				case 'Snom':
 				case 'snom':					
 					switch ($tuple['transport']) {						
@@ -1578,6 +1582,7 @@ private function adjustAstProvSettings(&$tuple) {
 					break;		
 */
 		
+				}
 			}
 
 		}

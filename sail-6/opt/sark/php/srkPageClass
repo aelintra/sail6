@@ -1724,7 +1724,12 @@ public function navRowDisplay($pkey) {
 	$sql = $dbh->prepare ($querystring);	
 	$sql->execute(array($pkey));
 	$res = $sql->fetch();
-	$next = $res['pkey'];
+    if (empty($res['pkey'])) {
+        $next = NULL;
+    }
+    else {
+	   $next = $res['pkey'];
+    }
 	
 // Get next lower key	
 	$querystring = "SELECT pkey FROM $tab WHERE pkey < ? ORDER BY pkey COLLATE NOCASE DESC LIMIT 1";		
@@ -1732,6 +1737,12 @@ public function navRowDisplay($pkey) {
 	$sql->execute(array($pkey));
 	$res = $sql->fetch();
 	$prev = $res['pkey'];
+    if (empty($res['pkey'])) {
+        $prev = NULL;
+    }
+    else {
+       $prev = $res['pkey'];
+    }
 	
 // Get first key
 

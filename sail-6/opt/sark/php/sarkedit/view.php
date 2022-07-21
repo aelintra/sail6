@@ -191,7 +191,7 @@ private function saveEdit() {
 		$pkey = $_POST['pkey']; 
 	}
 	if (isset ($_POST['astfile'])) {
-		$astfile = strip_tags($_POST['astfile']); 
+		$astfile = $_POST['astfile']; 
 	}
 	$astfile = preg_replace ( "/\\\/", '', $astfile);	
 		

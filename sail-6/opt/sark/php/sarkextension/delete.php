@@ -8,7 +8,8 @@
  
   /* delete a record using information about id, */ 
   $helper->delTuple("ipphone",$id);
-  $helper->deletePjsipPhoneInstance($id); 
+//  $helper->deletePjsipPhoneInstance($id);
+  $helper->request_syscmd ("rm /etc/asterisk/sark_pjsip_" . $id . "*"); 
   /* delete COS information */
   $helper->predDelTuple("IPphoneCOSopen","IPphone_pkey",$id);
   $helper->predDelTuple("IPphoneCOSclosed","IPphone_pkey",$id);
