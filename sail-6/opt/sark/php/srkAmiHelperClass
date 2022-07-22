@@ -66,8 +66,9 @@ public function get_pjsip_array($endpoints) {
 	$sip_work = array();
 
 	foreach ($endpoints as $extrow) {
+		$this->helper->logit(json_encode($extrow));
 		if (empty($extrow['pkey'])) {
-			$this->helper->logit(json_encode($extrow));
+//			$this->helper->logit(json_encode($extrow));
 			continue;
 		}
 		if ($extrow['active'] == 'NO') {

@@ -28,6 +28,7 @@ define('PJSIP_GLOBALS', 				'globals.conf');
 
 define('PJSIP_PHONE',					'phone.conf');
 define('PJSIP_PHONE_TEMPLATE',          'phone.tmpl');
+define('PJSIP_PHONE_INLINE_TEMPLATE',   'phone_inline.tmpl');
 define('PJSIP_PHONE_INSTANCE_TEMPLATE', 'phone_instance.tmpl');
 define('PJSIP_READY_PHONES',            'ready_phones.conf');
 
