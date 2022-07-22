@@ -622,6 +622,8 @@ private function genPjsipWizard() {
 //  SIP extensions (phones)
 //
 
+return 0;
+
 	$OUT = $this->genFileBanner();
 
 	$phoneTmpl = PJSIP . PJSIP_PHONE_TEMPLATE;

@@ -556,7 +556,7 @@ public function deletePjsipTrunkInstance($key) {
  */
 public function createPjsipPhoneInstance($key) {
 
-	$templateFile = PJSIP . PJSIP_PHONE_INSTANCE_TEMPLATE;
+	$templateFile = PJSIP . PJSIP_PHONE_TEMPLATE;
 	$targetFile = PJSIP . $key . '_' . PJSIP_PHONE;
 	if (!file_exists($targetFile) || 0 == filesize( $targetFile )) {
 		$rc = $this->request_syscmd ("/bin/cp $templateFile $targetFile >/dev/null 2>&1");		
