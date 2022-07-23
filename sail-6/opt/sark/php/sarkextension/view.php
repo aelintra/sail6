@@ -687,26 +687,6 @@ private function addNewExtension ($tuple) {
 //
 //	backport V7 extension definition for new extensions
 //
-
-	$tuple['sipiaxfriend'] 	= 
-	"type=friend
-context=internal	
-defaultuser=\$desc
-secret=\$password
-mailbox=\$ext@\$clst
-host=dynamic
-qualify=yes
-call-limit=3
-callerid=\"\$desc\" <\$ext>
-subscribecontext=extensions
-namedcallgroup=\$clst
-namedpickupgroup=\$clst
-disallow=all 
-allow=alaw
-allow=ulaw
-nat=\$nat
-transport=\$transport
-encryption=\$encryption";
 	
 	if (empty($tuple['provision'])) {
 		$tuple['provision'] = "\n";
@@ -1470,12 +1450,6 @@ private function adjustAstProvSettings(&$tuple) {
 /*
  * local/remote processing
  */ 
-//		$tuple['sipiaxfriend'] = preg_replace( " /nat=yes/ ",'',$tuple['sipiaxfriend']);	
-//			
-//		$tuple['sipiaxfriend'] = preg_replace( " /^\#include\s*sark_sip_tls.conf.*$/m ",'',$tuple['sipiaxfriend']);	
-//		$tuple['sipiaxfriend'] = preg_replace( " /^\#include\s*sark_sip_tcp.conf.*$/m ",'',$tuple['sipiaxfriend']);	
-//		$tuple['sipiaxfriend'] = rtrim($tuple['sipiaxfriend']);	
-
 
 		//tls - we provide provisioning support for snom,Yealink,Panasonic with TCP
 		

@@ -16,6 +16,8 @@ define('MONSTAGE',						'/var/spool/asterisk/monstage/');
 
 define('SARK_DB',						'/opt/sark/db/sark.db'); 
 define('SARK_READONLY_DB',				'/opt/sark/db/sark.rdonly.db');
+define('SARK_PATH',                     '/opt/sark');
+define('ROOTDIR',                       '/opt/sark/db');
 
 
 /**
