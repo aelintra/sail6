@@ -62,7 +62,6 @@ public function genAsterisk() {
     $this->genPjsipPhones();
     $this->genPjsipWebrtc();
     $this->genPjsipTrunks();
-    $this->genPjsipWizard();
     $this->genConferences();
     $this->genQueues();
     $this->genFeatures();
@@ -481,7 +480,8 @@ private function genPjsipPhones() {
 			$this->xlatePjsipBuff($pjsipPhoneBuff,$row);
 		}   
 					
-		$OUT .= $pjsipPhoneBuff . "\n";
+		$OUT .= $pjsipPhoneBuff;
+		$OUT .= "\n\n";
 		$pjsipPhoneBuff = NULL;		
 	}
 
@@ -582,7 +582,8 @@ private function genPjsipTrunks() {
 			else {
 				$pjsipTrunkBuff = preg_replace ( '/\$context/','internal', $pjsipTrunkBuff );
 			}
-			$pjsipReadyTrunks .= $pjsipTrunkBuff . "\n";
+			$pjsipReadyTrunks .= $pjsipTrunkBuff;
+			$pjsipReadyTrunks .= "\n\n";
 			$pjsipTrunkBuff = NULL;
 	}
 
@@ -607,32 +608,6 @@ private function genPjsipTrunks() {
 		fclose($fh);
 	}
 
-}
-
-/**
- * genPjsipWizard
- * Here we simpky cat the extension template wizardfile and the generated 
- * phones (extensions) into the pjsip wizard 
- * 
- * @return NULL
- */
-private function genPjsipWizard() {
-
-//
-//  SIP extensions (phones)
-//
-
-return 0;
-
-	$OUT = $this->genFileBanner();
-
-	$phoneTmpl = PJSIP . PJSIP_PHONE_TEMPLATE;
-	$this->checkFileIsWriteable($phoneTmpl);
-	$phones =  PJSIP . PJSIP_READY_PHONES;
-	$this->checkFileIsWriteable($phones);
-
-	$this->checkFileIsWriteable(PJSIP . PJSIP_WIZARD);
-	$this->helper->request_syscmd ("/bin/cat $phoneTmpl $phones  > " . PJSIP . PJSIP_WIZARD);
 }
 
 /**

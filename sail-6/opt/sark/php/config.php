@@ -28,8 +28,6 @@ define('PJSIP_GLOBALS', 				'globals.conf');
 
 define('PJSIP_PHONE',					'phone.conf');
 define('PJSIP_PHONE_TEMPLATE',          'phone.tmpl');
-define('PJSIP_PHONE_INLINE_TEMPLATE',   'phone_inline.tmpl');
-define('PJSIP_PHONE_INSTANCE_TEMPLATE', 'phone_instance.tmpl');
 define('PJSIP_READY_PHONES',            'ready_phones.conf');
 
 define('PJSIP_WEBRTC',					'webrtc.conf');
@@ -44,5 +42,3 @@ define('PJSIP_TRUNK_SNDREG_TEMPLATE',	'trunk_sndreg.tmpl');
 define('PJSIP_TRUNK_RCVREG_TEMPLATE',	'trunk_rcvreg.tmpl');
 define('PJSIP_TRUNK_TRUSTED_TEMPLATE',	'trunk_trusted.tmpl');
 define('PJSIP_READY_TRUNKS',            'ready_trunks.conf');
-
-define('PJSIP_WIZARD',                  'wizard.conf');
