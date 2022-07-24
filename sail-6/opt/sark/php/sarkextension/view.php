@@ -717,7 +717,7 @@ private function addNewExtension ($tuple) {
 	$tuple['technology'] = $resdevice['technology'];			
 	$tuple['passwd'] = $this->helper->ret_password ($this->passwordLength);
 	$tuple['dvrvmail'] = $tuple['pkey'];
-	$tuple['sipiaxfriend'] = trim($tuple['sipiaxfriend']);
+
 
 /*
  * 	Adjust the Asterisk and provisioning boxes

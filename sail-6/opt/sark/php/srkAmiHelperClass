@@ -79,6 +79,7 @@ public function get_pjsip_array($endpoints) {
 		$sip_peers[$extrow['pkey']]  = $sip_work[$extrow['pkey']];
 	}
 	$this->amiHdle->logout();
+	$this->helper->logit(json_encode($sip_peers));
 	return $sip_peers;
 }
 
@@ -109,12 +110,11 @@ public function get_pjsip_endpoint($endpoint) {
 public function getIpAddressFromPeer($key,$peers) {
 		
 
-		if (!empty($peers [$key]['IPaddress'])) {
-			return $peers [$key]['IPaddress'];
-		}
-		if (!empty($peers [$key]['ViaAddress'])) {
-			$via_parts = explode(':',$peers [$key]['ViaAddress']);
-			return $via_parts[0];
+		if (!empty($peers [$key]['URI'])) {
+			preg_match("/^sip:.*@(.*):/",$peers [$key]['URI'],$matches);
+			if (!empty($matches[1])) {
+				return $matches[1];
+			}
 		}
 		if (!empty($peers [$key]['Match'])) {
 			$match_parts = explode('/',$peers [$key]['Match']);
@@ -164,13 +164,6 @@ public function getUaFromPeer($key,$peers) {
  */
 		if (!empty($peers [$key]['UserAgent'])) {
 			return $this->getUaElementsFromPeer($peers [$key]['UserAgent']);	
-		}
-
-/*
- * chan_sip
- */
-		if (!empty($peers [$key]['SIP-Useragent'])) {
-			return $this->getUaElementsFromPeer($peers [$key]['SIP-Useragent']);	
 		}
  
 		return False;
