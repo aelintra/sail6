@@ -151,8 +151,8 @@ private function showMain() {
 	$iax = True;
 	if ( $this->astrunning ) {	
 		$this->amiHelper = new amiHelper();
-		$this->sip_peers = $amiHelper->get_pjsip_array($rows);
-		$this->iax_peers = $amiHelper->get_iax_array();		
+		$this->sip_peers = $this->amiHelper->get_pjsip_array($rows);
+		$this->iax_peers = $this->amiHelper->get_iax_array();		
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
