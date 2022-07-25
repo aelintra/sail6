@@ -43,6 +43,23 @@ public function get_peer_array($iax=false) {
 	$this->amiHdle->logout();
 	return $sip_peers;
 }
+
+/**
+ * @return Array of IAX peers  or False if none
+ */
+public function get_iax_array() {
+
+	if ( ! $this->amiHelperLogin()) {
+		return false;
+	}
+
+	$iax_peers = array(); 	
+	$amisiprets = $this->amiHdle->getIaxPeers();
+	$iax_peers = $this->build_peer_array($amisiprets);
+	$this->amiHdle->logout();
+	return $iax_peers;
+
+}
     /**
      * Get data for all PJSIP endpoints
      * PJSIP does not return what we want when we ask for all endpoints.   
@@ -139,12 +156,8 @@ public function getLatencyFromPeer($key,$peers) {
 
 		if (!empty($peers [$key]['RoundtripUsec'])) {
 			if (is_numeric($peers [$key]['RoundtripUsec'])) {
-				return round($peers [$key]['RoundtripUsec']/1000) . "ms";	
+				return "OK (" . round($peers [$key]['RoundtripUsec']/1000) . " ms)";	
 			}
-		}
-
-		if (isset($peers [$key]['Status'])) {
-			return $peers [$key]['Status'];	
 		}
  
 		return 'Unknown';

@@ -106,14 +106,6 @@ private function showMain() {
 	if (isset($this->message)) {
 		$this->myPanel->msg = $this->message;
 	} 
-/*
- * sign on to the AMI and build a peer array - the IAX stuff is Ast >= 1.8 only - 
- * Digium changed the format after 1.4 to be (almost) the same as the SIP output 
- * so we'll only work with 1.8 or higher
- */
-
-		
-
 /* 
  * start page output
  */
@@ -155,15 +147,11 @@ private function showMain() {
 			"from lineio li inner join carrier ca  on li.carrier=ca.pkey";
 	$rows = $this->helper->getTable("lineio", $sql,true,false,'li.pkey');
 
+	$iax = True;
 	if ( $this->astrunning ) {	
 		$amiHelper = new amiHelper();
-		if ($this->helper->checkPjsipEnabled()) {
-			$this->sip_peers = $amiHelper->get_pjsip_array($rows);
-		}
-		else {
-			$this->sip_peers = $amiHelper->get_peer_array();
-		}
-		$this->iax_peers = $amiHelper->get_peer_array(true);		
+		$this->sip_peers = $amiHelper->get_pjsip_array($rows);
+		$this->iax_peers = $amiHelper->get_iax_array();		
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
