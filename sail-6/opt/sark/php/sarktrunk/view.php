@@ -181,8 +181,8 @@ private function showMain() {
 		if ($row['active'] == 'YES' && $this->astrunning) {
 			if ($row['technology'] == 'SIP' ) {
 
-				$hostip = $amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
-				$status = $amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
+				$hostip = $this->amiHelper->getIpAddressFromPeer($row['pkey'],$this->sip_peers);
+				$status = $this->amiHelper->getLatencyFromPeer($row['pkey'],$this->sip_peers);
 			}		
 	
 			else if ($row['technology'] == 'IAX2') {
