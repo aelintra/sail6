@@ -26,23 +26,6 @@ class amiHelper {
 protected $amiHdle;
 protected $helper;
 
-public function get_peer_array($iax=false) {
-
-	if ( ! $this->amiHelperLogin()) {
-		return false;
-	}
-
-	$sip_peers = array(); 	
-	if ($iax) {
-		$amisiprets = $this->amiHdle->getIaxPeers();
-	}
-	else {
-		$amisiprets = $this->amiHdle->getSipPeers();
-	}
-	$sip_peers = $this->build_peer_array($amisiprets);
-	$this->amiHdle->logout();
-	return $sip_peers;
-}
 
 /**
  * @return Array of IAX peers  or False if none
@@ -61,7 +44,7 @@ public function get_iax_array() {
 
 }
     /**
-     * Get data for all PJSIP endpoints
+     * Get array for all PJSIP endpoints
      * PJSIP does not return what we want when we ask for all endpoints.   
      * Instead, we must recirsively call the AMI for each indivdual endpoint
      * and amalgamate the results into our final peer array
@@ -91,6 +74,10 @@ public function get_pjsip_array($endpoints) {
 		if ($extrow['active'] == 'NO') {
 			continue;
 		}
+		if ($extrow['technology'] != 'SIP') {
+			continue;
+		}
+				
 		$amisiprets = $this->amiHdle->getPjsipPeer($extrow['pkey']);
 		$sip_work = $this->build_pjsip_array($amisiprets,$extrow['pkey']);
 		$sip_peers[$extrow['pkey']]  = $sip_work[$extrow['pkey']];

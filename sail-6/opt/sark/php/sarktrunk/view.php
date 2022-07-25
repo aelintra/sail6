@@ -27,6 +27,7 @@ Class sarktrunk {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
+	protected $amiHelper;
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
@@ -149,7 +150,7 @@ private function showMain() {
 
 	$iax = True;
 	if ( $this->astrunning ) {	
-		$amiHelper = new amiHelper();
+		$this->amiHelper = new amiHelper();
 		$this->sip_peers = $amiHelper->get_pjsip_array($rows);
 		$this->iax_peers = $amiHelper->get_iax_array();		
 	}

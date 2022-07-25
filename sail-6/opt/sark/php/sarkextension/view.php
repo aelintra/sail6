@@ -206,12 +206,7 @@ private function showMain() {
 
 	if ( $this->astrunning ) {	
 		$this->amiHelper = new amiHelper();
-		if ($this->helper->checkPjsipEnabled()) {
-			$this->sip_peers = $this->amiHelper->get_pjsip_array($extensions);
-		}
-		else {
-			$this->sip_peers = $this->amiHelper->get_peer_array();
-		}	
+		$this->sip_peers = $this->amiHelper->get_pjsip_array($extensions);
 	}
 	else {
 		$this->myPanel->msg .= "  (No Asterisk running)";
@@ -220,10 +215,7 @@ private function showMain() {
 /* 
  * start page output
  */
-	
-
-	
-	
+		
 	$buttonArray=array();
 	$ret = $this->helper->getLc(); 
 	if (!$ret) {	
