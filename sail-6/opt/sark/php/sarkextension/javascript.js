@@ -85,8 +85,8 @@
 	$("#sarkextensionForm").validate ( {
 	   rules: {
 // edit-panel rules
-			pkey: {required: true, range:[001,9999]},
-			newkey: {required: true, range:[001,9999]},
+			pkey: {required: true, range:[001,99999]},
+			newkey: {required: true, range:[001,99999]},
 			desc: "required callername",
 			macaddr: "macaddress",
 			vmailfwd: "email",
@@ -96,8 +96,8 @@
 // new-panel rules
 	   },
 	   messages: {
-		   pkey: "Please enter a valid extension number that matches your chosen extension length (3 or 4 digits)",
-		   newkey: "Please enter a valid extension number that matches your chosen extension length (3 or 4 digits)",
+		   pkey: "Please enter a valid extension number that matches your chosen extension length (3 to 5 digits)",
+		   newkey: "Please enter a valid extension number that matches your chosen extension length (3 to 5 digits)",
 		   vmailfwd: "Invalid email address",
 		   cfim: "Call forward must be blank (default) or a numeric integer",
 		   cfbs: "Call forward must be blank (default) or a numeric integer",
