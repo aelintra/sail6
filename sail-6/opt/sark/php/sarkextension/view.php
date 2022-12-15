@@ -1253,7 +1253,7 @@ private function saveEdit() {
 	$this->validator->addValidation("newkey","num","Invalid extension number");
 	$this->validator->addValidation("newkey","req","You must specify an extension number");
 	$this->validator->addValidation("newkey","minlen=3","Invalid minimum extension number");
-	$this->validator->addValidation("newkey","maxlen=4","Invalid maximum extension number");
+	$this->validator->addValidation("newkey","maxlen=5","Invalid maximum extension number");
 	$this->validator->addValidation("cellphone","num","cellphone number must be numeric");
     $this->validator->addValidation("vmailfwd","email","Invalid email address format");
 //    $this->validator->addValidation("callgroup","alnum","Call Group name must be alphanumeric(no spaces)");  
@@ -1805,8 +1805,8 @@ private function chkMailbox(&$mailbox,&$friend)
 		if ( preg_match(' /mailbox=\$ext/ ',$friend))	{
 			$friend = preg_replace ( '/mailbox=\$ext/', $astmailbox, $friend);
 		}
-		else if ( preg_match(' /mailbox=\d{3,4}/ ',$friend))	{	
-			$friend = preg_replace ( '/mailbox=\d{3,4}/', $astmailbox, $friend);
+		else if ( preg_match(' /mailbox=\d{3,5}/ ',$friend))	{	
+			$friend = preg_replace ( '/mailbox=\d{3,5}/', $astmailbox, $friend);
 		}
 		else if ( preg_match(' /mailbox=/ ',$friend))	{	
 			$friend = preg_replace ( '/mailbox=/', $astmailbox, $friend);

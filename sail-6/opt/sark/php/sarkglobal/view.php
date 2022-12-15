@@ -202,7 +202,7 @@ private function showMain() {
   	$this->myPanel->displayPopupFor('countrycode',$global['COUNTRYCODE'],$country);  
 	
 	if ( ! $extensions ) {	
-		$this->myPanel->displayPopupFor('extlen',$global['EXTLEN'],array('3','4'));
+		$this->myPanel->displayPopupFor('extlen',$global['EXTLEN'],array('3','4','5'));
 	} 
 
     $this->myPanel->displayInputFor('sipiaxstart','number',$global['SIPIAXSTART']);
