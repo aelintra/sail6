@@ -1,3 +1,11 @@
+sail (6.2.0-28+ubuntu18) UNRELEASED; urgency=low
+
+   - fix formValidator for PHP8
+   - fix fpdf for PHP8
+   - require runit and dmedecode for Deb 11 and Ubu 22.04
+
+ -- CoCoSoft <admin@aelintra.com>  Tue, 19  Apr 2023 18:00:00 +0000
+
 sail (6.2.0-27+ubuntu18) UNRELEASED; urgency=low
 
    - fix typo in genclass at line 1496, incorrect comments delimiter

@@ -301,14 +301,9 @@ fi
 
 #Check if I am an AWS instance and set defaults accordingly
 
-dmidecode -s bios-version | grep -i amazon
+dmidecode | grep -i amazon
 if [ "$?" -eq "0" ] ; then
     setvcl
-else
-    dmidecode -s bios-vendor | grep -i amazon
-    if [ "$?" -eq "0" ] ; then
-        setvcl
-    fi
 fi
 
 # enable shorewall
