@@ -1,3 +1,11 @@
+sail (6.2.0-29+deb10u1) UNRELEASED; urgency=low
+
+   - change asterisk folder perms in setip
+   - update script getmac to fetch from sail.com
+   - update extensions/view for new MAC file
+
+ -- CoCoSoft <admin@aelintra.com>  Tue, 12  Aug 2023 18:00:00 +0000
+
 sail (6.2.0-28+deb10u1) UNRELEASED; urgency=low
 
    - fix formValidator for PHP8
