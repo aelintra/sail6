@@ -224,7 +224,7 @@ public function get_externip() {
 			return $r1;
 		}
 //	DiG failed so lets try ipify
-		$r2 = file_get_contents('https://api.ipify.org');
+		$r2 = `curl --connect-timeout 5  https://api.ipify.org`;
 		if (filter_var($r2, FILTER_VALIDATE_IP)) {
 			return $r2;
 		}

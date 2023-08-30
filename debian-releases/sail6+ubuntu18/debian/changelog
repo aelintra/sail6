@@ -1,3 +1,11 @@
+sail (6.2.0-31+ubuntu18) UNRELEASED; urgency=low
+
+   - use curl instead of file_get-contents in srkNetHelper - allows timeout
+   - remove country_codes function from srkHelper - not used
+   - fix error in fpdf
+
+ -- CoCoSoft <admin@aelintra.com>  Tue, 29  Aug 2023 18:00:00 +0000
+
 sail (6.2.0-29+ubuntu18) UNRELEASED; urgency=low
 
    - change asterisk folder perms in setip
