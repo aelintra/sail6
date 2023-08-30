@@ -1,0 +1,30 @@
+Format: 1.8
+Date: Thu, 31  Aug 2023 18:00:00 +0000
+Source: sail
+Binary: sail
+Built-For-Profiles: noudeb
+Architecture: all
+Version: 6.2.0-32+ubuntu
+Distribution: UNRELEASED
+Urgency: low
+Maintainer: CoCo <admin@aelintra.com>
+Changed-By: CoCoSoft <admin@aelintra.com>
+Description:
+ sail       - SARK  Asterisk Integration Layer (SAIL) - A fast, lightweight swi
+Changes:
+ sail (6.2.0-32+ubuntu) UNRELEASED; urgency=low
+ .
+    - cleaned up minor issues in srkhead, sarklogin and sarkshell
+    - dropped +ubuntu18 in favour of +ubuntu
+Checksums-Sha1:
+ 9c21e3b5d331698a8bd70d629fa5e2d3861d6c19 4762 sail_6.2.0-32+deb_arm64.buildinfo
+ 039e1fbfb31a2ac80eda7e4d7155088c398023cf 5943700 sail_6.2.0-32+ubuntu_all.deb
+ 0a36d3fa8e99c5e0f980c86ad37cfaf34ade458a 4774 sail_6.2.0-32+ubuntu_arm64.buildinfo
+Checksums-Sha256:
+ 32929b7dd836fc31f9672f6ecfb0645846af0b809586810fd1bf5a55567c2560 4762 sail_6.2.0-32+deb_arm64.buildinfo
+ b6bc9b6f92e88a0675199aa13446da25130e36c17638cedeb215b9cf36639531 5943700 sail_6.2.0-32+ubuntu_all.deb
+ 6bef53804189e2b1853efaa5e5a33523b5e2f9bacb78f447c950270a326b45a0 4774 sail_6.2.0-32+ubuntu_arm64.buildinfo
+Files:
+ 3192841929c3242556d3e498d093048f 4762 network extra sail_6.2.0-32+deb_arm64.buildinfo
+ 58b207a93767541993fcc131bce7d096 5943700 network extra sail_6.2.0-32+ubuntu_all.deb
+ 76869691b3bd526025f00c0c2b6b1ee7 4774 network extra sail_6.2.0-32+ubuntu_arm64.buildinfo
