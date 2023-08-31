@@ -1,3 +1,10 @@
+sail (6.2.0-32+ubuntu) UNRELEASED; urgency=low
+
+   - cleaned up minor issues in srkhead, sarklogin and sarkshell
+   - dropped +ubuntu18 in favour of +ubuntu
+
+ -- CoCoSoft <admin@aelintra.com>  Thu, 31  Aug 2023 18:00:00 +0000
+
 sail (6.2.0-31+ubuntu18) UNRELEASED; urgency=low
 
    - use curl instead of file_get-contents in srkNetHelper - allows timeout
