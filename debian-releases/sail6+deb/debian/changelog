@@ -1,3 +1,9 @@
+sail (6.2.0-33+deb) UNRELEASED; urgency=low
+
+   - fix missing sip_header.conf
+
+ -- CoCoSoft <admin@aelintra.com>  Fri, 1  Sep 2023 18:00:00 +0000
+
 sail (6.2.0-32+deb) UNRELEASED; urgency=low
 
    - cleaned up minor issues in srkhead, sarklogin and sarkshell
