@@ -45,8 +45,8 @@ $Phonelist = array ('aastra'=>'aastra',
 					
 $f2b_target = '/etc/fail2ban/jail.conf';
 
-if ($netaddress == '0.0.0.0') {
-	print "No IP from ifconfig  - got $netaddress \n";
+if ($netaddress == '0.0.0.0' || empty($netaddress)) {
+	logit ("!!!!!!!!! No IP returned from ip a !!!!!!!!!!  - check network cable");
 }
 else {
 	if ($staticIPV4) {
