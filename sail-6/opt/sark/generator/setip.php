@@ -19,21 +19,23 @@ include("/opt/sark/php/srkNetHelperClass");
 
 $net = new nethelper();
 
-$netaddress = $net->get_networkIPV4();
-$sleep = 5;
 
-while (empty($netaddress)) {
+$ip = $net->get_localIPV4();
+$sleep = 0;
+
+while (empty($ip)) {
 	logit  ("waiting for network - retry in $sleep seconds");
 	sleep ($sleep);
 	unset ($net);
 	$net = new nethelper();
-	$netaddress = $net->get_networkIPV4();
+	$ip = $net->get_localIPV4();
 	if ($sleep < 30) {
 		$sleep = $sleep + 5;
 	}
 }
 
 $interface = $net->get_interfaceName();
+$netaddress = $net->get_networkIPV4();
 $cidr = $net->get_networkCIDR();
 $msk = $net->get_netMask();
 $ip = $net->get_localIPV4();
