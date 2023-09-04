@@ -42,5 +42,8 @@ binary-arch: build
 	dh_md5sums
 	dh_builddeb
 
+override_dh_builddeb: 
+	dh_builddeb -- -Zgzip	
+
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary
