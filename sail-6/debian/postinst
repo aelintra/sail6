@@ -67,6 +67,7 @@ chown -R asterisk:asterisk /usr/share/asterisk/sounds
 chown -R asterisk:asterisk /var/log/asterisk
 chown -R asterisk:asterisk /var/spool/asterisk
 
+chmod 644 -R /etc/cron.d/sark
 chmod 664 -R /etc/asterisk/*
 chmod +x /etc/asterisk/manager.d
 chmod 755 -R /opt/sark/www
