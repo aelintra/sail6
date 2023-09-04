@@ -5,37 +5,7 @@ Maintainer: CoCo <admin@aelintra.com>
 
 Package: sail
 Architecture: all
-Depends: ${misc:Depends}, 
-sailhpe (>= 6.0.0-7),
-ngrep,
-sqlite3,
-lsb-release, 
-asterisk, asterisk-mp3, asterisk-mysql, 
-apache2, libapache2-mod-php,
-php, php-mbstring, php-gd, php-sqlite3, php-curl, php-mysql, php-pear, php-ldap, 
-libio-socket-multicast-perl,  libdbi-perl, libdbd-sqlite3-perl,libfile-readbackwards-perl,  
-sox, 
-nmap, 
-zip, 
-shorewall, 
-shorewall6, 
-fail2ban, 
-sudo, 
-dos2unix,
-dnsmasq, 
-tshark, 
-less, 
-hostname, 
-ipcalc,
-slapd, ldap-utils, 
-tcpdump, 
-rsync, 
-shellinabox, 
-dnsutils, 
-sysstat, 
-curl, 
-dmidecode,
-runit
+Depends: ${misc:Depends},sailhpe (>= 6.0.0-7),ngrep,sqlite3,lsb-release,asterisk, asterisk-mp3, asterisk-mysql,apache2, libapache2-mod-php,php,php-mbstring,php-gd,php-sqlite3,php-curl,php-mysql,php-pear,php-ldap,libio-socket-multicast-perl,libdbi-perl, libdbd-sqlite3-perl,libfile-readbackwards-perl,sox,nmap,zip,shorewall,shorewall6,fail2ban,sudo,dos2unix,dnsmasq,tshark,less,hostname,ipcalc,slapd, ldap-utils,tcpdump,rsync,shellinabox,dnsutils,sysstat,curl,dmidecode,runit
 
 Description: SARK  Asterisk Integration Layer (SAIL) - A fast, lightweight switch for Asterisk
  SARK  Asterisk Integration Layer (SAIL).  Admin and backend code to configure and build Asterisk dialplans on the fly.
