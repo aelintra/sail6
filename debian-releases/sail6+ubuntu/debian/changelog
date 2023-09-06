@@ -1,3 +1,11 @@
+sail (6.2.0-34+ubuntu) UNRELEASED; urgency=low
+
+   - fix empty sark_asterisk conf files, which do get created later anyway but cause issues if the user doesn't do a reboot after initial installation
+   - modify the netHelper to work in Raspbian debian as well as regular Debian and Ubuntu
+   - remove the old *SQL generators from opt/sark/generator.  They are no longer used.
+
+ -- CoCoSoft <admin@aelintra.com>  Wed, 6  Sep 2023 18:00:00 +0000
+
 sail (6.2.0-33+ubuntu) UNRELEASED; urgency=low
 
    - fix missing sip_header.conf
@@ -13,7 +21,7 @@ sail (6.2.0-32+ubuntu) UNRELEASED; urgency=low
 
 sail (6.2.0-31+ubuntu18) UNRELEASED; urgency=low
 
-   - use curl instead of file_get-contents in srkNetHelper - allows timeout
+   - use curl instead of file_get-contents in srkNetHelper - allows timeoutip
    - remove country_codes function from srkHelper - not used
    - fix error in fpdf
    - remove ntp dependency - rely on timesyncd instead

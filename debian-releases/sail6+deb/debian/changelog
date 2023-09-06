@@ -1,3 +1,11 @@
+sail (6.2.0-34+deb) UNRELEASED; urgency=low
+
+   - fix empty sark_asterisk conf files, which do get created later anyway but cause issues if the user doesn't do a reboot after initial installation
+   - modify the netHelper to work in Raspbian debian as well as regular Debian and Ubuntu
+   - remove the old *SQL generators from opt/sark/generator.  They are no longer used.
+
+ -- CoCoSoft <admin@aelintra.com>  Wed, 6  Sep 2023 18:00:00 +0000
+
 sail (6.2.0-33+deb) UNRELEASED; urgency=low
 
    - fix missing sip_header.conf
