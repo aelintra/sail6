@@ -2,10 +2,8 @@
 
 setvcl() {
 # turn on VCL in Globals
-    echo "AWS instance detected, setting cloud flags"
+    echo "Cloud instance detected, setting cloud flags"
     /usr/bin/sqlite3 /opt/sark/db/sark.db "update globals set VCL=1"
-# open 80,443 and 22 in the firewall (otherwise we'll be locked out)
-    echo "WARNING!!!  Ports 80, 443 and 22 have been opened to prevent AWS lockout - you should review these and set sensible values"
     sed -i 's/ACCEPT net:$LAN $FW tcp 80/ACCEPT net $FW tcp 80/' /etc/shorewall/sark_rules
     sed -i 's/ACCEPT net:$LAN $FW tcp 443/ACCEPT net $FW tcp 443/' /etc/shorewall/sark_rules
     sed -i 's/ACCEPT net:$LAN $FW tcp 22/ACCEPT net $FW tcp 22/' /etc/shorewall/sark_rules 
@@ -286,6 +284,10 @@ fi
 
 #run shorewall's own fix routines
 shorewall update
+
+# tell installer we've opened 80,443 and 22 in the firewall.
+    echo "WARNING!!!  Ports 80, 443 and 22 have been opened to prevent lockout - you should review these and set sensible values"
+
 
 # F2b setup
 [ -e /etc/fail2ban/jail.local ] && rm -rf /etc/fail2ban/jail.local && echo "replacing F2B jail.local" 
