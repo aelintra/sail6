@@ -73,9 +73,6 @@ chmod 755 -R /opt/sark/generator
 chmod 755 -R /opt/sark/perl
 chmod 755 -R /opt/sark/scripts
 
-#FOP directory 
-[ ! -e /opt/sark/fop ] && mkdir /opt/sark/fop
-
 grep -q '#include sark_manager.conf' /etc/asterisk/manager.conf
 if [  "$?" -ne "0" ] ; then
         cp -f /opt/sark/cache/manager.conf /etc/asterisk
@@ -280,6 +277,7 @@ if [ -d /etc/shorewall6 ]; then
 #    touch /etc/shorewall6/sark_blrules
     chown www-data:www-data /etc/shorewall6/sark_rules6
 #    chown www-data:www-data /etc/shorewall6/sark_blrules
+
 fi
 
 #run shorewall's own fix routines
