@@ -485,15 +485,27 @@ private function doUpload() {
 		}
 
 		$filename = strip_tags($_FILES['file']['name']);
-		if (!preg_match (' /wav$/ ', $filename) ) {
-			$this->error_hash['Format'] = "Upload file MUST be format wav";
+
+//	force whitespace in filename to '_'
+
+		$filename = preg_replace("/\s/", '_', $filename);
+		if ($filename != $_FILES['file']['name']) {
+			rename("/tmp" . '/' . $_FILES['file']['name'], "/tmp" . '/' . $filename);
+		}
+
+		if (!preg_match (' /(wav|mp3)$/ ', $filename,$matches) ) {
+			$this->error_hash['Format'] = "Upload file MUST be format wav or mp3";
 			return -1;
 		}
-		$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed /tmp/" . $_FILES['file']['name'] . " -q";
-		$rets = `$sox`;
-		if ($rets) {
-			$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";
-			return -1;			
+
+// For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
+		if (matches[1] == 'wav' ) {
+			$sox = "/usr/bin/sox " . $_FILES['file']['tmp_name'] . " -r 8000 -c 1 -e signed /tmp/" . $_FILES['file']['name'] . " -q";
+			$rets = `$sox`;
+			if ($rets) {
+				$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";
+				return -1;	
+			}		
 		}
 
 		$dir='moh-' . $_POST['pkey'];
