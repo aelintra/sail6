@@ -497,7 +497,7 @@ private function doUpload() {
 		preg_match('/(.*)\.(.*)$/',$filename,$matches); 
 
 		$filename = preg_replace('/[^A-Za-z0-9 ]/','',$matches[1]);
-		$filename = preg_replace('/\s*/','_',$filename);
+		$filename = preg_replace('/\s/','_',$filename);
 
 		$filename = $filename. '.' . $matches[2];
 		
