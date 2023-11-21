@@ -497,9 +497,10 @@ private function doUpload() {
 		preg_match('/(.*)\.(mp3|wav)',$matches); 
 
 		$filename = preg_replace('/[^A-Za-z0-9 ]/','',$matches[1]);
-		$filename = $filename. '.' . $matches[2];
 		$filename = preg_replace('/\s/',_,$filename);
 
+		$filename = $filename. '.' . $matches[2];
+		
 		$fullFileName = "/tmp/" . $filename;
 
 		if ($filename != $_FILES['file']['name']) {
@@ -518,7 +519,7 @@ private function doUpload() {
 
 		$dir='moh-' . $_POST['pkey'];
 		$tfile = $_FILES['file']['tmp_name'];
-		$this->helper->request_syscmd ("/bin/mv /tmp/" . $_FILES['file']['name'] . ' ' . $this->mohroot . $dir);
+		$this->helper->request_syscmd ("/bin/cp /tmp/" . $_FILES['file']['name'] . ' ' . $this->mohroot . $dir);
 		$this->message = "File $filename uploaded!";
 		
 }
