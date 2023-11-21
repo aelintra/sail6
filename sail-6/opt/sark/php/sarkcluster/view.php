@@ -497,14 +497,14 @@ private function doUpload() {
 		preg_match('/(.*)\.(.*)$/',$filename,$matches); 
 
 		$filename = preg_replace('/[^A-Za-z0-9 ]/','',$matches[1]);
-		$filename = preg_replace('/\s/',_,$filename);
+		$filename = preg_replace('/\s*/','_',$filename);
 
 		$filename = $filename. '.' . $matches[2];
 		
 		$fullFileName = "/tmp/" . $filename;
 
 		if ($filename != $_FILES['file']['name']) {
-			rename("/tmp" . '/' . $_FILES['file']['name'], $fullFileName);
+			rename('/tmp/"' . $_FILES['file']['name'] . '"', $fullFileName);
 		}
 
 // For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
