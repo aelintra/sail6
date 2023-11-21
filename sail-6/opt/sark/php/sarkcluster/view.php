@@ -488,38 +488,40 @@ private function doUpload() {
 
 //	Check for our mime types
 		if (!preg_match (' /\.(wav|mp3)$/ ', $filename) ) {
-			$this->error_hash['Format'] = "Upload file MUST be format wav or mp3";
+			$this->error_hash['Format'] = "Upload file MUST be .wav or .mp3";
 			return -1;
 		}
 
-//	Split the filename and remove anything we don't like from the leftname 
-		
+//	Split the filename and remove anything we don't like from the left hand side 		
 		preg_match('/(.*)\.(.*)$/',$filename,$matches); 
 
+//	Remove any nonsense		
 		$filename = preg_replace('/[^A-Za-z0-9 ]/','',$matches[1]);
-		$filename = preg_replace('/\s/','_',$filename);
+		$filename = preg_replace('/[^A-Za-z0-9 ]/','_',$filename);
+		$filename = preg_replace('/_+/','_',$filename);		
 
-		$filename = $filename. '.' . $matches[2];
-		
-		$fullFileName = "/tmp/" . $filename;
+//	re-assemble our cleansed filename
+		$filename = $filename . '.' . $matches[2];
 
-		if ($filename != $_FILES['file']['name']) {
-			rename('/tmp/"' . $_FILES['file']['name'] . '"', $fullFileName);
-		}
+//	get the fullpath name of the file php uploaded for us
+		$tfile = $_FILES['file']['tmp_name'];
 
 // For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
-		if ($matches[1] == 'wav' ) {
-			$sox = "/usr/bin/sox " . "/tmp" . '/' . $filename . " -r 8000 -c 1 -e signed /tmp/" . $filename . " -q";
+		if ($matches[2] == 'wav' ) {
+			$sox = "/usr/bin/sox $tfile -r 8000 -c 1 -e signed $tfile -q";
 			$rets = `$sox`;
 			if ($rets) {
-				$this->error_hash['fileconv'] = "Upload file conversion failed! - $rets";
+				$this->error_hash['fileconv'] = "Upload wav file conversion failed! - $rets";
 				return -1;	
 			}		
 		}
-
+		
+// 	create the moh directory name
 		$dir='moh-' . $_POST['pkey'];
-		$tfile = $_FILES['file']['tmp_name'];
-		$this->helper->request_syscmd ("/bin/cp /tmp/" . $_FILES['file']['name'] . ' ' . $this->mohroot . $dir);
+
+// 	copy the file over and set the perms
+		$this->helper->request_syscmd ("/bin/cp $tfile " . $this->mohroot . "$dir/$filename");
+		$this->helper->request_syscmd ("/usr/bin/chmod +r " . $this->mohroot . "$dir/$filename");
 		$this->message = "File $filename uploaded!";
 		
 }
