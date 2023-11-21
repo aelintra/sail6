@@ -494,7 +494,7 @@ private function doUpload() {
 
 //	Split the filename and remove anything we don't like from the leftname 
 		
-		preg_match('/(.*)\.(mp3|wav)',$matches); 
+		preg_match('/(.*)\.(mp3|wav)',$filename,$matches); 
 
 		$filename = preg_replace('/[^A-Za-z0-9 ]/','',$matches[1]);
 		$filename = preg_replace('/\s/',_,$filename);
@@ -508,7 +508,7 @@ private function doUpload() {
 		}
 
 // For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
-		if (matches[1] == 'wav' ) {
+		if ($matches[1] == 'wav' ) {
 			$sox = "/usr/bin/sox " . "/tmp" . '/' . $filename . " -r 8000 -c 1 -e signed /tmp/" . $filename . " -q";
 			$rets = `$sox`;
 			if ($rets) {
