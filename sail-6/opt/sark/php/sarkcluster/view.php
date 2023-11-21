@@ -495,35 +495,37 @@ private function doUpload() {
 //	Split the filename and remove anything we don't like from the left hand side 		
 		preg_match('/(.*)\.(.*)$/',$filename,$matches); 
 
-//	Remove any nonsense		
+// 	set type
+		$filetype = $matches[2];
+
+//	Remove any nonsense and replace spaces with '_' 		
 		$filename = preg_replace('/[^A-Za-z0-9 ]/','',$matches[1]);
-		$filename = preg_replace('/[^A-Za-z0-9 ]/','_',$filename);
-		$filename = preg_replace('/_+/','_',$filename);		
+		$filename = preg_replace('/[^A-Za-z0-9]/','_',$filename);
+		$filename = preg_replace('/__*/','_',$filename);		
 
 //	re-assemble our cleansed filename
-		$filename = $filename . '.' . $matches[2];
+		$filename = $filename . '.' . $filetype;
 
-//	get the fullpath name of the file php uploaded for us
+//	get the fullpath name of the file the browser uploaded for us
 		$tfile = $_FILES['file']['tmp_name'];
 
-// For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
-		if ($matches[2] == 'wav' ) {
-			$sox = "/usr/bin/sox $tfile -r 8000 -c 1 -e signed $tfile -q";
-			$rets = `$sox`;
-			if ($rets) {
-				$this->error_hash['fileconv'] = "Upload wav file conversion failed! - $rets";
-				return -1;	
-			}		
-		}
-		
 // 	create the moh directory name
 		$dir='moh-' . $_POST['pkey'];
 
 // 	copy the file over and set the perms
-		$this->helper->request_syscmd ("/bin/cp $tfile " . $this->mohroot . "$dir/$filename");
-		$this->helper->request_syscmd ("/usr/bin/chmod +r " . $this->mohroot . "$dir/$filename");
+		$targetfile = $this->mohroot . "$dir/$filename"
+		$this->helper->request_syscmd ("/bin/cp $tfile $targetfile");
+		$this->helper->request_syscmd ("/usr/bin/chmod +r $targetfile");
 		$this->message = "File $filename uploaded!";
 		
-}
+//	For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
+		if ($filetype == 'wav' ) {
+//	$sox = "/usr/bin/sox $targetfile -r 8000 -c 1 -e signed $targetfile -q";
+			$rets = $this->helper->request_syscmd ("/usr/bin/sox $targetfile -r 8000 -c 1 -e signed $targetfile -q");;
+			if ($rets) {
+				$this->error_hash['fileconv'] = "Upload wav file conversion failed! - $rets";
+			}
 
+		}
+	}	
 }
