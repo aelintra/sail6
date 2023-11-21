@@ -511,21 +511,25 @@ private function doUpload() {
 
 // 	create the moh directory name
 		$dir='moh-' . $_POST['pkey'];
+	
+// 	Set the target
+		$targetFile = $this->mohroot . "$dir/$fileName";
 
-// 	copy the file over and set the perms
-		$targetFile = $this->mohroot . "$dir/$fileName"
+//	For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
+		if ($fileExt == 'wav' ) {
+			$rets = $this->helper->request_syscmd ("/usr/bin/sox $tempFile -r 8000 -c 1 -e signed $targetFile -q");;
+			if ($rets) {
+				$this->error_hash['fileconv'] = ".wav file conversion failed! - $rets";
+				return -1;
+			}
+			$this->helper->request_syscmd ("/usr/bin/chmod +r $targetFile");
+			return;
+		}
+
+// 	copy the mp3 file over and set the perms
+		
 		$this->helper->request_syscmd ("/bin/cp $tempFile $targetFile");
 		$this->helper->request_syscmd ("/usr/bin/chmod +r $targetFile");
 		$this->message = "File $fileName uploaded!";
-		
-//	For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
-		if ($fileExt == 'wav' ) {
-//	$sox = "/usr/bin/sox $targetFile -r 8000 -c 1 -e signed $targetFile -q";
-			$rets = $this->helper->request_syscmd ("/usr/bin/sox $targetFile -r 8000 -c 1 -e signed $targetFile -q");;
-			if ($rets) {
-				$this->error_hash['fileconv'] = "Upload wav file conversion failed! - $rets";
-			}
-
-		}
 	}	
 }
