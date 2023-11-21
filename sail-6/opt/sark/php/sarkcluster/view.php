@@ -494,7 +494,7 @@ private function doUpload() {
 
 //	Split the filename and remove anything we don't like from the leftname 
 		
-		preg_match('/(.*)\.(mp3|wav)',$filename,$matches); 
+		preg_match('/(.*)\.(.*)$/',$filename,$matches); 
 
 		$filename = preg_replace('/[^A-Za-z0-9 ]/','',$matches[1]);
 		$filename = preg_replace('/\s/',_,$filename);
