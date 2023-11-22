@@ -484,10 +484,10 @@ private function doUpload() {
 			return -1;
 		}
 
-		$mono8K = "8KHz_mono_";
 		$fileName = $_FILES['file']['name'];
+		$monoEight = '8KHz_mono_';
 
-//	Check for our mime types
+		//	Check for our mime types
 		if (!preg_match (' /\.(wav|mp3)$/ ', $fileName) ) {
 			$this->error_hash['Format'] = "Upload file MUST be .wav or .mp3";
 			return -1;
@@ -518,12 +518,12 @@ private function doUpload() {
 
 //	For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
 		if ($fileExt == 'wav' ) {
-			$rets = $this->helper->request_syscmd ("/usr/bin/sox $tempFile -r 8000 -c 1 -e signed $mono8K$targetFile -q");;
+			$rets = $this->helper->request_syscmd ("/usr/bin/sox $tempFile -r 8000 -c 1 -e signed $monoEight$targetFile -q");;
 			if ($rets) {
 				$this->error_hash['fileconv'] = ".wav file conversion failed! - $rets";
 				return -1;
 			}
-			$this->helper->request_syscmd ("/usr/bin/chmod +r $mono8K$targetFile");
+			$this->helper->request_syscmd ("/usr/bin/chmod +r $monoEight$targetFile");
 			$this->message = "File $fileName uploaded!";
 			return;
 		}
