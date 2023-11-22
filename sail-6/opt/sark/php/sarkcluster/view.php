@@ -45,7 +45,7 @@ public function showForm() {
 
 	if (!empty($_FILES['file']['name'])) {
 		$this->doUpload(); 
-		$this->showMain();
+		$this->showEdit();
 		return;									
 	}	
 
@@ -275,8 +275,8 @@ private function showEdit($pkey=false) {
 	
 
 	if (!$pkey) {
-		if (isset ($_GET['pkey'])) {
-			$pkey = $_GET['pkey']; 
+		if (isset ($_REQUEST['pkey'])) {
+			$pkey = $_REQUEST['pkey']; 
 		}
 	}
 

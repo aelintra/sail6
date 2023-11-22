@@ -1,3 +1,11 @@
+sail (6.2.0-36) UNRELEASED; urgency=low
+
+   - Add MOH files to Backup set
+   - refactor MOH handling in sarkcluster
+   - add distro to sysNotes
+
+ -- CoCoSoft <admin@aelintra.com>  Thu, 21  Nov 2023 18:00:00 +0000
+
 sail (6.2.0-35) UNRELEASED; urgency=low
 
    - go back to unified debian control file - only one release now for debian and ubuntu
