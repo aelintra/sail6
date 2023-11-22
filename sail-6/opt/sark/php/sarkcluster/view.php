@@ -486,7 +486,7 @@ private function doUpload() {
 
 		$fileName = $_FILES['file']['name'];
 
-		//	Check for our mime types
+//	Check for our mime types
 		if (!preg_match (' /\.(wav|mp3)$/ ', $fileName) ) {
 			$this->error_hash['Format'] = "Upload file MUST be .wav or .mp3";
 			return -1;
@@ -514,24 +514,21 @@ private function doUpload() {
 	
 // 	Set the target
 		$targetFile = $this->mohroot . "$dir/$fileName";
-		$monotargetFile =  $this->mohroot . "$dir/Mono_8KHz_" . $fileName;
 
 //	For wav files, attempt to convert them to the correct 8k Mono format that Asterisk needs 
 		if ($fileExt == 'wav' ) {
-			$rets = $this->helper->request_syscmd ("/usr/bin/sox $tempFile -r 8000 -c 1 -e signed $monotargetFile -q");
-			if ($rets) {
-				$this->error_hash['fileconv'] = ".wav file conversion failed! - $rets";
-				return -1;
-			}
-			$this->helper->request_syscmd ("/usr/bin/chmod +r $monotargetFile");
-			$this->message = "File $fileName uploaded!";
-			return;
+			$this->helper->request_syscmd ("/usr/bin/sox $tempFile -r 8000 -c 1 -e signed $targetFile -q");
 		}
-
-// 	copy the mp3 file over and set the perms
-		
-		$this->helper->request_syscmd ("/bin/cp $tempFile $targetFile");
-		$this->helper->request_syscmd ("/usr/bin/chmod +r $targetFile");
-		$this->message = "File $fileName uploaded!";
+		else {
+			$this->helper->request_syscmd ("/bin/cp $tempFile $targetFile");
+		}
+// 	set the perms
+		if (file_exists($targetFile)) {				
+			$this->helper->request_syscmd ("/usr/bin/chmod +r $targetFile");
+			$this->message = "File $fileName uploaded!";
+		}
+		else {
+			$this->message = "File $fileName failed to upload!";
+		}
 	}	
 }
