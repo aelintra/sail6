@@ -36,9 +36,9 @@ function __construct($ouTenant) {
 	$this->password = $res['LDAPPASS'];
 	$this->addressbook = 'ou=' . $res['LDAPOU'];
 // filter the search space by stepping down an OU if required
-	if (!empty($ouTenant) {
+	if (!empty($ouTenant)) {
 		$this->addressbook .= ",ou=" . $ouTenant;
-	})
+	}
 	$this->base = $res['LDAPBASE']; 
  		
 public function Connect() {

@@ -49,7 +49,7 @@ public function showForm() {
 			}			
 		}
 	}
-}
+
 	$this->ldap = new ldaphelper($this->ouTenant);
 	
 	if (!$this->ldap->Connect()) {
@@ -164,7 +164,7 @@ private function showMain() {
 //	$this->myPanel->aHeaderFor('nohead',false,'w3-hide-medium w3-hide-large');
 
 
-	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn");
+	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn", "ou");
 	$result = $this->ldap->Search($search_arg);
 
 
@@ -178,9 +178,19 @@ private function showMain() {
 //print_r($result);
 	for ($i=0; $i<$result["count"]; $i++) {
 		
-		echo '<tr id="' .  $result[$i]["uid"][0] . '">'. PHP_EOL; 
+		$uid = $result[$i]["uid"][0];
+
+		echo '<tr id="' .  $uid . '">'. PHP_EOL;
+
+		$uidArray = preg_split("/,/",$uid);
+		foreach ($uidArray as $uA) {
+			preg_match("/ou=(.*),/",$matches);
+			for ($i=0; $i<=$matches[0]; $i++) {
+				$tenant = $matches[$i];
+			}
+		}
 		
-		echo '<td>' . $result[$i]["ou"][0]  . '</td>' . PHP_EOL;
+		echo '<td>' . $tenant  . '</td>' . PHP_EOL;
 
 		echo '<td>' . $result[$i]["sn"][0]  . '</td>' . PHP_EOL;
 
@@ -191,7 +201,6 @@ private function showMain() {
 			echo '<td class="w3-hide-small"></td>' . PHP_EOL;			
 		}
 
-				 
 		if (isset($result[$i]["telephonenumber"][0])) {
 			echo '<td class="w3-hide-small">' . $result[$i]["telephonenumber"][0]  . '</td>' . PHP_EOL;				
 		}
@@ -205,8 +214,7 @@ private function showMain() {
 		else {
 			echo '<td class="w3-hide-small"></td>' . PHP_EOL;
 		}	
-		
-			
+					
 		if (isset($result[$i]["homephone"][0])) {
 			echo '<td class="w3-hide-small">' .  $result[$i]["homephone"][0]  . '</td>' . PHP_EOL;
 		}
