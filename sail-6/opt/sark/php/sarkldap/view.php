@@ -25,6 +25,8 @@ Class sarkldap {
 	protected $myPanel;
 	protected $dbh;
 	protected $helper;
+	protected $ldap;
+	protected $ouTenant = NULL;
 	protected $validator;
 	protected $invalidForm;
 	protected $error_hash = array();
@@ -35,7 +37,20 @@ public function showForm() {
 	$this->myPanel = new page;
 	$this->dbh = DB::getInstance();
 	$this->helper = new helper;
-	$this->ldap = new ldaphelper;
+	
+	// get the addressbook OU (the tenant) for this instance
+	if (!empty($_SESSION)) {			
+		if ($_SESSION['user']['pkey'] != 'admin') {	
+			$usql = $dbh->prepare("SELECT cluster FROM user where pkey = ?");
+			$usql->execute(array($_SESSION['user']['pkey']));
+			$res = $usql->fetch();		
+			if 	(array_key_exists('cluster',$res) ) {
+				$this->$ouTenant = $res['cluster'];
+			}			
+		}
+	}
+}
+	$this->ldap = new ldaphelper($this->ouTenant);
 	
 	if (!$this->ldap->Connect()) {
 		$this->message = "ERROR - Could not connect to LDAP";
@@ -129,7 +144,8 @@ private function showMain() {
 
 	echo '<thead>' . PHP_EOL;	
 	echo '<tr>' . PHP_EOL;
-	
+
+	$this->myPanel->aHeaderFor('tenant');
 
 	$this->myPanel->aHeaderFor('surname'); 
 
@@ -162,7 +178,9 @@ private function showMain() {
 //print_r($result);
 	for ($i=0; $i<$result["count"]; $i++) {
 		
-		echo '<tr id="' .  $result[$i]["uid"][0] . '">'. PHP_EOL; 	
+		echo '<tr id="' .  $result[$i]["uid"][0] . '">'. PHP_EOL; 
+		
+		echo '<td>' . $result[$i]["ou"][0]  . '</td>' . PHP_EOL;
 
 		echo '<td>' . $result[$i]["sn"][0]  . '</td>' . PHP_EOL;
 
