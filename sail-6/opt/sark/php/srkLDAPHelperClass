@@ -75,7 +75,7 @@ public function Add($arg) {
          return "Entry already exists!";
 		} 
 		else { 
-			$this->helper->logit("ldap error with ds= " . $this->ds .",key=$lkey, arg=$arg",0);
+			$this->helper->logit("ldap error with key=$lkey, arg=$arg",0);
 			return "LDAP ERROR - " . ldap_error($this->ds); 
 		}
     } 
