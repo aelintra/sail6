@@ -225,8 +225,8 @@ private function showMain() {
 		}
 		
 		if ($table == "ldaptable") {
-			$get = '?uid=' . $result[$i]["uid"][0];		
-			$this->myPanel->ajaxdeleteClick($get);		 
+//			$get = '?uid=' . $result[$i]["uid"][0];		
+			$this->myPanel->ajaxdeleteClick($dn);		 
 			echo '</td>' . PHP_EOL;
 		}
 		echo '</tr>'. PHP_EOL;
