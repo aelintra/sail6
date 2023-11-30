@@ -17,6 +17,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkDbClass";
+require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";
  
 Class ldaphelper {
 	
@@ -24,6 +25,7 @@ Class ldaphelper {
 	protected $password;
 	protected $ldapserver = '127.0.0.1';
 	protected $dbh;
+	protected $helper;
 	
 	public $base;
 	public $baseou;
@@ -31,6 +33,7 @@ Class ldaphelper {
 	public $ds;
 	
 function __construct() {
+	$this->helper = new helper; 
 	$this->dbh = DB::getInstance();
 	$res = $this->dbh->query("SELECT LDAPBASE,LDAPOU,LDAPUSER,LDAPPASS FROM globals")->fetch(PDO::FETCH_ASSOC);
 	$this->user = 'cn=' . $res['LDAPUSER'];
@@ -65,12 +68,14 @@ public function Get($uid,$arg) {
 }
 
 public function Add($arg) {
-	$sr = ldap_add($this->ds, "uid=" . uniqid('',true) . ","  . $this->addressbook . "," . $this->base, $arg);
+	$lkey = "uid=" . uniqid('',true) . ","  . $this->addressbook . "," . $this->base  
+	$sr = ldap_add($this->ds, $lkey, $arg);
 	if (!$sr) {
 		if (ldap_errno($this->ds) == 0x44) { 
          return "Entry already exists!";
 		} 
 		else { 
+			$this->helper->logit("ldap error with ds= " . $this->ds .",key=$lkey, arg=$arg",0);
 			return "LDAP ERROR - " . ldap_error($this->ds); 
 		}
     } 
