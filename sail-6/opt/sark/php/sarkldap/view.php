@@ -250,6 +250,15 @@ private function showNew() {
 	echo '<form id="sarkldapForm" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
 	
 	$this->myPanel->internalEditBoxStart();
+
+	echo '<div class="cluster">';
+	echo '<div class="cluster w3-margin-bottom">';
+    $this->myPanel->aLabelFor('cluster','cluster');
+    echo '</div>';
+	$this->myPanel->selected = 'default';
+	$this->myPanel->displayCluster();
+	$this->myPanel->aHelpBoxFor('cluster');
+	echo '</div>';
 	
 	$this->myPanel->displayInputFor('surname','text');
 	$this->myPanel->displayInputFor('forename','text',null,'givenname');
