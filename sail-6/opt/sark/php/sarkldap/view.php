@@ -164,7 +164,7 @@ private function showMain() {
 //	$this->myPanel->aHeaderFor('nohead',false,'w3-hide-medium w3-hide-large');
 
 
-	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn", "ou");
+	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn");
 	$result = $this->ldap->Search($search_arg);
 
 
@@ -182,12 +182,9 @@ private function showMain() {
 
 		echo '<tr id="' .  $uid . '">'. PHP_EOL;
 
-		$uidArray = preg_split("/,/",$uid);
-		foreach ($uidArray as $uA) {
-			preg_match("/ou=(.*),/",$matches);
-			for ($i=0; $i<=$matches[0]; $i++) {
-				$tenant = $matches[$i];
-			}
+		preg_match("/ou=(.*),.*$/",$uid,$matches);
+		if (!empty($matches[1]) {
+			$tenant = $matches[$i];
 		}
 		
 		echo '<td>' . $tenant  . '</td>' . PHP_EOL;
