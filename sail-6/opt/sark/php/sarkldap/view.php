@@ -178,13 +178,15 @@ private function showMain() {
 //print_r($result);
 	for ($i=0; $i<$result["count"]; $i++) {
 		
-		$uid = $result[$i]["uid"][0];
+// dn appears a level up in the array hierarchy		
+		$dn = $result[$i]["dn"];
 
-		echo '<tr id="' .  $uid . '">'. PHP_EOL;
+		echo '<tr id="' . $result[$i]["uid"][0] . '">'. PHP_EOL;
 
-		preg_match("/ou=(.*),.*$/",$uid,$matches);
-		if (!empty($matches[1]) {
-			$tenant = $matches[$i];
+// pull the lowest ou from the dn.   It should be the tenant.
+		preg_match("/ou=(\w),.*$/",$dn,$matches);
+		if (!empty($matches[1])) {
+			$tenant = $matches[1];
 		}
 		
 		echo '<td>' . $tenant  . '</td>' . PHP_EOL;
@@ -219,7 +221,6 @@ private function showMain() {
 			echo '<td class="w3-hide-small"></td>' . PHP_EOL;
 		}
 		
-
 		if ($table == "ldaptable") {
 			$get = '?uid=' . $result[$i]["uid"][0];		
 			$this->myPanel->ajaxdeleteClick($get);		 
