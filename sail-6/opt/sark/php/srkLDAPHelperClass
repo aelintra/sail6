@@ -29,7 +29,7 @@ Class ldaphelper {
 	public $addressbook;	
 	public $ds;
 	
-function __construct($ouTenant) {
+function __construct() {
 	$this->dbh = DB::getInstance();
 	$res = $this->dbh->query("SELECT LDAPBASE,LDAPOU,LDAPUSER,LDAPPASS FROM globals")->fetch(PDO::FETCH_ASSOC);
 	$this->user = 'cn=' . $res['LDAPUSER'];
