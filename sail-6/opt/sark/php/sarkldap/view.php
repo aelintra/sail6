@@ -187,7 +187,7 @@ private function showMain() {
 		echo '<tr id="' . $result[$i]["uid"][0] . '">'. PHP_EOL;
 
 // pull the lowest ou from the dn.   It should be the tenant.
-		preg_match("/ou=(\w),.*$/",$dn,$matches);
+		preg_match("/ou=(\w+)/",$dn,$matches);
 		if (!empty($matches[1])) {
 			$tenant = $matches[1];
 		}
@@ -288,6 +288,8 @@ private function saveNew() {
     $this->validator->addValidation("mobile","num","Mobile number must be numeric with no spaces");   
 
     if ($this->validator->ValidateForm()) {
+		$this->ldap->addressbook = "ou=" . $_POST['cluster'] . ",ou=" . $this->ldap->baseou;
+
 		$ldapargs["sn"] = $_POST['surname'];
 		
 		if (isset($_POST['givenname']) && $_POST['givenname'] != "") {			

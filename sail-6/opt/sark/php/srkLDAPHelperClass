@@ -26,6 +26,7 @@ Class ldaphelper {
 	protected $dbh;
 	
 	public $base;
+	public $baseou;
 	public $addressbook;	
 	public $ds;
 	
@@ -34,15 +35,12 @@ function __construct() {
 	$res = $this->dbh->query("SELECT LDAPBASE,LDAPOU,LDAPUSER,LDAPPASS FROM globals")->fetch(PDO::FETCH_ASSOC);
 	$this->user = 'cn=' . $res['LDAPUSER'];
 	$this->password = $res['LDAPPASS'];
-
-// filter the search space by stepping down an OU if required
-	$this->addressbook = NULL;
-	if (!empty($ouTenant)) {
-		$this->addressbook = "ou=" . $ouTenant . ',';
-	}
-	$this->addressbook .= 'ou=' . $res['LDAPOU'];
-
 	$this->base = $res['LDAPBASE']; 
+	$this->baseou = $res['LDAPOU'];
+
+	if ($this->addressbook = NULL) {
+		$this->addressbook = 'ou=' . $res['LDAPOU'];
+	}
 }
 
 public function Connect() {

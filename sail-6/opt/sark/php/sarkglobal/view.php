@@ -421,7 +421,9 @@ private function saveEdit() {
 				$ldap = 'yes';				
 			}
 			$res=$this->dbh->exec("UPDATE Panel SET active='" . $active . "' WHERE pkey=210");
-			$res=$this->dbh->exec("UPDATE Panel SET active='" . $ldap . "' WHERE pkey=265");
+//			$res=$this->dbh->exec("UPDATE Panel SET active='" . $ldap . "' WHERE pkey=265");
+			$res=$this->dbh->exec("UPDATE Panel SET active='yes' WHERE pkey=265");
+
 /*
  * 
  */ 			
