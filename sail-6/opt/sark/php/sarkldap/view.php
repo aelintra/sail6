@@ -79,7 +79,7 @@ public function showForm() {
 		$this->saveNew();				
 	}	
 
-	if (isset($_POST['delete'])) { 
+	if (isset($_REQUEST['delete'])) { 
 		$this->deleteRow(); 		
 	}	
 	
@@ -218,12 +218,11 @@ private function showMain() {
 			echo '<td class="w3-hide-small"></td>' . PHP_EOL;
 		}
 		
-
-		}
+		$encodedn = urlencode($dn);
 		$get = '?edit=yes&amp;pkey=';
-		$get .= $dn;	
-		$this->myPanel->editClick($_SERVER['PHP_SELF'],urlencode($get));
-		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],urlencode($get));
+		$get .= $encodedn;
+		$this->myPanel->editClick($_SERVER['PHP_SELF'],$get);
+		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$encodedn);
 		echo '</tr>'. PHP_EOL;
 	}
 
@@ -396,17 +395,16 @@ private function doUpload() {
 			
 }
 
+
+
 private function deleteRow() {
 	
-//	  print_r($_REQUEST);
-
-	  $dn = $_REQUEST['dn'];
-	  if ( ! ldap_delete($ldap->ds,$dn)) {
-		$helper->logIt("LDAP delete error with dn = $dn");
-		echo  "LDAP ERROR - " . ldap_error($ldap->ds);
+	  $dn = urldecode($_REQUEST['pkey']);
+	  $this->helper->logIt("LDAP delete exec with dn = $dn");
+	  if ( ! ldap_delete($this->ldap->ds,$dn)) {
+		$this->helper->logIt("LDAP delete error with dn=$dn");
+		$this->message = "LDAP ERROR - " . ldap_error($this->ldap->ds);
 	  }
-	  
-	  $ldap->Close();
 
 }
 

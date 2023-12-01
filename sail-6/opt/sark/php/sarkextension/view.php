@@ -340,10 +340,11 @@ private function showMain() {
 		echo '<td class="icons" title = "Device State">' . $latency . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small" >' . $row['active'] . '</td>' . PHP_EOL;				
 
+		$encodedn = urlencode($dn);
 		$get = '?edit=yes&amp;pkey=';
-		$get .= $row['pkey'];	
+		$get .= $encodedn;	
 		$this->myPanel->editClick($_SERVER['PHP_SELF'],$get);
-		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$row['pkey']);
+		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$encodedn);
 
 	}
 	

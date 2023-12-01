@@ -82,6 +82,15 @@ public function Add($arg) {
     return "Saved new LDAP contact ";	
 }
 
+public function Delete($dn) {
+	$this->helper->logIt("LDAP delete exec with dn = $dn");
+	if ( ! ldap_delete($this->ds,$dn)) {
+	  $this->helper->logIt("LDAP delete error with dn=$dn");
+	  $this->message = "LDAP ERROR - " . ldap_error($this->ldap->ds);
+	}
+	return "Deleted $dn OK ";
+}
+
 // Used by the factory reset function
 public function Clean() {
 	$sr=ldap_list($this->ds,$this->addressbook . "," . $this->base,"cn=*",array(""));
