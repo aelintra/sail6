@@ -49,52 +49,14 @@
 			{ "sName": "telephonenumber" },
 			{ "sName": "mobile" },
 			{ "sName": "homephone" },
+			{ "sName": "edit" }			
 			{ "sName": "del" }
 		],
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
 		}  
 
-	} ).makeEditable({
-			sUpdateURL: "/php/sarkldap/update.php",		
-			sReadOnlyCellClass: "read_only",
-			"aoColumns": [
-				{
-					type: 'text',
-					event: 'click',
-					onblur: 'submit'			
-				}, 		// cluster	
-				{
-					type: 'text',
-					event: 'click',
-					onblur: 'submit'			
-				}, 		// surname	
-				{
-					type: 'text',
-					event: 'click',
-					onblur: 'submit'			
-				}, 		// givenname													
-				{
-					type: 'text',
-					event: 'click',
-					onblur: 'submit',	
-					placeholder: ' '				
-				}, 		// forename				
-				{
-					type: 'text',
-					event: 'click',
-					onblur: 'submit',	
-					placeholder: 'None',				
-				}, 		// phone
-				{
-					type: 'text',
-					event: 'click',
-					onblur: 'submit',	
-					placeholder: 'None'				
-				}, 		// mobile	
-				null	// delete col
-            ]
-    }); 
+	}) 
 
 
     	$('#readldaptable').dataTable ( {

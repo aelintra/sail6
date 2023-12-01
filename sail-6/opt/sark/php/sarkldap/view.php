@@ -78,6 +78,10 @@ public function showForm() {
 	if (isset($_POST['save']) || isset($_POST['endsave'])) { 
 		$this->saveNew();				
 	}	
+
+	if (isset($_POST['delete'])) { 
+		$this->deleteRow(); 		
+	}	
 	
 	if (!empty($_POST['upimgclick'])) {
 		$this->showUpload();
@@ -140,32 +144,22 @@ private function showMain() {
 
 	echo '<form id="sarkldapForm" action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">' . PHP_EOL;
 
-	$this->myPanel->aLabelFor("Click cells to edit them");
-//	echo '<div class="w3-padding w3-margin-bottom ">';
-
 	$this->myPanel->beginResponsiveTable("ldaptable",' w3-small w3-white w3-striped');
 
 	echo '<thead>' . PHP_EOL;	
 	echo '<tr>' . PHP_EOL;
 
 	$this->myPanel->aHeaderFor('tenant');
-
 	$this->myPanel->aHeaderFor('surname'); 
-
 	$this->myPanel->aHeaderFor('forename'); 
-
-	$this->myPanel->aHeaderFor('phone',false,'w3-hide-small');
-	
-	$this->myPanel->aHeaderFor('mobile',false,'w3-hide-small');
-	
+	$this->myPanel->aHeaderFor('phone',false,'w3-hide-small');	
+	$this->myPanel->aHeaderFor('mobile',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('home',false,'w3-hide-small');
-	
-	
+	$this->myPanel->aHeaderFor('ed',false,'editcol');
+
 	if ($table == "ldaptable") {
 		$this->myPanel->aHeaderFor('del',false,'delcol');
 	}
-//	$this->myPanel->aHeaderFor('nohead',false,'w3-hide-medium w3-hide-large');
-
 
 	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn");
 	$result = $this->ldap->Search($search_arg);
@@ -183,7 +177,7 @@ private function showMain() {
 		
 // dn appears a level up in the array hierarchy		
 		$dn = $result[$i]["dn"];
-
+		
 		echo '<tr id="' . $result[$i]["uid"][0] . '">'. PHP_EOL;
 
 // pull the lowest ou from the dn.   It should be the tenant.
@@ -224,13 +218,12 @@ private function showMain() {
 			echo '<td class="w3-hide-small"></td>' . PHP_EOL;
 		}
 		
-		if ($table == "ldaptable") {
-			$get = '?id=' . $dn;
-// 	escape the commas in the LDAP DN
-			$get = preg_replace("/,/",'%2C',$get);		
-			$this->myPanel->ajaxdeleteClick($get);		 
-			echo '</td>' . PHP_EOL;
+
 		}
+		$get = '?edit=yes&amp;pkey=';
+		$get .= $dn;	
+		$this->myPanel->editClick($_SERVER['PHP_SELF'],urlencode($get));
+		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],urlencode($get));
 		echo '</tr>'. PHP_EOL;
 	}
 
@@ -401,6 +394,20 @@ private function doUpload() {
 		}
 	}	
 			
+}
+
+private function deleteRow() {
+	
+//	  print_r($_REQUEST);
+
+	  $dn = $_REQUEST['dn'];
+	  if ( ! ldap_delete($ldap->ds,$dn)) {
+		$helper->logIt("LDAP delete error with dn = $dn");
+		echo  "LDAP ERROR - " . ldap_error($ldap->ds);
+	  }
+	  
+	  $ldap->Close();
+
 }
 
 private function array_orderby() {

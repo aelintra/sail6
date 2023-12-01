@@ -7,9 +7,10 @@
   if (!$ldap->Connect()) {
 	echo  "LDAP ERROR - " . ldap_error($ldap->ds);
   }
-  
+  //print_r($_REQUEST);
   $dn = $_REQUEST['id'];
   if ( ! ldap_delete($ldap->ds,$dn)) {
+    $helper->logIt("LDAP delete error with dn = $dn");
     echo  "LDAP ERROR - " . ldap_error($ldap->ds);
   }
   else { 
