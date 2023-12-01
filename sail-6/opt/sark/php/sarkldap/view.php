@@ -155,7 +155,6 @@ private function showMain() {
 	$this->myPanel->aHeaderFor('phone',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('mobile',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('home',false,'w3-hide-small');
-	$this->myPanel->aHeaderFor('ed',false,'editcol');
 
 	if ($table == "ldaptable") {
 		$this->myPanel->aHeaderFor('del',false,'delcol');
@@ -178,7 +177,7 @@ private function showMain() {
 // dn appears a level up in the array hierarchy		
 		$dn = $result[$i]["dn"];
 		
-		echo '<tr id="' . $result[$i]["uid"][0] . '">'. PHP_EOL;
+		echo '<tr id="$dn">'. PHP_EOL;
 
 // pull the lowest ou from the dn.   It should be the tenant.
 		preg_match("/ou=(\w+)/",$dn,$matches);

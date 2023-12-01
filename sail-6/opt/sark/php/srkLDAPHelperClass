@@ -62,8 +62,8 @@ public function Search($arg) {
 	return (ldap_get_entries($this->ds, $sr));	
 }
 
-public function Get($uid,$arg) {
-	$sr = ldap_search($this->ds, $this->addressbook . "," . $this->base, $uid, $arg);
+public function dnGet($dn,$arg) {
+	$sr = ldap_search($this->ds, $dn, "cn=*", $arg);
 	return (ldap_get_entries($this->ds, $sr));	
 }
 

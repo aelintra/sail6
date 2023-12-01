@@ -10,10 +10,11 @@
 
   
   $id = $_REQUEST['id'] ;
+  $helper->logIt("update id is $id");
   $value = strip_tags($_REQUEST['value']) ;
   $column = $_REQUEST['columnName'] ;
   $argument=array();
-  $dn = "uid=" . $_REQUEST['id'] . "," . $ldap->addressbook . "," . $ldap->base;
+  $dn = $id
 
   if (!$ldap->Connect()) {
 	echo  "LDAP ERROR 19 - " . ldap_error($ldap->ds);
@@ -55,10 +56,10 @@
 // get the existing sn,givenName usng the UID
 
 	$search_arg = array("givenname", "sn");
-	if (!$result = $ldap->Get("uid=" . $id, $search_arg)) {
-			echo  "LDAP ERROR47 - Couldn't retrieve UID $value";
-			$ldap->Close();
-			return; 
+	if (!$result = $ldap->dnGet($dn, $search_arg)) {
+		echo  "LDAP ERROR47 - Couldn't retrieve UID $value";
+		$ldap->Close();
+		return; 
 	}
 
 //  if target is sn then we need to replace sn and cn
