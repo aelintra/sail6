@@ -219,9 +219,7 @@ private function showMain() {
 		}
 		
 		$encodedn = urlencode($dn);
-		$get = '?edit=yes&amp;pkey=';
-		$get .= $encodedn;
-		$this->myPanel->editClick($_SERVER['PHP_SELF'],$get);
+
 		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$encodedn);
 		echo '</tr>'. PHP_EOL;
 	}

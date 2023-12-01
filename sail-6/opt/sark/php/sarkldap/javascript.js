@@ -79,19 +79,19 @@
 					event: 'click',
 					onblur: 'submit',	
 					placeholder: ' '				
-				}, 		// forename				
+				}, 		// phone1				
 				{
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',	
 					placeholder: 'None',				
-				}, 		// phone
+				}, 		// phone 2
 				{
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',	
 					placeholder: 'None'				
-				}, 		// mobile	
+				}, 		// phone 3
 				null	// delete col
             ]
     }); 
