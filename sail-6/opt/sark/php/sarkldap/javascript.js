@@ -40,9 +40,10 @@
 		"bSort" : true,
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [5]
+			"aTargets" : [6]
 		}],
 		"aoColumns": [ 
+			{ "sName": "cluster" },
 			{ "sName": "sn" },
 			{ "sName": "givenname" },
 			{ "sName": "telephonenumber" },
@@ -58,6 +59,11 @@
 			sUpdateURL: "/php/sarkldap/update.php",		
 			sReadOnlyCellClass: "read_only",
 			"aoColumns": [
+				{
+					type: 'text',
+					event: 'click',
+					onblur: 'submit'			
+				}, 		// cluster	
 				{
 					type: 'text',
 					event: 'click',
@@ -98,7 +104,7 @@
 		"sDom": 'fti',
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [5]
+			"aTargets" : [6]
 		}],
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);

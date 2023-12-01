@@ -3,19 +3,17 @@
   require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";
 
   $ldap = new ldaphelper;
-  $helper = new helper;
   
   if (!$ldap->Connect()) {
 	echo  "LDAP ERROR - " . ldap_error($ldap->ds);
   }
   
-  $dn = $_REQUEST['dn'];
-  if (ldap_delete($ldap->ds,$dn)) {
-	echo "ok";
+  $dn = $_REQUEST['id'];
+  if ( ! ldap_delete($ldap->ds,$dn)) {
+    echo  "LDAP ERROR - " . ldap_error($ldap->ds);
   }
   else { 
-  $this->helper->logit("ldap error with dn=$lkey, arg=$arg",0);
-	echo  "LDAP ERROR - " . ldap_error($ldap->ds);
+    echo "ok";
   }
   
   $ldap->Close();

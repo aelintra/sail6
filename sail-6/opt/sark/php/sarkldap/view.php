@@ -225,8 +225,10 @@ private function showMain() {
 		}
 		
 		if ($table == "ldaptable") {
-//			$get = '?uid=' . $result[$i]["uid"][0];		
-			$this->myPanel->ajaxdeleteClick($dn);		 
+			$get = '?id=' . $dn;
+// 	escape the commas in the LDAP DN
+			$get = preg_replace("/,/",'%2C',$get);		
+			$this->myPanel->ajaxdeleteClick($get);		 
 			echo '</td>' . PHP_EOL;
 		}
 		echo '</tr>'. PHP_EOL;

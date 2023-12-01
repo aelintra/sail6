@@ -68,7 +68,7 @@ public function Get($uid,$arg) {
 }
 
 public function Add($arg) {
-	$lkey = "uid=" . uniqid('',true) . ","  . $this->addressbook . "," . $this->base  
+	$lkey = "uid=" . uniqid('',true) . ","  . $this->addressbook . "," . $this->base;
 	$sr = ldap_add($this->ds, $lkey, $arg);
 	if (!$sr) {
 		if (ldap_errno($this->ds) == 0x44) { 
