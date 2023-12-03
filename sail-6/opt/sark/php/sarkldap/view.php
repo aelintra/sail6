@@ -160,7 +160,7 @@ private function showMain() {
 		$this->myPanel->aHeaderFor('del',false,'delcol');
 	}
 
-	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "cn");
+	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "o", "cn");
 	$result = $this->ldap->Search($search_arg);
 
 
@@ -177,7 +177,7 @@ private function showMain() {
 // dn appears a level up in the array hierarchy		
 		$dn = $result[$i]["dn"];
 		
-		echo '<tr id="$dn">'. PHP_EOL;
+		echo '<tr id="' . $dn . '">'. PHP_EOL;
 
 // pull the lowest ou from the dn.   It should be the tenant.
 		preg_match("/ou=(\w+)/",$dn,$matches);
@@ -216,7 +216,14 @@ private function showMain() {
 		else {
 			echo '<td class="w3-hide-small"></td>' . PHP_EOL;
 		}
-		
+	
+		if (isset($result[$i]["homephone"][0])) {
+			echo '<td class="w3-hide-small">' .  $result[$i]["o"][0]  . '</td>' . PHP_EOL;
+		}
+		else {
+			echo '<td class="w3-hide-small"></td>' . PHP_EOL;
+		}
+
 		$encodedn = urlencode($dn);
 
 		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$encodedn);

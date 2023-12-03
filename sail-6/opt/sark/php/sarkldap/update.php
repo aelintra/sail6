@@ -14,7 +14,7 @@
   $value = strip_tags($_REQUEST['value']) ;
   $column = $_REQUEST['columnName'] ;
   $argument=array();
-  $dn = $id
+  $dn = $id;
 
   if (!$ldap->Connect()) {
 	echo  "LDAP ERROR 19 - " . ldap_error($ldap->ds);
@@ -41,7 +41,21 @@
 		$ldap->Close();
 		return; 		
 	}
-  
+
+/*
+	organization
+*/
+	if ($column=='o') {
+		if (empty($value)) {
+			$argument[$column]=array();
+			doDelete($ldap,$dn,$argument);
+		}
+		else {
+			$argument["o"] = $value;
+			doModify($ldap,$dn,$argument); 
+		}
+	}
+		
 /*
 	We should now only have sn and givenName to handle
 	This means the cn will change also

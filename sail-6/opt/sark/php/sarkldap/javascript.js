@@ -49,6 +49,7 @@
 			{ "sName": "telephonenumber" },
 			{ "sName": "mobile" },
 			{ "sName": "homephone" },
+			{ "sName": "o" },
 			{ "sName": "del" }
 		],
         "drawCallback": function() {
@@ -92,6 +93,12 @@
 					onblur: 'submit',	
 					placeholder: 'None'				
 				}, 		// phone 3
+				{
+					type: 'text',
+					event: 'click',
+					onblur: 'submit',	
+					placeholder: 'None'				
+				}, 		// organization				
 				null	// delete col
             ]
     }); 
@@ -104,7 +111,7 @@
 		"sDom": 'fti',
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [6]
+			"aTargets" : [7]
 		}],
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
