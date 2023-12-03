@@ -155,7 +155,7 @@ private function showMain() {
 	$this->myPanel->aHeaderFor('phone',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('mobile',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('home',false,'w3-hide-small');
-	$this->myPanel->aHeaderFor('org',false,'w3-hide-small');
+	$this->myPanel->aHeaderFor('organisation',false,'w3-hide-small');
 
 	if ($table == "ldaptable") {
 		$this->myPanel->aHeaderFor('del',false,'delcol');
@@ -218,7 +218,7 @@ private function showMain() {
 			echo '<td class="w3-hide-small"></td>' . PHP_EOL;
 		}
 	
-		if (isset($result[$i]["homephone"][0])) {
+		if (isset($result[$i]["o"][0])) {
 			echo '<td class="w3-hide-small">' .  $result[$i]["o"][0]  . '</td>' . PHP_EOL;
 		}
 		else {
