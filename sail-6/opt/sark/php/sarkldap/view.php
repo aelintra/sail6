@@ -155,6 +155,7 @@ private function showMain() {
 	$this->myPanel->aHeaderFor('phone',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('mobile',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('home',false,'w3-hide-small');
+	$this->myPanel->aHeaderFor('org',false,'w3-hide-small');
 
 	if ($table == "ldaptable") {
 		$this->myPanel->aHeaderFor('del',false,'delcol');
@@ -263,9 +264,11 @@ private function showNew() {
 	
 	$this->myPanel->displayInputFor('surname','text');
 	$this->myPanel->displayInputFor('forename','text',null,'givenname');
+	$this->myPanel->displayInputFor('org','text');
 	$this->myPanel->displayInputFor('ext','number',null,'phone');
 	$this->myPanel->displayInputFor('mobile','number');
 	$this->myPanel->displayInputFor('home','text');
+
 
 	echo '</div>';
 
@@ -296,6 +299,9 @@ private function saveNew() {
 		}
 		else {
 			$ldapargs["cn"] = $ldapargs["sn"];
+		}
+		if (isset($_POST['org']) && $_POST['phone'] != "") {
+			$ldapargs["o"] = $_POST['org'];
 		}
 		if (isset($_POST['phone']) && $_POST['phone'] != "") {
 			$ldapargs["telephonenumber"] = $_POST['phone'];
