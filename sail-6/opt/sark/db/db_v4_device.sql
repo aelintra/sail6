@@ -1492,11 +1492,15 @@ ldap_base!: $ldapbase
 ldap_username!: 
 ldap_password!: 
 ldap_max_hits!: 50
-ldap_search_filter!: (|(name=%)(sn=%))
+ldap_sort_mode=client
+ldap_search_filter!: (|(sn=%*)(cn=%*))
 ldap_number_filter!: (|(telephoneNumber=%)(mobile=%)(homePhone=%))
-ldap_name_attributes!: displayName cn sn
-ldap_number_attributes!: mobile telephoneNumber
-ldap_display_name!: %cn
+ldap_name_attributes!: cn o
+ldap_number_attributes!: mobile telephoneNumber homePhone
+ldap_search_filter_during_call=(|(cn=%))
+ldap_number_filter_during_call=(|(telephoneNumber=%)(mobile=%)(homePhone=%))
+ldap_display_name!: %cn,%o
+
 dkey_directory!: keyevent F_DIRECTORY_SEARCH
 
 ignore_asserted_in_gui$: on
@@ -2295,7 +2299,7 @@ features.pickup.direct_pickup_code = *8
 ##         	              LDAP Settings                                              ##
 #######################################################################################
 #Configure the search criteria for name and number lookups.
-ldap.name_filter = (|(name=%)(sn=%))
+ldap.name_filter = (|(cn=%)(sn=%))
 ldap.number_filter = (|(telephoneNumber=%)(mobile=%)(homePhone=%))
 
 ldap.host = $localip
@@ -2306,11 +2310,11 @@ ldap.user =
 ldap.password = 
 
 #Specify the maximum of the displayed search results. It ranges from 1 to 32000, the default value is 50.
-ldap.max_hits = 
+ldap.max_hits = 50
 
-ldap.name_attr = displayName cn sn
-ldap.numb_attr =  mobile telephoneNumber
-ldap.display_name = %cn
+ldap.name_attr = cn o
+ldap.numb_attr =  mobile telephoneNumber homePhone
+ldap.display_name = %cn,%o
 
 #Configure the LDAP version. The valid value is 2 or 3 (default).
 ldap.version = 

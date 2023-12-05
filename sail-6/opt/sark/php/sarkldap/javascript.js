@@ -40,7 +40,7 @@
 		"bSort" : true,
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [6]
+			"aTargets" : [7]
 		}],
 		"aoColumns": [ 
 			{ "sName": "cluster" },
@@ -69,13 +69,14 @@
 				{
 					type: 'text',
 					event: 'click',
-					onblur: 'submit'			
+					onblur: 'submit',
+					placeholder: 'none'			
 				}, 		// givenname													
 				{
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',	
-					placeholder: ' '				
+					placeholder: 'none'				
 				}, 		// phone1				
 				{
 					type: 'text',
@@ -107,7 +108,7 @@
 		"sDom": 'fti',
 		"aoColumnDefs" : [{
 			"bSortable" : false,
-			"aTargets" : [8]
+			"aTargets" : [7]
 		}],
         "drawCallback": function() {
 			$(".dataTables_scrollBody").scrollTop(scrollPosition);
