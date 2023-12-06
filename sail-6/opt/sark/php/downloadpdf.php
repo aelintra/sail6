@@ -175,19 +175,21 @@ function print_ldap($pdf,$dbh,$helper,&$header,&$data,&$w) {
 	require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkLDAPHelperClass";
 	
 	$ldap = new ldaphelper;
+
 	$header = array('Surname', 'Forename', 'Phone', 'Mobile', 'Home', 'Organisation');
 	$w = array(30, 30, 25, 25, 25,30);
 	if ( ! $ldap->Connect() ) {
-		echo "ERROR - Could not connect to LDAP";
-		exit;
+		$helper->logIt("Could not connect to LDAP");
+		return;
 	}
-	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "o", "cn");
+	$ldap->addressbook = 'ou=Contacts';
+	$search_arg = array("givenname", "sn", "telephoneNumber", "mobile", "homePhone", "o");
 
 	$result = $ldap->Search($search_arg);
 
 	if (empty($result)) {
-		echo "ERROR - Empty set from LDAP";
-		exit;
+		$helper->logIt("Empty set from LDAP");
+		return;
 	}
 
 	for ($i=0; $i<$result["count"]; $i++) {
@@ -195,7 +197,7 @@ function print_ldap($pdf,$dbh,$helper,&$header,&$data,&$w) {
 						$result[$i]["givenname"][0],
 						$result[$i]["telephonenumber"][0],
 						$result[$i]["mobile"][0],
-						$result[$i]["homephone"][0]);	
+						$result[$i]["homephone"][0],	
 						$result[$i]["o"][0]);		
 	}
 	
