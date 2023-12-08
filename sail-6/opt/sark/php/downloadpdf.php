@@ -25,6 +25,7 @@
 	$target = strip_tags($_GET['pdf']);
 	
 	$pdf = new PDF();
+
 	$dbh = DB::getInstance();
 	$helper = new helper;
 	$data = array();
@@ -176,13 +177,16 @@ function print_ldap($pdf,$dbh,$helper,&$header,&$data,&$w) {
 	
 	$ldap = new ldaphelper;
 
-	$header = array('Surname', 'Forename', 'Phone', 'Mobile', 'Home', 'Organisation');
-	$w = array(30, 30, 25, 25, 25,30);
+	$pdf->pageHeading='Directory';
+	$pdf->leftMargin=10;
+	$header = array('Surname', 'Forename', 'Phone', 'Mobile', 'Other', 'Organisation');
+
+	$w = array(35, 30, 25, 25, 25,50);
 	if ( ! $ldap->Connect() ) {
 		$helper->logIt("Could not connect to LDAP");
 		return;
 	}
-	$ldap->addressbook = 'ou=Contacts';
+
 	$search_arg = array("givenname", "sn", "telephoneNumber", "mobile", "homePhone", "o");
 
 	$result = $ldap->Search($search_arg);
@@ -191,8 +195,14 @@ function print_ldap($pdf,$dbh,$helper,&$header,&$data,&$w) {
 		$helper->logIt("Empty set from LDAP");
 		return;
 	}
-
+	$ldapargs = array('sn', 'givenname', 'telephonenumber', 'mobile', 'homephone', 'o');
 	for ($i=0; $i<$result["count"]; $i++) {
+		foreach ($ldapargs as $argName) {
+// fill in non-returned (empty) arguments 
+			if (empty($result[$i][$argName][0])) {
+				$result[$i][$argName][0] = " ";
+			}
+		}
 		$data[] = array($result[$i]["sn"][0],
 						$result[$i]["givenname"][0],
 						$result[$i]["telephonenumber"][0],
@@ -200,10 +210,9 @@ function print_ldap($pdf,$dbh,$helper,&$header,&$data,&$w) {
 						$result[$i]["homephone"][0],	
 						$result[$i]["o"][0]);		
 	}
+	asort($data);
 	
-	
-	$pdf->pageHeading='Directory';
-	$pdf->leftMargin=40;
+
 }
 
 function print_shorewall($pdf,$dbh,$helper,&$header,&$data,&$w,&$layout) {
@@ -218,11 +227,11 @@ function print_shorewall($pdf,$dbh,$helper,&$header,&$data,&$w,&$layout) {
 			continue;
 		}
 		if (preg_match(" /#/ ", $row)) {
-			$splitComments = prteg_split("#",$row,2);
-			$cols = preg_split((" ",$splitComments[0]));
+			$splitComments = preg_split("/#/",$row,2);
+			$cols = preg_split("/\s+/",$splitComments[0]);
 		}
 		else {
-			$cols = preg_split(" ",$row);
+			$cols = preg_split("/\s+/ ",$row);
 		}
 
 		for($i=0;$i<5;$i++) {
@@ -271,7 +280,7 @@ function print_shorewall6($pdf,$dbh,$helper,&$header,&$data,&$w,&$layout) {
 			$cols = preg_split(" ",$splitComments[0]);
 		}
 		else {
-			$cols = preg_split(" ",$row);
+			$cols = preg_split("\s+ ",$row);
 		}
 
 		for($i=0;$i<5;$i++) {

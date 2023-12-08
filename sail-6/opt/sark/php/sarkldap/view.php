@@ -44,9 +44,10 @@ public function showForm() {
 	$this->ldap->addressbook = 'ou=' . $res['LDAPOU'];
 
 //	 get the addressbook OU (the tenant) for this instance (if it exists)
+
 	if (!empty($_SESSION)) {			
 		if ($_SESSION['user']['pkey'] != 'admin') {	
-			$usql = $dbh->prepare("SELECT cluster FROM user where pkey = ?");
+			$usql = $this->dbh->prepare("SELECT cluster FROM user where pkey = ?");
 			$usql->execute(array($_SESSION['user']['pkey']));
 			$res = $usql->fetch();		
 			if 	(array_key_exists('cluster',$res) ) {

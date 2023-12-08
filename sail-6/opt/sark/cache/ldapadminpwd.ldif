@@ -1,4 +1,4 @@
-dn: cn=admin,dc=eu-west-1,dc=compute,dc=internal
+dn: cn=admin,dc=sark,dc=local
 objectClass: simpleSecurityObject
 objectClass: organizationalRole
 cn: admin

@@ -41,7 +41,7 @@ function __construct() {
 	$this->base = $res['LDAPBASE']; 
 	$this->baseou = $res['LDAPOU'];
 
-	if ($this->addressbook = NULL) {
+	if (empty($this->addressbook)) {
 		$this->addressbook = 'ou=' . $res['LDAPOU'];
 	}
 }

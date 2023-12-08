@@ -340,11 +340,10 @@ private function showMain() {
 		echo '<td class="icons" title = "Device State">' . $latency . '</td>' . PHP_EOL;
 		echo '<td class="w3-hide-small" >' . $row['active'] . '</td>' . PHP_EOL;				
 
-		$encodedn = urlencode($dn);
 		$get = '?edit=yes&amp;pkey=';
-		$get .= $encodedn;	
+		$get .= $row['pkey'];	
 		$this->myPanel->editClick($_SERVER['PHP_SELF'],$get);
-		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$encodedn);
+		$this->myPanel->deleteClick($_SERVER['PHP_SELF'],$row['pkey']);
 
 	}
 	
@@ -1199,7 +1198,7 @@ private function showEdit() {
 /*
  *   TAB Provisioning
  */
-
+	$expand_prov = NULL;
 	if ($extension['technology'] == 'SIP') {
 		if ( $_SESSION['user']['pkey'] != 'admin' ) {
 			echo '<div style="display:none">';
@@ -1221,7 +1220,6 @@ private function showEdit() {
 			}
 		}
 	}
-
 
     echo '<div id="provExpand" style="display:none">';
     $this->myPanel->displayFile(htmlspecialchars($expand_prov),"provisioning",true);
