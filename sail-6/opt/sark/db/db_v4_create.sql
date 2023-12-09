@@ -371,6 +371,7 @@ PROXY TEXT,                         -- allow proxy operations
 PROXYIGNORE TEXT,                   -- not used in 4.x
 RECAGE INTEGER DEFAULT 60,			-- not used after 6.2.0-26 - moved to clusters
 RECFINALDEST TEXT,                  -- recordings folder
+RECFILEDLIM TEXT DEFAULT '|'        -- recordings filename delimiter
 RECLIMIT TEXT,                      -- Recording folder max size
 RECMOUNT TEXT,                   	-- Recording folder mount command
 RECQDITHER TEXT,                    -- dither (ms) on queuelog searches
