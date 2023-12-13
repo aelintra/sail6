@@ -77,11 +77,13 @@ if (is_dir($folder))
         if ($file == '.' || $file == '..' || is_dir($file))
         {
             
-//            syslog(LOG_WARNING, "ignoring .{.} file $file");
+            syslog(LOG_WARNING, "ignoring .{.} file $file");
             continue;
         }
 
-        $file_list = preg_split('/[' . preg_quote($dlim) . ".]/", $file);
+        $file_list = preg_split('/' . $dlim . "|\./", $file);
+
+//DEBUG var_dump($file_list);
 
         // Unless the filename contains the tenant name then we don't want to include this recording
         if ($offset > 0 && $_SESSION['user']['pkey'] != 'admin' && $file_list[1] != $_SESSION['user']['cluster'])
@@ -102,6 +104,7 @@ if (is_dir($folder))
                 array_slice($file_list, 4)
             );
         }
+
         syslog(LOG_WARNING, "Time series (epoch) $from_time_search $to_time_search");
         if ($queue_prefix || count($file_list) == 5+$offset)
         {
