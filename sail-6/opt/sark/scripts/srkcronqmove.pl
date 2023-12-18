@@ -3,11 +3,16 @@
 #
 #
 #	Copyright Aelintra Telecom Limited(2008-23), all rights reserved
+#  
+# Parse the monstage directory and convert queue calls to match regular calls
+# Once finished, the monstage should be empty and all the files should now be moved to monout ready for 
+# rsync to send them to their destination bucket in the recordings folder
 #
 # load required modules
 
 use strict;
 use File::ReadBackwards;
+use File::Copy;
 use DBI;
 
 sub SQLiteGet($$) {

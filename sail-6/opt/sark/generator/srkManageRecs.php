@@ -15,6 +15,10 @@
 // +-----------------------------------------------------------------------+
 //
 
+//
+// Calculate disk recording storage used by each tenant and store it into the tenant record
+//
+
 include("localvars.php");
 $recvals = array();
 
