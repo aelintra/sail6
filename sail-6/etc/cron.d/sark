@@ -2,7 +2,8 @@
 * * * * * root php /opt/sark/generator/srktimer.php >/dev/null 2>&1 
 
 # SARK queue mover in ARC
-* * * * * root perl /opt/sark/scripts/srkcronqmove.pl >/dev/null 2>&1
+*/5 * * * * root perl /opt/sark/scripts/srkcronqmove.pl >/dev/null 2>&1
+
 
 # SARK spin off regression copies
 0 4 * * * root sh /opt/sark/scripts/spin.sh >/dev/null 2>&1
