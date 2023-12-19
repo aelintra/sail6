@@ -6,7 +6,6 @@ use DBI;
 use IO::Socket::INET;
 
 my $maxundonum = '5';
-diff 
 
 sub check_pid {
     if ( -e "/persistent" ) {
