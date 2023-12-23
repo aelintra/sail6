@@ -1,3 +1,12 @@
+sail (6.2.0-39) UNRELEASED; urgency=low
+
+   - clean up prior to release 
+   - require sailhpe of at least -13
+   - minor changes to ageing routines
+   - remove age parameter from globals
+   
+ -- CoCoSoft <admin@aelintra.com>  Wed, 20  Dec 2023 18:00:00 +0000
+
 sail (6.2.0-38) UNRELEASED; urgency=low
 
    - merge back the callrecording branch 
