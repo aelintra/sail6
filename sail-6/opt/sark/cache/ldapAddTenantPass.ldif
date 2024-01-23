@@ -1,0 +1,4 @@
+dn: uid=$cluster,dc=ec2,dc=internal
+objectclass: account
+objectclass: simpleSecurityObject
+userPassword: c25vbcaeSDFXH1238

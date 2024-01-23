@@ -1,5 +1,0 @@
-dn: uid=$tenant$ext,$DN
-objectclass: account
-objectclass: simpleSecurityObject
-uid: snom
-userPassword: $passwd

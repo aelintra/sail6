@@ -150,7 +150,7 @@ private function showMain() {
 	echo '<thead>' . PHP_EOL;	
 	echo '<tr>' . PHP_EOL;
 
-	$this->myPanel->aHeaderFor('tenant');
+	$this->myPanel->aHeaderFor('cluster');
 	$this->myPanel->aHeaderFor('surname'); 
 	$this->myPanel->aHeaderFor('forename'); 
 	$this->myPanel->aHeaderFor('phone',false,'w3-hide-small');	
@@ -425,10 +425,16 @@ private function array_orderby() {
     foreach ($args as $n => $field) {
         if (is_string($field)) {
             $tmp = array();
-            foreach ($data as $key => $row)
-                $tmp[$key] = $row[$field];
-            $args[$n] = $tmp;
-            }
+            foreach ($data as $key => $row) {
+				if (! empty($row[$field])) {
+                	$tmp[$key] = $row[$field];
+				}
+				else {
+					$tmp[$key] = NULL;
+				}
+				$args[$n] = $tmp;
+			}
+        }
     }
     $args[] = &$data;
     call_user_func_array('array_multisort', $args);

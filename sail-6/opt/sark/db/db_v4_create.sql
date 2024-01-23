@@ -76,6 +76,7 @@ callgroup TEXT,   					-- asterisk callgroup number (1-63)
 chanmax TEXT,     					-- maximum active calls
 description TEXT, 					-- freeform description
 include TEXT,     					-- whitespace separated list of clusters OR, the keyword ALL
+ldapropwd TEXT DEFAULT 'caeSDFXH1238', -- ldap rdonly bind pwd  
 localarea TEXT,   					-- local area code
 localdplan TEXT,  					-- local dialplan
 masteroclo TEXT,  					-- master day/night throw

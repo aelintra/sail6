@@ -10,7 +10,7 @@
 
   
   $id = $_REQUEST['id'] ;
-  $helper->logIt("update id is $id");
+  $helper->logIt("update id is $id",3);
   $value = strip_tags($_REQUEST['value']) ;
   $column = $_REQUEST['columnName'] ;
   $argument=array();
@@ -67,7 +67,7 @@
 	}	 
 
 	
-// get the existing sn,givenName usng the UID
+// get the existing sn,givenName usng the DN
 
 	$search_arg = array("givenname", "sn");
 	if (!$result = $ldap->dnGet($dn, $search_arg)) {
@@ -92,7 +92,7 @@
 	}	
 
 // finally, givenName.   We may need to delete it.
-// in eithet case we will need to change cn
+// in either case we will need to change cn
 
 	if ($column=='givenname') {
 		if (empty($value)) {
@@ -116,7 +116,8 @@
  */
 
   function doDelete($ldap, $dn,$argument) {
-    if (ldap_mod_del($ldap->ds,$dn,$argument)) {
+	if ($ldap->DeleteAttribute ($dn, $argument)) {
+	//    if (ldap_mod_del($ldap->ds,$dn,$argument)) {
     	echo $_REQUEST['value'];
     }
     else {
@@ -126,7 +127,8 @@
  }
 
  function doModify($ldap, $dn,$argument) {
-	if (ldap_mod_replace($ldap->ds,$dn,$argument)) {  
+	if ($ldap->ModifyAttribute ($dn, $argument)) {
+	//	if (ldap_mod_replace($ldap->ds,$dn,$argument)) {  
 		echo $_REQUEST['value'];
 	}
 	else { 

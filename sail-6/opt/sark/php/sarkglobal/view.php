@@ -302,7 +302,7 @@ private function showMain() {
  */
 	
 
-	if ($global['CLUSTER'] == 'OFF') {
+//	if ($global['CLUSTER'] == 'OFF') {
 		$this->myPanel->internalEditBoxStart();
 		$this->myPanel->subjectBar("LDAP Settings");   
 		$this->myPanel->displayInputFor('ldapbase','text',$global['LDAPBASE']);
@@ -310,7 +310,7 @@ private function showMain() {
 		$this->myPanel->displayInputFor('ldapuser','text',$global['LDAPUSER']);
 		$this->myPanel->displayInputFor('ldappass','password',$global['LDAPPASS']);
 		echo '</div>';
-	}
+//	}
 
 /*
  * ToDo - placeholder for the PJSIP generator
@@ -417,11 +417,12 @@ private function saveEdit() {
 			$active = 'yes';
 			$ldap = 'no';
 			if ($tuple['cluster'] == 'OFF') {
-				$active = 'no';
-				$ldap = 'yes';				
+				$active = 'no';				
 			}
 			$res=$this->dbh->exec("UPDATE Panel SET active='" . $active . "' WHERE pkey=210");
-//			$res=$this->dbh->exec("UPDATE Panel SET active='" . $ldap . "' WHERE pkey=265");
+/*
+ *	Force Directory 'ON' for upgraded Multi-tenant systems
+ */
 			$res=$this->dbh->exec("UPDATE Panel SET active='yes' WHERE pkey=265");
 
 /*
