@@ -145,6 +145,9 @@ private function showMain() {
 
 	echo '<form id="sarkldapForm" action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">' . PHP_EOL;
 
+	$this->myPanel->aLabelFor("Click cells to edit them");
+//	echo '<div class="w3-padding w3-margin-bottom ">';
+
 	$this->myPanel->beginResponsiveTable("ldaptable",' w3-small w3-white w3-striped');
 
 	echo '<thead>' . PHP_EOL;	

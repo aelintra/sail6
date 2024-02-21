@@ -70,8 +70,11 @@ public function Search($arg) {
 /**	
  * Get a single entry using the DN 
  */
-public function dnGet($dn,$arg) {
+public function dnGet($dn) {
 	$sr = ldap_search($this->ds, $dn, "cn=*");
+	if (empty($sr)) {
+		return null;
+	}	
 	return (ldap_get_entries($this->ds, $sr));	
 }
 
@@ -105,8 +108,7 @@ public function AddNewTenant($tenant) {
 /**
  * Check for Duplicate
  */	
-	$search_arg = "ou=*";
-	if ($this->dnGet($lkey, $search_arg)) {
+	if ($this->dnGet($lkey)) {
 		return "Entry already exists!";
 	}
 /**
@@ -136,13 +138,12 @@ public function AddNewSimpleSecurityObject($tenant,$pwd) {
 	$this->ldapargs["objectclass"][0] = "simpleSecurityObject";
 	$this->ldapargs["objectclass"][1] = "account";
 	$this->ldapargs["userPassword"] = $pwd;
-	$this->ldapargs["cn"] = $tenant;
+//	$this->ldapargs["cn"] = $tenant;
 	$lkey = "uid=$tenant,"  .  $this->base;
 /**
  * Check for Duplicate
  */	
-$search_arg = "uid=*";
-if ($this->dnGet($lkey, $search_arg)) {
+if ($this->dnGet($lkey)) {
 	return "Entry already exists!";
 }
 
@@ -164,7 +165,7 @@ if ($this->dnGet($lkey, $search_arg)) {
 }
 
 /**
- * Delete an entry
+ * Delete an entry using the DN
  */
 public function Delete($dn) {
 	$this->helper->logIt("LDAP delete exec with dn = $dn");

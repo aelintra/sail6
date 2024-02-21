@@ -70,31 +70,31 @@
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',
-					placeholder: 'none'			
+					placeholder: '-'			
 				}, 		// givenname													
 				{
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',	
-					placeholder: 'none'				
+					placeholder: '-'				
 				}, 		// phone1				
 				{
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',	
-					placeholder: 'None',				
+					placeholder: '-',				
 				}, 		// phone 2
 				{
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',	
-					placeholder: 'None'				
+					placeholder: '-'				
 				}, 		// phone 3
 				{
 					type: 'text',
 					event: 'click',
 					onblur: 'submit',	
-					placeholder: 'None'				
+					placeholder: '-'				
 				}, 		// organization				
 				null	// delete col
             ]

@@ -70,7 +70,7 @@
 // get the existing sn,givenName usng the DN
 
 	$search_arg = array("givenname", "sn");
-	if (!$result = $ldap->dnGet($dn, $search_arg)) {
+	if (!$result = $ldap->dnGet($dn)) {
 		echo  "LDAP ERROR47 - Couldn't retrieve UID $value";
 		$ldap->Close();
 		return; 
