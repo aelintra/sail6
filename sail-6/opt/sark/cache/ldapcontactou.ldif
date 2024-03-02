@@ -1,4 +1,10 @@
+
 dn: ou=contacts,dc=sark,dc=local
 objectClass: organizationalUnit
 objectClass: top
 ou: contacts
+
+dn: ou=default,ou=contacts,dc=sark,dc=local
+objectClass: organizationalUnit
+objectClass: top
+ou: default

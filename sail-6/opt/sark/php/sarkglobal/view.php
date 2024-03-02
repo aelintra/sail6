@@ -37,7 +37,9 @@ Class sarkglobal {
 		'cfwdextrnrule',
 		'cfwdprogress',
 		'clusterstart',
-		'cosstart',		
+		'cosstart',
+		'ldapanonbind',
+		'ldaptls',		
 		'playbeep',
 		'playtransfer',		
 		'proxy',
@@ -300,19 +302,19 @@ private function showMain() {
     echo '</div>';
 
 /*
- *       TAB DIVEND
+ *       TAB LDAP
  */
-	
+		
+	$this->myPanel->internalEditBoxStart();
+	$this->myPanel->subjectBar("LDAP Settings"); 
+	$this->myPanel->displayInputFor('ldaphost','text',$global['LDAPHOST']);  
+	$this->myPanel->displayInputFor('ldapbase','text',$global['LDAPBASE']);
+	$this->myPanel->displayInputFor('ldapou','text',$global['LDAPOU']);
+	$this->myPanel->displayInputFor('ldapuser','text',$global['LDAPUSER']);
+	$this->myPanel->displayInputFor('ldappass','password',$global['LDAPPASS']);
+	$this->myPanel->displayBooleanFor('ldapanonbind',$global['LDAPANONBIND']);
+	echo '</div>';
 
-	if ($global['CLUSTER'] == 'OFF') {
-		$this->myPanel->internalEditBoxStart();
-		$this->myPanel->subjectBar("LDAP Settings");   
-		$this->myPanel->displayInputFor('ldapbase','text',$global['LDAPBASE']);
-		$this->myPanel->displayInputFor('ldapou','text',$global['LDAPOU']);
-		$this->myPanel->displayInputFor('ldapuser','text',$global['LDAPUSER']);
-		$this->myPanel->displayInputFor('ldappass','password',$global['LDAPPASS']);
-		echo '</div>';
-	}
 
 /*
  * ToDo - placeholder for the PJSIP generator
@@ -417,13 +419,12 @@ private function saveEdit() {
  */
 			
 			$active = 'yes';
-			$ldap = 'no';
-			if ($tuple['cluster'] == 'OFF') {
-				$active = 'no';
-				$ldap = 'yes';				
-			}
 			$res=$this->dbh->exec("UPDATE Panel SET active='" . $active . "' WHERE pkey=210");
-			$res=$this->dbh->exec("UPDATE Panel SET active='" . $ldap . "' WHERE pkey=265");
+/*
+ *	Force Directory 'ON' for upgraded Multi-tenant systems
+ */
+			$res=$this->dbh->exec("UPDATE Panel SET active='yes' WHERE pkey=265");
+
 /*
  * 
  */ 			
