@@ -288,9 +288,11 @@ private function showMain() {
     $this->myPanel->radioSlide('playcongested',$global['PLAYCONGESTED'],array('YES','NO','SIGNAL'));
     $this->myPanel->radioSlide('playbusy',$global['PLAYBUSY'],array('YES','NO','SIGNAL'));
     $this->myPanel->radioSlide('callrecord1',$global['CALLRECORD1'],array('None','OTR','OTRR','In','Out','Both'));	
+	$this->myPanel->displayInputFor('recfiledlim','text',$global['RECFILEDLIM']);
 // Place holder for mount options 
 //    $this->myPanel->displayInputFor('recmount','text',$global['RECMOUNT']);	
-    $this->myPanel->displayInputFor('recage','number',$global['RECAGE']);
+// recage remove in 6.2.0-39.   Function served by tenants now.
+//    $this->myPanel->displayInputFor('recage','number',$global['RECAGE']);
     $this->myPanel->displayInputFor('dynamicfeatures','text',$global['DYNAMICFEATURES']);
     $this->myPanel->displayInputFor('vmailage','number',$global['VMAILAGE']);
     $this->myPanel->displayInputFor('intringdelay','number',$global['INTRINGDELAY']);

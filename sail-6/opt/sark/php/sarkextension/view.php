@@ -1792,24 +1792,28 @@ private function sipRelease() {
 
 }
 
-private function chkMailbox(&$mailbox,&$friend)
+private function chkMailbox(&$dvrvmail,&$friend)
 {
-	/*
+/*
  * check mailbox setting
  */
-		$astmailbox = 'mailbox=';
-		if ($mailbox != "None") {			
-			$astmailbox .= $mailbox;	
-		}
-		if ( preg_match(' /mailbox=\$ext/ ',$friend))	{
-			$friend = preg_replace ( '/mailbox=\$ext/', $astmailbox, $friend);
-		}
-		else if ( preg_match(' /mailbox=\d{3,5}/ ',$friend))	{	
-			$friend = preg_replace ( '/mailbox=\d{3,5}/', $astmailbox, $friend);
-		}
-		else if ( preg_match(' /mailbox=/ ',$friend))	{	
-			$friend = preg_replace ( '/mailbox=/', $astmailbox, $friend);
-		}
+	$astmailbox = 'mailbox=';
+	if ($dvrvmail == "None") {
+		$friend = preg_replace ( '/mailbox=.+/', $astmailbox, $friend);
+		return;
+	}
+	$astmailbox .= $dvrvmail;
+	if ( preg_match(' /mailbox=\$ext/ ',$friend))   {
+		return;
+	}
+	if ( preg_match(' /mailbox=\d{3,4}/ ',$friend)) {
+		$friend = preg_replace ( '/mailbox=\d+/', $astmailbox, $friend);
+		return;
+	}
+	if ( preg_match(' /mailbox=$/ ',$friend))       {
+		$friend = preg_replace ( '/mailbox=/', $astmailbox, $friend);
+	}
+
 }
 
 private function printEditNotes ($pkey,$extension,$sip_peers) {
@@ -1868,7 +1872,7 @@ private function printEditNotes ($pkey,$extension,$sip_peers) {
 
     echo 'Transport: <strong>' . $extension['transport'] . '</strong><br/>' . PHP_EOL;
 
-/* ToDo   
+/* ToDo  - This will have to wait for the API...
     if (isset($extension['firstseen'])) {
     	$epoch = $extension['firstseen'];
     	$dt = new DateTime("@$epoch");

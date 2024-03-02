@@ -326,6 +326,7 @@ private function showEdit($pkey=false) {
 
 //	$this->myPanel->displayPopupFor('devicerec',$res['devicerec'],array('default','None','Both'));
 	$this->myPanel->displayInputFor('recmaxage','number',$res['recmaxage']);
+	$this->myPanel->displayInputFor('recused','text',$res['recused'],null,null,true);
 	$this->myPanel->displayInputFor('ldapropwd','text',$res['ldapropwd']);
 //	$this->myPanel->displayInputFor('recused','number',$res['recused'],null,null,true);
 	
