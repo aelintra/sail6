@@ -1,3 +1,10 @@
+sail (6.2.0-41) UNRELEASED; urgency=low
+
+   - add template fragment for snom V10 ldap search filter 
+   - add organisation to Yealink ldap seach filter
+   
+ -- CoCoSoft <admin@aelintra.com>  Fri, 29  Mar 2024 18:00:00 +0000
+
 sail (6.2.0-40) UNRELEASED; urgency=low
 
    - clean up prior to release 
