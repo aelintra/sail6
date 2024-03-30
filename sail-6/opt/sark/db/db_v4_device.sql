@@ -1493,7 +1493,7 @@ ldap_username$: $ldaprouser
 ldap_password$: $ldapropwd
 ldap_max_hits$: 50
 ldap_sort_mode$: server
-ldap_search_filter$: (|(sn=%*)(cn=%*))
+ldap_search_filter$: (|(sn=%)(cn=%)(o=%))
 ldap_number_filter$: (|(telephoneNumber=%)(mobile=%)(homePhone=%))
 ldap_name_attributes$: cn o
 ldap_number_attributes$: mobile telephoneNumber homePhone
@@ -1586,6 +1586,7 @@ user_srtp1$: on
 user_auth_tag1$: off
 user_savp1$: mandatory
 ','Descriptor');
+INSERT OR IGNORE INTO Device(pkey,desc,owner,provision,technology) values ('snom.v10_ldap','snom v10 ldap search filter','system','ldap_search_filter$: (|(cn=%*)(sn=%*)(o=%*)','Descriptor');
 INSERT OR IGNORE INTO Device(pkey,desc,owner,provision,technology) values ('snom.udp','snom udp fragment','system','user_outbound1$:
 user_srtp1$: off
 user_srtp2$: off
@@ -2301,7 +2302,7 @@ features.pickup.direct_pickup_code = *8
 ##         	              LDAP Settings                                              ##
 #######################################################################################
 #Configure the search criteria for name and number lookups.
-ldap.name_filter = (|(cn=%)(sn=%))
+ldap.name_filter = (|(cn=%)(sn=%)(o=%))
 ldap.number_filter = (|(telephoneNumber=%)(mobile=%)(homePhone=%))
 
 ldap.host = $ldaphost
