@@ -1,6 +1,6 @@
 <?php
 // +-----------------------------------------------------------------------+
-// |  Copyright (c) CoCoSoft 2005-10                                  |
+// |  Copyright (c) CoCoKraft 2005-                                  |
 // +-----------------------------------------------------------------------+
 // | This file is free software; you can redistribute it and/or modify     |
 // | it under the terms of the GNU General Public License as published by  |

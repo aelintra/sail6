@@ -19,7 +19,11 @@
  
 Class helper {
 public $navRowDisplayMsg;
-	
+
+/**
+ * [sysCommit perform a system Commit - i.e. generate from local to live]
+ * @return NULL
+ */
 public function sysCommit() {
 require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkGenClass";
 // ask the helper to run a regen for us.

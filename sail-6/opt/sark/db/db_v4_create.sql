@@ -396,6 +396,7 @@ SMSALERT TEXT,                      -- not used in 4.x
 SMSC TEXT,                          -- not used in 4.x 
 SNO TEXT,                           -- not used in 4.x 
 SPYPASS TEXT,                       -- password for SPY ops
+SITENAME TEXT,                      -- Common name for this site
 STATICIPV4 TEXT DEFAULT NULL,		   -- Static IP to start
 SUPEMAIL TEXT,                      -- supervisor email
 SYSOP TEXT DEFAULT '00',			   -- system operator real extension

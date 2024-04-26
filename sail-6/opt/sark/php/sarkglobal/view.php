@@ -200,6 +200,7 @@ private function showMain() {
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("General Settings");
   	
+	$this->myPanel->displayInputFor('sitename','number',$global['SITENAME']);   
 
   	$this->myPanel->displayPopupFor('countrycode',$global['COUNTRYCODE'],$country);  
 	
@@ -366,25 +367,25 @@ private function saveEdit() {
 	$this->validator->addValidation("spypass","num","Spy password password must be numeric");
 	$this->validator->addValidation("spypass","maxlen=4","Spy password must be 4 digits"); 
 	$this->validator->addValidation("spypass","minlen=4","Spy password must be 4 digits");		
-    $this->validator->addValidation("supemail","email","Supervisor email is malformed");    
-    $this->validator->addValidation("intringdelay","req","Ringtime must be entered"); 
-    $this->validator->addValidation("intringdelay","num","Ringtime must be numeric");
-    $this->validator->addValidation("intringdelay","maxlen=3","Ringtime must be 3 digits or less");     
-    $this->validator->addValidation("abstimeout","req","Call timeout must be entered");
-    $this->validator->addValidation("abstimeout","num","Call timeout must be numeric");    
-    $this->validator->addValidation("voipmax","req","Max Outbound VOIP Calls must be entered");
-    $this->validator->addValidation("voipmax","num","Max Outbound VOIP Calls must be numeric");    
-    $this->validator->addValidation("extlen","num","Extension Length must be numeric");
-    $this->validator->addValidation("extlen","gt=2","Extension Length must 3 to 5");
-    $this->validator->addValidation("extlen","lt=6","Extension Length must 3 to 5");    
-    $this->validator->addValidation("sipiaxstart","req","Extension start must be entered");
-    $this->validator->addValidation("sipiaxstart","num","Extension start must be numeric");
-    $this->validator->addValidation("sipiaxstart","maxlen=5","Extension start must be 3 to 5 digits (and same as extension length)"); 
+   $this->validator->addValidation("supemail","email","Supervisor email is malformed");    
+   $this->validator->addValidation("intringdelay","req","Ringtime must be entered"); 
+   $this->validator->addValidation("intringdelay","num","Ringtime must be numeric");
+   $this->validator->addValidation("intringdelay","maxlen=3","Ringtime must be 3 digits or less");     
+   $this->validator->addValidation("abstimeout","req","Call timeout must be entered");
+   $this->validator->addValidation("abstimeout","num","Call timeout must be numeric");    
+   $this->validator->addValidation("voipmax","req","Max Outbound VOIP Calls must be entered");
+   $this->validator->addValidation("voipmax","num","Max Outbound VOIP Calls must be numeric");    
+   $this->validator->addValidation("extlen","num","Extension Length must be numeric");
+   $this->validator->addValidation("extlen","gt=2","Extension Length must be 3 to 5");
+   $this->validator->addValidation("extlen","lt=6","Extension Length must be 3 to 5");    
+   $this->validator->addValidation("sipiaxstart","req","Extension start must be entered");
+   $this->validator->addValidation("sipiaxstart","num","Extension start must be numeric");
+   $this->validator->addValidation("sipiaxstart","maxlen=5","Extension start must be 3 to 5 digits (and same as extension length)"); 
 	$this->validator->addValidation("sipiaxstart","minlen=3","Extension start must be 3 to 5 digits (and same as extension length)");	   
-    $this->validator->addValidation("agentstart","num","Agent start must be numeric");
-    $this->validator->addValidation("agentstart","maxlen=4","Agent start must be 4 digits");
-    $this->validator->addValidation("agentstart","minlen=4","Agent start must be 4 digits");    
-    $this->validator->addValidation("operator","num","Operator must be numeric");   
+   $this->validator->addValidation("agentstart","num","Agent start must be numeric");
+   $this->validator->addValidation("agentstart","maxlen=4","Agent start must be 4 digits");
+   $this->validator->addValidation("agentstart","minlen=4","Agent start must be 4 digits");    
+   $this->validator->addValidation("operator","num","Operator must be numeric");   
    
     //Now, validate the form
     if ($this->validator->ValidateForm()) {
