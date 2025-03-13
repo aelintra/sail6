@@ -1,6 +1,6 @@
 sail (6.2.0-42) UNRELEASED; urgency=low
 
-   - remove runit-systemd dependecncy 
+   - remove runit-systemd dependency 
    
  -- CoCoKraft <info@aelintra.com>  Thu, 13  Mar 2025 18:00:00 +0000
 
