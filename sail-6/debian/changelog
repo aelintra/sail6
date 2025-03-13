@@ -1,3 +1,9 @@
+sail (6.2.0-42) UNRELEASED; urgency=low
+
+   - remove runit-systemd dependecncy 
+   
+ -- CoCoKraft <info@aelintra.com>  Thu, 13  Mar 2025 18:00:00 +0000
+
 sail (6.2.0-41) UNRELEASED; urgency=low
 
    - add template fragment for snom V10 ldap search filter 
