@@ -188,8 +188,8 @@ function print_ldap($pdf,$dbh,$helper,&$header,&$data,&$w) {
 	}
 
 	$search_arg = array("givenname", "sn", "telephoneNumber", "mobile", "homePhone", "o");
-
-	$result = $ldap->Search($search_arg);
+	$filter = "cn=*";
+	$result = $ldap->Search($filter,$search_arg);
 
 	if (empty($result)) {
 		$helper->logIt("Empty set from LDAP");

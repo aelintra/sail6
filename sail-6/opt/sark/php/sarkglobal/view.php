@@ -200,7 +200,7 @@ private function showMain() {
 	$this->myPanel->internalEditBoxStart();
 	$this->myPanel->subjectBar("General Settings");
   	
-	$this->myPanel->displayInputFor('sitename','number',$global['SITENAME']);   
+	$this->myPanel->displayInputFor('sitename','text',$global['SITENAME']);   
 
   	$this->myPanel->displayPopupFor('countrycode',$global['COUNTRYCODE'],$country);  
 	

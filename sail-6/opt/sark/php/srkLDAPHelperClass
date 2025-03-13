@@ -62,8 +62,8 @@ public function Connect() {
 /**
  * Generalised search
  */
-public function Search($arg) {
-	$sr = ldap_search($this->ds, $this->addressbook . "," . $this->base, "cn=*", $arg);
+public function Search($filter,$arg) {
+	$sr = ldap_search($this->ds, $this->addressbook . "," . $this->base, $filter, $arg);
 	return (ldap_get_entries($this->ds, $sr));	
 }
 
@@ -181,10 +181,10 @@ public function Delete($dn) {
  * Used by the factory reset function
  */
 public function Clean() {
-	$sr=ldap_list($this->ds,$this->addressbook . "," . $this->base,"cn=*",array(""));
-    $info = ldap_get_entries($this->ds, $sr);
-    for($i=0;$i<$info['count'];$i++){
-		$dn = $info[$i]['dn'];
+	$arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "o", "cn");
+	$sr=$this->Search("cn=*",$arg);
+    for($i=0;$i<$sr['count'];$i++){
+		$dn = $sr[$i]['dn'];
         $result = ldap_delete($this->ds,$dn);
         if(!$result){
 			//return result code, if delete fails
@@ -226,7 +226,7 @@ public function DeleteAttribute ($dn, $arg) {
 	  	return "LDAP ERROR - " . ldap_error($this->ds);
 	}
 	else { 
-		return "Modifyed $dn attribute OK ";
+		return "Modified $dn attribute OK ";
 	} 	
  }
 

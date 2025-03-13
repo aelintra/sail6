@@ -327,15 +327,7 @@ sub sysCommit($) {
   
  
     my $dbh =SQLiteConnect();
-# turn off commit (done in genAst as of r1986)
-#    SQLiteDo($dbh, "UPDATE globals SET MYCOMMIT='NO' WHERE pkey='global'");
-# clear undologs
-#    SQLiteDo($dbh,"DELETE FROM undolog");
-# generate FOP layouts if requested
-	if (SQLiteGetGlobal($dbh,"RUNFOP") eq 'enabled') {
-		$rc = request_syscmd ("perl /opt/sark/scripts/op_buttons.pl >/dev/null 2>&1");
-		$rc = request_syscmd ("perl /opt/sark/scripts/name_op_buttons.pl >/dev/null 2>&1");	
-	}
+
 # we're out
     SQLiteCommit($dbh);
     SQLiteDisconnect($dbh);

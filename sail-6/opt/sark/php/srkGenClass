@@ -62,11 +62,12 @@ public function genAsterisk() {
 
     $dbh = NULL;
 
-	
+/*	
 	if ($this->globals['RUNFOP'] == 'enabled') {
 		$rc = $this->request_syscmd ("perl /opt/sark/scripts/op_buttons.pl >/dev/null 2>&1");
 		$rc = $this->request_syscmd ("perl /opt/sark/scripts/name_op_buttons.pl >/dev/null 2>&1");	
 	}
+*/
 
 	$this->helper->logit(" commit - ended", 5 );
 // run FOP gen if enabled

@@ -4,11 +4,12 @@
 #
 ZERO=0
 VMAILAGE=`/usr/bin/sqlite3 /opt/sark/db/sark.db "SELECT VMAILAGE FROM globals WHERE pkey='global'"`
-#echo deleting vmail older than $VMAILAGE days
+echo deleting vmail older than $VMAILAGE days
 if [ ! -z $VMAILAGE ]; then
 	if [ $VMAILAGE -gt $ZERO ]; then
 		logger "srkagevmail - Deleting vmail older than $VMAILAGE days"
 		find /var/spool/asterisk/voicemail/default/*/Old -name "msg*" -type f -mtime +$VMAILAGE -exec rm {} \;
+		find /var/spool/asterisk/voicemail/default/*/INBOX -name "msg*" -type f -mtime +$VMAILAGE -exec rm {} \;
 	else
 		logger "srkagevmail - no vmail ageing (variable is zero)"
 	fi

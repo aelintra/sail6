@@ -116,7 +116,7 @@ INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('220','sarkcallback/main.php','Callback','50','create');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('224','sarkmcast/main.php','Multicast','50','create');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('230','sarkglobal/main.php','Globals','50','update');
-INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('232','sarkreception/main.php','Home','50','view');
+INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ab\ility) values ('232','sarkreception/main.php','Home','50','view');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('235','sarkthreat/main.php','Threats','50','view');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('236','sarkthreathist/main.php','Threat History','50','view');
 INSERT OR IGNORE INTO Panel(pkey,classname,displayname,weight,ability) values ('240','sarkbackup/main.php','Backup/Restore','50','create');

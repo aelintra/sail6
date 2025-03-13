@@ -155,7 +155,7 @@ private function showMain() {
 
 	$this->myPanel->aHeaderFor('cluster');
 	$this->myPanel->aHeaderFor('surname'); 
-	$this->myPanel->aHeaderFor('forename'); 
+	$this->myPanel->aHeaderFor('forename');
 	$this->myPanel->aHeaderFor('phone',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('mobile',false,'w3-hide-small');	
 	$this->myPanel->aHeaderFor('home',false,'w3-hide-small');
@@ -166,8 +166,8 @@ private function showMain() {
 	}
 
 	$search_arg = array("uid","givenname", "sn", "telephoneNumber", "mobile", "homePhone", "o", "cn");
-	$result = $this->ldap->Search($search_arg);
-
+	$filter = "cn=*";
+	$result = $this->ldap->Search($filter,$search_arg);
 
 	echo '</tr>' . PHP_EOL;
 	echo '</thead>' . PHP_EOL;
