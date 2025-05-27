@@ -351,7 +351,7 @@ LTERM TEXT,                         -- late termination flag
 MAXIN TEXT,                         -- maximum inbound calls
 MEETMEDIAL TEXT,                    -- not used in 4.x 
 MISDNRUN TEXT,                      -- not used in 4.x 
-MIXMONITOR TEXT,                    -- force mixmonitor on all recordings
+MIXMONITOR TEXT DEFAULT 'YES',      -- force mixmonitor on all recordings (as of Ast 20)
 MONITOROUT TEXT,                    -- monitorout folder
 MONITORSTAGE TEXT,                  -- monstage folder
 MONITORTYPE TEXT,					      -- Monitor or Mixmonitor

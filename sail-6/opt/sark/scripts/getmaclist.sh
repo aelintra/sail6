@@ -4,7 +4,8 @@
 
 [ ! -e /opt/sark/www/sark-common/manuf.txt ]  && touch /opt/sark/www/sark-common/manuf.txt
 chown www-data:www-data /opt/sark/www/sark-common/manuf.txt
-curl -L -s "http://www.sailpbx.com/sail/public/manuf.txt" > /tmp/manuf.txt
+#curl -L -s "http://www.sailpbx.com/sail/public/manuf.txt" > /tmp/manuf.txt ==> OLD URL
+curl -L -s "https://aelintra.github.io/sail6-docs/assets/files/manuf.txt" > /tmp/manuf.txt
 ret=$?
 if test "$ret" != "0"; then
      logger SARKgetmaclist - **** Link fail - Could not fetch new manufacturer MAC DB ****
