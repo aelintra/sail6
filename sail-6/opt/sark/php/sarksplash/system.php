@@ -1,15 +1,6 @@
 <?php
 
-//    echo rand(0,100);
-//    return;
-
     $var=array();
-
-/*        
-        $cpuinfo = file_get_contents('/proc/cpuinfo');
-        preg_match_all('/^processor/m', $cpuinfo, $matches);
-        $var ['numCpus'] = count($matches[0]);
-*/
 
         $iowait = `iostat -c|awk '/^ /{print $4}'`;
         $var['iowait'] = trim($iowait); 
@@ -32,7 +23,17 @@
         $rootdev = trim (`df -P / | tail -n 1 | awk '/.*/ { print $1 }'`);
         $diskusage = `df --output=pcent $rootdev | tr -dc '0-9'`;
         $var['disk'] = $diskusage; 
+
+        $numCpus = `/bin/grep -c ^processor /proc/cpuinfo`; 
+        $numCpus = trim($numCpus);
+        $var['numCpus'] = $numCpus;   
         
+        $var['uptime'] = trim(`uptime | awk -F'up ' '{print $2}' | awk -F',' '{print $1}'`);
+        $cpu_usage = sys_getloadavg();
+        $var['lga'] = round($cpu_usage[0],2 );
+        $var['lgb'] = round($cpu_usage[1],2 );
+        $var['lgc'] = round($cpu_usage[2],2 );
+
 
 //    syslog(LOG_WARNING, "system.php sending values");
 

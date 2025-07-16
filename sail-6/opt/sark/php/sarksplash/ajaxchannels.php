@@ -20,7 +20,6 @@
   
 //	syslog(LOG_WARNING, "channel reader running");
 
-// memory jogger ToDo
   require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkAmiHelperClass";
   require_once $_SERVER["DOCUMENT_ROOT"] . "../php/srkHelperClass";
 
@@ -31,10 +30,6 @@
     return;
   }
 
-/*
-	$result = `sudo /usr/sbin/asterisk -rx 'core show channels concise'`;
-  $data = explode("\n", $result);
-*/
 
   $stream = null;
  
@@ -54,11 +49,7 @@
 
   foreach($channels as $key=>$chan) {
 
-/*
-    if ($chan['Application'] == 'AppDial') {
-        continue;
-    }
-*/
+
     switch ($chan['Application']) {
 
       case "Dial":

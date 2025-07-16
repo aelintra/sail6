@@ -1,3 +1,10 @@
+sail (6.2.0-44) UNRELEASED; urgency=low
+
+   - refactor the dashboard to correctly count inbound calls.  It was counting call group rings as multiple calls.
+   - refactor the dashboard to remove the google chart artifacts.  Replaced with simple text output.
+   
+ -- CoCoKraft <info@aelintra.com>  Thu, 27  May 2025 18:00:00 +0000
+ 
 sail (6.2.0-43) UNRELEASED; urgency=low
 
    - Set MIXMONITOR default to YES in Globals in preparation for MONITOR removal in Asterisk 20+
