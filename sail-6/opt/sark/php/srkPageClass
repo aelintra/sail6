@@ -1567,7 +1567,9 @@ Class page {
         }
                 
         if (!$short) {
-            $sql = "SELECT * FROM meetme WHERE cluster='" . $cluster . "'"; 
+//            $sql = "SELECT * FROM meetme WHERE cluster='" . $cluster . "'"; 
+/* change to this select to remove cluster dependency - conf rooms are global  19/8/25*/
+            $sql = "SELECT * FROM meetme";
             $qRes = $dbh->query($sql);
             $conferences = $qRes->fetchAll();
             $qRes = NULL;       
