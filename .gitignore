@@ -1,3 +1,8 @@
 .DS_Store
 /sail-6/debian/sail*
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
