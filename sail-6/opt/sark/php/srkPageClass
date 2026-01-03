@@ -1317,6 +1317,17 @@ Class page {
         echo '</p>' . PHP_EOL;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $type
+     * @param [type] $val
+     * @param [type] $dbname
+     * @param [type] $placeholder
+     * @param [type] $readonly
+     * @return void
+     */
 	public function displayInputFor($name,$type,$val=null,$dbname=null,$placeholder=null,$readonly=null) {
 		echo '<div class="w3-margin-bottom">';
 		$this->aLabelFor($name);

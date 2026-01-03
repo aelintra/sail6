@@ -269,8 +269,8 @@ private function showNew() {
 	$this->myPanel->displayInputFor('surname','text');
 	$this->myPanel->displayInputFor('forename','text',null,'givenname');
 	$this->myPanel->displayInputFor('org','text');
-	$this->myPanel->displayInputFor('ext','number',null,'phone');
-	$this->myPanel->displayInputFor('mobile','number');
+	$this->myPanel->displayInputFor('phone','text');
+	$this->myPanel->displayInputFor('mobile','text');
 	$this->myPanel->displayInputFor('home','text');
 
 
@@ -290,7 +290,8 @@ private function saveNew() {
 	$this->validator = new FormValidator();
     $this->validator->addValidation("surname","req","Please fill in surname");
     $this->validator->addValidation("phone","num","Phone number must be numeric with no spaces");   
-    $this->validator->addValidation("mobile","num","Mobile number must be numeric with no spaces");   
+    $this->validator->addValidation("mobile","num","Mobile number must be numeric with no spaces"); 
+	$this->validator->addValidation("home","num","Home number must be numeric with no spaces");  
 
     if ($this->validator->ValidateForm()) {
 		$this->ldap->addressbook = "ou=" . $_POST['cluster'] . ",ou=" . $this->ldap->baseou;
@@ -304,7 +305,7 @@ private function saveNew() {
 		else {
 			$ldapargs["cn"] = $ldapargs["sn"];
 		}
-		if (isset($_POST['org']) && $_POST['phone'] != "") {
+		if (isset($_POST['org']) && $_POST['org'] != "") {
 			$ldapargs["o"] = $_POST['org'];
 		}
 		if (isset($_POST['phone']) && $_POST['phone'] != "") {
