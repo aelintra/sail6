@@ -22,7 +22,7 @@ A Python utility to split a SQLite database into multiple sub-databases based on
 Split all clusters into separate databases:
 
 ```bash
-python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sql
+python /opt/sark/py/split_db.py /opt/sark/db/sark.db /opt/sark/db/db_v4_create.sql
 ```
 
 ### Split Specific Clusters
@@ -30,7 +30,7 @@ python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sq
 Only split certain clusters:
 
 ```bash
-python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sql --clusters default,tenant1,tenant2
+python /opt/sark/py/split_db.py /opt/sark/db/sark.db /opt/sark/db/db_v4_create.sql --clusters default,tenant1,tenant2
 ```
 
 ### Specify Output Directory
@@ -38,7 +38,7 @@ python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sq
 Save sub-databases to a specific directory:
 
 ```bash
-python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sql --output-dir ./output
+python /opt/sark/py/split_db.py /opt/sark/db/sark.db /opt/sark/db/db_v4_create.sql --output-dir ./output
 ```
 
 ## How It Works
@@ -60,12 +60,12 @@ python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sq
 ## Output
 
 The utility creates one database file per cluster in the format:
-- `sark_<cluster_name>.db`
+- `<cluster_name>.db`
 
 For example:
-- `sark_default.db`
-- `sark_tenant1.db`
-- `sark_tenant2.db`
+- `default.db`
+- `tenant1.db`
+- `tenant2.db`
 
 ## Table Classification
 
@@ -141,9 +141,9 @@ These tables are handled specially to maintain relationships:
 ## Example Output
 
 ```
-Splitting database: sail-6/opt/sark/db/sark.db
-Schema file: sail-6/opt/sark/db/db_v4_create.sql
-Output directory: sail-6/opt/sark/db
+Splitting database: /opt/sark/db/sark.db
+Schema file: /opt/sark/db/db_v4_create.sql
+Output directory: /opt/sark/db
 
 Found 35 tables:
   - 18 cluster-specific tables
@@ -169,9 +169,9 @@ Processing cluster: tenant1
   ✓ Completed cluster: tenant1
 
 ✓ Database split complete!
-  Created 2 sub-database(s) in sail-6/opt/sark/db
+  Created 2 sub-database(s) in /opt/sark/db
   Files:
-    - sark_default.db (2.45 MB)
-    - sark_tenant1.db (1.87 MB)
+    - default.db (2.45 MB)
+    - tenant1.db (1.87 MB)
 ```
 

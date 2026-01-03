@@ -383,13 +383,13 @@ def main():
         epilog="""
 Examples:
   # Split all clusters
-  python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sql
+  python split_db.py /opt/sark/db/sark.db /opt/sark/db/db_v4_create.sql
   
   # Split specific clusters
-  python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sql --clusters default,tenant1
+  python split_db.py /opt/sark/db/sark.db /opt/sark/db/db_v4_create.sql --clusters default,tenant1
   
   # Specify output directory
-  python split_db.py sail-6/opt/sark/db/sark.db sail-6/opt/sark/db/db_v4_create.sql --output-dir ./output
+  python split_db.py /opt/sark/db/sark.db /opt/sark/db/db_v4_create.sql --output-dir ./output
         """
     )
     
