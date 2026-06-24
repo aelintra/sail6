@@ -31,6 +31,7 @@ Class sarkholiday {
 	
 public function showForm() {
 	
+	$this->setLocalTimezone();
 	$this->myPanel = new page;
 	$this->dbh = DB::getInstance();
 	$this->helper = new helper;
@@ -245,21 +246,9 @@ private function saveNew() {
 	$edd = date('d-m-Y');	
 
 
-// convert the inputs to Epoch time	
-    $dtsplit = preg_split('/-/',$sdd);
-	$hmsplit = preg_split('/:/',$shm);
-
-	$tm = new DateTime();
-	$tm-> setDate($dtsplit[2], $dtsplit[1], $dtsplit[0]);
-	$tm-> setTime($hmsplit[0], $hmsplit[1], 00);
-	$sepoch = $tm->getTimestamp();
-
-	$dtsplit = preg_split('/-/',$edd);
-	$hmsplit = preg_split('/:/',$ehm);
-
-	$tm-> setDate($dtsplit[2], $dtsplit[1], $dtsplit[0]);
-	$tm-> setTime($hmsplit[0], $hmsplit[1], 00);
-	$eepoch = $tm->getTimestamp();
+// convert the inputs to Epoch time
+	$sepoch = $this->localToEpoch($sdd, $shm);
+	$eepoch = $this->localToEpoch($edd, $ehm);
 
 // check end > start		
 	if ($sepoch > $eepoch) {
@@ -412,21 +401,9 @@ private function saveEdit() {
 	}		
 
 
-// convert the inputs to Epoch time	
-    $dtsplit = preg_split('/-/',$sdd);
-	$hmsplit = preg_split('/:/',$shm);
-
-	$tm = new DateTime();
-	$tm-> setDate($dtsplit[2], $dtsplit[1], $dtsplit[0]);
-	$tm-> setTime($hmsplit[0], $hmsplit[1], 00);
-	$sepoch = $tm->getTimestamp();
-
-	$dtsplit = preg_split('/-/',$edd);
-	$hmsplit = preg_split('/:/',$ehm);
-
-	$tm-> setDate($dtsplit[2], $dtsplit[1], $dtsplit[0]);
-	$tm-> setTime($hmsplit[0], $hmsplit[1], 00);
-	$eepoch = $tm->getTimestamp();
+// convert the inputs to Epoch time
+	$sepoch = $this->localToEpoch($sdd, $shm);
+	$eepoch = $this->localToEpoch($edd, $ehm);
 
 // check end > start		
 	if ($sepoch > $eepoch) {
@@ -469,5 +446,17 @@ private function saveEdit() {
 		$this->invalidForm = True;
 		$this->message = "Validation Errors!";	
 	}		
+}
+
+private function setLocalTimezone() {
+	$tz = trim(@file_get_contents('/etc/timezone'));
+	if (!empty($tz)) {
+		date_default_timezone_set($tz);
+	}
+}
+
+private function localToEpoch($date, $time) {
+	$tm = DateTime::createFromFormat('d-m-Y H:i', "$date $time", new DateTimeZone(date_default_timezone_get()));
+	return $tm->getTimestamp();
 }
 }
