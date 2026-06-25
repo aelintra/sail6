@@ -327,7 +327,7 @@ private function showEdit() {
 	echo '<input type="text" class="datepicker w3-input w3-border w3-round" name="sdate" id="sdate" value="' . date('d-m-Y', $tuple['stime']) . '"  />' . PHP_EOL;
 	echo '<div class="w3-margin-bottom">';
 	echo '<br/>';	
-	$this->myPanel->displayInputFor("time",'time',date('H:i:s', $tuple['stime']),'stime');
+	$this->myPanel->displayInputFor("time",'time',date('H:i', $tuple['stime']),'stime');
 	echo '</div>';
 	echo '</div>';	
 	
@@ -339,7 +339,7 @@ private function showEdit() {
 	echo '<input type="text" class="datepicker w3-input w3-border w3-round" name="edate" id="edate" value="' . date('d-m-Y', $tuple['etime']) . '"  />' . PHP_EOL;
 	echo '<div class="w3-margin-bottom">';
 	echo '<br/>';
-	$this->myPanel->displayInputFor("time",'time',date('H:i:s', $tuple['etime']),'etime');
+	$this->myPanel->displayInputFor("time",'time',date('H:i', $tuple['etime']),'etime');
 	echo '</div>';
 	echo '</div>';
 
@@ -357,6 +357,7 @@ private function showEdit() {
 }
 private function saveEdit() {
 
+	$pkey = $_POST['pkey'];
 	$tuple = array();
 	$custom = array (
 		'sdate' => True,
@@ -390,19 +391,30 @@ private function saveEdit() {
 	$sepoch = $this->localToEpoch($sdd, $shm);
 	$eepoch = $this->localToEpoch($edd, $ehm);
 
+	if ($sepoch === false) {
+		$this->invalidForm = True;
+		$this->error_hash['schedinsertstarttime'] = "Illegal start date/time $sdd $shm";
+	}
+	if ($eepoch === false) {
+		$this->invalidForm = True;
+		$this->error_hash['schedinsertendtime'] = "Illegal end date/time $edd $ehm";
+	}
+
 // check end > start		
-	if ($sepoch > $eepoch) {
+	if (!$this->invalidForm && $sepoch > $eepoch) {
 		$this->invalidForm = True;
 		$this->error_hash['schedinsertendtime'] = "End time must be after start time - stime = " . date ('d-m-Y H:i:s', $sepoch) . " etime = " . date ('d-m-Y H:i:s', $eepoch);
 	}
 
 // check for overlap with existing rows in the same cluster (overlap between clusters is OK)
+	if (!$this->invalidForm) {
 	$sql = $this->dbh->prepare("SELECT * FROM Holiday WHERE cluster=? AND ? < etime AND stime < ? and pkey != ?") ;
 	$sql->execute(array($tuple['cluster'],$sepoch,$eepoch,$pkey));
 	$res = $sql->fetch();
 	if (!empty($res)) {
 		$this->invalidForm = True;
 		$this->error_hash['schedinsertoverlap'] = "Period overlaps an existing period in the same Tenant stime = " . date ('d-m-Y H:i:s', $sepoch) . " etime = " . date ('d-m-Y H:i:s', $eepoch);
+	}
 	}
 			  	
 // update	
@@ -434,14 +446,29 @@ private function saveEdit() {
 }
 
 private function setLocalTimezone() {
+	$tz = $this->getLocalTimezone();
+	date_default_timezone_set($tz);
+}
+
+private function getLocalTimezone() {
 	$tz = trim(@file_get_contents('/etc/timezone'));
-	if (!empty($tz)) {
-		date_default_timezone_set($tz);
+	if ($tz === '' || !in_array($tz, DateTimeZone::listIdentifiers())) {
+		$tz = date_default_timezone_get();
 	}
+	if ($tz === '' || !in_array($tz, DateTimeZone::listIdentifiers())) {
+		$tz = 'UTC';
+	}
+	return $tz;
 }
 
 private function localToEpoch($date, $time) {
-	$tm = DateTime::createFromFormat('d-m-Y H:i', "$date $time", new DateTimeZone(date_default_timezone_get()));
+	$date = trim($date);
+	$time = trim($time);
+	$tz = new DateTimeZone($this->getLocalTimezone());
+	$tm = DateTime::createFromFormat('d-m-Y H:i:s', "$date $time", $tz);
+	if ($tm === false) {
+		$tm = DateTime::createFromFormat('d-m-Y H:i', "$date $time", $tz);
+	}
 	if ($tm === false) {
 		return false;
 	}
