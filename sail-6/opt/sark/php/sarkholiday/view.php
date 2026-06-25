@@ -246,25 +246,10 @@ private function saveNew() {
 	$edd = date('d-m-Y');	
 
 
-// convert the inputs to Epoch time
+// convert the inputs to Epoch time (placeholders until user sets dates in edit)
 	$sepoch = $this->localToEpoch($sdd, $shm);
 	$eepoch = $this->localToEpoch($edd, $ehm);
 
-// check end > start		
-	if ($sepoch > $eepoch) {
-		$this->invalidForm = True;
-		$this->error_hash['schedinsertendtime'] = "End time must be after start time - " . date ('d-m-Y H:i:s', $sepoch) . " etime = " . date ('d-m-Y H:i:s', $eepoch);
-	}
-
-// check for overlap with existing rows in the same cluster (overlap between clusters is OK)
-	$sql = $this->dbh->prepare("SELECT * FROM Holiday WHERE cluster=? AND ? < etime AND stime < ?") ;
-	$sql->execute(array($tuple['cluster'],$sepoch,$eepoch));
-	$res = $sql->fetch();
-	if (!empty($res)) {
-		$this->invalidForm = True;
-		$this->error_hash['schedinsertoverlap'] = "Period overlaps an existing period in the same cluster stime = " . date ('d-m-Y H:i:s', $sepoch) . " etime = " . date ('d-m-Y H:i:s', $eepoch);
-	}
-			  	
 // update	
 	if (!$this->invalidForm) {
 		if (array_key_exists('route',$tuple)) {
@@ -457,6 +442,9 @@ private function setLocalTimezone() {
 
 private function localToEpoch($date, $time) {
 	$tm = DateTime::createFromFormat('d-m-Y H:i', "$date $time", new DateTimeZone(date_default_timezone_get()));
+	if ($tm === false) {
+		return false;
+	}
 	return $tm->getTimestamp();
 }
 }
