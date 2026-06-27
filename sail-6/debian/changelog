@@ -1,3 +1,12 @@
+sail (6.2.0-45) UNRELEASED; urgency=low
+
+   - Fix holiday timer epoch conversion to use the system timezone from /etc/timezone,
+     correcting schedules that were one hour late during daylight saving time.
+   - Skip date overlap validation when creating a new holiday (dates are set on edit).
+   - Fix holiday update clearing stime/etime when only other fields (e.g. route) are changed.
+   
+ -- CoCoKraft <info@aelintra.com>  Wed, 25 Jun 2025 18:00:00 +0000
+
 sail (6.2.0-44) UNRELEASED; urgency=low
 
    - refactor the dashboard to correctly count inbound calls.  It was counting call group rings as multiple calls.
